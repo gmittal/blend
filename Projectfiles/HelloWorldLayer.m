@@ -11,8 +11,6 @@
  - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION
  - NOT ALL 360 DEGREES OF WORK WHEN DIVIDING THE PLAYER INTO 3 SECTIONS
  - SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION
- - COLLISION DETECTION needs to be more accurate
- 
  */
 
 
@@ -39,7 +37,7 @@ bool warning = false;
         director = [CCDirector sharedDirector];
         size = [[CCDirector sharedDirector] winSize];
         screenCenter = CGPointMake(size.width/2, size.height/2);
-        shipSpeed = 6.4f; // default speed
+        shipSpeed = 5.0f; // default speed
         playerScore = 0;
         playerLives = 5;
         framesPassed = 0;
@@ -83,7 +81,7 @@ bool warning = false;
         
         // score label
         score = [[NSString alloc]initWithFormat:@"Score: %i", playerScore];
-        scoreLabel = [CCLabelTTF labelWithString:score fontName:@"HelveticaNeue-Light" fontSize:25];
+        scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
         scoreLabel.position = ccp(size.width/2, 465);
         scoreLabel.color = ccc3(0,0,0);
         [self addChild:scoreLabel z:100];
@@ -208,10 +206,14 @@ bool warning = false;
         //            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
         //            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
         [self scoreCheck:shipAngle withColor:shipColor];
-        if ((numCollisions - playerScore) > playerLives) {
+        if ((numCollisions - playerScore) > playerLives - 1) {
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
             warning = true;
+        } else if ((numCollisions - playerScore) > playerLives) {
+            [self removeChild:circle2 cleanup:YES];
+            [self gameOver]; // GAME OVER
+            
         } else {
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
@@ -403,7 +405,7 @@ bool warning = false;
 -(void) createShipCoord:(CCSprite *)shipForCoord
 {
     // Temporary way of generating random coordinates to spawn to
-    int fromNumber = 100;
+    int fromNumber = -100;
     int toNumber = 600;
     shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
     shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
@@ -458,8 +460,8 @@ bool warning = false;
         normalizedEnd2Ang-=360;
     }
     section2EndAngle = normalizedEnd2Ang;
-    section3StartAngle = section2EndAngle; // the line below's problem applies to this line
-    section3EndAngle = section1StartAngle; // right now does not work for some reason
+    section3StartAngle = normalizedEnd1Ang; // the line below's problem applies to this line
+    section3EndAngle = normalizedStart1Ang; // right now does not work for some reason
     //    [self normalizeAngle:section1StartAngle];
     //    [self normalizeAngle:section1EndAngle];
     //    [self normalizeAngle:section2StartAngle];
@@ -549,12 +551,16 @@ bool warning = false;
 -(void) initChallenges
 {
     // challenge 1
-    if (playerScore > 9) {
-        shipSpeed = 0.8f;
+    if (playerScore > 6) {
+        shipSpeed = 3.5f;
     }
     
-    if (playerScore > 11) {
-        shipSpeed = 1.1f;
+    if (playerScore > 9) {
+        shipSpeed = 2.0f;
+    }
+    
+    if (playerScore > 10) {
+        shipSpeed = 4.9f;
     }
 }
 
@@ -573,6 +579,7 @@ bool warning = false;
     //} else {
     // do nothing
     // }
+    [self divideAngularSections];
     [self circleCollisionWithSprite:player andThis:ship1];
     //    [self circleCollisionWith:section2Ships];
     //    [self circleCollisionWith:section3Ships];
@@ -585,7 +592,7 @@ bool warning = false;
     //    [self normalizeAngle:section3StartAngle];
     //    [self normalizeAngle:section3EndAngle];
     [self updateScore];
-    //    [self initChallenges];
+    [self initChallenges];
 }
 
 @end

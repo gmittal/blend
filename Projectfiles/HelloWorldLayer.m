@@ -6,6 +6,15 @@
  */
 
 // NOT OPTIMIZED FOR 4-Inch RETINA SCREENS YET
+/*
+ CURRENT BUGS:
+ - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION
+ - NOT ALL 360 DEGREES OF WORK WHEN DIVIDING THE PLAYER INTO 3 SECTIONS
+- SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION
+ - COLLISION DETECTION needs to be more accurate
+ 
+ */
+
 
 #import "HelloWorldLayer.h"
 
@@ -83,9 +92,9 @@ float radii;
         //        [self addChild:liveLabel z:100];
         
         
-                ship1 = [[CCSprite alloc] init];
-                ship1 = [CCSprite spriteWithFile:@"section1.png"];
-                ship1.scale = 0.15f;
+        ship1 = [[CCSprite alloc] init];
+        ship1 = [CCSprite spriteWithFile:@"section1.png"];
+        ship1.scale = 0.15f;
         
         [self divideAngularSections];
         
@@ -109,112 +118,88 @@ float radii;
 
 
 // Collision DETECTION
--(void) circleCollisionWith:(NSMutableArray *) circle2
+-(void) circleCollisionWithSprite:(CCSprite *)circle1 andThis:(CCSprite *) circle2
 {
-    NSUInteger numSprites = [circle2 count];
-    for (int i = 0; i < numSprites; i++)
+    //        CCSprite *c = [circle2 objectAtIndex:i];
+    //        [self circleCollisionWithSprite:c];
+    //        [self doubleCheckCollisions:c];
+    
+    float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
+    // NSLog(@"Circle 1 Radius: %f", c1radius);
+    float c2radius = [circle2 boundingBox].size.width/2; // circle 2 radius
+    //        float c2radius = c.contentSize.width/2;
+    radii = c1radius + c2radius;
+    float distX = circle1.position.x - circle2.position.x;
+    float distY = circle1.position.y - circle2.position.y;
+    distance = sqrtf((distX * distX) + (distY * distY));
+    
+    //            [self circleCollisionWithSprite:c];
+    float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
+    float shipAngleRadians = asin(ratio); // arcsin of ratio
+    float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
+//    float shipAngle; // shipAngle
+    
+    CGPoint pos1 = [circle1 position];
+    CGPoint pos2 = [circle2 position];
+    
+    float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
+    
+    float shipAngle;
+    
+    if(pos1.y - pos2.y > 0)
     {
-        CCSprite *c = [circle2 objectAtIndex:i];
-//        [self circleCollisionWithSprite:c];
-       [self doubleCheckCollisions:c];
-        
-        float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
-        // NSLog(@"Circle 1 Radius: %f", c1radius);
-        float c2radius = [c boundingBox].size.width/2; // circle 2 radius
-        //        float c2radius = c.contentSize.width/2;
-        radii = c1radius + c2radius;
-        float distX = player.position.x - c.position.x;
-        float distY = player.position.y - c.position.y;
-        distance = sqrtf((distX * distX) + (distY * distY));
-        
-        if (distance <= radii) { // did the two circles collide at all??
-//            [self circleCollisionWithSprite:c];
-            float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
-            float shipAngleRadians = asin(ratio); // arcsin of ratio
-            float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
-            float shipAngle; // shipAngle
-            
-            if (antiShipAngle < 0.0f) {
-                shipAngle = (-360 + (antiShipAngle));
-            } else {
-                shipAngle = antiShipAngle;
-            }
-            
-            if (shipAngle < -360.0f) {
-                [self removeChild:c cleanup:YES];
-                //                NSLog(@"ERROR WITH SHIP GENERATION: DELETING AND RETRYING");
-                //            [self initShips];
-            }
-            
-            //            NSLog(@"Ship Angle %f", shipAngle);
-            
-            [self divideAngularSections];
-            [self scoreCheck:shipAngle withColor:shipColor];
-            
-            if (distance < radii) {
-                c.visible = false;
-                [self removeChild:c cleanup:YES];
-                [circle2 removeObject:c];
-            }
-            
-            //            NSLog(@"HIT");
-            c.visible = false;
-            [self removeChild:c cleanup:YES];
-            [circle2 removeObject:c];
+        if(pos1.x - pos2.x < 0)
+        {
+            shipAngle = (-90-theta);
+        }
+        else if(pos1.x - pos2.x > 0)
+        {
+            shipAngle = (90-theta);
+        }
+    }
+    else if(pos1.y - pos2.y < 0)
+    {
+        if(pos1.x - pos2.x < 0)
+        {
+            shipAngle = (270-theta);
+        }
+        else if(pos1.x - pos2.x > 0)
+        {
+            shipAngle = (90-theta);
         }
     }
     
-}
-
--(void) circleCollisionWithSprite:(CCSprite *)circle1 andThis:(CCSprite *) circle2
-{
-//        CCSprite *c = [circle2 objectAtIndex:i];
-//        [self circleCollisionWithSprite:c];
-//        [self doubleCheckCollisions:c];
+    if (shipAngle < 0)
+    {
+        shipAngle+=360;
+    }
     
-        float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
-        // NSLog(@"Circle 1 Radius: %f", c1radius);
-        float c2radius = [circle2 boundingBox].size.width/2; // circle 2 radius
-        //        float c2radius = c.contentSize.width/2;
-        radii = c1radius + c2radius;
-        float distX = circle1.position.x - circle2.position.x;
-        float distY = circle1.position.y - circle2.position.y;
-        distance = sqrtf((distX * distX) + (distY * distY));
-        
-        if (distance <= radii) { // did the two circles collide at all??
-//            [self circleCollisionWithSprite:c];
-            float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
-            float shipAngleRadians = asin(ratio); // arcsin of ratio
-            float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
-            float shipAngle; // shipAngle
-            
-            if (antiShipAngle < 0.0f) {
-                shipAngle = (-360 + (antiShipAngle));
-            } else {
-                shipAngle = antiShipAngle;
-            }
-            
-            if (shipAngle < -360.0f) {
-                [self removeChild:circle2 cleanup:YES];
-                [self initShips];
-            } else {
+    
+//    if (antiShipAngle < 0.0f) {
+//        shipAngle = (-360 + (antiShipAngle));
+//    } else {
+//        shipAngle = antiShipAngle;
+//    }
+    
+    
+    if (distance <= radii) { // did the two circles collide at all??
+        if (shipAngle < -360.0f) {
+            [self removeChild:circle2 cleanup:YES];
+            [self initShips];
+        } else {
             
             [self divideAngularSections];
+            NSLog(@"%f", shipAngle);
+            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
             [self scoreCheck:shipAngle withColor:shipColor];
             [self removeChild:circle2 cleanup:YES];
-            NSLog(@"HIT");
             [self initShips];
-            }
         }
-}
-
--(void) doubleCheckCollisions:(CCSprite *) spriteToKill
-{
-    if (distance < radii) {
-        //        NSLog(@"HIT");
-        spriteToKill.visible = false;
-        [self removeChild:spriteToKill cleanup:YES];
-        //        [circle2 removeObject:c];
     }
 }
 
@@ -370,25 +355,25 @@ float radii;
 {
     [self pickColor];
     if (shipColor == 1) {
-                ship1 = [CCSprite spriteWithFile:@"section1.png"];
-                ship1.scale = 0.15;
-//        [self initSect1Ships];
+        ship1 = [CCSprite spriteWithFile:@"section1.png"];
+        ship1.scale = 0.15;
+        //        [self initSect1Ships];
     }
     
     if (shipColor == 2) {
-                ship1 = [CCSprite spriteWithFile:@"section2.png"];
-                ship1.scale = 0.15;
-//        [self initSect2Ships];
+        ship1 = [CCSprite spriteWithFile:@"section2.png"];
+        ship1.scale = 0.15;
+        //        [self initSect2Ships];
     }
     
     if (shipColor == 3) {
-                ship1 = [CCSprite spriteWithFile:@"section3.png"];
-                ship1.scale = 0.15;
-//        [self initSect3Ships];
+        ship1 = [CCSprite spriteWithFile:@"section3.png"];
+        ship1.scale = 0.15;
+        //        [self initSect3Ships];
     }
     
-        [self createShipCoord:ship1]; // create coordinate for ship to spawn to
-        [self moveShip:ship1];
+    [self createShipCoord:ship1]; // create coordinate for ship to spawn to
+    [self moveShip:ship1];
 }
 
 
@@ -405,6 +390,14 @@ float radii;
     int toNumber = 600;
     shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
     shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    if (shipRandX < 320) {
+        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    }
+    
+    if (shipRandY < 480) {
+        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    }
+    
     shipForCoord.position = ccp(shipRandX, shipRandY);
     [self addChild:shipForCoord z:7];
 }
@@ -422,20 +415,48 @@ float radii;
 
 -(void) divideAngularSections
 {
-    section1StartAngle = (player.rotation * (-1)) + 90; //120 + player.rotation;
-    section1EndAngle = (player.rotation * (-1)) - 30;
-    section2StartAngle = section1EndAngle;
-    section2EndAngle = section1EndAngle - 120;
+    float normalizedStart1Ang = player.rotation;
+    if (normalizedStart1Ang > 360.0f) {
+        normalizedStart1Ang-=360;
+    }
+    
+    float normalizedEnd1Ang = player.rotation + 120;
+    if (normalizedEnd1Ang > 360.0f) {
+        normalizedEnd1Ang-=360;
+    }
+    
+    section1StartAngle = normalizedStart1Ang; //120 + player.rotation;
+    section1EndAngle = normalizedEnd1Ang;
+    section2StartAngle = normalizedEnd1Ang;
+    float normalizedEnd2Ang = normalizedEnd1Ang + 120;
+    if (normalizedEnd2Ang > 360.0f) {
+        normalizedEnd2Ang-=360;
+    }
+    section2EndAngle = normalizedEnd2Ang;
     section3StartAngle = section2EndAngle; // the line below's problem applies to this line
     section3EndAngle = section1StartAngle; // right now does not work for some reason
+//    [self normalizeAngle:section1StartAngle];
+//    [self normalizeAngle:section1EndAngle];
+//    [self normalizeAngle:section2StartAngle];
+//    [self normalizeAngle:section2EndAngle];
+//    [self normalizeAngle:section3StartAngle];
+//    [self normalizeAngle:section3EndAngle];
     
-    //NSLog(@"%f", player.rotation);
-    /*   NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+    
+//    NSLog(@"%f", player.rotation);
+ /*    NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
      NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
      NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
      NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
      NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
      NSLog(@"Section 3 EndAngle: %f", section3EndAngle); */
+}
+
+-(void) normalizeAngle:(float) angleInput
+{
+    while (angleInput > 360) {
+        angleInput = angleInput - 360;
+    }
 }
 
 -(void) handleUserInput
@@ -445,28 +466,96 @@ float radii;
     {
         [self divideAngularSections];
         CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-        player.rotation = ((pos.x/360)*360) * (-1);
+//        player.rotation = ((pos.x/360)*360) * (-1);
+        float distX = pos.x - screenCenter.x;
+        float distY = pos.y - screenCenter.y;
+        float touchDistance = sqrtf((distX * distX) + (distY * distY));
+        
+        //            [self circleCollisionWithSprite:c];
+        float ratio = distY/touchDistance; // ratio of distance in terms of Y to distance from player
+        float shipAngleRadians = asin(ratio); // arcsin of ratio
+        float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
+//        float rotation = antiShipAngle; // shipAngle
+        CGPoint pos1 = [player position];
+        CGPoint pos2 = pos;
+        
+        float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
+        
+        float rotation;
+        
+        if(pos1.y - pos2.y > 0)
+        {
+            if(pos1.x - pos2.x < 0)
+            {
+                rotation = (-90-theta);
+            }
+            else if(pos1.x - pos2.x > 0)
+            {
+                rotation = (90-theta);
+            }
+        }
+        else if(pos1.y - pos2.y < 0)
+        {
+            if(pos1.x - pos2.x < 0)
+            {
+                rotation = (270-theta);
+            }
+            else if(pos1.x - pos2.x > 0)
+            {
+                rotation = (90-theta);
+            }
+        }
+        
+        if (rotation < 0)
+        {
+            rotation+=360;
+        }
+        
+//        [player runAction:[CCRotateTo actionWithDuration:0.1f angle:rotation]];
+        
+        
+//        NSLog(@"Rotation: %f", rotation);
+        player.rotation = rotation;
+//        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
     }
 }
 
+-(void) initChallenges
+{
+    // challenge 1
+    if (playerScore > 9) {
+        shipSpeed = 0.8f;
+    }
+    
+    if (playerScore > 11) {
+        shipSpeed = 1.1f;
+    }
+}
 
 -(void)update:(ccTime)dt // update method
 {
     framesPassed++;
     secondsPassed = framesPassed/60; // divide by framerate;
-   // if ((framesPassed % 100) == 0) {
-        //        NSLog(@"New Ship Generated!");
+    // if ((framesPassed % 100) == 0) {
+    //        NSLog(@"New Ship Generated!");
     //    [self initShips];
     //} else {
-        // do nothing
-   // }
+    // do nothing
+    // }
     [self circleCollisionWithSprite:player andThis:ship1];
-//    [self circleCollisionWith:section2Ships];
-//    [self circleCollisionWith:section3Ships];
+    //    [self circleCollisionWith:section2Ships];
+    //    [self circleCollisionWith:section3Ships];
     [self handleUserInput];
     [self divideAngularSections];
+//    [self normalizeAngle:section1StartAngle];
+//    [self normalizeAngle:section1EndAngle];
+//    [self normalizeAngle:section2StartAngle];
+//    [self normalizeAngle:section2EndAngle];
+//    [self normalizeAngle:section3StartAngle];
+//    [self normalizeAngle:section3EndAngle];
     [self updateScore];
+//    [self initChallenges];
 }
 
 @end

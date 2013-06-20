@@ -70,5 +70,8 @@
 -(void) initSect3Ships;
 -(void) updateScore;
 -(void)update:(ccTime)dt;
+-(void) normalizeAngle:(float) angleInput;
+-(void) initChallenges;
+-(void) gameOver;
 
 @end

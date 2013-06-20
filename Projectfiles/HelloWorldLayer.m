@@ -10,7 +10,7 @@
  CURRENT BUGS:
  - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION
  - NOT ALL 360 DEGREES OF WORK WHEN DIVIDING THE PLAYER INTO 3 SECTIONS
-- SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION
+ - SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION
  - COLLISION DETECTION needs to be more accurate
  
  */
@@ -25,6 +25,10 @@
 
 float distance;
 float radii;
+int numCollisions;
+
+CCLabelBMFont *warningLabel;
+bool warning = false;
 
 -(id) init
 {
@@ -91,6 +95,12 @@ float radii;
         liveLabel.color = ccc3(0,0,0);
         //        [self addChild:liveLabel z:100];
         
+        // warning label
+        warningLabel = [CCLabelTTF labelWithString:@"STATUS CRITICAL" fontName:@"Courier" fontSize:25];
+        warningLabel.position = ccp(size.width/2, 435);
+        warningLabel.color = ccc3(255,0,0);
+        [self addChild:warningLabel z:100];
+        
         
         ship1 = [[CCSprite alloc] init];
         ship1 = [CCSprite spriteWithFile:@"section1.png"];
@@ -137,7 +147,7 @@ float radii;
     float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
     float shipAngleRadians = asin(ratio); // arcsin of ratio
     float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
-//    float shipAngle; // shipAngle
+    //    float shipAngle; // shipAngle
     
     CGPoint pos1 = [circle1 position];
     CGPoint pos2 = [circle2 position];
@@ -175,31 +185,38 @@ float radii;
     }
     
     
-//    if (antiShipAngle < 0.0f) {
-//        shipAngle = (-360 + (antiShipAngle));
-//    } else {
-//        shipAngle = antiShipAngle;
-//    }
+    //    if (antiShipAngle < 0.0f) {
+    //        shipAngle = (-360 + (antiShipAngle));
+    //    } else {
+    //        shipAngle = antiShipAngle;
+    //    }
     
     
     if (distance <= radii) { // did the two circles collide at all??
-        if (shipAngle < -360.0f) {
+        //        if (shipAngle < -360.0f) {
+        //            [self removeChild:circle2 cleanup:YES];
+        //            [self initShips];
+        //        } else {
+        
+        [self divideAngularSections];
+        numCollisions++;
+        NSLog(@"%f", shipAngle);
+        //            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+        //            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+        //            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+        //            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+        //            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+        //            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+        [self scoreCheck:shipAngle withColor:shipColor];
+        if ((numCollisions - playerScore) > playerLives) {
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
+            warning = true;
         } else {
-            
-            [self divideAngularSections];
-            NSLog(@"%f", shipAngle);
-            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
-            [self scoreCheck:shipAngle withColor:shipColor];
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
         }
+        //        }
     }
 }
 
@@ -207,7 +224,7 @@ float radii;
 {
     if (shipColor == 1)
     {
-        if (section1StartAngle > section1EndAngle) {
+//        if (section1StartAngle > section1EndAngle) {
             [self divideAngularSections];
             if (angle < section1StartAngle && angle > section1EndAngle) {
                 playerScore = playerScore + 1;
@@ -215,20 +232,20 @@ float radii;
                 // carry on with checking for collisions
                 [self divideAngularSections];
             }
-        }
-        if (section1StartAngle < section1EndAngle) {
-            [self divideAngularSections];
-            if (angle > section1StartAngle && angle < section1EndAngle) {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-        }
+//        }
+//        if (section1StartAngle < section1EndAngle) {
+//            [self divideAngularSections];
+//            if (angle > section1StartAngle && angle < section1EndAngle) {
+//                playerScore = playerScore + 1;
+//            } else {
+//                // carry on with checking for collisions
+//                [self divideAngularSections];
+//            }
+//        }
     }
     else if (shipColor == 2)
     {
-        if (section2StartAngle > section2EndAngle) {
+//        if (section2StartAngle > section2EndAngle) {
             [self divideAngularSections];
             if (angle < section2StartAngle && angle > section2EndAngle) {
                 playerScore = playerScore + 1;
@@ -236,21 +253,21 @@ float radii;
                 // carry on with checking for collisions
                 [self divideAngularSections];
             }
-        }
-        if (section2StartAngle < section2EndAngle) {
-            [self divideAngularSections];
-            if (angle > section2StartAngle && angle < section2EndAngle) {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-        }
+//        }
+//        if (section2StartAngle < section2EndAngle) {
+//            [self divideAngularSections];
+//            if (angle > section2StartAngle && angle < section2EndAngle) {
+//                playerScore = playerScore + 1;
+//            } else {
+//                // carry on with checking for collisions
+//                [self divideAngularSections];
+//            }
+//        }
         
     }
     else if (shipColor == 3)
     {
-        if (section3StartAngle > section3EndAngle) {
+//        if (section3StartAngle > section3EndAngle) {
             [self divideAngularSections];
             if (angle < section3StartAngle && angle > section3EndAngle) {
                 playerScore = playerScore + 1;
@@ -258,16 +275,16 @@ float radii;
                 // carry on with checking for collisions
                 [self divideAngularSections];
             }
-        }
-        if (section3StartAngle < section3EndAngle) {
-            [self divideAngularSections];
-            if (angle > section3StartAngle && angle < section3EndAngle) {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-        }
+//        }
+//        if (section3StartAngle < section3EndAngle) {
+//            [self divideAngularSections];
+//            if (angle > section3StartAngle && angle < section3EndAngle) {
+//                playerScore = playerScore + 1;
+//            } else {
+//                // carry on with checking for collisions
+//                [self divideAngularSections];
+//            }
+//        }
         
     }
 }
@@ -411,6 +428,14 @@ float radii;
     [scoreLabel setString:score];
     lives = [[NSString alloc] initWithFormat:@"Lives: %i",playerLives];
     [liveLabel setString:lives];
+    
+    if (warning == true) {
+        warningLabel.visible = true;
+//        [warningLabel runAction:[CCFadeIn actionWithDuration:0.5]];
+    } else {
+//        [warningLabel runAction:[CCFadeOut actionWithDuration:0.5f]];
+        warningLabel.visible = false;
+    }
 }
 
 -(void) divideAngularSections
@@ -435,16 +460,16 @@ float radii;
     section2EndAngle = normalizedEnd2Ang;
     section3StartAngle = section2EndAngle; // the line below's problem applies to this line
     section3EndAngle = section1StartAngle; // right now does not work for some reason
-//    [self normalizeAngle:section1StartAngle];
-//    [self normalizeAngle:section1EndAngle];
-//    [self normalizeAngle:section2StartAngle];
-//    [self normalizeAngle:section2EndAngle];
-//    [self normalizeAngle:section3StartAngle];
-//    [self normalizeAngle:section3EndAngle];
+    //    [self normalizeAngle:section1StartAngle];
+    //    [self normalizeAngle:section1EndAngle];
+    //    [self normalizeAngle:section2StartAngle];
+    //    [self normalizeAngle:section2EndAngle];
+    //    [self normalizeAngle:section3StartAngle];
+    //    [self normalizeAngle:section3EndAngle];
     
     
-//    NSLog(@"%f", player.rotation);
- /*    NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+    //    NSLog(@"%f", player.rotation);
+    /*    NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
      NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
      NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
      NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
@@ -466,7 +491,7 @@ float radii;
     {
         [self divideAngularSections];
         CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-//        player.rotation = ((pos.x/360)*360) * (-1);
+        //        player.rotation = ((pos.x/360)*360) * (-1);
         float distX = pos.x - screenCenter.x;
         float distY = pos.y - screenCenter.y;
         float touchDistance = sqrtf((distX * distX) + (distY * distY));
@@ -475,7 +500,7 @@ float radii;
         float ratio = distY/touchDistance; // ratio of distance in terms of Y to distance from player
         float shipAngleRadians = asin(ratio); // arcsin of ratio
         float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
-//        float rotation = antiShipAngle; // shipAngle
+        //        float rotation = antiShipAngle; // shipAngle
         CGPoint pos1 = [player position];
         CGPoint pos2 = pos;
         
@@ -511,12 +536,12 @@ float radii;
             rotation+=360;
         }
         
-//        [player runAction:[CCRotateTo actionWithDuration:0.1f angle:rotation]];
+        //        [player runAction:[CCRotateTo actionWithDuration:0.1f angle:rotation]];
         
         
-//        NSLog(@"Rotation: %f", rotation);
+        //        NSLog(@"Rotation: %f", rotation);
         player.rotation = rotation;
-//        NSLog(@"%f", player.rotation);
+        //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
     }
 }
@@ -531,6 +556,11 @@ float radii;
     if (playerScore > 11) {
         shipSpeed = 1.1f;
     }
+}
+
+-(void) gameOver
+{
+    NSLog(@"Game Over!");
 }
 
 -(void)update:(ccTime)dt // update method
@@ -548,14 +578,14 @@ float radii;
     //    [self circleCollisionWith:section3Ships];
     [self handleUserInput];
     [self divideAngularSections];
-//    [self normalizeAngle:section1StartAngle];
-//    [self normalizeAngle:section1EndAngle];
-//    [self normalizeAngle:section2StartAngle];
-//    [self normalizeAngle:section2EndAngle];
-//    [self normalizeAngle:section3StartAngle];
-//    [self normalizeAngle:section3EndAngle];
+    //    [self normalizeAngle:section1StartAngle];
+    //    [self normalizeAngle:section1EndAngle];
+    //    [self normalizeAngle:section2StartAngle];
+    //    [self normalizeAngle:section2EndAngle];
+    //    [self normalizeAngle:section3StartAngle];
+    //    [self normalizeAngle:section3EndAngle];
     [self updateScore];
-//    [self initChallenges];
+    //    [self initChallenges];
 }
 
 @end

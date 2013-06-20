@@ -7,10 +7,11 @@
 
 // NOT OPTIMIZED FOR 4-Inch RETINA SCREENS YET
 /*
+ 
  CURRENT BUGS:
- - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION
- - NOT ALL 360 DEGREES OF WORK WHEN DIVIDING THE PLAYER INTO 3 SECTIONS
- - SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION
+ - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION (TODO WITH NSMUTABLEARRAYS)
+ - NOT ALL 360 DEGREES OF WORK WHEN DIVIDING THE PLAYER INTO 3 SECTIONS (REALLY BAD)
+ - SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION (RELATED TO ABOVE BUG)
  */
 
 
@@ -27,6 +28,17 @@ int numCollisions;
 
 CCLabelBMFont *warningLabel;
 bool warning = false;
+
+NSMutableArray *powerUpType1;
+NSMutableArray *powerUpType2;
+NSMutableArray *powerUpType3;
+CCSprite *powerUp1;
+CCSprite *powerUp2;
+CCSprite *powerUp3;
+
+CCSprite *powerUpCreator1;
+CCSprite *powerUpCreator2;
+CCSprite *powerUpCreator3;
 
 -(id) init
 {
@@ -55,7 +67,7 @@ bool warning = false;
         [player addChild:progressBar1 z:1];
         progressBar1.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //        [progressBar1 setAnchorPoint:zero];
-        progressTo1 = [CCProgressTo actionWithDuration:2 percent:33.3f];
+        progressTo1 = [CCProgressTo actionWithDuration:2 percent:33.3333333f];
         
         section2 = [CCSprite spriteWithFile:@"section2.png"];
         progressBar2 = [CCProgressTimer progressWithSprite:section2];
@@ -64,7 +76,7 @@ bool warning = false;
         progressBar2.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //   [progressBar2 setAnchorPoint:zero];
         progressBar2.rotation = 120.0f;
-        progressTo2 = [CCProgressTo actionWithDuration:2 percent:33.3f];
+        progressTo2 = [CCProgressTo actionWithDuration:2 percent:33.3333333f];
         
         section3 = [CCSprite spriteWithFile:@"section3.png"];
         progressBar3 = [CCProgressTimer progressWithSprite:section3];
@@ -73,7 +85,7 @@ bool warning = false;
         progressBar3.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //   [progressBar2 setAnchorPoint:zero];
         progressBar3.rotation = 240.0f;
-        progressTo3 = [CCProgressTo actionWithDuration:2 percent:33.3f];
+        progressTo3 = [CCProgressTo actionWithDuration:2 percent:33.3333333f];
         
         [progressBar1 runAction:progressTo1];
         [progressBar2 runAction:progressTo2];
@@ -99,10 +111,33 @@ bool warning = false;
         warningLabel.color = ccc3(255,0,0);
         [self addChild:warningLabel z:100];
         
+        // initialize arrays
+        powerUpType1 = [[NSMutableArray alloc] init];
+        powerUpType2 = [[NSMutableArray alloc] init];
+        powerUpType3 = [[NSMutableArray alloc] init];
         
         ship1 = [[CCSprite alloc] init];
         ship1 = [CCSprite spriteWithFile:@"section1.png"];
         ship1.scale = 0.15f;
+        
+        powerUpCreator1 = [[CCSprite alloc] init];
+        powerUpCreator1 = [CCSprite spriteWithFile:@"section1.png"];
+        powerUpCreator1.scale = 0.2f;
+        powerUpCreator1.position = ccp(size.width/3, 20);
+        [self addChild:powerUpCreator1 z:5];
+        
+        powerUpCreator2 = [[CCSprite alloc] init];
+        powerUpCreator2 = [CCSprite spriteWithFile:@"section2.png"];
+        powerUpCreator2.scale = 0.2f;
+        powerUpCreator2.position = ccp(size.width/2, 20);
+        [self addChild:powerUpCreator2 z:5];
+        
+        powerUpCreator3 = [[CCSprite alloc] init];
+        powerUpCreator3 = [CCSprite spriteWithFile:@"section3.png"];
+        powerUpCreator3.scale = 0.2f;
+        powerUpCreator3.position = ccp(size.width/1.5, 20);
+        [self addChild:powerUpCreator3 z:5];
+        
         
         [self divideAngularSections];
         
@@ -122,8 +157,6 @@ bool warning = false;
     [scene addChild:layer];
     return scene;
 }
-
-
 
 // Collision DETECTION
 -(void) circleCollisionWithSprite:(CCSprite *)circle1 andThis:(CCSprite *) circle2
@@ -234,6 +267,17 @@ bool warning = false;
                 // carry on with checking for collisions
                 [self divideAngularSections];
             }
+        
+        if (section1StartAngle > section1EndAngle) {
+            [self divideAngularSections];
+            if (angle > section1StartAngle && angle < section1EndAngle) {
+                playerScore = playerScore + 1;
+            } else {
+                // carry on with checking for collisions
+                [self divideAngularSections];
+            }
+            
+        }
 //        }
 //        if (section1StartAngle < section1EndAngle) {
 //            [self divideAngularSections];
@@ -255,6 +299,17 @@ bool warning = false;
                 // carry on with checking for collisions
                 [self divideAngularSections];
             }
+        
+        if (section2StartAngle > section2EndAngle) {
+            [self divideAngularSections];
+            if (angle > section2StartAngle && angle < section2EndAngle) {
+                playerScore = playerScore + 1;
+            } else {
+                // carry on with checking for collisions
+                [self divideAngularSections];
+            }
+            
+        }
 //        }
 //        if (section2StartAngle < section2EndAngle) {
 //            [self divideAngularSections];
@@ -278,6 +333,17 @@ bool warning = false;
                 [self divideAngularSections];
             }
 //        }
+        
+        if (section3StartAngle > section3EndAngle) {
+            [self divideAngularSections];
+            if (angle > section3StartAngle && angle < section3EndAngle) {
+                playerScore = playerScore + 1;
+            } else {
+                // carry on with checking for collisions
+                [self divideAngularSections];
+            }
+
+        }
 //        if (section3StartAngle < section3EndAngle) {
 //            [self divideAngularSections];
 //            if (angle > section3StartAngle && angle < section3EndAngle) {
@@ -296,7 +362,38 @@ bool warning = false;
 
 
 
-// INITIALIZE SHIPS
+// INITIALIZE SHIPS AND POWERUPS
+-(void) addPowerup1
+{
+    powerUp1 = [[CCSprite alloc] init];
+    powerUp1 = [CCSprite spriteWithFile:@"section1.png"];
+    powerUp1.scale = 0.2f;
+    powerUp1.position = [powerUpCreator1 position];
+    [self addChild:powerUp1 z:20];
+    [powerUpType1 addObject:powerUp1];
+}
+
+-(void) addPowerup2
+{
+    powerUp2 = [[CCSprite alloc] init];
+    powerUp2 = [CCSprite spriteWithFile:@"section2.png"];
+    powerUp2.scale = 0.2f;
+    powerUp2.position = [powerUpCreator2 position];
+    [self addChild:powerUp2 z:20];
+    [powerUpType2 addObject:powerUp2];
+}
+
+-(void) addPowerup3
+{
+    powerUp3 = [[CCSprite alloc] init];
+    powerUp3 = [CCSprite spriteWithFile:@"section3.png"];
+    powerUp3.scale = 0.2f;
+    powerUp3.position = [powerUpCreator3 position];
+    [self addChild:powerUp3 z:20];
+    [powerUpType3 addObject:powerUp3];
+}
+
+
 -(void) pickColor
 {
     int color = (arc4random()%(3-1+1))+1;
@@ -545,6 +642,37 @@ bool warning = false;
         player.rotation = rotation;
         //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
+        
+        
+        //HANDLE POWERUP INPUT
+        if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
+            [self addPowerup1];
+        }
+        
+        if ([input isAnyTouchOnNode:powerUpCreator2 touchPhase:KKTouchPhaseAny]) {
+            [self addPowerup2];
+        }
+        
+        if ([input isAnyTouchOnNode:powerUpCreator3 touchPhase:KKTouchPhaseAny]) {
+            [self addPowerup3];
+        }
+        
+        if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
+            CGPoint powerUp1Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+            powerUp1.position = powerUp1Pos;
+        }
+        
+        if ([input isAnyTouchOnNode:powerUp2 touchPhase:KKTouchPhaseAny]) {
+            CGPoint powerUp2Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+            powerUp2.position = powerUp2Pos;
+        }
+        
+        if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
+            CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+            powerUp3.position = powerUp3Pos;
+        }
+        
+        
     }
 }
 

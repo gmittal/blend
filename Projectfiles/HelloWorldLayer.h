@@ -58,7 +58,7 @@
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color;
--(void) circleCollisionWith:(NSMutableArray *) circle2;
+-(void) circleCollisionWithSprite:(CCSprite *) circle1 andThis:(CCSprite *) circle2;
 -(void) createShipCoord:(CCSprite *)shipForCoord;
 -(void) moveShip:(CCSprite *) shipToMove;
 -(void) initShips;
@@ -73,5 +73,8 @@
 -(void) normalizeAngle:(float) angleInput;
 -(void) initChallenges;
 -(void) gameOver;
+-(void) addPowerup1;
+-(void) addPowerup2;
+-(void) addPowerup3;
 
 @end

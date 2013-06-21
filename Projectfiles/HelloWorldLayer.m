@@ -10,8 +10,7 @@
  
  CURRENT BUGS:
  - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION (TODO WITH NSMUTABLEARRAYS)
- - NOT ALL 360 DEGREES OF WORK WHEN DIVIDING THE PLAYER INTO 3 SECTIONS (REALLY BAD)
- - SOMETIMES FAILS TO GIVE POINTS WHEN SHIP LANDS IN CORRECT SECTION (RELATED TO ABOVE BUG)
+ - ADDING POWERUPS CAUSES THE FRAME RATE TO GO DOWN (TEMPORARILY DEPRECATED DUE TO THAT PROBLEM)
  */
 
 
@@ -67,7 +66,7 @@ CCSprite *powerUpCreator3;
         [player addChild:progressBar1 z:1];
         progressBar1.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //        [progressBar1 setAnchorPoint:zero];
-        progressTo1 = [CCProgressTo actionWithDuration:2 percent:33.3333333f];
+        progressTo1 = [CCProgressTo actionWithDuration:2 percent:33.333f];
         
         section2 = [CCSprite spriteWithFile:@"section2.png"];
         progressBar2 = [CCProgressTimer progressWithSprite:section2];
@@ -76,7 +75,7 @@ CCSprite *powerUpCreator3;
         progressBar2.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //   [progressBar2 setAnchorPoint:zero];
         progressBar2.rotation = 120.0f;
-        progressTo2 = [CCProgressTo actionWithDuration:2 percent:33.3333333f];
+        progressTo2 = [CCProgressTo actionWithDuration:2 percent:33.333f];
         
         section3 = [CCSprite spriteWithFile:@"section3.png"];
         progressBar3 = [CCProgressTimer progressWithSprite:section3];
@@ -85,7 +84,7 @@ CCSprite *powerUpCreator3;
         progressBar3.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //   [progressBar2 setAnchorPoint:zero];
         progressBar3.rotation = 240.0f;
-        progressTo3 = [CCProgressTo actionWithDuration:2 percent:33.3333333f];
+        progressTo3 = [CCProgressTo actionWithDuration:2 percent:33.333f];
         
         [progressBar1 runAction:progressTo1];
         [progressBar2 runAction:progressTo2];
@@ -124,19 +123,19 @@ CCSprite *powerUpCreator3;
         powerUpCreator1 = [CCSprite spriteWithFile:@"section1.png"];
         powerUpCreator1.scale = 0.2f;
         powerUpCreator1.position = ccp(size.width/3, 20);
-        [self addChild:powerUpCreator1 z:5];
+//        [self addChild:powerUpCreator1 z:5];
         
         powerUpCreator2 = [[CCSprite alloc] init];
         powerUpCreator2 = [CCSprite spriteWithFile:@"section2.png"];
         powerUpCreator2.scale = 0.2f;
         powerUpCreator2.position = ccp(size.width/2, 20);
-        [self addChild:powerUpCreator2 z:5];
+//        [self addChild:powerUpCreator2 z:5];
         
         powerUpCreator3 = [[CCSprite alloc] init];
         powerUpCreator3 = [CCSprite spriteWithFile:@"section3.png"];
         powerUpCreator3.scale = 0.2f;
         powerUpCreator3.position = ccp(size.width/1.5, 20);
-        [self addChild:powerUpCreator3 z:5];
+//        [self addChild:powerUpCreator3 z:5];
         
         
         [self divideAngularSections];
@@ -175,46 +174,6 @@ CCSprite *powerUpCreator3;
     distance = sqrtf((distX * distX) + (distY * distY));
     
     //            [self circleCollisionWithSprite:c];
-    float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
-    float shipAngleRadians = asin(ratio); // arcsin of ratio
-    float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
-    //    float shipAngle; // shipAngle
-    
-    CGPoint pos1 = [circle1 position];
-    CGPoint pos2 = [circle2 position];
-    
-    float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
-    
-    float shipAngle;
-    
-    if(pos1.y - pos2.y > 0)
-    {
-        if(pos1.x - pos2.x < 0)
-        {
-            shipAngle = (-90-theta);
-        }
-        else if(pos1.x - pos2.x > 0)
-        {
-            shipAngle = (90-theta);
-        }
-    }
-    else if(pos1.y - pos2.y < 0)
-    {
-        if(pos1.x - pos2.x < 0)
-        {
-            shipAngle = (270-theta);
-        }
-        else if(pos1.x - pos2.x > 0)
-        {
-            shipAngle = (90-theta);
-        }
-    }
-    
-    if (shipAngle < 0)
-    {
-        shipAngle+=360;
-    }
-    
     
     //    if (antiShipAngle < 0.0f) {
     //        shipAngle = (-360 + (antiShipAngle));
@@ -228,16 +187,62 @@ CCSprite *powerUpCreator3;
         //            [self removeChild:circle2 cleanup:YES];
         //            [self initShips];
         //        } else {
+    
+        
+        float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
+        float shipAngleRadians = asin(ratio); // arcsin of ratio
+        float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
+        //    float shipAngle; // shipAngle
+        
+        CGPoint pos1 = [circle2 position];
+        CGPoint pos2 = [player position];
+        
+        float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
+        
+        float shipAngle;
+        
+        if(pos1.y - pos2.y > 0)
+        {
+            if(pos1.x - pos2.x < 0)
+            {
+                shipAngle = (-90-theta);
+            }
+            else if(pos1.x - pos2.x > 0)
+            {
+                shipAngle = (90-theta);
+            }
+        }
+        else if(pos1.y - pos2.y < 0)
+        {
+            if(pos1.x - pos2.x < 0)
+            {
+                shipAngle = (270-theta);
+            }
+            else if(pos1.x - pos2.x > 0)
+            {
+                shipAngle = (90-theta);
+            }
+        }
+        
+        if (shipAngle < 0)
+        {
+            shipAngle+=360;
+        }
+        
+        
+        
+        
+        
         
         [self divideAngularSections];
         numCollisions++;
         NSLog(@"%f", shipAngle);
-        //            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-        //            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-        //            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-        //            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-        //            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-        //            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+                    NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+                    NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+                    NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+                    NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+                    NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+                    NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
         [self scoreCheck:shipAngle withColor:shipColor];
         if ((numCollisions - playerScore) > playerLives - 1) {
             [self removeChild:circle2 cleanup:YES];
@@ -261,7 +266,7 @@ CCSprite *powerUpCreator3;
     {
 //        if (section1StartAngle > section1EndAngle) {
             [self divideAngularSections];
-            if (angle < section1StartAngle && angle > section1EndAngle) {
+            if (angle > section1StartAngle && angle < section1EndAngle) {
                 playerScore = playerScore + 1;
             } else {
                 // carry on with checking for collisions
@@ -270,14 +275,30 @@ CCSprite *powerUpCreator3;
         
         if (section1StartAngle > section1EndAngle) {
             [self divideAngularSections];
-            if (angle > section1StartAngle && angle < section1EndAngle) {
+            if (angle < 119 && angle < section1EndAngle)
+            {
                 playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
             }
             
+            if (angle > 241 && angle > section1StartAngle)
+            {
+                playerScore = playerScore + 1;
+            }
         }
+        
+        
+//            if (angle < section1StartAngle && angle > section1EndAngle) {
+//                playerScore = playerScore + 1;
+//            } else {
+//                // carry on with checking for collisions
+//                [self divideAngularSections];
+//            }
+    
+//        }
+    
+        
+        
+        
 //        }
 //        if (section1StartAngle < section1EndAngle) {
 //            [self divideAngularSections];
@@ -288,28 +309,43 @@ CCSprite *powerUpCreator3;
 //                [self divideAngularSections];
 //            }
 //        }
-    }
+        
+}
     else if (shipColor == 2)
     {
-//        if (section2StartAngle > section2EndAngle) {
             [self divideAngularSections];
-            if (angle < section2StartAngle && angle > section2EndAngle) {
+            if (angle > section2StartAngle && angle < section2EndAngle)
+            {
                 playerScore = playerScore + 1;
             } else {
                 // carry on with checking for collisions
                 [self divideAngularSections];
             }
         
-        if (section2StartAngle > section2EndAngle) {
+        if (section2StartAngle > section2EndAngle)
+        {
             [self divideAngularSections];
-            if (angle > section2StartAngle && angle < section2EndAngle) {
+            if (angle < 119 && angle < section2EndAngle)
+            {
                 playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
             }
             
+            if (angle > 241 && angle > section2StartAngle)
+            {
+                playerScore = playerScore + 1;
+            }
         }
+        
+            
+//            if (angle < section2StartAngle && angle > section2EndAngle) {
+//                playerScore = playerScore + 1;
+//            } else {
+//                // carry on with checking for collisions
+//                [self divideAngularSections];
+//            }            
+    
+        
+        
 //        }
 //        if (section2StartAngle < section2EndAngle) {
 //            [self divideAngularSections];
@@ -321,29 +357,41 @@ CCSprite *powerUpCreator3;
 //            }
 //        }
         
-    }
-    else if (shipColor == 3)
+    } else if (shipColor == 3) {
+    [self divideAngularSections];
+    
+    if (angle > section3StartAngle && angle < section3EndAngle)
     {
-//        if (section3StartAngle > section3EndAngle) {
-            [self divideAngularSections];
-            if (angle < section3StartAngle && angle > section3EndAngle) {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-//        }
-        
-        if (section3StartAngle > section3EndAngle) {
-            [self divideAngularSections];
-            if (angle > section3StartAngle && angle < section3EndAngle) {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-
+        playerScore = playerScore + 1;
+    } else
+    {
+        // carry on with checking for collisions
+        [self divideAngularSections];
+    }
+    
+    if (section3StartAngle > section3EndAngle)
+    {
+        [self divideAngularSections];
+        if (angle < 119 && angle < section3EndAngle)
+        {
+            playerScore = playerScore + 1;
         }
+        
+        if (angle > 241 && angle > section3StartAngle)
+        {
+            playerScore = playerScore + 1;
+        }
+    }
+    
+    //            if (angle < section3StartAngle && angle > section3EndAngle) {
+    //                playerScore = playerScore + 1;
+    //            } else {
+    //                // carry on with checking for collisions
+    //                [self divideAngularSections];
+    //            }
+
+
+
 //        if (section3StartAngle < section3EndAngle) {
 //            [self divideAngularSections];
 //            if (angle > section3StartAngle && angle < section3EndAngle) {
@@ -353,12 +401,9 @@ CCSprite *powerUpCreator3;
 //                [self divideAngularSections];
 //            }
 //        }
-        
-    }
+
 }
-
-
-
+}
 
 
 
@@ -368,7 +413,7 @@ CCSprite *powerUpCreator3;
     powerUp1 = [[CCSprite alloc] init];
     powerUp1 = [CCSprite spriteWithFile:@"section1.png"];
     powerUp1.scale = 0.2f;
-    powerUp1.position = [powerUpCreator1 position];
+    powerUp1.position = ccp(powerUpCreator1.position.x, powerUpCreator1.position.y + 30);
     [self addChild:powerUp1 z:20];
     [powerUpType1 addObject:powerUp1];
 }
@@ -378,7 +423,7 @@ CCSprite *powerUpCreator3;
     powerUp2 = [[CCSprite alloc] init];
     powerUp2 = [CCSprite spriteWithFile:@"section2.png"];
     powerUp2.scale = 0.2f;
-    powerUp2.position = [powerUpCreator2 position];
+    powerUp2.position = ccp(powerUpCreator2.position.x, powerUpCreator2.position.y + 30);
     [self addChild:powerUp2 z:20];
     [powerUpType2 addObject:powerUp2];
 }
@@ -388,7 +433,7 @@ CCSprite *powerUpCreator3;
     powerUp3 = [[CCSprite alloc] init];
     powerUp3 = [CCSprite spriteWithFile:@"section3.png"];
     powerUp3.scale = 0.2f;
-    powerUp3.position = [powerUpCreator3 position];
+    powerUp3.position = ccp(powerUpCreator3.position.x, powerUpCreator3.position.y + 30);
     [self addChild:powerUp3 z:20];
     [powerUpType3 addObject:powerUp3];
 }
@@ -543,21 +588,23 @@ CCSprite *powerUpCreator3;
     if (normalizedStart1Ang > 360.0f) {
         normalizedStart1Ang-=360;
     }
-    
+
     float normalizedEnd1Ang = player.rotation + 120;
     if (normalizedEnd1Ang > 360.0f) {
         normalizedEnd1Ang-=360;
     }
-    
+
     section1StartAngle = normalizedStart1Ang; //120 + player.rotation;
     section1EndAngle = normalizedEnd1Ang;
     section2StartAngle = normalizedEnd1Ang;
+    
     float normalizedEnd2Ang = normalizedEnd1Ang + 120;
     if (normalizedEnd2Ang > 360.0f) {
         normalizedEnd2Ang-=360;
     }
+    
     section2EndAngle = normalizedEnd2Ang;
-    section3StartAngle = normalizedEnd1Ang; // the line below's problem applies to this line
+    section3StartAngle = normalizedEnd2Ang; // the line below's problem applies to this line
     section3EndAngle = normalizedStart1Ang; // right now does not work for some reason
     //    [self normalizeAngle:section1StartAngle];
     //    [self normalizeAngle:section1EndAngle];
@@ -567,13 +614,13 @@ CCSprite *powerUpCreator3;
     //    [self normalizeAngle:section3EndAngle];
     
     
-    //    NSLog(@"%f", player.rotation);
-    /*    NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-     NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-     NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-     NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-     NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-     NSLog(@"Section 3 EndAngle: %f", section3EndAngle); */
+//       NSLog(@"%f", player.rotation);
+//     NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+//     NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+//     NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+//     NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+//     NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+//     NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
 }
 
 -(void) normalizeAngle:(float) angleInput
@@ -645,7 +692,7 @@ CCSprite *powerUpCreator3;
         
         
         //HANDLE POWERUP INPUT
-        if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
+    /*    if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
             [self addPowerup1];
         }
         
@@ -670,7 +717,7 @@ CCSprite *powerUpCreator3;
         if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
             CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
             powerUp3.position = powerUp3Pos;
-        }
+        } */
         
         
     }

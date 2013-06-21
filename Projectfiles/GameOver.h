@@ -7,6 +7,8 @@
 //
 
 #import "CCScene.h"
+#import "GameOver.h"
+#import "HelloWorldLayer.h"
 
 @interface GameOver : CCScene
 

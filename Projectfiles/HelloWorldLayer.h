@@ -6,6 +6,7 @@
  */
 
 #import "kobold2d.h"
+#import "GameOver.h"
 
 @interface HelloWorldLayer : CCLayer
 {
@@ -55,6 +56,10 @@
     
     int framesPassed;
     float secondsPassed;
+    
+    CCAction *explode;
+    NSMutableArray *explodingFrames;
+    CCAnimation *explosion;
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color;

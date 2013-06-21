@@ -11,6 +11,7 @@
  CURRENT BUGS:
  - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION (TODO WITH NSMUTABLEARRAYS)
  - ADDING POWERUPS CAUSES THE FRAME RATE TO GO DOWN (TEMPORARILY DEPRECATED DUE TO THAT PROBLEM)
+ - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS
  */
 
 
@@ -35,7 +36,7 @@ CCSprite *powerUp1;
 CCSprite *powerUp2;
 CCSprite *powerUp3;
 
-CCSprite *powerUpCreator1; 
+CCSprite *powerUpCreator1;
 CCSprite *powerUpCreator2;
 CCSprite *powerUpCreator3;
 
@@ -50,12 +51,12 @@ bool gameOver = false;
         director = [CCDirector sharedDirector];
         size = [[CCDirector sharedDirector] winSize];
         screenCenter = CGPointMake(size.width/2, size.height/2);
-    /*    shipSpeed = 5.0f; // default speed
-        playerScore = 0;
-        playerLives = 5;
-        framesPassed = 0;
-        secondsPassed = 0;
-        numCollisions = 0; */
+        /*    shipSpeed = 5.0f; // default speed
+         playerScore = 0;
+         playerLives = 5;
+         framesPassed = 0;
+         secondsPassed = 0;
+         numCollisions = 0; */
         [self resetVariables]; // does pretty much everything the previous 6 lines do.
         
         
@@ -98,7 +99,7 @@ bool gameOver = false;
         player.position = ccp(size.width/2, size.height/2);
         playerWidth = [player boundingBox].size.width; // get player width
         [self addChild:player z:1];
-//        [player runAction:explode];
+        //        [player runAction:explode];
         
         section1 = [CCSprite spriteWithFile:@"section1.png"];
         progressBar1 = [CCProgressTimer progressWithSprite:section1];
@@ -163,19 +164,19 @@ bool gameOver = false;
         powerUpCreator1 = [CCSprite spriteWithFile:@"section1.png"];
         powerUpCreator1.scale = 0.2f;
         powerUpCreator1.position = ccp(size.width/3, 20);
-//        [self addChild:powerUpCreator1 z:5];
+        //        [self addChild:powerUpCreator1 z:5];
         
         powerUpCreator2 = [[CCSprite alloc] init];
         powerUpCreator2 = [CCSprite spriteWithFile:@"section2.png"];
         powerUpCreator2.scale = 0.2f;
         powerUpCreator2.position = ccp(size.width/2, 20);
-//        [self addChild:powerUpCreator2 z:5];
+        //        [self addChild:powerUpCreator2 z:5];
         
         powerUpCreator3 = [[CCSprite alloc] init];
         powerUpCreator3 = [CCSprite spriteWithFile:@"section3.png"];
         powerUpCreator3.scale = 0.2f;
         powerUpCreator3.position = ccp(size.width/1.5, 20);
-//        [self addChild:powerUpCreator3 z:5];
+        //        [self addChild:powerUpCreator3 z:5];
         
         
         [self divideAngularSections];
@@ -227,7 +228,7 @@ bool gameOver = false;
         //            [self removeChild:circle2 cleanup:YES];
         //            [self initShips];
         //        } else {
-    
+        
         
         float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
         float shipAngleRadians = asin(ratio); // arcsin of ratio
@@ -277,27 +278,38 @@ bool gameOver = false;
         [self divideAngularSections];
         numCollisions++;
         NSLog(@"%f", shipAngle);
-                    NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-                    NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-                    NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-                    NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-                    NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-                    NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
         [self scoreCheck:shipAngle withColor:shipColor];
-        if ((numCollisions - playerScore) > playerLives - 2) {
+        
+        if (playerLives == 0) {
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
-//            warning = true;
+            //            warning = true;
             [self gameOver];
-        } else if ((numCollisions - playerScore) > playerLives - 1) {
-            [self removeChild:circle2 cleanup:YES];
-            warning = false;
-            [self gameOver]; // GAME OVER
         } else {
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
         }
-        //        }
+        
+        /* if ((numCollisions - playerScore) > playerLives - 2) {
+         [self removeChild:circle2 cleanup:YES];
+         [self initShips];
+         //            warning = true;
+         [self gameOver];
+         } else if ((numCollisions - playerScore) > playerLives - 1) {
+         [self removeChild:circle2 cleanup:YES];
+         warning = false;
+         [self gameOver]; // GAME OVER
+         } else {
+         [self removeChild:circle2 cleanup:YES];
+         [self initShips];
+         }
+         //        } */
     }
 }
 
@@ -305,16 +317,11 @@ bool gameOver = false;
 {
     if (shipColor == 1)
     {
-//        if (section1StartAngle > section1EndAngle) {
-            [self divideAngularSections];
-            if (angle > section1StartAngle && angle < section1EndAngle) {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-        
-        if (section1StartAngle > section1EndAngle) {
+        //        if (section1StartAngle > section1EndAngle) {
+        [self divideAngularSections];
+        if (angle > section1StartAngle && angle < section1EndAngle) {
+            playerScore = playerScore + 1;
+        } else if (section1StartAngle > section1EndAngle) {
             [self divideAngularSections];
             if (angle < 119 && angle < section1EndAngle)
             {
@@ -325,45 +332,44 @@ bool gameOver = false;
             {
                 playerScore = playerScore + 1;
             }
+        } else {
+            playerLives--;
+            [self divideAngularSections];
+            
         }
         
         
-//            if (angle < section1StartAngle && angle > section1EndAngle) {
-//                playerScore = playerScore + 1;
-//            } else {
-//                // carry on with checking for collisions
-//                [self divideAngularSections];
-//            }
-    
-//        }
-    
+        //            if (angle < section1StartAngle && angle > section1EndAngle) {
+        //                playerScore = playerScore + 1;
+        //            } else {
+        //                // carry on with checking for collisions
+        //                [self divideAngularSections];
+        //            }
+        
+        //        }
         
         
         
-//        }
-//        if (section1StartAngle < section1EndAngle) {
-//            [self divideAngularSections];
-//            if (angle > section1StartAngle && angle < section1EndAngle) {
-//                playerScore = playerScore + 1;
-//            } else {
-//                // carry on with checking for collisions
-//                [self divideAngularSections];
-//            }
-//        }
         
-}
+        //        }
+        //        if (section1StartAngle < section1EndAngle) {
+        //            [self divideAngularSections];
+        //            if (angle > section1StartAngle && angle < section1EndAngle) {
+        //                playerScore = playerScore + 1;
+        //            } else {
+        //                // carry on with checking for collisions
+        //                [self divideAngularSections];
+        //            }
+        //        }
+        
+    }
     else if (shipColor == 2)
     {
-            [self divideAngularSections];
-            if (angle > section2StartAngle && angle < section2EndAngle)
-            {
-                playerScore = playerScore + 1;
-            } else {
-                // carry on with checking for collisions
-                [self divideAngularSections];
-            }
-        
-        if (section2StartAngle > section2EndAngle)
+        [self divideAngularSections];
+        if (angle > section2StartAngle && angle < section2EndAngle)
+        {
+            playerScore = playerScore + 1;
+        } else if (section2StartAngle > section2EndAngle)
         {
             [self divideAngularSections];
             if (angle < 119 && angle < section2EndAngle)
@@ -375,75 +381,75 @@ bool gameOver = false;
             {
                 playerScore = playerScore + 1;
             }
+        } else {
+            playerLives--;
+            [self divideAngularSections];
         }
         
-            
-//            if (angle < section2StartAngle && angle > section2EndAngle) {
-//                playerScore = playerScore + 1;
-//            } else {
-//                // carry on with checking for collisions
-//                [self divideAngularSections];
-//            }            
-    
+        
+        //            if (angle < section2StartAngle && angle > section2EndAngle) {
+        //                playerScore = playerScore + 1;
+        //            } else {
+        //                // carry on with checking for collisions
+        //                [self divideAngularSections];
+        //            }
         
         
-//        }
-//        if (section2StartAngle < section2EndAngle) {
-//            [self divideAngularSections];
-//            if (angle > section2StartAngle && angle < section2EndAngle) {
-//                playerScore = playerScore + 1;
-//            } else {
-//                // carry on with checking for collisions
-//                [self divideAngularSections];
-//            }
-//        }
+        
+        //        }
+        //        if (section2StartAngle < section2EndAngle) {
+        //            [self divideAngularSections];
+        //            if (angle > section2StartAngle && angle < section2EndAngle) {
+        //                playerScore = playerScore + 1;
+        //            } else {
+        //                // carry on with checking for collisions
+        //                [self divideAngularSections];
+        //            }
+        //        }
         
     } else if (shipColor == 3) {
-    [self divideAngularSections];
-    
-    if (angle > section3StartAngle && angle < section3EndAngle)
-    {
-        playerScore = playerScore + 1;
-    } else
-    {
-        // carry on with checking for collisions
         [self divideAngularSections];
-    }
-    
-    if (section3StartAngle > section3EndAngle)
-    {
-        [self divideAngularSections];
-        if (angle < 119 && angle < section3EndAngle)
+        
+        if (angle > section3StartAngle && angle < section3EndAngle)
         {
             playerScore = playerScore + 1;
+        } else if (section3StartAngle > section3EndAngle)
+        {
+            [self divideAngularSections];
+            if (angle < 119 && angle < section3EndAngle)
+            {
+                playerScore = playerScore + 1;
+            }
+            
+            if (angle > 241 && angle > section3StartAngle)
+            {
+                playerScore = playerScore + 1;
+            }
+        } else {
+            playerLives--;
+            [self divideAngularSections];
         }
         
-        if (angle > 241 && angle > section3StartAngle)
-        {
-            playerScore = playerScore + 1;
-        }
+        //            if (angle < section3StartAngle && angle > section3EndAngle) {
+        //                playerScore = playerScore + 1;
+        //            } else {
+        //                // carry on with checking for collisions
+        //                [self divideAngularSections];
+        //            }
+        
+        
+        
+        //        if (section3StartAngle < section3EndAngle) {
+        //            [self divideAngularSections];
+        //            if (angle > section3StartAngle && angle < section3EndAngle) {
+        //                playerScore = playerScore + 1;
+        //            } else {
+        //                // carry on with checking for collisions
+        //                [self divideAngularSections];
+        //            }
+        //        }
+        
     }
-    
-    //            if (angle < section3StartAngle && angle > section3EndAngle) {
-    //                playerScore = playerScore + 1;
-    //            } else {
-    //                // carry on with checking for collisions
-    //                [self divideAngularSections];
-    //            }
-
-
-
-//        if (section3StartAngle < section3EndAngle) {
-//            [self divideAngularSections];
-//            if (angle > section3StartAngle && angle < section3EndAngle) {
-//                playerScore = playerScore + 1;
-//            } else {
-//                // carry on with checking for collisions
-//                [self divideAngularSections];
-//            }
-//        }
-
-}
 }
 
 
@@ -617,9 +623,9 @@ bool gameOver = false;
     
     if (warning == true) {
         warningLabel.visible = true;
-//        [warningLabel runAction:[CCFadeIn actionWithDuration:0.5]];
+        //        [warningLabel runAction:[CCFadeIn actionWithDuration:0.5]];
     } else {
-//        [warningLabel runAction:[CCFadeOut actionWithDuration:0.5f]];
+        //        [warningLabel runAction:[CCFadeOut actionWithDuration:0.5f]];
         warningLabel.visible = false;
         
     }
@@ -631,12 +637,12 @@ bool gameOver = false;
     if (normalizedStart1Ang > 360.0f) {
         normalizedStart1Ang-=360;
     }
-
+    
     float normalizedEnd1Ang = player.rotation + 120;
     if (normalizedEnd1Ang > 360.0f) {
         normalizedEnd1Ang-=360;
     }
-
+    
     section1StartAngle = normalizedStart1Ang; //120 + player.rotation;
     section1EndAngle = normalizedEnd1Ang;
     section2StartAngle = normalizedEnd1Ang;
@@ -657,13 +663,13 @@ bool gameOver = false;
     //    [self normalizeAngle:section3EndAngle];
     
     
-//       NSLog(@"%f", player.rotation);
-//     NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-//     NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-//     NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-//     NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-//     NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-//     NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+    //       NSLog(@"%f", player.rotation);
+    //     NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+    //     NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+    //     NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+    //     NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+    //     NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+    //     NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
 }
 
 -(void) normalizeAngle:(float) angleInput
@@ -735,41 +741,41 @@ bool gameOver = false;
         
         
         //HANDLE POWERUP INPUT
-    /*    if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
-            [self addPowerup1];
-        }
+        /*    if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
+         [self addPowerup1];
+         }
+         
+         if ([input isAnyTouchOnNode:powerUpCreator2 touchPhase:KKTouchPhaseAny]) {
+         [self addPowerup2];
+         }
+         
+         if ([input isAnyTouchOnNode:powerUpCreator3 touchPhase:KKTouchPhaseAny]) {
+         [self addPowerup3];
+         }
+         
+         if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
+         CGPoint powerUp1Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+         powerUp1.position = powerUp1Pos;
+         }
+         
+         if ([input isAnyTouchOnNode:powerUp2 touchPhase:KKTouchPhaseAny]) {
+         CGPoint powerUp2Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+         powerUp2.position = powerUp2Pos;
+         }
+         
+         if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
+         CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+         powerUp3.position = powerUp3Pos;
+         } */
         
-        if ([input isAnyTouchOnNode:powerUpCreator2 touchPhase:KKTouchPhaseAny]) {
-            [self addPowerup2];
-        }
+        //        if (gameOver)
+        //        {
+        //            if ([input isAnyTouchOnNode:player touchPhase:KKTouchPhaseAny])
+        //            {
+        //                [self resetGame];
+        //            }
+        //        }
         
-        if ([input isAnyTouchOnNode:powerUpCreator3 touchPhase:KKTouchPhaseAny]) {
-            [self addPowerup3];
-        }
-        
-        if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
-            CGPoint powerUp1Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-            powerUp1.position = powerUp1Pos;
-        }
-        
-        if ([input isAnyTouchOnNode:powerUp2 touchPhase:KKTouchPhaseAny]) {
-            CGPoint powerUp2Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-            powerUp2.position = powerUp2Pos;
-        }
-        
-        if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
-            CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-            powerUp3.position = powerUp3Pos;
-        } */
-        
-//        if (gameOver)
-//        {
-//            if ([input isAnyTouchOnNode:player touchPhase:KKTouchPhaseAny])
-//            {
-//                [self resetGame];
-//            }
-//        }
-
         
     }
 }
@@ -804,7 +810,7 @@ bool gameOver = false;
 
 -(void) initMenuItems
 {
-
+    
 }
 
 -(void) goToGameOver
@@ -831,48 +837,48 @@ bool gameOver = false;
     gameOver = true;
     [self goToGameOver];
     
-/*    [self unscheduleAllSelectors];
-    
-    // have everything stop
-    CCNode* node;
-    CCARRAY_FOREACH([self children], node)
-    {
-        [node pauseSchedulerAndActions];
-    }
-
-    
-    // add the labels shown during game over
-    CGSize screenSize = [[CCDirector sharedDirector] winSize];
-    
-    CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"Marker Felt" fontSize:60];
-    gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
-    [self addChild:gameOver z:100 tag:100];
-    
-    // game over label runs 3 different actions at the same time to create the combined effect
-    // 1) color tinting
-    CCTintTo* tint1 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:0];
-    CCTintTo* tint2 = [CCTintTo actionWithDuration:2 red:255 green:255 blue:0];
-    CCTintTo* tint3 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:0];
-    CCTintTo* tint4 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:255];
-    CCTintTo* tint5 = [CCTintTo actionWithDuration:2 red:0 green:0 blue:255];
-    CCTintTo* tint6 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:255];
-    CCSequence* tintSequence = [CCSequence actions:tint1, tint2, tint3, tint4, tint5, tint6, nil];
-    CCRepeatForever* repeatTint = [CCRepeatForever actionWithAction:tintSequence];
-    [gameOver runAction:repeatTint];
-    
-    // 2) rotation with ease
-    CCRotateTo* rotate1 = [CCRotateTo actionWithDuration:2 angle:3];
-    CCEaseBounceInOut* bounce1 = [CCEaseBounceInOut actionWithAction:rotate1];
-    CCRotateTo* rotate2 = [CCRotateTo actionWithDuration:2 angle:-3];
-    CCEaseBounceInOut* bounce2 = [CCEaseBounceInOut actionWithAction:rotate2];
-    CCSequence* rotateSequence = [CCSequence actions:bounce1, bounce2, nil];
-    CCRepeatForever* repeatBounce = [CCRepeatForever actionWithAction:rotateSequence];
-    [gameOver runAction:repeatBounce];
-    
-    // 3) jumping
-    CCJumpBy* jump = [CCJumpBy actionWithDuration:3 position:CGPointZero height:screenSize.height / 3 jumps:1];
-    CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
-    [gameOver runAction:repeatJump]; */
+    /*    [self unscheduleAllSelectors];
+     
+     // have everything stop
+     CCNode* node;
+     CCARRAY_FOREACH([self children], node)
+     {
+     [node pauseSchedulerAndActions];
+     }
+     
+     
+     // add the labels shown during game over
+     CGSize screenSize = [[CCDirector sharedDirector] winSize];
+     
+     CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"Marker Felt" fontSize:60];
+     gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
+     [self addChild:gameOver z:100 tag:100];
+     
+     // game over label runs 3 different actions at the same time to create the combined effect
+     // 1) color tinting
+     CCTintTo* tint1 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:0];
+     CCTintTo* tint2 = [CCTintTo actionWithDuration:2 red:255 green:255 blue:0];
+     CCTintTo* tint3 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:0];
+     CCTintTo* tint4 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:255];
+     CCTintTo* tint5 = [CCTintTo actionWithDuration:2 red:0 green:0 blue:255];
+     CCTintTo* tint6 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:255];
+     CCSequence* tintSequence = [CCSequence actions:tint1, tint2, tint3, tint4, tint5, tint6, nil];
+     CCRepeatForever* repeatTint = [CCRepeatForever actionWithAction:tintSequence];
+     [gameOver runAction:repeatTint];
+     
+     // 2) rotation with ease
+     CCRotateTo* rotate1 = [CCRotateTo actionWithDuration:2 angle:3];
+     CCEaseBounceInOut* bounce1 = [CCEaseBounceInOut actionWithAction:rotate1];
+     CCRotateTo* rotate2 = [CCRotateTo actionWithDuration:2 angle:-3];
+     CCEaseBounceInOut* bounce2 = [CCEaseBounceInOut actionWithAction:rotate2];
+     CCSequence* rotateSequence = [CCSequence actions:bounce1, bounce2, nil];
+     CCRepeatForever* repeatBounce = [CCRepeatForever actionWithAction:rotateSequence];
+     [gameOver runAction:repeatBounce];
+     
+     // 3) jumping
+     CCJumpBy* jump = [CCJumpBy actionWithDuration:3 position:CGPointZero height:screenSize.height / 3 jumps:1];
+     CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
+     [gameOver runAction:repeatJump]; */
 }
 
 -(void)update:(ccTime)dt // update method

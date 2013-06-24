@@ -10,7 +10,8 @@
  
  CURRENT BUGS:
  - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION (TODO WITH NSMUTABLEARRAYS)
- - ADDING POWERUPS CAUSES THE FRAME RATE TO GO DOWN (TEMPORARILY DEPRECATED DUE TO THAT PROBLEM)
+ - TOUCHING POWERUP2 CAN CAUSE RAPID SPRITE SPAWNING CAUSING SOME PROBLEMS
+ - POWERUP1 DOES NOT WORK
  - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS
  */
 
@@ -41,6 +42,11 @@ CCSprite *powerUpCreator2;
 CCSprite *powerUpCreator3;
 
 bool gameOver = false;
+
+bool collisionDidHappen = false;
+
+int livesSubtract;
+int scoreAdd;
 
 -(id) init
 {
@@ -163,20 +169,20 @@ bool gameOver = false;
         powerUpCreator1 = [[CCSprite alloc] init];
         powerUpCreator1 = [CCSprite spriteWithFile:@"section1.png"];
         powerUpCreator1.scale = 0.2f;
-        powerUpCreator1.position = ccp(size.width/3, 20);
-        //        [self addChild:powerUpCreator1 z:5];
+        powerUpCreator1.position = ccp(size.width/3 - 50, 20);
+        [self addChild:powerUpCreator1 z:5];
         
         powerUpCreator2 = [[CCSprite alloc] init];
         powerUpCreator2 = [CCSprite spriteWithFile:@"section2.png"];
         powerUpCreator2.scale = 0.2f;
         powerUpCreator2.position = ccp(size.width/2, 20);
-        //        [self addChild:powerUpCreator2 z:5];
+        [self addChild:powerUpCreator2 z:5];
         
         powerUpCreator3 = [[CCSprite alloc] init];
         powerUpCreator3 = [CCSprite spriteWithFile:@"section3.png"];
         powerUpCreator3.scale = 0.2f;
-        powerUpCreator3.position = ccp(size.width/1.5, 20);
-        //        [self addChild:powerUpCreator3 z:5];
+        powerUpCreator3.position = ccp(size.width/1.5 + 50, 20);
+        [self addChild:powerUpCreator3 z:5];
         
         
         [self divideAngularSections];
@@ -419,14 +425,16 @@ bool gameOver = false;
         
         [self divideAngularSections];
         numCollisions++;
-        NSLog(@"%f", shipAngle);
-        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+//        NSLog(@"%f", shipAngle);
+//        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+//        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+//        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+//        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+//        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+//        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
         [self scoreCheck:shipAngle withColor:shipColor];
+        
+        collisionDidHappen = true;
         
         if (playerLives == 0) {
             [self removeChild:circle2 cleanup:YES];
@@ -462,20 +470,20 @@ bool gameOver = false;
         //        if (section1StartAngle > section1EndAngle) {
         [self divideAngularSections];
         if (angle > section1StartAngle && angle < section1EndAngle) {
-            playerScore = playerScore + 1;
+            playerScore = playerScore + scoreAdd;
         } else if (section1StartAngle > section1EndAngle) {
             [self divideAngularSections];
             if (angle < 119 && angle < section1EndAngle)
             {
-                playerScore = playerScore + 1;
+                playerScore = playerScore + scoreAdd;
             }
             
             if (angle > 241 && angle > section1StartAngle)
             {
-                playerScore = playerScore + 1;
+                playerScore = playerScore + scoreAdd;
             }
         } else {
-            playerLives--;
+            playerLives = playerLives - livesSubtract;
             [self divideAngularSections];
             
         }
@@ -510,21 +518,21 @@ bool gameOver = false;
         [self divideAngularSections];
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
-            playerScore = playerScore + 1;
+            playerScore = playerScore + scoreAdd;
         } else if (section2StartAngle > section2EndAngle)
         {
             [self divideAngularSections];
             if (angle < 119 && angle < section2EndAngle)
             {
-                playerScore = playerScore + 1;
+                playerScore = playerScore + scoreAdd;
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
-                playerScore = playerScore + 1;
+                playerScore = playerScore + scoreAdd;
             }
         } else {
-            playerLives--;
+            playerLives = playerLives - livesSubtract;
             [self divideAngularSections];
         }
         
@@ -554,21 +562,21 @@ bool gameOver = false;
         
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
-            playerScore = playerScore + 1;
+            playerScore = playerScore + scoreAdd;
         } else if (section3StartAngle > section3EndAngle)
         {
             [self divideAngularSections];
             if (angle < 119 && angle < section3EndAngle)
             {
-                playerScore = playerScore + 1;
+                playerScore = playerScore + scoreAdd;
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
-                playerScore = playerScore + 1;
+                playerScore = playerScore + scoreAdd;
             }
         } else {
-            playerLives--;
+            playerLives = playerLives - livesSubtract;
             [self divideAngularSections];
         }
         
@@ -597,6 +605,53 @@ bool gameOver = false;
 
 
 // INITIALIZE SHIPS AND POWERUPS
+
+-(void) enablePowerUp1
+{
+    // powerup that allows any ship to go ANYWHERE on the player and still grant points
+    if (collisionDidHappen == true) {
+        livesSubtract = 0;
+        scoreAdd = 0;
+        playerScore+=1;
+    } else {
+        livesSubtract = 1;
+        scoreAdd = 1;
+    }
+    
+
+}
+
+-(void) enablePowerUp2
+{
+    id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
+    id delayShip = [CCDelayTime actionWithDuration:1.5f];
+    id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
+    CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
+    [self runAction:powerUp2Seq];
+
+}
+
+
+-(void) enablePowerUp3
+{
+    [self removeChild:ship1 cleanup:YES];
+    [self unscheduleUpdate];
+    [self initShips];
+    [self scheduleUpdate];
+}
+
+
+-(void) shipPauseAllActions
+{
+    [ship1 pauseSchedulerAndActions];
+}
+
+-(void) shipResumeAllActions
+{
+    [ship1 resumeSchedulerAndActions];
+}
+
+
 -(void) addPowerup1
 {
     powerUp1 = [[CCSprite alloc] init];
@@ -823,6 +878,8 @@ bool gameOver = false;
 
 -(void) handleUserInput
 {
+    int timesPowerUp1enabled = 0;
+    
     KKInput *input = [KKInput sharedInput];
     if(input.touchesAvailable)
     {
@@ -883,16 +940,40 @@ bool gameOver = false;
         
         
         //HANDLE POWERUP INPUT
-        /*    if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
-         [self addPowerup1];
+        if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
+//            numShip1Created++;
+//            if (numShip1Created > 1) {
+//            [self addPowerup1];
+//            }
+//            if (timesPowerUp1enabled == 0) {
+//            id enable = [CCCallFunc actionWithTarget:self selector:@selector(enablePowerUp1)];
+//            id timeEnabled = [CCDelayTime actionWithDuration:5.0f];
+//            CCSequence *powerUp1Seq = [CCSequence actions:enable, timeEnabled, nil];
+//            [self runAction:powerUp1Seq];
+//            }
+            
+//            timesPowerUp1enabled++;
+            
          }
          
          if ([input isAnyTouchOnNode:powerUpCreator2 touchPhase:KKTouchPhaseAny]) {
-         [self addPowerup2];
+//             numShip2Created++;
+//             if (numShip2Created > 1) {
+//                 [self addPowerup2];
+//             }
+             
+             [self enablePowerUp2];
+             
          }
          
          if ([input isAnyTouchOnNode:powerUpCreator3 touchPhase:KKTouchPhaseAny]) {
-         [self addPowerup3];
+//             numShip3Created++;
+//             if (numShip3Created > 1) {
+//             [self addPowerup3];
+//             }
+             
+             [self enablePowerUp3];
+         
          }
          
          if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
@@ -908,7 +989,7 @@ bool gameOver = false;
          if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
          CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
          powerUp3.position = powerUp3Pos;
-         } */
+         }
         
         //        if (gameOver)
         //        {
@@ -946,7 +1027,7 @@ bool gameOver = false;
     }
     
     if (playerScore > 20) {
-        shipSpeed = 0.3f;
+        shipSpeed = 2.2f;
     }
 }
 
@@ -957,9 +1038,12 @@ bool gameOver = false;
 
 -(void) goToGameOver
 {
+    [ship1 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
     id particleEffects = [CCCallFunc actionWithTarget:self selector:@selector(runEffect)];
     id effectDelay = [CCDelayTime actionWithDuration:2.4f];
     id goToScene = [CCCallFunc actionWithTarget:self selector:@selector(transferToGameOverScene)];
+    [self removeChild:player cleanup:YES];
+    [self removeChild:ship1 cleanup:YES];
     CCSequence *gameOverSequence = [CCSequence actions:particleEffects, effectDelay, goToScene, nil];
     
     // execute the sequence
@@ -983,6 +1067,8 @@ bool gameOver = false;
     framesPassed = 0;
     secondsPassed = 0;
     numCollisions = 0;
+    livesSubtract = 1;
+    scoreAdd = 1;
 }
 
 -(void) gameOver
@@ -993,6 +1079,7 @@ bool gameOver = false;
 
 -(void)update:(ccTime)dt // update method
 {
+    collisionDidHappen = false;
     framesPassed++;
     secondsPassed = framesPassed/60; // divide by framerate;
     // if ((framesPassed % 100) == 0) {

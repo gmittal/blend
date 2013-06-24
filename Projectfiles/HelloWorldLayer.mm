@@ -143,7 +143,7 @@ bool gameOver = false;
         liveLabel = [CCLabelTTF labelWithString:lives fontName:@"HelveticaNeue-Light" fontSize:25];
         liveLabel.position = ccp(size.width/2, 435);
         liveLabel.color = ccc3(0,0,0);
-        [self addChild:liveLabel z:100];
+//        [self addChild:liveLabel z:100];
         
         // warning label
         warningLabel = [CCLabelTTF labelWithString:@"STATUS CRITICAL" fontName:@"Courier" fontSize:25];
@@ -184,6 +184,7 @@ bool gameOver = false;
         [self pickColor];
         [self initShips];
         
+        
         [self scheduleUpdate]; // schedule the framely update
 	}
     
@@ -197,6 +198,85 @@ bool gameOver = false;
     [scene addChild:layer];
     return scene;
 }
+
+
+-(void) runEffect
+{
+	// remove any previous particle FX
+	[self removeChildByTag:7 cleanup:YES];
+	
+    CCParticleSystem* system;
+	
+/*	switch (particleType)
+	{
+			// effects designed with Particle Designer http://particledesigner.71squared.com/
+		case ParticleTypeDesignedFX:
+			system = [CCParticleSystemQuad particleWithFile:@"designed-fx.plist"];
+			break;
+		case ParticleTypeDesignedFX2:
+			// uses a plist with the texture already embedded
+			system = [CCParticleSystemQuad particleWithFile:@"designed-fx2.plist"];
+			system.positionType = kCCPositionTypeFree;
+			break;
+		case ParticleTypeDesignedFX3:
+			// same effect but different texture (scaled down by Particle Designer)
+			system = [CCParticleSystemQuad particleWithFile:@"designed-fx3.plist"];
+			system.positionType = kCCPositionTypeFree;
+			break;
+			
+			// programmed particle effect
+		case ParticleTypeSelfMade:
+			system = [ParticleEffectSelfMade node];
+			break;
+            
+			// cocos2d built-in particle effects
+		case ParticleTypeExplosion:
+			system = [CCParticleExplosion node];
+			break;
+		case ParticleTypeFire:
+			system = [CCParticleFire node];
+			break;
+		case ParticleTypeFireworks:
+			system = [CCParticleFireworks node];
+			break;
+		case ParticleTypeFlower:
+			system = [CCParticleFlower node];
+			break;
+		case ParticleTypeGalaxy:
+			system = [CCParticleGalaxy node];
+			break;
+		case ParticleTypeMeteor:
+			system = [CCParticleMeteor node];
+			break;
+		case ParticleTypeRain:
+			system = [CCParticleRain node];
+			break;
+		case ParticleTypeSmoke:
+			system = [CCParticleSmoke node];
+			break;
+		case ParticleTypeSnow:
+			system = [CCParticleSnow node];
+			break;
+		case ParticleTypeSpiral:
+			system = [CCParticleSpiral node];
+			break;
+		case ParticleTypeSun:
+			system = [CCParticleSun node];
+			break;
+			
+		default:
+			// do nothing
+			break;
+	} */
+    
+    system = [CCParticleExplosion node];
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	system.position = CGPointMake(winSize.width / 2, winSize.height / 2);
+	[self addChild:system z:101 tag:7];
+	
+}
+
+
 
 // Collision DETECTION
 -(void) circleCollisionWithSprite:(CCSprite *)circle1 andThis:(CCSprite *) circle2
@@ -815,10 +895,19 @@ bool gameOver = false;
 
 -(void) goToGameOver
 {
-    //psst! you can create a wrapper around your init method to pass in parameters
-    [[CCDirector sharedDirector] replaceScene: [GameOver node]];
+    id particleEffects = [CCCallFunc actionWithTarget:self selector:@selector(runEffect)];
+    id effectDelay = [CCDelayTime actionWithDuration:2.4f];
+    id goToScene = [CCCallFunc actionWithTarget:self selector:@selector(transferToGameOverScene)];
+    CCSequence *gameOverSequence = [CCSequence actions:particleEffects, effectDelay, goToScene, nil];
+    
+    // execute the sequence
+    [self runAction:gameOverSequence]; // delay
 }
 
+-(void) transferToGameOverScene
+{
+    [[CCDirector sharedDirector] replaceScene: [GameOver node]];
+}
 
 -(void) resetVariables
 {

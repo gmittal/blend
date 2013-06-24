@@ -28,7 +28,7 @@
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"Marker Felt" fontSize:60];
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"PipeDream" fontSize:60];
         gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
         [self addChild:gameOver z:100 tag:100];
         
@@ -70,7 +70,9 @@
 
 -(void) playAgain
 {
-        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+//        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 
 @end

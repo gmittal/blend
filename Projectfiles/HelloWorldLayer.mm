@@ -279,6 +279,68 @@ bool gameOver = false;
 
 
 // Collision DETECTION
+
+-(void) circleCollisionWith:(NSMutableArray *) circle2
+{
+    NSUInteger numSprites = [circle2 count];
+    for (NSUInteger i = 0; i < numSprites; i++)
+    {
+        CCSprite *c = [circle2 objectAtIndex:i];
+        //        [self circleCollisionWithSprite:c];
+        
+        float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
+        // NSLog(@"Circle 1 Radius: %f", c1radius);
+        float c2radius = [c boundingBox].size.width/2; // circle 2 radius
+        //        float c2radius = c.contentSize.width/2;
+        radii = c1radius + c2radius;
+        float distX = player.position.x - c.position.x;
+        float distY = player.position.y - c.position.y;
+        distance = sqrtf((distX * distX) + (distY * distY));
+        
+        if (distance <= radii) { // did the two circles collide at all??
+            //            [self circleCollisionWithSprite:c];
+            float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
+            float shipAngleRadians = asin(ratio); // arcsin of ratio
+            float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
+            float shipAngle; // shipAngle
+            
+            if (antiShipAngle < 0.0f) {
+                shipAngle = (-360 + (antiShipAngle));
+            } else {
+                shipAngle = antiShipAngle;
+            }
+            
+            if (shipAngle < -360.0f) {
+                [self removeChild:c cleanup:YES];
+                //                NSLog(@"ERROR WITH SHIP GENERATION: DELETING AND RETRYING");
+                //            [self initShips];
+            }
+            
+            //            NSLog(@"Ship Angle %f", shipAngle);
+            
+            [self divideAngularSections];
+            [self scoreCheck:shipAngle withColor:shipColor];
+            
+            if (distance < radii) {
+                c.visible = false;
+                [self removeChild:c cleanup:YES];
+                [circle2 removeObjectAtIndex:i];
+            }
+            
+            //            NSLog(@"HIT");
+            c.visible = false;
+            [self removeChild:c cleanup:YES];
+            [circle2 removeObjectAtIndex:i];
+        }
+    }
+    
+}
+
+
+
+
+
+
 -(void) circleCollisionWithSprite:(CCSprite *)circle1 andThis:(CCSprite *) circle2
 {
     //        CCSprite *c = [circle2 objectAtIndex:i];
@@ -862,7 +924,7 @@ bool gameOver = false;
 
 -(void) initChallenges
 {
-    // challenge 1
+    // speed challenge 
     if (playerScore > 6) {
         shipSpeed = 3.5f;
     }
@@ -906,7 +968,9 @@ bool gameOver = false;
 
 -(void) transferToGameOverScene
 {
-    [[CCDirector sharedDirector] replaceScene: [GameOver node]];
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[GameOver node]]];
+//    [[CCDirector sharedDirector] replaceScene: [GameOver node]];
 }
 
 -(void) resetVariables
@@ -925,49 +989,6 @@ bool gameOver = false;
 {
     gameOver = true;
     [self goToGameOver];
-    
-    /*    [self unscheduleAllSelectors];
-     
-     // have everything stop
-     CCNode* node;
-     CCARRAY_FOREACH([self children], node)
-     {
-     [node pauseSchedulerAndActions];
-     }
-     
-     
-     // add the labels shown during game over
-     CGSize screenSize = [[CCDirector sharedDirector] winSize];
-     
-     CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"Marker Felt" fontSize:60];
-     gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
-     [self addChild:gameOver z:100 tag:100];
-     
-     // game over label runs 3 different actions at the same time to create the combined effect
-     // 1) color tinting
-     CCTintTo* tint1 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:0];
-     CCTintTo* tint2 = [CCTintTo actionWithDuration:2 red:255 green:255 blue:0];
-     CCTintTo* tint3 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:0];
-     CCTintTo* tint4 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:255];
-     CCTintTo* tint5 = [CCTintTo actionWithDuration:2 red:0 green:0 blue:255];
-     CCTintTo* tint6 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:255];
-     CCSequence* tintSequence = [CCSequence actions:tint1, tint2, tint3, tint4, tint5, tint6, nil];
-     CCRepeatForever* repeatTint = [CCRepeatForever actionWithAction:tintSequence];
-     [gameOver runAction:repeatTint];
-     
-     // 2) rotation with ease
-     CCRotateTo* rotate1 = [CCRotateTo actionWithDuration:2 angle:3];
-     CCEaseBounceInOut* bounce1 = [CCEaseBounceInOut actionWithAction:rotate1];
-     CCRotateTo* rotate2 = [CCRotateTo actionWithDuration:2 angle:-3];
-     CCEaseBounceInOut* bounce2 = [CCEaseBounceInOut actionWithAction:rotate2];
-     CCSequence* rotateSequence = [CCSequence actions:bounce1, bounce2, nil];
-     CCRepeatForever* repeatBounce = [CCRepeatForever actionWithAction:rotateSequence];
-     [gameOver runAction:repeatBounce];
-     
-     // 3) jumping
-     CCJumpBy* jump = [CCJumpBy actionWithDuration:3 position:CGPointZero height:screenSize.height / 3 jumps:1];
-     CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
-     [gameOver runAction:repeatJump]; */
 }
 
 -(void)update:(ccTime)dt // update method

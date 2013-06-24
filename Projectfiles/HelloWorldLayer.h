@@ -81,5 +81,6 @@
 -(void) addPowerup1;
 -(void) addPowerup2;
 -(void) addPowerup3;
+-(void) transferToGameOverScene;
 
 @end

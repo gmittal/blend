@@ -22,6 +22,9 @@
 		C771177B1778D11500EB508B /* PipeDream.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C771177A1778D11500EB508B /* PipeDream.ttf */; };
 		C771177D1778DA3300EB508B /* ship-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C771177C1778DA3300EB508B /* ship-hd.png */; };
 		C771177F1778DFF800EB508B /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = C771177E1778DFF800EB508B /* fire.png */; };
+		C77117821778F98800EB508B /* pause-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C77117801778F98800EB508B /* pause-hd.png */; };
+		C77117831778F98800EB508B /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = C77117811778F98800EB508B /* pause.png */; };
+		C77117861778FB1100EB508B /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C77117851778FB1100EB508B /* PauseLayer.mm */; };
 		C7945153176FB3AE0053FB62 /* section3.png in Resources */ = {isa = PBXBuildFile; fileRef = C7945152176FB3AE0053FB62 /* section3.png */; };
 		C7945158176FB6480053FB62 /* border-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7945154176FB6480053FB62 /* border-hd.png */; };
 		C7945159176FB6480053FB62 /* section1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7945155176FB6480053FB62 /* section1-hd.png */; };
@@ -88,6 +91,10 @@
 		C771177A1778D11500EB508B /* PipeDream.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PipeDream.ttf; sourceTree = "<group>"; };
 		C771177C1778DA3300EB508B /* ship-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship-hd.png"; sourceTree = "<group>"; };
 		C771177E1778DFF800EB508B /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		C77117801778F98800EB508B /* pause-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause-hd.png"; sourceTree = "<group>"; };
+		C77117811778F98800EB508B /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		C77117841778FB1100EB508B /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
+		C77117851778FB1100EB508B /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
 		C7945152176FB3AE0053FB62 /* section3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = section3.png; sourceTree = "<group>"; };
 		C7945154176FB6480053FB62 /* border-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border-hd.png"; sourceTree = "<group>"; };
 		C7945155176FB6480053FB62 /* section1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "section1-hd.png"; sourceTree = "<group>"; };
@@ -273,6 +280,8 @@
 				DCC1A39013A94F1A005BD75D /* HelloWorldLayer.mm */,
 				C73E19A11773AE010004BB0A /* GameOver.h */,
 				C73E19A21773AE010004BB0A /* GameOver.mm */,
+				C77117841778FB1100EB508B /* PauseLayer.h */,
+				C77117851778FB1100EB508B /* PauseLayer.mm */,
 				DCC1A38D13A94F1A005BD75D /* AppDelegate.h */,
 				DCC1A38E13A94F1A005BD75D /* AppDelegate.m */,
 				DCC1A39413A94F1A005BD75D /* Resources */,
@@ -288,6 +297,8 @@
 				C73E19A61773B2650004BB0A /* Roboto.ttf */,
 				C758BB5C17750061005106E7 /* expldata.plist */,
 				C758BB5D17750061005106E7 /* expldata.png */,
+				C77117801778F98800EB508B /* pause-hd.png */,
+				C77117811778F98800EB508B /* pause.png */,
 				C7945154176FB6480053FB62 /* border-hd.png */,
 				C758BB501774EABF005106E7 /* ship3-hd.png */,
 				C758BB511774EABF005106E7 /* ship2-hd.png */,
@@ -434,6 +445,8 @@
 				C771177B1778D11500EB508B /* PipeDream.ttf in Resources */,
 				C771177D1778DA3300EB508B /* ship-hd.png in Resources */,
 				C771177F1778DFF800EB508B /* fire.png in Resources */,
+				C77117821778F98800EB508B /* pause-hd.png in Resources */,
+				C77117831778F98800EB508B /* pause.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +473,7 @@
 				DCC1A3AB13A94F1A005BD75D /* HelloWorldLayer.mm in Sources */,
 				DCC1A3AD13A94F1A005BD75D /* main.m in Sources */,
 				C73E19A31773AE010004BB0A /* GameOver.mm in Sources */,
+				C77117861778FB1100EB508B /* PauseLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

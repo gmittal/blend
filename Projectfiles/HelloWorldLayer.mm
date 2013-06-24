@@ -48,6 +48,8 @@ bool collisionDidHappen = false;
 int livesSubtract;
 int scoreAdd;
 
+CCSprite *pauseButton;
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -183,6 +185,13 @@ int scoreAdd;
         powerUpCreator3.scale = 0.2f;
         powerUpCreator3.position = ccp(size.width/1.5 + 50, 20);
         [self addChild:powerUpCreator3 z:5];
+        
+        // init pausebutton
+        pauseButton = [[CCSprite alloc] init];
+        pauseButton = [CCSprite spriteWithFile:@"pause.png"];
+        pauseButton.position = ccp(size.width - 20, size.height - 20);
+        pauseButton.scale = 0.25f;
+        [self addChild:pauseButton z:100];
         
         
         [self divideAngularSections];
@@ -803,6 +812,11 @@ int scoreAdd;
         shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
     }
     
+    if (shipRandX < 320 && shipRandY < 480) {
+        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    }
+    
     shipForCoord.position = ccp(shipRandX, shipRandY);
     [self addChild:shipForCoord z:7];
 }
@@ -991,13 +1005,11 @@ int scoreAdd;
          powerUp3.position = powerUp3Pos;
          }
         
-        //        if (gameOver)
-        //        {
-        //            if ([input isAnyTouchOnNode:player touchPhase:KKTouchPhaseAny])
-        //            {
-        //                [self resetGame];
-        //            }
-        //        }
+        if ([input isAnyTouchOnNode:pauseButton touchPhase:KKTouchPhaseAny]) {
+
+            [self pauseGame];
+            
+        }
         
         
     }
@@ -1075,6 +1087,12 @@ int scoreAdd;
 {
     gameOver = true;
     [self goToGameOver];
+}
+
+-(void) pauseGame
+{
+    [[CCDirector sharedDirector] pushScene:
+	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[PauseLayer node]]];
 }
 
 -(void)update:(ccTime)dt // update method

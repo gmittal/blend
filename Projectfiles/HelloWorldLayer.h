@@ -7,6 +7,7 @@
 
 #import "kobold2d.h"
 #import "GameOver.h"
+#import "PauseLayer.h"
 
 @interface HelloWorldLayer : CCLayer
 {

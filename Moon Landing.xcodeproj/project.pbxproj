@@ -11,6 +11,9 @@
 		C73B8264176FAD2F007C0FE6 /* section2.png in Resources */ = {isa = PBXBuildFile; fileRef = C73B8263176FAD2F007C0FE6 /* section2.png */; };
 		C73E19A31773AE010004BB0A /* GameOver.mm in Sources */ = {isa = PBXBuildFile; fileRef = C73E19A21773AE010004BB0A /* GameOver.mm */; };
 		C73E19A71773B2660004BB0A /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C73E19A61773B2650004BB0A /* Roboto.ttf */; };
+		C74659FD177A205200DB24E7 /* PowerupBorder-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C74659FB177A205200DB24E7 /* PowerupBorder-hd.png */; };
+		C74659FE177A205200DB24E7 /* PowerupBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = C74659FC177A205200DB24E7 /* PowerupBorder.png */; };
+		C7465A01177A364400DB24E7 /* StartMenuLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7465A00177A364400DB24E7 /* StartMenuLayer.mm */; };
 		C758BB561774EABF005106E7 /* ship3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C758BB501774EABF005106E7 /* ship3-hd.png */; };
 		C758BB571774EABF005106E7 /* ship2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C758BB511774EABF005106E7 /* ship2-hd.png */; };
 		C758BB581774EABF005106E7 /* ship1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C758BB521774EABF005106E7 /* ship1-hd.png */; };
@@ -80,6 +83,10 @@
 		C73E19A11773AE010004BB0A /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
 		C73E19A21773AE010004BB0A /* GameOver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameOver.mm; sourceTree = "<group>"; };
 		C73E19A61773B2650004BB0A /* Roboto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roboto.ttf; sourceTree = "<group>"; };
+		C74659FB177A205200DB24E7 /* PowerupBorder-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PowerupBorder-hd.png"; sourceTree = "<group>"; };
+		C74659FC177A205200DB24E7 /* PowerupBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PowerupBorder.png; sourceTree = "<group>"; };
+		C74659FF177A364400DB24E7 /* StartMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartMenuLayer.h; sourceTree = "<group>"; };
+		C7465A00177A364400DB24E7 /* StartMenuLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = StartMenuLayer.mm; sourceTree = "<group>"; };
 		C758BB501774EABF005106E7 /* ship3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship3-hd.png"; sourceTree = "<group>"; };
 		C758BB511774EABF005106E7 /* ship2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship2-hd.png"; sourceTree = "<group>"; };
 		C758BB521774EABF005106E7 /* ship1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship1-hd.png"; sourceTree = "<group>"; };
@@ -282,6 +289,8 @@
 				C73E19A21773AE010004BB0A /* GameOver.mm */,
 				C77117841778FB1100EB508B /* PauseLayer.h */,
 				C77117851778FB1100EB508B /* PauseLayer.mm */,
+				C74659FF177A364400DB24E7 /* StartMenuLayer.h */,
+				C7465A00177A364400DB24E7 /* StartMenuLayer.mm */,
 				DCC1A38D13A94F1A005BD75D /* AppDelegate.h */,
 				DCC1A38E13A94F1A005BD75D /* AppDelegate.m */,
 				DCC1A39413A94F1A005BD75D /* Resources */,
@@ -313,6 +322,8 @@
 				C7945152176FB3AE0053FB62 /* section3.png */,
 				C73B8263176FAD2F007C0FE6 /* section2.png */,
 				C73B825F176FA8D4007C0FE6 /* section1.png */,
+				C74659FB177A205200DB24E7 /* PowerupBorder-hd.png */,
+				C74659FC177A205200DB24E7 /* PowerupBorder.png */,
 				C771177C1778DA3300EB508B /* ship-hd.png */,
 				C771177E1778DFF800EB508B /* fire.png */,
 				DCC1A39513A94F1A005BD75D /* config.lua */,
@@ -447,6 +458,8 @@
 				C771177F1778DFF800EB508B /* fire.png in Resources */,
 				C77117821778F98800EB508B /* pause-hd.png in Resources */,
 				C77117831778F98800EB508B /* pause.png in Resources */,
+				C74659FD177A205200DB24E7 /* PowerupBorder-hd.png in Resources */,
+				C74659FE177A205200DB24E7 /* PowerupBorder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +487,7 @@
 				DCC1A3AD13A94F1A005BD75D /* main.m in Sources */,
 				C73E19A31773AE010004BB0A /* GameOver.mm in Sources */,
 				C77117861778FB1100EB508B /* PauseLayer.mm in Sources */,
+				C7465A01177A364400DB24E7 /* StartMenuLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

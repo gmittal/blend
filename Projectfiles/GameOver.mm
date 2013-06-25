@@ -59,13 +59,19 @@
         [gameOver runAction:repeatJump];
         
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Play Again" target:self selector:@selector(playAgain)];
-        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, nil];
+        CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
+        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, quit, nil];
         [gameOverMenu alignItemsVertically];
-        gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 40);
+        gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
         [self addChild:gameOverMenu];
-        
     }
     return self;
+}
+
+-(void) quitGame
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 -(void) playAgain

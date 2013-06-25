@@ -21,46 +21,12 @@
 
 @implementation HelloWorldLayer
 
-float distance;
-float radii;
-int numCollisions;
 
-CCLabelBMFont *warningLabel;
-bool warning = false;
+CCMenuItemImage *powerUpBorder1;
+CCMenuItemImage *powerUpBorder2;
+CCMenuItemImage *powerUpBorder3;
 
-NSMutableArray *powerUpType1;
-NSMutableArray *powerUpType2;
-NSMutableArray *powerUpType3;
-CCSprite *powerUp1;
-CCSprite *powerUp2;
-CCSprite *powerUp3;
-
-CCMenuItemImage *powerUpCreator1;
-CCMenuItemImage *powerUpCreator2;
-CCMenuItemImage *powerUpCreator3;
-
-bool gameOver = false;
-
-bool collisionDidHappen = false;
-
-int livesSubtract;
-int scoreAdd;
-
-CCSprite *pauseButton;
-
-int numPower1Left;
-int numPower2Left;
-int numPower3Left;
-NSString *power1Num;
-NSString *power2Num;
-NSString *power3Num;
-CCLabelBMFont *power1Left;
-CCLabelBMFont *power2Left;
-CCLabelBMFont *power3Left;
-
-CCMenu *powerUpCreatorsMenu;
-
-CCSprite *infiniteBorderPowerUp1;
+CCLabelBMFont *screenflashLabel;
 
 -(id) init
 {
@@ -169,7 +135,7 @@ CCSprite *infiniteBorderPowerUp1;
         warningLabel = [CCLabelTTF labelWithString:@"STATUS CRITICAL" fontName:@"Courier" fontSize:25];
         warningLabel.position = ccp(size.width/2, 435);
         warningLabel.color = ccc3(255,0,0);
-        [self addChild:warningLabel z:100];
+//        [self addChild:warningLabel z:100];
         
         // initialize arrays
         powerUpType1 = [[NSMutableArray alloc] init];
@@ -185,8 +151,8 @@ CCSprite *infiniteBorderPowerUp1;
                                                             selectedImage: @"section1.png"
                                                                    target:self
                                                                  selector:@selector(enablePowerUp1)];
-        powerUpCreator1.scale = 0.2f;
-        powerUpCreator1.position = ccp(size.width/3 - 50, 20);
+        powerUpCreator1.scale = 0.15f;
+        powerUpCreator1.position = ccp(size.width/3 - 70, 20);
 //        [self addChild:powerUpCreator1 z:5];
         
         powerUpCreator2 = [[CCMenuItemImage alloc] init];
@@ -194,8 +160,8 @@ CCSprite *infiniteBorderPowerUp1;
                                                  selectedImage: @"section2.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp2)];
-        powerUpCreator2.scale = 0.2f;
-        powerUpCreator2.position = ccp(size.width/2, 20);
+        powerUpCreator2.scale = 0.15f;
+        powerUpCreator2.position = ccp(size.width/2 - 20, 20);
 //        [self addChild:powerUpCreator2 z:5];
         
         powerUpCreator3 = [[CCMenuItemImage alloc] init];
@@ -203,8 +169,8 @@ CCSprite *infiniteBorderPowerUp1;
                                                  selectedImage: @"section3.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp3)];
-        powerUpCreator3.scale = 0.2f;
-        powerUpCreator3.position = ccp(size.width/1.5 + 50, 20);
+        powerUpCreator3.scale = 0.15f;
+        powerUpCreator3.position = ccp(size.width/1.5 + 30, 20);
 //        [self addChild:powerUpCreator3 z:5];
         
         powerUpCreatorsMenu = [CCMenu menuWithItems:powerUpCreator1, powerUpCreator2, powerUpCreator3, nil];
@@ -221,24 +187,53 @@ CCSprite *infiniteBorderPowerUp1;
         // init powerup labels
         power1Left = [[CCLabelBMFont alloc] init];
         power1Num = [[NSString alloc]initWithFormat:@"%i", numPower1Left];
-        power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"Roboto-Light" fontSize:25];
-        power1Left.position = ccp(size.width/3 - 50, 20);
+        power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"PipeDream" fontSize:25];
+        power1Left.position = ccp(size.width/3 - 30, 20);
         power1Left.color = ccc3(0,0,0);
         [self addChild:power1Left z:200];
         
         power2Left = [[CCLabelBMFont alloc] init];
         power2Num = [[NSString alloc]initWithFormat:@"%i", numPower2Left];
-        power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"Roboto-Light" fontSize:25];
-        power2Left.position = ccp(size.width/2, 20);
+        power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"PipeDream" fontSize:25];
+        power2Left.position = ccp(size.width/2 + 20, 20);
         power2Left.color = ccc3(0,0,0);
         [self addChild:power2Left z:200];
         
         power3Left = [[CCLabelBMFont alloc] init];
         power3Num = [[NSString alloc]initWithFormat:@"%i", numPower3Left];
-        power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"Roboto-Light" fontSize:25];
-        power3Left.position = ccp(size.width/1.5 + 50, 20);
+        power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"PipeDream" fontSize:25];
+        power3Left.position = ccp(size.width/1.5 + 70, 20);
         power3Left.color = ccc3(0,0,0);
         [self addChild:power3Left z:200];
+        
+        
+        powerUpBorder1 = [[CCMenuItemImage alloc] init];
+        powerUpBorder1 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
+                                                selectedImage: @"PowerupBorder.png"
+                                                       target:self
+                                                     selector:@selector(enablePowerUp1)];
+        powerUpBorder1.position = ccp(size.width/3 - 53, 20);
+//        [self addChild:powerUpBorder1 z:-5];
+        
+        powerUpBorder2 = [[CCMenuItemImage alloc] init];
+        powerUpBorder2 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
+                                                selectedImage: @"PowerupBorder.png"
+                                                       target:self
+                                                     selector:@selector(enablePowerUp2)];
+        powerUpBorder2.position = ccp(size.width/2, 20);
+//        [self addChild:powerUpBorder2 z:-5];
+        
+        powerUpBorder3 = [[CCMenuItemImage alloc] init];
+        powerUpBorder3 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
+                                                selectedImage: @"PowerupBorder.png"
+                                                       target:self
+                                                     selector:@selector(enablePowerUp3)];
+        powerUpBorder3.position = ccp(size.width/1.5 + 53, 20);
+//        [self addChild:powerUpBorder3 z:-5];
+        
+        CCMenu *powerBorderMenu = [CCMenu menuWithItems:powerUpBorder1, powerUpBorder2, powerUpBorder3, nil];
+        powerBorderMenu.position = ccp(size.width/2-160, 0);
+        [self addChild:powerBorderMenu z:-5];
         
         // init the border sprite for powerup1
         infiniteBorderPowerUp1 = [[CCSprite alloc] init];
@@ -246,12 +241,19 @@ CCSprite *infiniteBorderPowerUp1;
         infiniteBorderPowerUp1.scale = 0;
         infiniteBorderPowerUp1.position = screenCenter;
         
+        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"PipeDream" fontSize:25];
+        screenflashLabel.position = ccp(size.width/2, 405);
+        screenflashLabel.color = ccc3(255,0,0);
+        [self addChild:screenflashLabel z:110];
+        screenflashLabel.visible = false;
+        
         
         [self divideAngularSections];
         
         [self pickColor];
         [self initShips];
         
+//        [self flashLabel:@"WELCOME!" forTime:2.0f];
         
         [self scheduleUpdate]; // schedule the framely update
 	}
@@ -671,18 +673,17 @@ CCSprite *infiniteBorderPowerUp1;
     // NSLog(@"Circle 1 Radius: %f", c1radius);
     float c2radius = [shipToCollideWith boundingBox].size.width/2; // circle 2 radius
     //        float c2radius = c.contentSize.width/2;
-    float radii = c1radius + c2radius;
+    float cradii = c1radius + c2radius;
     float distX = infiniteBorderPowerUp1.position.x - shipToCollideWith.position.x;
     float distY = infiniteBorderPowerUp1.position.y - shipToCollideWith.position.y;
-    float distance = sqrtf((distX * distX) + (distY * distY));
+    float cdistance = sqrtf((distX * distX) + (distY * distY));
     
-    if (distance <= radii) {
+    if (cdistance <= cradii) {
         playerScore = playerScore + scoreAdd;
         [self removeChild:shipToCollideWith cleanup:YES];
         [self initShips];
     }
 }
-
 
 // INITIALIZE SHIPS AND POWERUPS
 
@@ -690,8 +691,9 @@ CCSprite *infiniteBorderPowerUp1;
 {
     // powerup that allows any ship to go ANYWHERE on the player and still grant points
     if (numPower1Left > 0) {
+        [self flashLabel:@"ENERGY SHIELD UP" forTime:5.0f];
         id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
-        id delayRemoval = [CCDelayTime actionWithDuration:2.0f];
+        id delayRemoval = [CCDelayTime actionWithDuration:5.0f];
         id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
         CCSequence *powerUp1Seq = [CCSequence actions:addBorder, delayRemoval, removeBorder, nil];
         numPower1Left--;
@@ -995,7 +997,7 @@ CCSprite *infiniteBorderPowerUp1;
 
 -(void) handleUserInput
 {
-    int timesPowerUp1enabled = 0;
+//    int timesPowerUp1enabled = 0;
     
     KKInput *input = [KKInput sharedInput];
     if(input.touchesAvailable)
@@ -1116,6 +1118,26 @@ CCSprite *infiniteBorderPowerUp1;
     
 }
 
+-(void) flashLabel:(NSString *) stringToFlashOnScreen forTime:(float) numSecondsToFlash
+{
+    [screenflashLabel setString:stringToFlashOnScreen];
+    id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelVisible)];
+    id delayInvis = [CCDelayTime actionWithDuration:numSecondsToFlash];
+    id addInvis = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelInvisible)];
+    CCSequence *flashLabelSeq = [CCSequence actions:addVisibility, delayInvis, addInvis, nil];
+    [self runAction:flashLabelSeq];
+}
+
+-(void) makeFlashLabelVisible
+{
+    screenflashLabel.visible = true;
+}
+
+-(void) makeFlashLabelInvisible
+{
+    screenflashLabel.visible = false;
+}
+
 -(void) goToGameOver
 {
     [ship1 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
@@ -1153,6 +1175,9 @@ CCSprite *infiniteBorderPowerUp1;
     numPower1Left = 1;
     numPower2Left = 5;
     numPower3Left = 5;
+    
+    warning = false;
+    collisionDidHappen = false;
 }
 
 -(void) gameOver

@@ -61,6 +61,47 @@
     CCAction *explode;
     NSMutableArray *explodingFrames;
     CCAnimation *explosion;
+    
+    float distance;
+    float radii;
+    int numCollisions;
+    
+    CCLabelBMFont *warningLabel;
+    bool warning;
+    
+    NSMutableArray *powerUpType1;
+    NSMutableArray *powerUpType2;
+    NSMutableArray *powerUpType3;
+    CCSprite *powerUp1;
+    CCSprite *powerUp2;
+    CCSprite *powerUp3;
+    
+    CCMenuItemImage *powerUpCreator1;
+    CCMenuItemImage *powerUpCreator2;
+    CCMenuItemImage *powerUpCreator3;
+    
+    bool gameOver;
+    
+    bool collisionDidHappen;
+    
+    int livesSubtract;
+    int scoreAdd;
+    
+    CCSprite *pauseButton;
+    
+    int numPower1Left;
+    int numPower2Left;
+    int numPower3Left;
+    NSString *power1Num;
+    NSString *power2Num;
+    NSString *power3Num;
+    CCLabelBMFont *power1Left;
+    CCLabelBMFont *power2Left;
+    CCLabelBMFont *power3Left;
+    
+    CCMenu *powerUpCreatorsMenu;
+    
+    CCSprite *infiniteBorderPowerUp1;
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color;

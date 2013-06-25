@@ -60,13 +60,20 @@
         
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Resume" target:self selector:@selector(unPause)];
         CCMenuItemFont *restart = [CCMenuItemFont itemFromString: @"Restart" target:self selector:@selector(restartGame)];
-        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, restart, nil];
+        CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
+        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, restart, quit, nil];
         [gameOverMenu alignItemsVertically];
-        gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
+        gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 80);
         gameOverMenu.color = ccc3(0, 0, 0);
         [self addChild:gameOverMenu];
     }
     return self;
+}
+
+-(void) quitGame
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 -(void) restartGame

@@ -10,9 +10,7 @@
  
  CURRENT BUGS:
  - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION (TODO WITH NSMUTABLEARRAYS)
- - TOUCHING POWERUP2 CAN CAUSE RAPID SPRITE SPAWNING CAUSING SOME PROBLEMS
- - POWERUP1 DOES NOT WORK
- - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS
+ - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS (BUT WORKS WELL ENOUGH WHEN LIVES ARE NOT DISPLAYED)
  */
 
 
@@ -37,9 +35,9 @@ CCSprite *powerUp1;
 CCSprite *powerUp2;
 CCSprite *powerUp3;
 
-CCSprite *powerUpCreator1;
-CCSprite *powerUpCreator2;
-CCSprite *powerUpCreator3;
+CCMenuItemImage *powerUpCreator1;
+CCMenuItemImage *powerUpCreator2;
+CCMenuItemImage *powerUpCreator3;
 
 bool gameOver = false;
 
@@ -49,6 +47,20 @@ int livesSubtract;
 int scoreAdd;
 
 CCSprite *pauseButton;
+
+int numPower1Left;
+int numPower2Left;
+int numPower3Left;
+NSString *power1Num;
+NSString *power2Num;
+NSString *power3Num;
+CCLabelBMFont *power1Left;
+CCLabelBMFont *power2Left;
+CCLabelBMFont *power3Left;
+
+CCMenu *powerUpCreatorsMenu;
+
+CCSprite *infiniteBorderPowerUp1;
 
 -(id) init
 {
@@ -168,23 +180,36 @@ CCSprite *pauseButton;
         ship1 = [CCSprite spriteWithFile:@"ship1.png"];
         ship1.scale = 0.15f;
         
-        powerUpCreator1 = [[CCSprite alloc] init];
-        powerUpCreator1 = [CCSprite spriteWithFile:@"section1.png"];
+        powerUpCreator1 = [[CCMenuItemImage alloc] init];
+        powerUpCreator1 = [CCMenuItemImage itemWithNormalImage:@"section1.png"
+                                                            selectedImage: @"section1.png"
+                                                                   target:self
+                                                                 selector:@selector(enablePowerUp1)];
         powerUpCreator1.scale = 0.2f;
         powerUpCreator1.position = ccp(size.width/3 - 50, 20);
-        [self addChild:powerUpCreator1 z:5];
+//        [self addChild:powerUpCreator1 z:5];
         
-        powerUpCreator2 = [[CCSprite alloc] init];
-        powerUpCreator2 = [CCSprite spriteWithFile:@"section2.png"];
+        powerUpCreator2 = [[CCMenuItemImage alloc] init];
+        powerUpCreator2 = [CCMenuItemImage itemWithNormalImage:@"section2.png"
+                                                 selectedImage: @"section2.png"
+                                                        target:self
+                                                      selector:@selector(enablePowerUp2)];
         powerUpCreator2.scale = 0.2f;
         powerUpCreator2.position = ccp(size.width/2, 20);
-        [self addChild:powerUpCreator2 z:5];
+//        [self addChild:powerUpCreator2 z:5];
         
-        powerUpCreator3 = [[CCSprite alloc] init];
-        powerUpCreator3 = [CCSprite spriteWithFile:@"section3.png"];
+        powerUpCreator3 = [[CCMenuItemImage alloc] init];
+        powerUpCreator3 = [CCMenuItemImage itemWithNormalImage:@"section3.png"
+                                                 selectedImage: @"section3.png"
+                                                        target:self
+                                                      selector:@selector(enablePowerUp3)];
         powerUpCreator3.scale = 0.2f;
         powerUpCreator3.position = ccp(size.width/1.5 + 50, 20);
-        [self addChild:powerUpCreator3 z:5];
+//        [self addChild:powerUpCreator3 z:5];
+        
+        powerUpCreatorsMenu = [CCMenu menuWithItems:powerUpCreator1, powerUpCreator2, powerUpCreator3, nil];
+        powerUpCreatorsMenu.position = ccp(size.width/2-160, 0);
+        [self addChild:powerUpCreatorsMenu z:5 tag:10];
         
         // init pausebutton
         pauseButton = [[CCSprite alloc] init];
@@ -192,6 +217,34 @@ CCSprite *pauseButton;
         pauseButton.position = ccp(size.width - 20, size.height - 20);
         pauseButton.scale = 0.25f;
         [self addChild:pauseButton z:100];
+        
+        // init powerup labels
+        power1Left = [[CCLabelBMFont alloc] init];
+        power1Num = [[NSString alloc]initWithFormat:@"%i", numPower1Left];
+        power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"Roboto-Light" fontSize:25];
+        power1Left.position = ccp(size.width/3 - 50, 20);
+        power1Left.color = ccc3(0,0,0);
+        [self addChild:power1Left z:200];
+        
+        power2Left = [[CCLabelBMFont alloc] init];
+        power2Num = [[NSString alloc]initWithFormat:@"%i", numPower2Left];
+        power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"Roboto-Light" fontSize:25];
+        power2Left.position = ccp(size.width/2, 20);
+        power2Left.color = ccc3(0,0,0);
+        [self addChild:power2Left z:200];
+        
+        power3Left = [[CCLabelBMFont alloc] init];
+        power3Num = [[NSString alloc]initWithFormat:@"%i", numPower3Left];
+        power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"Roboto-Light" fontSize:25];
+        power3Left.position = ccp(size.width/1.5 + 50, 20);
+        power3Left.color = ccc3(0,0,0);
+        [self addChild:power3Left z:200];
+        
+        // init the border sprite for powerup1
+        infiniteBorderPowerUp1 = [[CCSprite alloc] init];
+        infiniteBorderPowerUp1 = [CCSprite spriteWithFile:@"border.png"];
+        infiniteBorderPowerUp1.scale = 0;
+        infiniteBorderPowerUp1.position = screenCenter;
         
         
         [self divideAngularSections];
@@ -612,41 +665,83 @@ CCSprite *pauseButton;
 }
 
 
+-(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith
+{
+    float c1radius = [infiniteBorderPowerUp1 boundingBox].size.width/2; // circle 1 radius
+    // NSLog(@"Circle 1 Radius: %f", c1radius);
+    float c2radius = [shipToCollideWith boundingBox].size.width/2; // circle 2 radius
+    //        float c2radius = c.contentSize.width/2;
+    float radii = c1radius + c2radius;
+    float distX = infiniteBorderPowerUp1.position.x - shipToCollideWith.position.x;
+    float distY = infiniteBorderPowerUp1.position.y - shipToCollideWith.position.y;
+    float distance = sqrtf((distX * distX) + (distY * distY));
+    
+    if (distance <= radii) {
+        playerScore = playerScore + scoreAdd;
+        [self removeChild:shipToCollideWith cleanup:YES];
+        [self initShips];
+    }
+}
+
 
 // INITIALIZE SHIPS AND POWERUPS
 
 -(void) enablePowerUp1
 {
     // powerup that allows any ship to go ANYWHERE on the player and still grant points
-    if (collisionDidHappen == true) {
-        livesSubtract = 0;
-        scoreAdd = 0;
-        playerScore+=1;
+    if (numPower1Left > 0) {
+        id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
+        id delayRemoval = [CCDelayTime actionWithDuration:2.0f];
+        id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
+        CCSequence *powerUp1Seq = [CCSequence actions:addBorder, delayRemoval, removeBorder, nil];
+        numPower1Left--;
+        [self runAction:powerUp1Seq];
     } else {
-        livesSubtract = 1;
-        scoreAdd = 1;
+        // do nothing
     }
-    
 
 }
 
+-(void) addInfiniteBorder
+{
+    infiniteBorderPowerUp1.scale = 1.3f;
+    [self addChild:infiniteBorderPowerUp1 z:-10 tag:50];
+}
+
+-(void) removeInfiniteBorder
+{
+    infiniteBorderPowerUp1.scale = 0;
+    [self removeChild:infiniteBorderPowerUp1 cleanup:YES];
+}
+
+
 -(void) enablePowerUp2
 {
+    if (numPower2Left > 0) {
     id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
     id delayShip = [CCDelayTime actionWithDuration:1.5f];
     id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
     CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
+    numPower2Left -= 1;
     [self runAction:powerUp2Seq];
+    } else {
+        // do nothing
+    }
 
 }
 
 
 -(void) enablePowerUp3
 {
+    if (numPower3Left > 0) {
     [self removeChild:ship1 cleanup:YES];
     [self unscheduleUpdate];
     [self initShips];
+    numPower3Left -= 1;
     [self scheduleUpdate];
+    } else {
+        // do nothing
+    }
 }
 
 
@@ -831,6 +926,14 @@ CCSprite *pauseButton;
     lives = [[NSString alloc] initWithFormat:@"Lives: %i",playerLives];
     [liveLabel setString:lives];
     
+    power1Num = [[NSString alloc] initWithFormat:@"%i",numPower1Left];
+    [power1Left setString:power1Num];
+    
+    power2Num = [[NSString alloc] initWithFormat:@"%i",numPower2Left];
+    [power2Left setString:power2Num];
+    
+    power3Num = [[NSString alloc] initWithFormat:@"%i",numPower3Left];
+    [power3Left setString:power3Num];
     
     if (warning == true) {
         warningLabel.visible = true;
@@ -952,45 +1055,8 @@ CCSprite *pauseButton;
         //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
         
-        
-        //HANDLE POWERUP INPUT
-        if ([input isAnyTouchOnNode:powerUpCreator1 touchPhase:KKTouchPhaseAny]) {
-//            numShip1Created++;
-//            if (numShip1Created > 1) {
-//            [self addPowerup1];
-//            }
-//            if (timesPowerUp1enabled == 0) {
-//            id enable = [CCCallFunc actionWithTarget:self selector:@selector(enablePowerUp1)];
-//            id timeEnabled = [CCDelayTime actionWithDuration:5.0f];
-//            CCSequence *powerUp1Seq = [CCSequence actions:enable, timeEnabled, nil];
-//            [self runAction:powerUp1Seq];
-//            }
-            
-//            timesPowerUp1enabled++;
-            
-         }
-         
-         if ([input isAnyTouchOnNode:powerUpCreator2 touchPhase:KKTouchPhaseAny]) {
-//             numShip2Created++;
-//             if (numShip2Created > 1) {
-//                 [self addPowerup2];
-//             }
-             
-             [self enablePowerUp2];
-             
-         }
-         
-         if ([input isAnyTouchOnNode:powerUpCreator3 touchPhase:KKTouchPhaseAny]) {
-//             numShip3Created++;
-//             if (numShip3Created > 1) {
-//             [self addPowerup3];
-//             }
-             
-             [self enablePowerUp3];
-         
-         }
-         
-         if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
+    
+ /*        if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
          CGPoint powerUp1Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
          powerUp1.position = powerUp1Pos;
          }
@@ -1003,8 +1069,10 @@ CCSprite *pauseButton;
          if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
          CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
          powerUp3.position = powerUp3Pos;
-         }
+         } */
         
+        
+        // PAUSE BUTTON
         if ([input isAnyTouchOnNode:pauseButton touchPhase:KKTouchPhaseAny]) {
 
             [self pauseGame];
@@ -1081,6 +1149,10 @@ CCSprite *pauseButton;
     numCollisions = 0;
     livesSubtract = 1;
     scoreAdd = 1;
+    
+    numPower1Left = 1;
+    numPower2Left = 5;
+    numPower3Left = 5;
 }
 
 -(void) gameOver
@@ -1108,6 +1180,7 @@ CCSprite *pauseButton;
     // }
     [self divideAngularSections];
     [self circleCollisionWithSprite:player andThis:ship1];
+    [self infiniteBorderCollisionWith:ship1];
     //    [self circleCollisionWith:section2Ships];
     //    [self circleCollisionWith:section3Ships];
     [self handleUserInput];

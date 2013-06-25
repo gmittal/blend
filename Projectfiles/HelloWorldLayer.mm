@@ -28,6 +28,9 @@ CCMenuItemImage *powerUpBorder3;
 
 CCLabelBMFont *screenflashLabel;
 
+CCSprite *enemyShip;
+
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -247,6 +250,8 @@ CCLabelBMFont *screenflashLabel;
         [self addChild:screenflashLabel z:110];
         screenflashLabel.visible = false;
         
+        enemyShip = [[CCSprite alloc] init];
+        enemyShip = [CCSprite spriteWithFile:@""];
         
         [self divideAngularSections];
         
@@ -897,27 +902,41 @@ CCLabelBMFont *screenflashLabel;
 -(void) createShipCoord:(CCSprite *)shipForCoord
 {
     // Temporary way of generating random coordinates to spawn to
-    int fromNumber = -100;
-    int toNumber = 600;
+    int fromNumber = -160;
+    int toNumber = 480;
+    
+    int topBottomChoose = (arc4random()%(2-1+1))+1;
+    
+    if (topBottomChoose == 1) {
+        shipRandY = 500;
+    } else {
+        shipRandY = -20;
+    }
+    
     shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    if (shipRandX < 320) {
-        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    }
+//    shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
     
-    if (shipRandY < 480) {
-        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    }
+//    if (shipRandX < 320) {
+//        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//    }
     
-    if (shipRandX < 320 && shipRandY < 480) {
-        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    }
+//    if (shipRandY < 480) {
+//        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//    }
+    
+//    if (shipRandX < 320 && shipRandY < 480) {
+//        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//    }
+    
+//    while (shipRandY < 280 && shipRandY > 200) {
+//        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//    }
     
     shipForCoord.position = ccp(shipRandX, shipRandY);
     [self addChild:shipForCoord z:7];
 }
-
 
 
 // METHODS THAT MUST RUN EVERY FRAME
@@ -943,7 +962,6 @@ CCLabelBMFont *screenflashLabel;
     } else {
         //        [warningLabel runAction:[CCFadeOut actionWithDuration:0.5f]];
         warningLabel.visible = false;
-        
     }
 }
 
@@ -1111,6 +1129,8 @@ CCLabelBMFont *screenflashLabel;
     if (playerScore > 20) {
         shipSpeed = 2.2f;
     }
+    
+    // 
 }
 
 -(void) initMenuItems

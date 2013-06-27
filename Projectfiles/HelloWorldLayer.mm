@@ -13,6 +13,11 @@
  - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS (BUT WORKS WELL ENOUGH WHEN LIVES ARE NOT DISPLAYED)
  */
 
+/* SUGGESTIONS:
+ - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL)
+ 
+ */
+
 
 #import "HelloWorldLayer.h"
 
@@ -28,7 +33,11 @@ CCMenuItemImage *powerUpBorder3;
 
 CCLabelBMFont *screenflashLabel;
 
-CCSprite *enemyShip;
+CCSprite *enemyShip1;
+CCSprite *enemyShip2;
+CCSprite *enemyShip3;
+
+int spriteTagNum = 0;
 
 
 -(id) init
@@ -50,7 +59,6 @@ CCSprite *enemyShip;
         
         
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"expldata.plist"];
-        
         
         
         CCSpriteBatchNode *spriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"expldata.png"];
@@ -116,6 +124,8 @@ CCSprite *enemyShip;
         progressBar3.rotation = 240.0f;
         progressTo3 = [CCProgressTo actionWithDuration:1 percent:33.333f];
         
+        
+        
         [progressBar1 runAction:progressTo1];
         [progressBar2 runAction:progressTo2];
         [progressBar3 runAction:progressTo3];
@@ -148,6 +158,7 @@ CCSprite *enemyShip;
         ship1 = [[CCSprite alloc] init];
         ship1 = [CCSprite spriteWithFile:@"ship1.png"];
         ship1.scale = 0.15f;
+//        ship1.tag = spriteTagNum;
         
         powerUpCreator1 = [[CCMenuItemImage alloc] init];
         powerUpCreator1 = [CCMenuItemImage itemWithNormalImage:@"section1.png"
@@ -250,8 +261,8 @@ CCSprite *enemyShip;
         [self addChild:screenflashLabel z:110];
         screenflashLabel.visible = false;
         
-        enemyShip = [[CCSprite alloc] init];
-        enemyShip = [CCSprite spriteWithFile:@""];
+        enemyShip1 = [[CCSprite alloc] init];
+        enemyShip1 = [CCSprite spriteWithFile:@""];
         
         [self divideAngularSections];
         
@@ -487,20 +498,20 @@ CCSprite *enemyShip;
             shipAngle+=360;
         }
         
-        
+        shipAngle = shipAngle;
         
         
         
         
         [self divideAngularSections];
         numCollisions++;
-//        NSLog(@"%f", shipAngle);
-//        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-//        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-//        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-//        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-//        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-//        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+        NSLog(@"%f", shipAngle);
+        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
         [self scoreCheck:shipAngle withColor:shipColor];
         
         collisionDidHappen = true;
@@ -511,6 +522,9 @@ CCSprite *enemyShip;
             //            warning = true;
             [self gameOver];
         } else {
+//            id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
+//            id removeDockedShip = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+//            [circle2 runAction:[CCSequence actions:dock, removeDockedShip, nil]];
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
         }
@@ -530,6 +544,11 @@ CCSprite *enemyShip;
          }
          //        } */
     }
+}
+
+-(void) removeSprite:(id)sender
+{
+    [self removeChild:sender cleanup:YES];
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color
@@ -956,6 +975,7 @@ CCSprite *enemyShip;
     power3Num = [[NSString alloc] initWithFormat:@"%i",numPower3Left];
     [power3Left setString:power3Num];
     
+    
     if (warning == true) {
         warningLabel.visible = true;
         //        [warningLabel runAction:[CCFadeIn actionWithDuration:0.5]];
@@ -1018,6 +1038,7 @@ CCSprite *enemyShip;
 //    int timesPowerUp1enabled = 0;
     
     KKInput *input = [KKInput sharedInput];
+    input.multipleTouchEnabled = true;
     if(input.touchesAvailable)
     {
         [self divideAngularSections];
@@ -1032,8 +1053,11 @@ CCSprite *enemyShip;
         float shipAngleRadians = asin(ratio); // arcsin of ratio
         float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
         //        float rotation = antiShipAngle; // shipAngle
+                
         CGPoint pos1 = [player position];
         CGPoint pos2 = pos;
+        
+        
         
         float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
         
@@ -1067,11 +1091,15 @@ CCSprite *enemyShip;
             rotation+=360;
         }
         
-        //        [player runAction:[CCRotateTo actionWithDuration:0.1f angle:rotation]];
+
         
-        
+        float diff = (lastTouchAngle-rotation);
         //        NSLog(@"Rotation: %f", rotation);
-        player.rotation = rotation;
+        if (!input.anyTouchBeganThisFrame)
+            player.rotation -= diff; // was originally player.rotation += diff
+        
+        lastTouchAngle = rotation;
+        
         //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
         
@@ -1080,7 +1108,7 @@ CCSprite *enemyShip;
          CGPoint powerUp1Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
          powerUp1.position = powerUp1Pos;
          }
-         
+  
          if ([input isAnyTouchOnNode:powerUp2 touchPhase:KKTouchPhaseAny]) {
          CGPoint powerUp2Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
          powerUp2.position = powerUp2Pos;
@@ -1098,8 +1126,6 @@ CCSprite *enemyShip;
             [self pauseGame];
             
         }
-        
-        
     }
 }
 
@@ -1217,12 +1243,12 @@ CCSprite *enemyShip;
     collisionDidHappen = false;
     framesPassed++;
     secondsPassed = framesPassed/60; // divide by framerate;
-    // if ((framesPassed % 100) == 0) {
-    //        NSLog(@"New Ship Generated!");
-    //    [self initShips];
-    //} else {
-    // do nothing
-    // }
+//     if ((framesPassed % 100) == 0) {
+//            NSLog(@"New Ship Generated!");
+//        [self initShips];
+//    } else {
+//     do nothing
+//     }
     [self divideAngularSections];
     [self circleCollisionWithSprite:player andThis:ship1];
     [self infiniteBorderCollisionWith:ship1];

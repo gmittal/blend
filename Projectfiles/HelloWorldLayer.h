@@ -88,6 +88,7 @@
     int scoreAdd;
     
     CCSprite *pauseButton;
+    float lastTouchAngle;
     
     int numPower1Left;
     int numPower2Left;

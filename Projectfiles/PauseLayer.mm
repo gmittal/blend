@@ -28,7 +28,7 @@
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"PipeDream" fontSize:60];
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"SpaceraLT-Regular" fontSize:40];
         gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
         [self addChild:gameOver z:100 tag:100];
         
@@ -61,6 +61,9 @@
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Resume" target:self selector:@selector(unPause)];
         CCMenuItemFont *restart = [CCMenuItemFont itemFromString: @"Restart" target:self selector:@selector(restartGame)];
         CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
+        [playAgain setFontName:@"Roboto-Light"];
+        [restart setFontName:@"Roboto-Light"];
+        [quit setFontName:@"Roboto-Light"];
         CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, restart, quit, nil];
         [gameOverMenu alignItemsVertically];
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 80);

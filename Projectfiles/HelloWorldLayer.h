@@ -103,6 +103,8 @@
     CCMenu *powerUpCreatorsMenu;
     
     CCSprite *infiniteBorderPowerUp1;
+    
+    NSNumber *sharedScore;
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color;

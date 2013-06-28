@@ -19,6 +19,7 @@
 
 // iOS SDK headers
 #import <Foundation/Foundation.h>
+#import <mgwuSDK/MGWU.h>
 #import <GameKit/GameKit.h>
 #import <iAd/iAd.h>
 #import <UIKit/UIKit.h>

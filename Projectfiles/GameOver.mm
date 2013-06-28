@@ -28,8 +28,8 @@
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"PipeDream" fontSize:60];
-        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"SpaceraLT-Regular" fontSize:30];
+        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 215);
         [self addChild:gameOver z:100 tag:100];
         
         // game over label runs 3 different actions at the same time to create the combined effect
@@ -58,20 +58,83 @@
         CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
         [gameOver runAction:repeatJump];
         
+        NSNumber *endingScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
+        int endingScore = [endingScoreNumber intValue];
+        NSString *endScoreString = [[NSString alloc] initWithFormat:@"Final Score: %i", endingScore];
+        CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"Roboto-Light" fontSize:25];
+        endScore.position = ccp(screenSize.width/2, 80);
+        [self addChild:endScore];
+        
+        NSNumber *endingHighScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+        int endingHighScore = [endingHighScoreNumber intValue];
+        NSString *endHighScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", endingHighScore];
+        CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:25];
+        endHighScore.position = ccp(screenSize.width/2, 40);
+        [self addChild:endHighScore];
+        
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Play Again" target:self selector:@selector(playAgain)];
         CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
+        [playAgain setFontName:@"Roboto-Light"];
+        [quit setFontName:@"Roboto-Light"];
         CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, quit, nil];
         [gameOverMenu alignItemsVertically];
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
         [self addChild:gameOverMenu];
+        
+        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 220, 250, 25)];
+        [[[CCDirector sharedDirector] view] addSubview:nameField];
+        nameField.delegate = self;
+        nameField.placeholder = @"Tap to Enter Username";
+        nameField.borderStyle = UITextBorderStyleRoundedRect;
+        [nameField setReturnKeyType:UIReturnKeyDone];
+        [nameField setAutocorrectionType:UITextAutocorrectionTypeNo];
+        [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+//        textField.visible = true;
+//        [glView addSubview:textField];
+//        [self addChild:textField];
+
     }
     return self;
 }
+
+- (void)textFieldDidEndEditing:(UITextField*)textField
+{
+    if (textField == nameField && ![nameField.text isEqualToString:@""])
+    {
+		
+        [nameField endEditing:YES];
+        [nameField removeFromSuperview];
+        // here is where you should do something with the data they entered
+        NSString *result = nameField.text;
+        
+//        username = result;
+        [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"username"];
+        
+    }
+}
+
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+	if (![nameField.text isEqualToString:@""])
+	{
+		//Hide keyboard when "done" clicked
+		[textField resignFirstResponder];
+		[nameField removeFromSuperview];
+		return YES;
+	}
+}
+
+
 
 -(void) quitGame
 {
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+    //Hide keyboard when "done" clicked
+  //  [textField resignFirstResponder];
+    [nameField removeFromSuperview];
+    //return YES;
 }
 
 -(void) playAgain

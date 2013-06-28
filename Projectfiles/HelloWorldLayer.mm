@@ -15,7 +15,10 @@
 
 /* SUGGESTIONS:
  - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL)
- 
+ - LEADERBOARDS
+ - NOT HAVING THE ROTATION JUMP WHEN THE USER TAPS THEIR FINGER TO SOME ARBITRARY ANGLE
+ - HAVE A 'SWEET-SPOT' WHICH GETS ENABLED EVERY ONCE IN A WHILE WHERE IF THE USER LANDS THE SHIP THERE, THEY GET BONUS POINTS
+ - (NEW POSSIBLE GAMEPLAY FEATURE): HAVE THE USER COAT THE OUTSIDE OF THE BALL WITH SHIPS TO PROCEED TO THE NEXT ROUND
  */
 
 
@@ -38,6 +41,12 @@ CCSprite *enemyShip2;
 CCSprite *enemyShip3;
 
 int spriteTagNum = 0;
+
+float rotation = 0.0f;
+
+int playerHighScore;
+
+NSNumber *sharedHighScore;
 
 
 -(id) init
@@ -201,21 +210,21 @@ int spriteTagNum = 0;
         // init powerup labels
         power1Left = [[CCLabelBMFont alloc] init];
         power1Num = [[NSString alloc]initWithFormat:@"%i", numPower1Left];
-        power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"PipeDream" fontSize:25];
+        power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"Roboto-Light" fontSize:25];
         power1Left.position = ccp(size.width/3 - 30, 20);
         power1Left.color = ccc3(0,0,0);
         [self addChild:power1Left z:200];
         
         power2Left = [[CCLabelBMFont alloc] init];
         power2Num = [[NSString alloc]initWithFormat:@"%i", numPower2Left];
-        power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"PipeDream" fontSize:25];
+        power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"Roboto-Light" fontSize:25];
         power2Left.position = ccp(size.width/2 + 20, 20);
         power2Left.color = ccc3(0,0,0);
         [self addChild:power2Left z:200];
         
         power3Left = [[CCLabelBMFont alloc] init];
         power3Num = [[NSString alloc]initWithFormat:@"%i", numPower3Left];
-        power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"PipeDream" fontSize:25];
+        power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"Roboto-Light" fontSize:25];
         power3Left.position = ccp(size.width/1.5 + 70, 20);
         power3Left.color = ccc3(0,0,0);
         [self addChild:power3Left z:200];
@@ -255,7 +264,7 @@ int spriteTagNum = 0;
         infiniteBorderPowerUp1.scale = 0;
         infiniteBorderPowerUp1.position = screenCenter;
         
-        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"PipeDream" fontSize:25];
+        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"SpaceraLT-Regular" fontSize:18];
         screenflashLabel.position = ccp(size.width/2, 405);
         screenflashLabel.color = ccc3(255,0,0);
         [self addChild:screenflashLabel z:110];
@@ -522,10 +531,10 @@ int spriteTagNum = 0;
             //            warning = true;
             [self gameOver];
         } else {
-//            id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
-//            id removeDockedShip = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
-//            [circle2 runAction:[CCSequence actions:dock, removeDockedShip, nil]];
-            [self removeChild:circle2 cleanup:YES];
+            id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
+            id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+            [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
+//            [self removeChild:circle2 cleanup:YES];
             [self initShips];
         }
         
@@ -548,6 +557,7 @@ int spriteTagNum = 0;
 
 -(void) removeSprite:(id)sender
 {
+    NSLog(@"SPRITE REMOVED");
     [self removeChild:sender cleanup:YES];
 }
 
@@ -704,7 +714,10 @@ int spriteTagNum = 0;
     
     if (cdistance <= cradii) {
         playerScore = playerScore + scoreAdd;
-        [self removeChild:shipToCollideWith cleanup:YES];
+        id dockInfin = [CCFadeTo actionWithDuration:0.1f opacity:0];
+        id removeSpriteInfin = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+        [shipToCollideWith runAction:[CCSequence actions:dockInfin, removeSpriteInfin, nil]];
+//        [self removeChild:shipToCollideWith cleanup:YES];
         [self initShips];
     }
 }
@@ -760,7 +773,10 @@ int spriteTagNum = 0;
 -(void) enablePowerUp3
 {
     if (numPower3Left > 0) {
-    [self removeChild:ship1 cleanup:YES];
+        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
+        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+        [ship1 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+//    [self removeChild:ship1 cleanup:YES];
     [self unscheduleUpdate];
     [self initShips];
     numPower3Left -= 1;
@@ -975,6 +991,8 @@ int spriteTagNum = 0;
     power3Num = [[NSString alloc] initWithFormat:@"%i",numPower3Left];
     [power3Left setString:power3Num];
     
+    sharedScore = [NSNumber numberWithInteger:playerScore];
+    [[NSUserDefaults standardUserDefaults] setObject:sharedScore forKey:@"sharedScore"];
     
     if (warning == true) {
         warningLabel.visible = true;
@@ -987,12 +1005,12 @@ int spriteTagNum = 0;
 
 -(void) divideAngularSections
 {
-    float normalizedStart1Ang = player.rotation;
+    float normalizedStart1Ang = rotation;
     if (normalizedStart1Ang > 360.0f) {
         normalizedStart1Ang-=360;
     }
     
-    float normalizedEnd1Ang = player.rotation + 120;
+    float normalizedEnd1Ang = rotation + 120;
     if (normalizedEnd1Ang > 360.0f) {
         normalizedEnd1Ang-=360;
     }
@@ -1039,10 +1057,11 @@ int spriteTagNum = 0;
     
     KKInput *input = [KKInput sharedInput];
     input.multipleTouchEnabled = true;
-    if(input.touchesAvailable)
+    CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+
+    if(pos.x != 0 && pos.y != 0)
     {
         [self divideAngularSections];
-        CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
         //        player.rotation = ((pos.x/360)*360) * (-1);
         float distX = pos.x - screenCenter.x;
         float distY = pos.y - screenCenter.y;
@@ -1061,7 +1080,7 @@ int spriteTagNum = 0;
         
         float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
         
-        float rotation;
+//        float rotation;
         
         if(pos1.y - pos2.y > 0)
         {
@@ -1093,14 +1112,21 @@ int spriteTagNum = 0;
         
 
         
-        float diff = (lastTouchAngle-rotation);
+//        float diff = (lastTouchAngle-rotation) * (-1);
         //        NSLog(@"Rotation: %f", rotation);
-        if (!input.anyTouchBeganThisFrame)
-            player.rotation -= diff; // was originally player.rotation += diff
+//        if (!input.anyTouchBeganThisFrame) {
+//            player.rotation += diff; // was originally player.rotation += diff
+//        }
+    
+//        lastTouchAngle = rotation;
         
-        lastTouchAngle = rotation;
+//        NSLog(@"Rotation %f", rotation);
+//        player.rotation = rotation; // for now until the code above gets fixed
+//        [player runAction:[CCRotateTo actionWithDuration:0.05f angle:rotation]];
         
-        //        NSLog(@"%f", player.rotation);
+        player.rotation = rotation;
+        
+//        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
         
     
@@ -1141,7 +1167,7 @@ int spriteTagNum = 0;
     }
     
     if (playerScore > 10) {
-        shipSpeed = 4.9f;
+        shipSpeed = 3.7f;
     }
     
     if (playerScore > 15) {
@@ -1154,6 +1180,10 @@ int spriteTagNum = 0;
     
     if (playerScore > 20) {
         shipSpeed = 2.2f;
+    }
+    
+    if (playerScore > 29) {
+        shipSpeed = 2.0f;
     }
     
     // 
@@ -1209,7 +1239,7 @@ int spriteTagNum = 0;
 {
     gameOver = false;
     // reset all game variables
-    shipSpeed = 5.0f; // default speed
+    shipSpeed = 4.8f; // default speed
     playerScore = 0;
     playerLives = 5;
     framesPassed = 0;
@@ -1229,6 +1259,19 @@ int spriteTagNum = 0;
 -(void) gameOver
 {
     gameOver = true;
+    if (playerHighScore == 0) {
+        playerHighScore = playerScore;
+        sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
+        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
+    }
+    
+    if (playerScore > playerHighScore) {
+        playerHighScore = playerScore;
+        sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
+        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
+    }
+    
+    
     [self goToGameOver];
 }
 

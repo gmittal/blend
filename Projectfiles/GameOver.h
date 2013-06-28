@@ -12,5 +12,7 @@
 #import "StartMenuLayer.h"
 
 @interface GameOver : CCScene
-
+{
+    UITextField *nameField;
+}
 @end

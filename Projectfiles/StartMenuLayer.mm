@@ -14,19 +14,28 @@
 {
 	if ((self = [super init]))
 	{
-        glClearColor(0, 0, 0, 0);
+        glClearColor(255, 255, 255, 255);
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"Moon Landing" fontName:@"HelveticaNeue-UltraLight" fontSize:48];
-        gameTitle.color = ccc3(255,255,255);
-        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 60);
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"dOck SHIPS" fontName:@"SpaceraLT-Regular" fontSize:30];
+        gameTitle.color = ccc3(0,0,0);
+        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 50);
         [self addChild:gameTitle];
         
                                     
         CCMenuItemFont *playNow = [CCMenuItemFont itemFromString: @"Play Now" target:self selector:@selector(startGame)];
-        CCMenu *startMenu = [CCMenu menuWithItems:playNow, nil];
+        [playNow setFontName:@"Roboto-Light"];
+        [playNow setFontSize:25];
+        playNow.color = ccc3(0, 0, 0);
+        
+        CCMenuItemFont *statsNow = [CCMenuItemFont itemFromString: @"Stats" target:self selector:@selector(gameStats)];
+        [statsNow setFontName:@"Roboto-Light"];
+        [statsNow setFontSize:25];
+        statsNow.color = ccc3(0, 0, 0);
+        
+        CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, nil];
         [startMenu alignItemsVertically];
-        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 + 10);
+        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 10);
         [self addChild:startMenu];
     }
     return self;
@@ -37,6 +46,12 @@
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
+}
+
+-(void) gameStats
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StatLayer node]]];
 }
 
 

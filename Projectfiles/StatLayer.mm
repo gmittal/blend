@@ -45,9 +45,8 @@ CGSize screenSize;
 //        [MGWU submitHighScore:highScore byPlayer:@"gmittal" forLeaderboard:@"defaultLeaderboard"];
         
         NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-        
-        
         [MGWU submitHighScore:highScore byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
+    
 //        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
 //                                 onTarget:self];
 

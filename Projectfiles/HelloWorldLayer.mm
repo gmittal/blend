@@ -9,17 +9,54 @@
 /*
  
  CURRENT BUGS:
- - SHIP COMBOS DO NOT EFFECTIVELY WORK WITHOUT BREAKING COLLISION DETECTION (TODO WITH NSMUTABLEARRAYS)
  - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS (BUT WORKS WELL ENOUGH WHEN LIVES ARE NOT DISPLAYED)
  */
 
 /* SUGGESTIONS:
  - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL)
- - LEADERBOARDS
- - NOT HAVING THE ROTATION JUMP WHEN THE USER TAPS THEIR FINGER TO SOME ARBITRARY ANGLE
+ - LEADERBOARDS (IMPLEMENTED)
  - HAVE A 'SWEET-SPOT' WHICH GETS ENABLED EVERY ONCE IN A WHILE WHERE IF THE USER LANDS THE SHIP THERE, THEY GET BONUS POINTS
  - (NEW POSSIBLE GAMEPLAY FEATURE): HAVE THE USER COAT THE OUTSIDE OF THE BALL WITH SHIPS TO PROCEED TO THE NEXT ROUND
  */
+
+
+/*
+    POWERUP IDEAS:
+    - ENERGY SHEILD (IMPLEMENTED, POWERUP1)
+    - PAUSE POWER (IMPLEMENTED, POWERUP2)
+    - DESTROY SHIP POWER (IMPLEMENTED, POWERUP3)
+ 
+    (3) - SLOW MOTION POWER
+    (2) - WORLD SPlITS INTO 2 COLORS FOR A CERTAIN AMOUNT OF TIME
+    - COLORS BECOME INVERSE (RED GOES TO BLUE, BLUE TO YELLOW, YELLOW TO RED)
+    (2) - SUICIDE POWERUP (BLOW EVERYTHING UP)
+    - ATMOSPHERE POWERUP (certain section can be broken by each ship collision, but the rest of the section will remain intact)
+    - MORE SECTIONS POWERUP (creates more colored sections on the middle wheel)
+    (2) - UNLEASH MONSTER POWERUP (releases monster that shoots ships, redirecting to a minigame where you shoot ships)
+    (2) - STORE POWER (buy anything midway through a game, but with limited time)
+    (2) - MUSIC MODE (play music to increase focus and coordination)
+    (1) - NEGATIVE COLOR MODE (inverts the colors on screen)
+    (2) - GOLF MODE (try and get the most ships into the wrong sectors as possible)
+    (2) - POINT BOOST (any ship that collides with the player will grant some extra number of points)
+    (1) - RED SHIP BOOST (only creates red ships for some amount of time)
+    (1) - BLUE SHIP BOOST (only creates blue ships for some amount of time)
+    (1) - YELLOW SHIP BOOST (only creates yellow ships for some amount of time)
+    (1) - LIVES BOOST (gain lives every time a ship correctly lands into a sector)
+    (2) - CHANGE THE DEATH OF THE PLANET (change the death of the planet randomly, will it explode? will it melt? will it burn?)
+    (2) - ZOMBIE PLANET (right before death, activate powerup to ressurect the planet and give you an additional life)
+    (1) - KATAMARI PLANET (enable this powerup to allow any ship that collides with the planet to add on to the ships mass for a certain amount of time)
+    - INVERSE STEERING (does what its name claims)
+    (1) - BOUNCE OFF POWERUP (all ships that collide with the planet bounce off)
+*/
+
+/*
+    PROJECTILE IDEAS:
+    - MAGENTA SHIP (IMPLEMENTED, SHPIP1)
+    - BLUE SHIP (IMPLEMENTED, SHIP2)
+    - YELLOW SHIP (IMPLEMENTED, SHIP3)
+    - BAG OF COINS: GIVES USER 10 COINS IF PLACED IN CORRECT SECTOR
+*/
+
 
 
 #import "HelloWorldLayer.h"
@@ -43,6 +80,8 @@ CCSprite *enemyShip3;
 int spriteTagNum = 0;
 
 float rotation = 0.0f;
+float circle_rotation;// = 0.0f;
+
 
 int playerHighScore;
 
@@ -1005,12 +1044,12 @@ NSNumber *sharedHighScore;
 
 -(void) divideAngularSections
 {
-    float normalizedStart1Ang = rotation;
+    float normalizedStart1Ang = player.rotation;
     if (normalizedStart1Ang > 360.0f) {
         normalizedStart1Ang-=360;
     }
     
-    float normalizedEnd1Ang = rotation + 120;
+    float normalizedEnd1Ang = player.rotation + 120;
     if (normalizedEnd1Ang > 360.0f) {
         normalizedEnd1Ang-=360;
     }
@@ -1072,36 +1111,40 @@ NSNumber *sharedHighScore;
         float shipAngleRadians = asin(ratio); // arcsin of ratio
         float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
         //        float rotation = antiShipAngle; // shipAngle
-                
-        CGPoint pos1 = [player position];
-        CGPoint pos2 = pos;
         
+        CGPoint rot_pos1 = [player position];
+        CGPoint rot_pos2 = pos;
         
+        CGPoint circle_pos1 = [player position];
+        CGPoint circle_pos2 = pos;
         
-        float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
+        //    rot_pos1 = [player position];
+        //    rot_pos2 = posOfTouch;
         
-//        float rotation;
+        float rotation_theta = atan((rot_pos1.y-rot_pos2.y)/(rot_pos1.x-rot_pos2.x)) * 180 / M_PI;
         
-        if(pos1.y - pos2.y > 0)
+        //        float rotation;
+        
+        if(rot_pos1.y - rot_pos2.y > 0)
         {
-            if(pos1.x - pos2.x < 0)
+            if(rot_pos1.x - rot_pos2.x < 0)
             {
-                rotation = (-90-theta);
+                rotation = (-90-rotation_theta);
             }
-            else if(pos1.x - pos2.x > 0)
+            else if(rot_pos1.x - rot_pos2.x > 0)
             {
-                rotation = (90-theta);
+                rotation = (90-rotation_theta);
             }
         }
-        else if(pos1.y - pos2.y < 0)
+        else if(rot_pos1.y - rot_pos2.y < 0)
         {
-            if(pos1.x - pos2.x < 0)
+            if(rot_pos1.x - rot_pos2.x < 0)
             {
-                rotation = (270-theta);
+                rotation = (270-rotation_theta);
             }
-            else if(pos1.x - pos2.x > 0)
+            else if(rot_pos1.x - rot_pos2.x > 0)
             {
-                rotation = (90-theta);
+                rotation = (90-rotation_theta);
             }
         }
         
@@ -1110,21 +1153,70 @@ NSNumber *sharedHighScore;
             rotation+=360;
         }
         
+        /*float circle_theta = atan((circle_pos1.y-circle_pos2.y)/(circle_pos1.x-circle_pos2.x)) * 180 / M_PI;
+        
+        //        float rotation;
+        
+        if(circle_pos1.y - circle_pos2.y > 0)
+        {
+            if(circle_pos1.x - circle_pos2.x < 0)
+            {
+                circle_rotation = (-90-circle_theta);
+            }
+            else if(circle_pos1.x - circle_pos2.x > 0)
+            {
+                circle_rotation = (90-circle_theta);
+            }
+        }
+        else if(circle_pos1.y - circle_pos2.y < 0)
+        {
+            if(circle_pos1.x - circle_pos2.x < 0)
+            {
+                circle_rotation = (270-circle_theta);
+            }
+            else if(circle_pos1.x - circle_pos2.x > 0)
+            {
+                circle_rotation = (90-circle_theta);
+            }
+        }
+        
+        if (circle_rotation < 0)
+        {
+            circle_rotation+=360;
+        }
 
+        NSLog(@"Circle's Rotation: %f", circle_rotation); */
+//        [self normalizeThisToStandards:rotation_pos1 andThis:rotation_pos2 withRotVariable:rotation];
         
-//        float diff = (lastTouchAngle-rotation) * (-1);
-        //        NSLog(@"Rotation: %f", rotation);
-//        if (!input.anyTouchBeganThisFrame) {
-//            player.rotation += diff; // was originally player.rotation += diff
-//        }
     
-//        lastTouchAngle = rotation;
+        float diff = (lastTouchAngle-rotation) * (-1);
+    
+//        NSLog(@"Rotation: %f", rotation);
         
-//        NSLog(@"Rotation %f", rotation);
+        if (!input.anyTouchBeganThisFrame) {
+//            NSLog(@"LastTouchAngle: %f", lastTouchAngle);
+//            NSLog(@"Rotation: %f", rotation);
+//            NSLog(@"Diff: %f", diff);
+            player.rotation += diff; // was originally player.rotation += diff
+            if (player.rotation < 0) {
+                player.rotation = player.rotation + 360.f;
+            }
+            
+            if (player.rotation > 360) {
+                player.rotation -= 360;
+            }
+            
+            NSLog(@"Player Rotation: %f", player.rotation);
+        }
+    
+        lastTouchAngle = rotation;
+        
+        
+//        NSLog(@"Rotation %f", player.rotation);
 //        player.rotation = rotation; // for now until the code above gets fixed
-//        [player runAction:[CCRotateTo actionWithDuration:0.05f angle:rotation]];
+//        [player runAction:[CCRotateTo actionWithDuration:0.1f angle:rotation]];
         
-        player.rotation = rotation;
+//        player.rotation = rotation;
         
 //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
@@ -1155,9 +1247,14 @@ NSNumber *sharedHighScore;
     }
 }
 
+-(void) normalizeThisToStandards:(CGPoint) rot_pos1 andThis:(CGPoint) rot_pos2 withRotVariable:(float) rotationVar
+{
+
+}
+
 -(void) initChallenges
 {
-    // speed challenge 
+    // speed challenge
     if (playerScore > 6) {
         shipSpeed = 3.5f;
     }
@@ -1254,6 +1351,9 @@ NSNumber *sharedHighScore;
     
     warning = false;
     collisionDidHappen = false;
+    
+    NSNumber *curHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+    playerHighScore = [curHighScore intValue]; // read from the devices memory
 }
 
 -(void) gameOver
@@ -1263,14 +1363,19 @@ NSNumber *sharedHighScore;
         playerHighScore = playerScore;
         sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
         [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
+//        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
     }
     
     if (playerScore > playerHighScore) {
         playerHighScore = playerScore;
         sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
         [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
+//        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
     }
     
+//    NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+//    NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+//    [MGWU submitHighScore:[savedHighScore intValue] byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
     
     [self goToGameOver];
 }

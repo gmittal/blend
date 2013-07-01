@@ -33,9 +33,14 @@
         [statsNow setFontSize:25];
         statsNow.color = ccc3(0, 0, 0);
         
-        CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, nil];
+        CCMenuItemFont *store = [CCMenuItemFont itemFromString: @"Store" target:self selector:@selector(gameStore)];
+        [store setFontName:@"Roboto-Light"];
+        [store setFontSize:25];
+        store.color = ccc3(0, 0, 0);
+        
+        CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, store, nil];
         [startMenu alignItemsVertically];
-        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 10);
+        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 20);
         [self addChild:startMenu];
     }
     return self;
@@ -54,5 +59,10 @@
 	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StatLayer node]]];
 }
 
+-(void) gameStore
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StoreLayer node]]];
+}
 
 @end

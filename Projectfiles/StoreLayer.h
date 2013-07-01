@@ -7,7 +7,11 @@
 //
 
 #import "CCScene.h"
+#import "HelloWorldLayer.h"
 
 @interface StoreLayer : CCScene
+{
+CGSize screenSize;
+}
 
 @end

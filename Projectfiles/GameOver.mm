@@ -28,7 +28,7 @@
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"YOU DIED!" fontName:@"SpaceraLT-Regular" fontSize:30];
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"MISSION FAILED" fontName:@"SpaceraLT-Regular" fontSize:25];
         gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 215);
         [self addChild:gameOver z:100 tag:100];
         
@@ -66,6 +66,7 @@
         [self addChild:endScore];
         
         NSNumber *endingHighScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+//        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         int endingHighScore = [endingHighScoreNumber intValue];
         NSString *endHighScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", endingHighScore];
         CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:25];
@@ -142,6 +143,7 @@
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
 //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
+    [nameField removeFromSuperview];
 }
 
 @end

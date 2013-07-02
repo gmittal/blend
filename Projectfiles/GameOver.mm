@@ -61,17 +61,27 @@
         NSNumber *endingScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         int endingScore = [endingScoreNumber intValue];
         NSString *endScoreString = [[NSString alloc] initWithFormat:@"Final Score: %i", endingScore];
-        CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"Roboto-Light" fontSize:25];
-        endScore.position = ccp(screenSize.width/2, 80);
+        CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"Roboto-Light" fontSize:20];
+        endScore.position = ccp(screenSize.width/2, 100);
         [self addChild:endScore];
         
         NSNumber *endingHighScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
 //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         int endingHighScore = [endingHighScoreNumber intValue];
         NSString *endHighScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", endingHighScore];
-        CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:25];
-        endHighScore.position = ccp(screenSize.width/2, 40);
+        CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:20];
+        endHighScore.position = ccp(screenSize.width/2, 60);
         [self addChild:endHighScore];
+        
+        NSNumber *endingCoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+        //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
+        int endingCoins = [endingCoinNumber intValue];
+        NSString *endCoinString = [[NSString alloc] initWithFormat:@"Coins: %i", endingCoins];
+        CCLabelBMFont *endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"Roboto-Light" fontSize:20];
+        endCoins.position = ccp(screenSize.width/2, 20);
+        [self addChild:endCoins];
+
+        
         
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Play Again" target:self selector:@selector(playAgain)];
         CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];

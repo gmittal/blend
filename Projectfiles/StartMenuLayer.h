@@ -10,6 +10,7 @@
 #import "HelloWorldLayer.h"
 #import "StatLayer.h"
 #import "StoreLayer.h"
+#import "UpgradesLayer.h"
 
 @interface StartMenuLayer : CCScene
 

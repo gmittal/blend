@@ -13,12 +13,18 @@
  */
 
 /* SUGGESTIONS:
- - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL)
+ - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL, OPTIONAL)
  - LEADERBOARDS (IMPLEMENTED)
  - HAVE A 'SWEET-SPOT' WHICH GETS ENABLED EVERY ONCE IN A WHILE WHERE IF THE USER LANDS THE SHIP THERE, THEY GET BONUS POINTS
  - (NEW POSSIBLE GAMEPLAY FEATURE): HAVE THE USER COAT THE OUTSIDE OF THE BALL WITH SHIPS TO PROCEED TO THE NEXT ROUND
+ - HAVE A SHAPE ASSOCIATED WITH EACH COLOR AND IF THE SHAPE AND COLOR OF THE SHIP MATCHES THE SECTOR, THEN GRANT EXTRA POINTS
  */
 
+/* SHAPES ASSOSCIATED WITH COLORS
+    - RED = SQUARE
+    - BLUE = HEXAGON
+    - YELLOW = TRIANGLE
+*/
 
 /*
     POWERUP IDEAS:
@@ -26,27 +32,27 @@
     - PAUSE POWER (IMPLEMENTED, POWERUP2)
     - DESTROY SHIP POWER (IMPLEMENTED, POWERUP3)
  
-    (3) - SLOW MOTION POWER
-    (2) - WORLD SPlITS INTO 2 COLORS FOR A CERTAIN AMOUNT OF TIME
+    (4) E - SLOW MOTION POWER
+    (3) I - WORLD SPlITS INTO 2 COLORS FOR A CERTAIN AMOUNT OF TIME
     - COLORS BECOME INVERSE (RED GOES TO BLUE, BLUE TO YELLOW, YELLOW TO RED)
-    (2) - SUICIDE POWERUP (BLOW EVERYTHING UP)
+    (2) E - SUICIDE POWERUP (BLOW EVERYTHING UP)
     - ATMOSPHERE POWERUP (certain section can be broken by each ship collision, but the rest of the section will remain intact)
     - MORE SECTIONS POWERUP (creates more colored sections on the middle wheel)
-    (2) - UNLEASH MONSTER POWERUP (releases monster that shoots ships, redirecting to a minigame where you shoot ships)
-    (2) - STORE POWER (buy anything midway through a game, but with limited time)
-    (2) - MUSIC MODE (play music to increase focus and coordination)
-    (1) - NEGATIVE COLOR MODE (inverts the colors on screen)
-    (2) - GOLF MODE (try and get the most ships into the wrong sectors as possible)
-    (2) - POINT BOOST (any ship that collides with the player will grant some extra number of points)
-    (1) - RED SHIP BOOST (only creates red ships for some amount of time)
-    (1) - BLUE SHIP BOOST (only creates blue ships for some amount of time)
-    (1) - YELLOW SHIP BOOST (only creates yellow ships for some amount of time)
-    (1) - LIVES BOOST (gain lives every time a ship correctly lands into a sector)
-    (2) - CHANGE THE DEATH OF THE PLANET (change the death of the planet randomly, will it explode? will it melt? will it burn?)
-    (2) - ZOMBIE PLANET (right before death, activate powerup to ressurect the planet and give you an additional life)
-    (1) - KATAMARI PLANET (enable this powerup to allow any ship that collides with the planet to add on to the ships mass for a certain amount of time)
+    (3) A - UNLEASH MONSTER POWERUP (releases monster that shoots ships, redirecting to a minigame where you shoot ships)
+    (3) I - STORE POWER (buy anything midway through a game, but with limited time)
+    (2) E - MUSIC MODE (play music to increase focus and coordination)
+    (1) I - NEGATIVE COLOR MODE (inverts the colors on screen)
+    (3) I - GOLF MODE (try and get the most ships into the wrong sectors as possible)
+    (3) E - POINT BOOST (any ship that collides with the player will grant some extra number of points)
+    (2) I - RED SHIP BOOST (only creates red ships for some amount of time)
+    (2) I - BLUE SHIP BOOST (only creates blue ships for some amount of time)
+    (2) I - YELLOW SHIP BOOST (only creates yellow ships for some amount of time)
+    (2) E - LIVES BOOST (gain lives every time a ship correctly lands into a sector)
+    (2) E - CHANGE THE DEATH OF THE PLANET (change the death of the planet randomly, will it explode? will it melt? will it burn?)
+    (3) E - ZOMBIE PLANET (right before death, activate powerup to ressurect the planet and give you an additional life)
+    (1) A - KATAMARI PLANET (enable this powerup to allow any ship that collides with the planet to add on to the ships mass for a certain amount of time)
     - INVERSE STEERING (does what its name claims)
-    (1) - BOUNCE OFF POWERUP (all ships that collide with the planet bounce off)
+    (1) E/I - BOUNCE OFF POWERUP (all ships that collide with the planet bounce off)
 */
 
 /*
@@ -60,6 +66,7 @@
 
 
 #import "HelloWorldLayer.h"
+#import "SimpleAudioEngine.h"
 
 @interface HelloWorldLayer (PrivateMethods)
 @end
@@ -87,6 +94,12 @@ int playerHighScore;
 
 NSNumber *sharedHighScore;
 
+int numSpritesCollided;
+
+int shipShape;
+
+int playerCoins;
+NSNumber *sharedCoins;
 
 -(id) init
 {
@@ -179,9 +192,9 @@ NSNumber *sharedHighScore;
         [progressBar3 runAction:progressTo3];
         
         // score label
-        score = [[NSString alloc]initWithFormat:@"Score: %i", playerScore];
+        score = [[NSString alloc]initWithFormat:@"%i", playerScore];
         scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
-        scoreLabel.position = ccp(size.width/2, 465);
+        scoreLabel.position = ccp(20, size.height - 15);
         scoreLabel.color = ccc3(0,0,0);
         [self addChild:scoreLabel z:100];
         
@@ -206,6 +219,11 @@ NSNumber *sharedHighScore;
         ship1 = [[CCSprite alloc] init];
         ship1 = [CCSprite spriteWithFile:@"ship1.png"];
         ship1.scale = 0.15f;
+        
+        ship2 = [[CCSprite alloc] init];
+        ship2 = [CCSprite spriteWithFile:@"ship1.png"];
+        ship2.scale = 0.15f;
+
 //        ship1.tag = spriteTagNum;
         
         powerUpCreator1 = [[CCMenuItemImage alloc] init];
@@ -315,9 +333,11 @@ NSNumber *sharedHighScore;
         [self divideAngularSections];
         
         [self pickColor];
+        [self pickShape];
         [self initShips];
         
-//        [self flashLabel:@"WELCOME!" forTime:2.0f];
+        // preload sound effects so that there is no delay when playing sound effect
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"click.mp3"];
         
         [self scheduleUpdate]; // schedule the framely update
 	}
@@ -563,18 +583,25 @@ NSNumber *sharedHighScore;
         [self scoreCheck:shipAngle withColor:shipColor];
         
         collisionDidHappen = true;
-        
+
         if (playerLives == 0) {
             [self removeChild:circle2 cleanup:YES];
             [self initShips];
             //            warning = true;
             [self gameOver];
         } else {
+            [[SimpleAudioEngine sharedEngine] playEffect:@"click.mp3"];
             id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
             id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
             [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
-//            [self removeChild:circle2 cleanup:YES];
+            //            [self removeChild:circle2 cleanup:YES];
             [self initShips];
+//            numSpritesCollided++;
+//            if (numSpritesCollided > 2) {
+//            [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
+//            [self initShips];
+//                numSpritesCollided = 0;
+//            }
         }
         
         /* if ((numCollisions - playerScore) > playerLives - 2) {
@@ -815,6 +842,7 @@ NSNumber *sharedHighScore;
         id removeEffect = [CCFadeOut actionWithDuration:0.2f];
         id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
         [ship1 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+//        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
 //    [self removeChild:ship1 cleanup:YES];
     [self unscheduleUpdate];
     [self initShips];
@@ -829,11 +857,15 @@ NSNumber *sharedHighScore;
 -(void) shipPauseAllActions
 {
     [ship1 pauseSchedulerAndActions];
+//    [ship2 pauseSchedulerAndActions];
+
 }
 
 -(void) shipResumeAllActions
 {
     [ship1 resumeSchedulerAndActions];
+//    [ship2 pauseSchedulerAndActions];
+
 }
 
 
@@ -867,6 +899,13 @@ NSNumber *sharedHighScore;
     [powerUpType3 addObject:powerUp3];
 }
 
+
+
+-(void) pickShape
+{
+    int shape = (arc4random()%(3-1+1))+1;
+    shipShape = shape;
+}
 
 -(void) pickColor
 {
@@ -944,26 +983,36 @@ NSNumber *sharedHighScore;
 -(void) initShips
 {
     [self pickColor];
+    [self pickShape];
     if (shipColor == 1) {
         ship1 = [CCSprite spriteWithFile:@"ship1.png"];
         ship1.scale = 0.15;
+//        ship2 = [CCSprite spriteWithFile:@"ship1.png"];
+//        ship2.scale = 0.15;
         //        [self initSect1Ships];
     }
+    
     
     if (shipColor == 2) {
         ship1 = [CCSprite spriteWithFile:@"ship2.png"];
         ship1.scale = 0.15;
+//        ship2 = [CCSprite spriteWithFile:@"ship2.png"];
+//        ship2.scale = 0.15;
         //        [self initSect2Ships];
     }
     
     if (shipColor == 3) {
         ship1 = [CCSprite spriteWithFile:@"ship3.png"];
         ship1.scale = 0.15;
+//        ship2 = [CCSprite spriteWithFile:@"ship3.png"];
+//        ship2.scale = 0.15;
         //        [self initSect3Ships];
     }
     
     [self createShipCoord:ship1]; // create coordinate for ship to spawn to
     [self moveShip:ship1];
+//    [self createShipCoord:ship2]; // create coordinate for ship to spawn to
+//    [self moveShip:ship2];
 }
 
 
@@ -1016,7 +1065,7 @@ NSNumber *sharedHighScore;
 // METHODS THAT MUST RUN EVERY FRAME
 -(void) updateScore
 {
-    score = [[NSString alloc] initWithFormat:@"Score: %i",playerScore];
+    score = [[NSString alloc] initWithFormat:@"%i",playerScore];
     [scoreLabel setString:score];
     lives = [[NSString alloc] initWithFormat:@"Lives: %i",playerLives];
     [liveLabel setString:lives];
@@ -1206,7 +1255,7 @@ NSNumber *sharedHighScore;
                 player.rotation -= 360;
             }
             
-            NSLog(@"Player Rotation: %f", player.rotation);
+//            NSLog(@"Player Rotation: %f", player.rotation);
         }
     
         lastTouchAngle = rotation;
@@ -1283,7 +1332,23 @@ NSNumber *sharedHighScore;
         shipSpeed = 2.0f;
     }
     
-    // 
+//    if (playerScore > 39) {
+//        shipSpeed = 1.9f;
+//    }
+    
+//    if (playerScore > 59) {
+//        shipSpeed = 1.9f;
+//    }
+    
+//    if (playerScore > 79) {
+//        shipSpeed = 1.9f;
+//    }
+    
+//    if (playerScore > 99) {
+//        shipSpeed = 1.0f;
+//    }
+    
+    
 }
 
 -(void) initMenuItems
@@ -1314,11 +1379,14 @@ NSNumber *sharedHighScore;
 -(void) goToGameOver
 {
     [ship1 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
+//    [ship2 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
     id particleEffects = [CCCallFunc actionWithTarget:self selector:@selector(runEffect)];
     id effectDelay = [CCDelayTime actionWithDuration:2.4f];
     id goToScene = [CCCallFunc actionWithTarget:self selector:@selector(transferToGameOverScene)];
     [self removeChild:player cleanup:YES];
     [self removeChild:ship1 cleanup:YES];
+//    [self removeChild:ship2 cleanup:YES];
+
     CCSequence *gameOverSequence = [CCSequence actions:particleEffects, effectDelay, goToScene, nil];
     
     // execute the sequence
@@ -1354,6 +1422,9 @@ NSNumber *sharedHighScore;
     
     NSNumber *curHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     playerHighScore = [curHighScore intValue]; // read from the devices memory
+    
+    NSNumber *curCoins = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+    playerCoins = [curCoins intValue]; // read from devices memory
 }
 
 -(void) gameOver
@@ -1372,6 +1443,19 @@ NSNumber *sharedHighScore;
         [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
 //        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
     }
+    
+    if (playerCoins == 0) {
+        playerCoins = playerScore;
+        sharedCoins = [NSNumber numberWithInteger:playerCoins];
+        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
+    }
+    if (playerCoins > 0) {
+        playerCoins = playerCoins + playerScore;
+        sharedCoins = [NSNumber numberWithInteger:playerCoins];
+        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
+    }
+    
+    
     
 //    NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
 //    NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
@@ -1400,6 +1484,9 @@ NSNumber *sharedHighScore;
     [self divideAngularSections];
     [self circleCollisionWithSprite:player andThis:ship1];
     [self infiniteBorderCollisionWith:ship1];
+//    [self circleCollisionWithSprite:player andThis:ship2];
+//    [self circleCollisionWithSprite:player andThis:ship2];
+//    [self infiniteBorderCollisionWith:ship2];
     //    [self circleCollisionWith:section2Ships];
     //    [self circleCollisionWith:section3Ships];
     [self handleUserInput];

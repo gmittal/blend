@@ -32,6 +32,16 @@
         coinsLabel.color = ccc3(0, 0, 0);
         [self addChild:coinsLabel];
         
+        CCMenuItemFont *powerup1 = [CCMenuItemFont itemFromString: @"Slow Motion Power - 100 Coins" target:self selector:@selector(powerup1)];
+        [powerup1 setFontName:@"Roboto-Light"];
+        [powerup1 setFontSize:25];
+        powerup1.color = ccc3(0, 0, 0);
+        
+        CCMenuItemFont *powerup2 = [CCMenuItemFont itemFromString: @"Slow Motion Power - 100 Coins" target:self selector:@selector(powerup2)];
+        [powerup2 setFontName:@"Roboto-Light"];
+        [powerup2 setFontSize:25];
+        powerup2.color = ccc3(0, 0, 0);
+        
         
         NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
         int highScore = [savedHighScore intValue];
@@ -52,8 +62,8 @@
         
         //        [MGWU submitHighScore:highScore byPlayer:@"gmittal" forLeaderboard:@"defaultLeaderboard"];
         
-        NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-        [MGWU submitHighScore:highScore byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
+//        NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+//        [MGWU submitHighScore:highScore byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
         
         //        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
         //                                 onTarget:self];

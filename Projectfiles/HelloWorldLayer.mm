@@ -200,9 +200,9 @@ CCSprite *lifeBarBorder;
         // score label
         score = [[NSString alloc]initWithFormat:@"%i", playerScore];
         scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
-        scoreLabel.position = ccp(20, size.height - 15);
+        scoreLabel.position = ccp(27, size.height - 19);
         scoreLabel.color = ccc3(0,0,0);
-        [self addChild:scoreLabel z:100];
+        [self addChild:scoreLabel z:1001];
         
         // lives label
         lives = [[NSString alloc]initWithFormat:@"Lives: %i", playerLives];
@@ -228,18 +228,18 @@ CCSprite *lifeBarBorder;
         
         lifeBarBorder = [CCSprite spriteWithFile: @"healthbarBorder.png"];
         lifeBarBorder.scale = 0.85f;
-        [lifeBarBorder setPosition:ccp(screenCenter.x, size.height - 17)];
-        [self addChild:lifeBarBorder z:1];
+        [lifeBarBorder setPosition:ccp(screenCenter.x + 7, size.height - 20)];
+        [self addChild:lifeBarBorder z:1001];
         
         lifeBarSprite = [CCSprite spriteWithFile:@"healthbarFill.png"];
         lifeBar = [CCProgressTimer progressWithSprite:lifeBarSprite];
         lifeBar.scale = 0.85f;
         lifeBar.type = kCCProgressTimerTypeBar;
-        lifeBar.position = ccp(45, size.height - 32);
+        lifeBar.position = ccp(52, size.height - 35);
         lifeBar.midpoint = ccp(0.f, 0.5f);
 //        lifeBar.midpoint = ccp(screenCenter.x, size.height - 20);
         lifeBar.barChangeRate = ccp(1,0);
-        [self addChild:lifeBar z:14];
+        [self addChild:lifeBar z:1002];
         [lifeBar setAnchorPoint: ccp(0,0)];
         lifeBar.percentage = 100;
 //        lifeUpdater = [CCProgressTo actionWithDuration:1 percent:100];
@@ -303,7 +303,7 @@ CCSprite *lifeBarBorder;
         pauseButton = [CCSprite spriteWithFile:@"pause.png"];
         pauseButton.position = ccp(size.width - 20, size.height - 20);
         pauseButton.scale = 0.25f;
-        [self addChild:pauseButton z:100];
+        [self addChild:pauseButton z:1001];
         
         // init powerup labels
         power1Left = [[CCLabelBMFont alloc] init];
@@ -371,6 +371,16 @@ CCSprite *lifeBarBorder;
         enemyShip1 = [[CCSprite alloc] init];
         enemyShip1 = [CCSprite spriteWithFile:@""];
         
+        CCSprite *topBar = [CCSprite spriteWithFile:@"topbar.png"];
+        topBar.position = ccp(screenCenter.x, size.height - 20);
+        topBar.scaleX = 3.0f;
+        [self addChild:topBar z:1000];
+        
+        CCSprite *background = [CCSprite spriteWithFile:@"backgroundip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
+        
         [self divideAngularSections];
         
         [self pickColor];
@@ -379,6 +389,7 @@ CCSprite *lifeBarBorder;
         
         // preload sound effects so that there is no delay when playing sound effect
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"click.mp3"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"gameover.mp3"];
         
         [self scheduleUpdate]; // schedule the framely update
 	}
@@ -397,6 +408,7 @@ CCSprite *lifeBarBorder;
 
 -(void) runEffect
 {
+    [[SimpleAudioEngine sharedEngine] playEffect:@"gameover.mp3"];
 	// remove any previous particle FX
 	[self removeChildByTag:7 cleanup:YES];
 	
@@ -1466,7 +1478,7 @@ CCSprite *lifeBarBorder;
     secondsPassed = 0;
     numCollisions = 0;
     livesSubtract = 1;
-    scoreAdd = 1;
+    scoreAdd = 5;
     
     numPower1Left = 1;
     numPower2Left = 5;

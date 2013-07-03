@@ -101,6 +101,12 @@ int shipShape;
 int playerCoins;
 NSNumber *sharedCoins;
 
+CCSprite *lifeBarSprite;
+CCProgressTimer *lifeBar;
+CCProgressTo *lifeUpdater;
+
+CCSprite *lifeBarBorder;
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -204,6 +210,41 @@ NSNumber *sharedCoins;
         liveLabel.position = ccp(size.width/2, 435);
         liveLabel.color = ccc3(0,0,0);
 //        [self addChild:liveLabel z:100];
+        
+        
+    /*    lifeBarBorder = [CCSprite spriteWithFile:@"healthbarBorder.png"];
+        lifeBarBorder.position = ccp(screenCenter.x, size.height - 15);
+        [self addChild:lifeBarBorder];
+        
+        lifeBarSprite = [CCSprite spriteWithFile:@"healthBarFill.png"];
+        lifeBar = [CCProgressTimer progressWithSprite:lifeBarSprite];
+        lifeBar.type = kCCProgressTimerTypeBar;
+        [lifeBarBorder addChild:lifeBar z:2];
+        lifeBar.position = ccp(size.width/2, size.height/2 - 15);
+        //   [progressBar2 setAnchorPoint:zero];
+//        progressBar3.rotation = 240.0f;
+        lifeUpdater = [CCProgressTo actionWithDuration:1 percent:playerLives];
+        [lifeBar runAction:lifeUpdater]; */
+        
+        lifeBarBorder = [CCSprite spriteWithFile: @"healthbarBorder.png"];
+        lifeBarBorder.scale = 0.85f;
+        [lifeBarBorder setPosition:ccp(screenCenter.x, size.height - 17)];
+        [self addChild:lifeBarBorder z:1];
+        
+        lifeBarSprite = [CCSprite spriteWithFile:@"healthbarFill.png"];
+        lifeBar = [CCProgressTimer progressWithSprite:lifeBarSprite];
+        lifeBar.scale = 0.85f;
+        lifeBar.type = kCCProgressTimerTypeBar;
+        lifeBar.position = ccp(45, size.height - 32);
+        lifeBar.midpoint = ccp(0.f, 0.5f);
+//        lifeBar.midpoint = ccp(screenCenter.x, size.height - 20);
+        lifeBar.barChangeRate = ccp(1,0);
+        [self addChild:lifeBar z:14];
+        [lifeBar setAnchorPoint: ccp(0,0)];
+        lifeBar.percentage = 100;
+//        lifeUpdater = [CCProgressTo actionWithDuration:1 percent:100];
+//        [lifeBar runAction:lifeUpdater];
+        
         
         // warning label
         warningLabel = [CCLabelTTF labelWithString:@"STATUS CRITICAL" fontName:@"Courier" fontSize:25];
@@ -648,6 +689,7 @@ NSNumber *sharedCoins;
             }
         } else {
             playerLives = playerLives - livesSubtract;
+            [self updateHealth];
             [self divideAngularSections];
             
         }
@@ -697,6 +739,7 @@ NSNumber *sharedCoins;
             }
         } else {
             playerLives = playerLives - livesSubtract;
+            [self updateHealth];
             [self divideAngularSections];
         }
         
@@ -741,6 +784,7 @@ NSNumber *sharedCoins;
             }
         } else {
             playerLives = playerLives - livesSubtract;
+            [self updateHealth];
             [self divideAngularSections];
         }
         
@@ -1063,6 +1107,16 @@ NSNumber *sharedCoins;
 
 
 // METHODS THAT MUST RUN EVERY FRAME
+-(void) updateHealth
+{
+//    float percent = (playerLives/startLives) * 100;
+//    NSLog(@"PERCENT: %f", percent);
+    lifeBar.percentage -= 20; //(playerLives/startLives) * 100;
+//    NSLog(@"PERCENTAGE: %f", lifeBar.percentage);
+//    lifeUpdater = [CCProgressTo actionWithDuration:0.5f percent:(playerLives/startLives) * 100];
+//    [lifeBar runAction:lifeUpdater];
+}
+
 -(void) updateScore
 {
     score = [[NSString alloc] initWithFormat:@"%i",playerScore];
@@ -1406,6 +1460,7 @@ NSNumber *sharedCoins;
     // reset all game variables
     shipSpeed = 4.8f; // default speed
     playerScore = 0;
+    startLives = 5;
     playerLives = 5;
     framesPassed = 0;
     secondsPassed = 0;

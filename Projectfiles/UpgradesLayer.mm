@@ -11,7 +11,6 @@
 
 @implementation UpgradesLayer
 
-
 -(id) init
 {
 	if ((self = [super init]))
@@ -23,6 +22,15 @@
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 210);
         [self addChild:gameTitle];
+        
+        NSNumber *CoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+        //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
+        coins = [CoinNumber intValue];
+        CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
+        coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"Roboto-Light" fontSize:20];
+        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 60);
+        coinsLabel.color = ccc3(0, 0, 0);
+        [self addChild:coinsLabel];
         
         
         NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];

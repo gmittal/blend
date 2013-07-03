@@ -19,7 +19,7 @@
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"dOck SHIPS" fontName:@"SpaceraLT-Regular" fontSize:30];
         gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 110);
+        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 130);
         [self addChild:gameTitle];
         
                                     
@@ -44,12 +44,18 @@
         [store setFontSize:25];
         store.color = ccc3(0, 0, 0);
         
+        CCMenuItemFont *about = [CCMenuItemFont itemFromString: @"About" target:self selector:@selector(about)];
+        [about setFontName:@"Roboto-Light"];
+        [about setFontSize:25];
+        about.color = ccc3(0, 0, 0);
+
+        
         CCMenuItemFont *crosspromo = [CCMenuItemFont itemFromString: @"More Games" target:self selector:@selector(moreGames)];
         [crosspromo setFontName:@"Roboto-Light"];
         [crosspromo setFontSize:25];
         crosspromo.color = ccc3(0, 0, 0);
         
-        CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, upgrades, store, crosspromo, nil];
+        CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, upgrades, store, about, crosspromo, nil];
         [startMenu alignItemsVertically];
         startMenu.position = ccp(screenSize.width/2, screenSize.height/2);
         [self addChild:startMenu];
@@ -80,6 +86,11 @@
 {
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
+}
+
+-(void) about
+{
+    [MGWU displayAboutPage];
 }
 
 -(void) moreGames

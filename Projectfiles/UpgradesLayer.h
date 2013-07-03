@@ -11,6 +11,9 @@
 @interface UpgradesLayer : CCScene
 {
     CGSize screenSize;
+    int coins;
+    NSString *CoinString;
+    CCLabelBMFont *coinsLabel;
 }
 
 @end

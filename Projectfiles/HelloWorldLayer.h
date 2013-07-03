@@ -105,6 +105,8 @@
     CCSprite *infiniteBorderPowerUp1;
     
     NSNumber *sharedScore;
+    
+    int startLives;
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color;

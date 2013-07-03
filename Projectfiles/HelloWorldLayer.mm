@@ -107,6 +107,10 @@ CCProgressTo *lifeUpdater;
 
 CCSprite *lifeBarBorder;
 
+int topBottomVariable;
+
+int numSpritesPerArray;
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -162,13 +166,13 @@ CCSprite *lifeBarBorder;
         player = [CCSprite spriteWithFile:@"border.png"];
         player.position = ccp(size.width/2, size.height/2);
         playerWidth = [player boundingBox].size.width; // get player width
-        [self addChild:player z:1];
+        [self addChild:player z:20];
         //        [player runAction:explode];
         
         section1 = [CCSprite spriteWithFile:@"section1.png"];
         progressBar1 = [CCProgressTimer progressWithSprite:section1];
         progressBar1.type = kCCProgressTimerTypeRadial;
-        [player addChild:progressBar1 z:1];
+        [player addChild:progressBar1 z:21];
         progressBar1.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //        [progressBar1 setAnchorPoint:zero];
         progressTo1 = [CCProgressTo actionWithDuration:1 percent:33.333f];
@@ -176,7 +180,7 @@ CCSprite *lifeBarBorder;
         section2 = [CCSprite spriteWithFile:@"section2.png"];
         progressBar2 = [CCProgressTimer progressWithSprite:section2];
         progressBar2.type = kCCProgressTimerTypeRadial;
-        [player addChild:progressBar2 z:2];
+        [player addChild:progressBar2 z:21];
         progressBar2.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //   [progressBar2 setAnchorPoint:zero];
         progressBar2.rotation = 120.0f;
@@ -185,7 +189,7 @@ CCSprite *lifeBarBorder;
         section3 = [CCSprite spriteWithFile:@"section3.png"];
         progressBar3 = [CCProgressTimer progressWithSprite:section3];
         progressBar3.type = kCCProgressTimerTypeRadial;
-        [player addChild:progressBar3 z:2];
+        [player addChild:progressBar3 z:21];
         progressBar3.position = ccp(size.width/2 - 65, size.height/2 - 145);
         //   [progressBar2 setAnchorPoint:zero];
         progressBar3.rotation = 240.0f;
@@ -489,58 +493,136 @@ CCSprite *lifeBarBorder;
 
 -(void) circleCollisionWith:(NSMutableArray *) circle2
 {
-    NSUInteger numSprites = [circle2 count];
-    for (NSUInteger i = 0; i < numSprites; i++)
+    
+    for(NSUInteger i = 0; i < [circle2 count]; i++)
     {
-        CCSprite *c = [circle2 objectAtIndex:i];
-        //        [self circleCollisionWithSprite:c];
+        CCSprite* tempSprite = [circle2 objectAtIndex:i];
+    
+    float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
+    // NSLog(@"Circle 1 Radius: %f", c1radius);
+    float c2radius = [tempSprite boundingBox].size.width/2; // circle 2 radius
+    //        float c2radius = c.contentSize.width/2;
+    radii = c1radius + c2radius;
+    float distX = player.position.x - tempSprite.position.x;
+    float distY = player.position.y - tempSprite.position.y;
+    distance = sqrtf((distX * distX) + (distY * distY));
+    
+    //            [self circleCollisionWithSprite:c];
+    
+    //    if (antiShipAngle < 0.0f) {
+    //        shipAngle = (-360 + (antiShipAngle));
+    //    } else {
+    //        shipAngle = antiShipAngle;
+    //    }
+    
+    
+    if (distance <= radii) { // did the two circles collide at all??
+        //        if (shipAngle < -360.0f) {
+        //            [self removeChild:circle2 cleanup:YES];
+        //            [self initShips];
+        //        } else {
         
-        float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
-        // NSLog(@"Circle 1 Radius: %f", c1radius);
-        float c2radius = [c boundingBox].size.width/2; // circle 2 radius
-        //        float c2radius = c.contentSize.width/2;
-        radii = c1radius + c2radius;
-        float distX = player.position.x - c.position.x;
-        float distY = player.position.y - c.position.y;
-        distance = sqrtf((distX * distX) + (distY * distY));
+        float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
+        float shipAngleRadians = asin(ratio); // arcsin of ratio
+        float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
+        //    float shipAngle; // shipAngle
         
-        if (distance <= radii) { // did the two circles collide at all??
-            //            [self circleCollisionWithSprite:c];
-            float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
-            float shipAngleRadians = asin(ratio); // arcsin of ratio
-            float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
-            float shipAngle; // shipAngle
-            
-            if (antiShipAngle < 0.0f) {
-                shipAngle = (-360 + (antiShipAngle));
-            } else {
-                shipAngle = antiShipAngle;
+        CGPoint pos1 = [tempSprite position];
+        CGPoint pos2 = [player position];
+        
+        float theta = atan((pos1.y-pos2.y)/(pos1.x-pos2.x)) * 180 / M_PI;
+        
+        float shipAngle;
+        
+        if(pos1.y - pos2.y > 0)
+        {
+            if(pos1.x - pos2.x < 0)
+            {
+                shipAngle = (-90-theta);
             }
-            
-            if (shipAngle < -360.0f) {
-                [self removeChild:c cleanup:YES];
-                //                NSLog(@"ERROR WITH SHIP GENERATION: DELETING AND RETRYING");
-                //            [self initShips];
+            else if(pos1.x - pos2.x > 0)
+            {
+                shipAngle = (90-theta);
             }
-            
-            //            NSLog(@"Ship Angle %f", shipAngle);
-            
-            [self divideAngularSections];
-            [self scoreCheck:shipAngle withColor:shipColor];
-            
-            if (distance < radii) {
-                c.visible = false;
-                [self removeChild:c cleanup:YES];
-                [circle2 removeObjectAtIndex:i];
-            }
-            
-            //            NSLog(@"HIT");
-            c.visible = false;
-            [self removeChild:c cleanup:YES];
-            [circle2 removeObjectAtIndex:i];
         }
+        else if(pos1.y - pos2.y < 0)
+        {
+            if(pos1.x - pos2.x < 0)
+            {
+                shipAngle = (270-theta);
+            }
+            else if(pos1.x - pos2.x > 0)
+            {
+                shipAngle = (90-theta);
+            }
+        }
+        
+        if (shipAngle < 0)
+        {
+            shipAngle+=360;
+        }
+        
+        shipAngle = shipAngle;
+        
+        
+        
+        
+        [self divideAngularSections];
+        numCollisions++;
+        NSLog(@"%f", shipAngle);
+        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+        [self scoreCheck:shipAngle withColor:shipColor];
+        
+        collisionDidHappen = true;
+        
+        if (playerLives == 0) {
+            [[SimpleAudioEngine sharedEngine] playEffect:@"click.mp3"];
+            [self removeChild:tempSprite cleanup:YES];
+            [circle2 removeObjectAtIndex:i];
+//            [self initShips];
+            //            warning = true;
+            [self gameOver];
+        } else {
+            //NSLog(@"Collision detected!");
+            
+            [[SimpleAudioEngine sharedEngine] playEffect:@"click.mp3"];
+    
+            id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
+            id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
+            [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
+            //            [self removeChild:circle2 cleanup:YES];
+            [circle2 removeObjectAtIndex:i];
+//            [self initShips];
+            //            numSpritesCollided++;
+            //            if (numSpritesCollided > 2) {
+            //            [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
+            //            [self initShips];
+            //                numSpritesCollided = 0;
+            //            }
+        }
+        
+        /* if ((numCollisions - playerScore) > playerLives - 2) {
+         [self removeChild:circle2 cleanup:YES];
+         [self initShips];
+         //            warning = true;
+         [self gameOver];
+         } else if ((numCollisions - playerScore) > playerLives - 1) {
+         [self removeChild:circle2 cleanup:YES];
+         warning = false;
+         [self gameOver]; // GAME OVER
+         } else {
+         [self removeChild:circle2 cleanup:YES];
+         [self initShips];
+         }
+         //        } */
     }
     
+    }
 }
 
 
@@ -673,6 +755,18 @@ CCSprite *lifeBarBorder;
          //        } */
     }
 }
+
+-(void) removeArraySprite:(id)sender
+{
+//    NSLog(@"SPRITE REMOVED");
+    [self removeChild:sender cleanup:YES];
+    numSpritesCollided++;
+    if (numSpritesCollided == 2) {
+        numSpritesCollided = 0;
+        [self initShips];
+    }
+}
+
 
 -(void) removeSprite:(id)sender
 {
@@ -972,7 +1066,7 @@ CCSprite *lifeBarBorder;
 
 -(void) initSect1Ships
 {
- 	int numShips1 = 1;
+ 	int numShips1 = numSpritesPerArray;
     
 	// Initialize the spiders array. Make sure it hasn't been initialized before.
 	//NSAssert1(section1Ships == nil, @"%@: spiders array is already initialized!", NSStringFromSelector(_cmd));
@@ -983,7 +1077,8 @@ CCSprite *lifeBarBorder;
 		// Creating a spider sprite, positioning will be done later
 		ship1 = [CCSprite spriteWithFile:@"section1.png"];
         ship1.scale = 0.15f;
-		[self createShipCoord:ship1];
+//        topBottomVariable = (arc4random()%(2-1+1))+1;
+		[self createShipCoord:ship1 topBottomChoose:topBottomVariable];
         [self addChild:ship1 z:50 tag:100];
 		
 		// Also add the spider to the spiders array so it can be accessed more easily.
@@ -994,7 +1089,7 @@ CCSprite *lifeBarBorder;
 
 -(void) initSect2Ships
 {
- 	int numShips2 = 1;
+ 	int numShips2 = numSpritesPerArray;
     
 	// Initialize the spiders array. Make sure it hasn't been initialized before.
 	//NSAssert1(section2Ships  == nil, @"%@: spiders array is already initialized!", NSStringFromSelector(_cmd));
@@ -1005,7 +1100,8 @@ CCSprite *lifeBarBorder;
 		// Creating a spider sprite, positioning will be done later
 		ship2 = [CCSprite spriteWithFile:@"section2.png"];
         ship2.scale = 0.15f;
-        [self createShipCoord:ship2];
+//        topBottomVariable = (arc4random()%(2-1+1))+1;
+		[self createShipCoord:ship2 topBottomChoose:topBottomVariable];
 		[self addChild:ship2 z:50 tag:200];
 		
 		// Also add the spider to the spiders array so it can be accessed more easily.
@@ -1016,7 +1112,7 @@ CCSprite *lifeBarBorder;
 
 -(void) initSect3Ships
 {
- 	int numShips3 = 1;
+ 	int numShips3 = numSpritesPerArray;
     
 	// Initialize the spiders array. Make sure it hasn't been initialized before.
 	//NSAssert1(section3Ships == nil, @"%@: spiders array is already initialized!", NSStringFromSelector(_cmd));
@@ -1027,7 +1123,8 @@ CCSprite *lifeBarBorder;
 		// Creating a spider sprite, positioning will be done later
 		ship3 = [CCSprite spriteWithFile:@"section3.png"];
         ship3.scale = 0.15f;
-        [self createShipCoord:ship3];
+//        topBottomVariable = (arc4random()%(2-1+1))+1;
+		[self createShipCoord:ship3 topBottomChoose:topBottomVariable];
 		[self addChild:ship3 z:50 tag:300];
 		
 		// Also add the spider to the spiders array so it can be accessed more easily.
@@ -1040,33 +1137,34 @@ CCSprite *lifeBarBorder;
 {
     [self pickColor];
     [self pickShape];
+    topBottomVariable = (arc4random()%(2-1+1))+1;
     if (shipColor == 1) {
-        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
-        ship1.scale = 0.15;
+//        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
+//        ship1.scale = 0.15;
 //        ship2 = [CCSprite spriteWithFile:@"ship1.png"];
 //        ship2.scale = 0.15;
-        //        [self initSect1Ships];
+                [self initSect1Ships];
     }
     
     
     if (shipColor == 2) {
-        ship1 = [CCSprite spriteWithFile:@"ship2.png"];
-        ship1.scale = 0.15;
+//        ship1 = [CCSprite spriteWithFile:@"ship2.png"];
+//        ship1.scale = 0.15;
 //        ship2 = [CCSprite spriteWithFile:@"ship2.png"];
 //        ship2.scale = 0.15;
-        //        [self initSect2Ships];
+            [self initSect2Ships];
     }
     
     if (shipColor == 3) {
-        ship1 = [CCSprite spriteWithFile:@"ship3.png"];
-        ship1.scale = 0.15;
+//        ship1 = [CCSprite spriteWithFile:@"ship3.png"];
+//        ship1.scale = 0.15;
 //        ship2 = [CCSprite spriteWithFile:@"ship3.png"];
 //        ship2.scale = 0.15;
-        //        [self initSect3Ships];
+          [self initSect3Ships];
     }
     
-    [self createShipCoord:ship1]; // create coordinate for ship to spawn to
-    [self moveShip:ship1];
+//    [self createShipCoord:ship1]; // create coordinate for ship to spawn to
+//    [self moveShip:ship1];
 //    [self createShipCoord:ship2]; // create coordinate for ship to spawn to
 //    [self moveShip:ship2];
 }
@@ -1078,15 +1176,13 @@ CCSprite *lifeBarBorder;
     [shipToMove runAction:shipMove]; // run the action initialized
 }
 
--(void) createShipCoord:(CCSprite *)shipForCoord
+-(void) createShipCoord:(CCSprite *)shipForCoord topBottomChoose:(int) decidingVariable
 {
     // Temporary way of generating random coordinates to spawn to
-    int fromNumber = -160;
-    int toNumber = 480;
+    int fromNumber = -560;
+    int toNumber = 880;
     
-    int topBottomChoose = (arc4random()%(2-1+1))+1;
-    
-    if (topBottomChoose == 1) {
+    if (decidingVariable == 1) {
         shipRandY = 500;
     } else {
         shipRandY = -20;
@@ -1114,7 +1210,7 @@ CCSprite *lifeBarBorder;
 //    }
     
     shipForCoord.position = ccp(shipRandX, shipRandY);
-    [self addChild:shipForCoord z:7];
+//    [self addChild:shipForCoord z:7];
 }
 
 
@@ -1123,7 +1219,7 @@ CCSprite *lifeBarBorder;
 {
 //    float percent = (playerLives/startLives) * 100;
 //    NSLog(@"PERCENT: %f", percent);
-    lifeBar.percentage -= 20; //(playerLives/startLives) * 100;
+    lifeBar.percentage -= 10; //(playerLives/startLives) * 100;
 //    NSLog(@"PERCENTAGE: %f", lifeBar.percentage);
 //    lifeUpdater = [CCProgressTo actionWithDuration:0.5f percent:(playerLives/startLives) * 100];
 //    [lifeBar runAction:lifeUpdater];
@@ -1369,8 +1465,11 @@ CCSprite *lifeBarBorder;
 
 -(void) initChallenges
 {
+    if (playerScore > 100) {
+        shipSpeed = 4.2f;
+    }
     // speed challenge
-    if (playerScore > 6) {
+    /*if (playerScore > 6) {
         shipSpeed = 3.5f;
     }
     
@@ -1396,7 +1495,7 @@ CCSprite *lifeBarBorder;
     
     if (playerScore > 29) {
         shipSpeed = 2.0f;
-    }
+    }*/
     
 //    if (playerScore > 39) {
 //        shipSpeed = 1.9f;
@@ -1472,8 +1571,8 @@ CCSprite *lifeBarBorder;
     // reset all game variables
     shipSpeed = 4.8f; // default speed
     playerScore = 0;
-    startLives = 5;
-    playerLives = 5;
+    startLives = 10;
+    playerLives = 10;
     framesPassed = 0;
     secondsPassed = 0;
     numCollisions = 0;
@@ -1486,6 +1585,10 @@ CCSprite *lifeBarBorder;
     
     warning = false;
     collisionDidHappen = false;
+    
+    numSpritesCollided = 0;
+    
+    numSpritesPerArray = 2;
     
     NSNumber *curHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     playerHighScore = [curHighScore intValue]; // read from the devices memory
@@ -1549,13 +1652,14 @@ CCSprite *lifeBarBorder;
 //     do nothing
 //     }
     [self divideAngularSections];
-    [self circleCollisionWithSprite:player andThis:ship1];
-    [self infiniteBorderCollisionWith:ship1];
+//    [self circleCollisionWithSprite:player andThis:ship1];
+//    [self infiniteBorderCollisionWith:ship1];
 //    [self circleCollisionWithSprite:player andThis:ship2];
 //    [self circleCollisionWithSprite:player andThis:ship2];
 //    [self infiniteBorderCollisionWith:ship2];
-    //    [self circleCollisionWith:section2Ships];
-    //    [self circleCollisionWith:section3Ships];
+    [self circleCollisionWith:section1Ships];
+    [self circleCollisionWith:section2Ships];
+    [self circleCollisionWith:section3Ships];
     [self handleUserInput];
     [self divideAngularSections];
     //    [self normalizeAngle:section1StartAngle];

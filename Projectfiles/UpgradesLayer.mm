@@ -34,13 +34,29 @@
         
         CCMenuItemFont *powerup1 = [CCMenuItemFont itemFromString: @"Slow Motion Power - 100 Coins" target:self selector:@selector(powerup1)];
         [powerup1 setFontName:@"Roboto-Light"];
-        [powerup1 setFontSize:25];
+        [powerup1 setFontSize:20];
         powerup1.color = ccc3(0, 0, 0);
         
-        CCMenuItemFont *powerup2 = [CCMenuItemFont itemFromString: @"Slow Motion Power - 100 Coins" target:self selector:@selector(powerup2)];
+        CCMenuItemFont *powerup2 = [CCMenuItemFont itemFromString: @"Point Boost - 200 Coins" target:self selector:@selector(powerup2)];
         [powerup2 setFontName:@"Roboto-Light"];
-        [powerup2 setFontSize:25];
+        [powerup2 setFontSize:20];
         powerup2.color = ccc3(0, 0, 0);
+        
+        CCMenuItemFont *powerup3 = [CCMenuItemFont itemFromString: @"Explode - 500 Coins" target:self selector:@selector(powerup3)];
+        [powerup3 setFontName:@"Roboto-Light"];
+        [powerup3 setFontSize:20];
+        powerup3.color = ccc3(0, 0, 0);
+        
+        CCMenuItemFont *powerup4 = [CCMenuItemFont itemFromString: @"Ressurection - 750 Coins" target:self selector:@selector(powerup4)];
+        [powerup4 setFontName:@"Roboto-Light"];
+        [powerup4 setFontSize:20];
+        powerup4.color = ccc3(0, 0, 0);
+        
+        CCMenuItemFont *powerup5 = [CCMenuItemFont itemFromString: @"Lives Boost - 500 Coins" target:self selector:@selector(powerup5)];
+        [powerup5 setFontName:@"Roboto-Light"];
+        [powerup5 setFontSize:20];
+        powerup5.color = ccc3(0, 0, 0);
+
         
         
         NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];

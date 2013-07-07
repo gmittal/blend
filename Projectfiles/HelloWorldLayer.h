@@ -107,6 +107,54 @@
     NSNumber *sharedScore;
     
     int startLives;
+    
+    CCMenuItemImage *powerUpBorder1;
+    CCMenuItemImage *powerUpBorder2;
+    CCMenuItemImage *powerUpBorder3;
+    
+    CCLabelBMFont *screenflashLabel;
+    
+    CCSprite *enemyShip1;
+    CCSprite *enemyShip2;
+    CCSprite *enemyShip3;
+    
+    int spriteTagNum;
+    
+    float rotation;
+    float circle_rotation;// = 0.0f;
+    
+    
+    int playerHighScore;
+    
+    NSNumber *sharedHighScore;
+    
+    int numSpritesCollided;
+    
+    int shipShape;
+    
+    int playerCoins;
+    NSNumber *sharedCoins;
+    
+    CCSprite *lifeBarSprite;
+    CCProgressTimer *lifeBar;
+    CCProgressTo *lifeUpdater;
+    
+    CCSprite *lifeBarBorder;
+    
+    int topBottomVariable;
+    
+    int numSpritesPerArray;
+    int numSpritesCollidedWithShield;
+    
+    int shipArray;
+    
+    int pointMultiplier;
+    
+    NSString *multiplierString;
+    CCLabelBMFont *multiplierLabel;
+    
+    int numHitsUntilNextMultiplier;
+
 }
 
 -(void) scoreCheck:(int) angle withColor: (int) color;

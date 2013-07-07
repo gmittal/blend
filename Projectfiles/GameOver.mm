@@ -10,6 +10,8 @@
 
 @implementation GameOver
 
+int endingHighScore;
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -28,13 +30,13 @@
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"MISSION FAILED" fontName:@"SpaceraLT-Regular" fontSize:25];
-        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 215);
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"SpaceraLT-Regular" fontSize:25];
+        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 100);
         [self addChild:gameOver z:100 tag:100];
         
         // game over label runs 3 different actions at the same time to create the combined effect
         // 1) color tinting
-        CCTintTo* tint1 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:0];
+    /*  CCTintTo* tint1 = [CCTintTo actionWithDuration:2 red:255 green:0 blue:0];
         CCTintTo* tint2 = [CCTintTo actionWithDuration:2 red:255 green:255 blue:0];
         CCTintTo* tint3 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:0];
         CCTintTo* tint4 = [CCTintTo actionWithDuration:2 red:0 green:255 blue:255];
@@ -56,7 +58,7 @@
         // 3) jumping
         CCJumpBy* jump = [CCJumpBy actionWithDuration:3 position:CGPointZero height:screenSize.height / 3 jumps:1];
         CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
-        [gameOver runAction:repeatJump];
+        [gameOver runAction:repeatJump]; */
         
         NSNumber *endingScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         int endingScore = [endingScoreNumber intValue];
@@ -67,7 +69,7 @@
         
         NSNumber *endingHighScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
 //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
-        int endingHighScore = [endingHighScoreNumber intValue];
+        endingHighScore = [endingHighScoreNumber intValue];
         NSString *endHighScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", endingHighScore];
         CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:20];
         endHighScore.position = ccp(screenSize.width/2, 60);
@@ -120,6 +122,7 @@
         
 //        username = result;
         [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"username"];
+        [MGWU submitHighScore:endingHighScore byPlayer:result forLeaderboard:@"defaultLeaderboard"];
         
     }
 }

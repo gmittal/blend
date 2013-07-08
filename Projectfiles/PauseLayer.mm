@@ -76,12 +76,12 @@
 -(void) quitGame
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 -(void) restartGame
 {
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInL transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
 }
 
 -(void) unPause

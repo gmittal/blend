@@ -165,8 +165,9 @@
         // score label
         score = [[NSString alloc]initWithFormat:@"%i", playerScore];
         scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
-        scoreLabel.position = ccp(27, size.height - 19);
+        scoreLabel.position = ccp(45, size.height - 19);
         scoreLabel.color = ccc3(0,0,0);
+        scoreLabel.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:scoreLabel z:1001];
         
         // lives label
@@ -334,11 +335,18 @@
         screenflashLabel.visible = false;
         
         
+        multiplierWrapper = [CCSprite spriteWithFile:@"multiplier_wrapper.png"];
+        multiplierWrapper.position = ccp(15, size.height - 19);
+        [self setDimensionsInPixelsOnSprite:multiplierWrapper width:50 height:50];
+        [self addChild:multiplierWrapper z:scoreLabel.zOrder];
+        
         multiplierString = [[NSString alloc] initWithFormat:@"x%i", pointMultiplier];
         multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:25];
-        multiplierLabel.position = ccp(scoreLabel.position.x + 55, scoreLabel.position.y);
-        multiplierLabel.color = ccc3(0,0,0);
-        [self addChild:multiplierLabel z:scoreLabel.zOrder];
+        multiplierLabel.position = ccp(multiplierWrapper.position.x - 7, multiplierWrapper.position.y);
+        multiplierLabel.color = ccc3(255,255,255);
+        multiplierLabel.anchorPoint = ccp(0.0f,0.5f);
+        [self addChild:multiplierLabel z:scoreLabel.zOrder+1];
+        
         
         enemyShip1 = [[CCSprite alloc] init];
         enemyShip1 = [CCSprite spriteWithFile:@""];
@@ -362,6 +370,7 @@
         // preload sound effects so that there is no delay when playing sound effect
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"click1.mp3"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"gameover1.mp3"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"incorrect.wav"];
         
         [self scheduleUpdate]; // schedule the framely update
 	}
@@ -376,6 +385,32 @@
     [scene addChild:layer];
     return scene;
 }
+
+
+-(void) killGrass
+{
+    burnGrass = [CCParticleFire node];
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	burnGrass.position = CGPointMake(winSize.width / 2, winSize.height / 2);
+	[self addChild:burnGrass z:101];
+}
+
+-(void) killFire
+{
+    snuffedFire = [CCParticleSmoke node];
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	snuffedFire.position = CGPointMake(winSize.width / 2, winSize.height / 2);
+	[self addChild:snuffedFire z:101];
+}
+
+-(void) killWater
+{
+    dryWater = [CCParticleSmoke node];
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	dryWater.position = CGPointMake(winSize.width / 2, winSize.height / 2);
+	[self addChild:dryWater z:101];
+}
+
 
 
 -(void) runEffect
@@ -544,8 +579,6 @@
                 
             } else {
                 
-                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
-                
                 id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
                 id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
                 [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
@@ -669,7 +702,7 @@
         NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
         NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
         NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
-        [self scoreCheck:shipAngle withColor:shipColor];
+//        [self scoreCheck:shipAngle withColor:shipColor];
         
         collisionDidHappen = true;
         
@@ -746,6 +779,7 @@
         
         if (angle > section1StartAngle && angle < section1EndAngle) {
             playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
             [self increaseMultiplier];
             
         } else if (section1StartAngle > section1EndAngle) {
@@ -753,6 +787,7 @@
             if (angle < 119 && angle < section1EndAngle)
             {
                 playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
                 
             }
@@ -760,13 +795,15 @@
             if (angle > 241 && angle > section1StartAngle)
             {
                 playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
         }
     
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
-//            playerScore = playerScore + (scoreAdd * pointMultiplier);
+        
+            [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section2StartAngle > section2EndAngle)
         {
@@ -774,12 +811,14 @@
             if (angle < 119 && angle < section2EndAngle)
             {
 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
@@ -787,6 +826,7 @@
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
 //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section3StartAngle > section3EndAngle)
         {
@@ -794,12 +834,14 @@
             if (angle < 119 && angle < section3EndAngle)
             {
 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         } 
@@ -812,6 +854,7 @@
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
             playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
             [self increaseMultiplier];
         } else if (section2StartAngle > section2EndAngle)
         {
@@ -819,12 +862,14 @@
             if (angle < 119 && angle < section2EndAngle)
             {
                 playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
                 playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
         } 
@@ -832,6 +877,7 @@
         if (angle > section1StartAngle && angle < section1EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section1StartAngle > section1EndAngle)
         {
@@ -839,12 +885,14 @@
             if (angle < 119 && angle < section1EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section1StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
@@ -852,6 +900,7 @@
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section3StartAngle > section3EndAngle)
         {
@@ -859,12 +908,14 @@
             if (angle < 119 && angle < section3EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
@@ -878,6 +929,7 @@
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
             playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
             [self increaseMultiplier];
         } else if (section3StartAngle > section3EndAngle)
         {
@@ -885,12 +937,14 @@
             if (angle < 119 && angle < section3EndAngle)
             {
                 playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
                 playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
         }
@@ -898,6 +952,7 @@
         if (angle > section1StartAngle && angle < section1EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section1StartAngle > section1EndAngle)
         {
@@ -905,12 +960,14 @@
             if (angle < 119 && angle < section1EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section1StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
@@ -918,6 +975,7 @@
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section2StartAngle > section2EndAngle)
         {
@@ -925,12 +983,14 @@
             if (angle < 119 && angle < section2EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
@@ -950,14 +1010,19 @@
     float cdistance = sqrtf((distX * distX) + (distY * distY));
     
     if (cdistance <= cradii) {
-        //        playerScore = playerScore + (scoreAdd * pointMultiplier);
         id dockInfin = [CCFadeTo actionWithDuration:0.1f opacity:0];
-        id removeSpriteInfin = [CCCallFuncN actionWithTarget:self selector:@selector(removeInfiniteArraySprite:)];
-        [shipToCollideWith runAction:[CCSequence actions:dockInfin, removeSpriteInfin, nil]];
+        id grantPoints = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteArrayPoints)];
+        id removeSpriteInfin = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
+        [shipToCollideWith runAction:[CCSequence actions:dockInfin, grantPoints, removeSpriteInfin, nil]];
         
         //        [self removeChild:shipToCollideWith cleanup:YES];
         //        [self initShips];
     }
+}
+
+-(void) addInfiniteArrayPoints
+{
+    playerScore = playerScore + (scoreAdd * pointMultiplier);
 }
 
 -(void) removeInfiniteArraySprite:(id) sender
@@ -982,12 +1047,11 @@
     if (numPower1Left > 0) {
         [self flashLabel:@"ENERGY SHIELD UP" forTime:5.0f];
         id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
-        [self runAction:addBorder];
-        //        id delayRemoval = [CCDelayTime actionWithDuration:5.0f];
-        //        id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
-        //        CCSequence *powerUp1Seq = [CCSequence actions:addBorder, delayRemoval, removeBorder, nil];
+        id delayRemoval = [CCDelayTime actionWithDuration:5.0f];
+        id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
+        CCSequence *powerUp1Seq = [CCSequence actions:addBorder, delayRemoval, removeBorder, nil];
         numPower1Left--;
-        //        [self runAction:powerUp1Seq];
+        [self runAction:powerUp1Seq];
     } else {
         // do nothing
     }
@@ -1091,6 +1155,7 @@
     [self addChild:powerUp3 z:20];
     [powerUpType3 addObject:powerUp3];
 }
+
 
 
 
@@ -1408,6 +1473,15 @@
     }
 }
 
+-(void) updateLabelPositions
+{
+   /* if (score.length == 1) {
+        scoreLabel.position = ccp(15, scoreLabel.position.y);
+    } else {
+    scoreLabel.position = ccp((score.length * 10), scoreLabel.position.y);
+    } */
+}
+
 -(void) divideAngularSections
 {
     float normalizedStart1Ang = player.rotation;
@@ -1680,6 +1754,12 @@
     
 }
 
+-(void) setDimensionsInPixelsOnSprite:(CCSprite *) spriteToSetDimensions width:(int) width height:(int) height
+{
+    spriteToSetDimensions.scaleX = width/[spriteToSetDimensions boundingBox].size.width;
+    spriteToSetDimensions.scaleY = height/[spriteToSetDimensions boundingBox].size.height;
+}
+
 -(void) flashLabel:(NSString *) stringToFlashOnScreen forTime:(float) numSecondsToFlash
 {
     [screenflashLabel setString:stringToFlashOnScreen];
@@ -1810,7 +1890,7 @@
 -(void) pauseGame
 {
     [[CCDirector sharedDirector] pushScene:
-	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[PauseLayer node]]];
+	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[PauseLayer node]]];
 }
 
 -(void)update:(ccTime)dt // update method
@@ -1831,6 +1911,7 @@
     [self handleUserInput]; // handle the player's touch and rotation
     [self divideAngularSections]; // divide the angle borders to differentiate between colors
     [self updateScore]; // update the labels for player data
+    [self updateLabelPositions];
     [self initChallenges]; // start challenges to throw at the player
 }
 

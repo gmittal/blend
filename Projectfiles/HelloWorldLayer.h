@@ -154,12 +154,18 @@
     CCLabelBMFont *multiplierLabel;
     
     int numHitsUntilNextMultiplier;
+    
+    CCParticleSystem *burnGrass;
+    CCParticleSystem *snuffedFire;
+    CCParticleSystem *dryWater;
+    
+    CCSprite *multiplierWrapper;
 
 }
 
--(void) scoreCheck:(int) angle withColor: (int) color;
+-(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;
 -(void) circleCollisionWithSprite:(CCSprite *) circle1 andThis:(CCSprite *) circle2;
--(void) createShipCoord:(CCSprite *)shipForCoord;
+-(void) createShipCoord:(CCSprite *)shipForCoord topBottomChoose:(int) decidingVariable;
 -(void) moveShip:(CCSprite *) shipToMove;
 -(void) initShips;
 -(void) handleUserInput;
@@ -177,5 +183,42 @@
 -(void) addPowerup2;
 -(void) addPowerup3;
 -(void) transferToGameOverScene;
+-(void) killGrass;
+-(void) killFire;
+-(void) killWater;
+-(void) runEffect;
+-(void) circleCollisionWith:(NSMutableArray *) circle2;
+-(void) removeArraySprite:(id)sender;
+-(void) removeSprite:(id)sender;
+-(void) increaseMultiplier;
+-(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith;
+-(void) addInfiniteArrayPoints;
+-(void) removeInfiniteArraySprite:(id)sender;
+-(void) enablePowerUp1;
+-(void) enablePowerUp2;
+-(void) enablePowerUp3;
+-(void) addInfiniteBorder;
+-(void) removeInfiniteArrayBorder;
+-(void) shipPauseAllActions;
+-(void) shipResumeAllActions;
+-(void) pickShape;
+-(void) pickArray;
+-(void) initializeShip1Sprite;
+-(void) initializeShip2Sprite;
+-(void) initializeShip3Sprite;
+-(void) moveShip1;
+-(void) moveShip2;
+-(void) moveShip3;
+-(void) moveShip:(CCSprite *) shipToMove;
+-(void) updateHealth;
+-(void) updateLabelPositions;
+-(void) normalizeThisToStandards:(CGPoint) rot_pos1 andThis:(CGPoint) rot_pos2 withRotVariable:(float) rotationVar;
+-(void) initMenuItems;
+-(void) flashLabel:(NSString *) stringToFlashOnScreen forTime:(float) numSecondsToFlash;
+-(void) makeFlashLabelVisible;
+-(void) makeFlashLabelInvisible;
+-(void) goToGameOver;
+-(void) resetVariables;
+-(void) pauseGame;
 
 @end

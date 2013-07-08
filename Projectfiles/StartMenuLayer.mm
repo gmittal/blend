@@ -66,26 +66,26 @@
 -(void) startGame
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 
 -(void) gameStats
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StatLayer node]]];
+	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[StatLayer node]]];
 }
 
 -(void) gameStore
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StoreLayer node]]];
+	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[StoreLayer node]]];
 }
 
 -(void) gameUpgrades
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
+	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
 }
 
 -(void) about

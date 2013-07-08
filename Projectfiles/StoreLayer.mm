@@ -127,7 +127,7 @@ CCLabelBMFont *coinsLabel;
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 

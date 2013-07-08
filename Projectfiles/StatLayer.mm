@@ -68,7 +68,7 @@ CGSize screenSize;
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 
@@ -128,6 +128,9 @@ CGSize screenSize;
         NSMutableDictionary *playerDict = [otherPlayers objectAtIndex:i];
         NSNumber * score = [playerDict objectForKey:@"score"];
         NSString *name = [playerDict objectForKey:@"name"];
+        if (!name) {
+            name = @"player";
+        }
 //        NSNumber *rank = [playerDict objectForKey:@"rank"];
         NSNumber *rank = [NSNumber numberWithInt:i + 1];
     

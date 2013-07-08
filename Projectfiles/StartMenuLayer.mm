@@ -22,7 +22,13 @@
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 130);
         [self addChild:gameTitle];
         
-                                    
+        
+        CCMenuItemImage *settings = [CCMenuItemImage itemWithNormalImage:@"settings_gear.png" selectedImage:@"settings_gear.png" target:self selector:@selector(goToSettings)];
+        CCMenu *settingsMenu = [CCMenu menuWithItems:settings, nil];
+        [settingsMenu alignItemsHorizontally];
+        settingsMenu.position = ccp(screenSize.width - 25, screenSize.height - 25);
+        [self addChild:settingsMenu];
+        
         CCMenuItemFont *playNow = [CCMenuItemFont itemFromString: @"Play Now" target:self selector:@selector(startGame)];
         [playNow setFontName:@"Roboto-Light"];
         [playNow setFontSize:25];
@@ -61,6 +67,12 @@
         [self addChild:startMenu];
     }
     return self;
+}
+
+-(void) goToSettings
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[SettingsLayer node]]];
 }
 
 -(void) startGame

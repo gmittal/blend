@@ -11,6 +11,7 @@
 #import "StatLayer.h"
 #import "StoreLayer.h"
 #import "UpgradesLayer.h"
+#import "SettingsLayer.h"
 
 @interface StartMenuLayer : CCScene
 

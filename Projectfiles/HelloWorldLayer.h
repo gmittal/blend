@@ -160,6 +160,8 @@
     CCParticleSystem *dryWater;
     
     CCSprite *multiplierWrapper;
+    
+    CCLayerColor* colorLayer;
 
 }
 

@@ -358,7 +358,7 @@
         
         CCSprite *background = [CCSprite spriteWithFile:@"backgroundip5.png"];
         background.position = screenCenter;
-        //        [self addChild:background z:-100];
+//        [self addChild:background z:-100];
         
         
         [self divideAngularSections];
@@ -370,7 +370,8 @@
         // preload sound effects so that there is no delay when playing sound effect
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"click1.mp3"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"gameover1.mp3"];
-        [[SimpleAudioEngine sharedEngine] preloadEffect:@"incorrect.wav"];
+
+//        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
         
         [self scheduleUpdate]; // schedule the framely update
 	}
@@ -390,27 +391,64 @@
 -(void) killGrass
 {
     burnGrass = [CCParticleFire node];
-	CGSize winSize = [[CCDirector sharedDirector] winSize];
-	burnGrass.position = CGPointMake(winSize.width / 2, winSize.height / 2);
-	[self addChild:burnGrass z:101];
+	[progressBar3 addChild:burnGrass z:101];
 }
+
+-(void) removeGrassEffect
+{
+    [progressBar3 removeChild:burnGrass];
+}
+
 
 -(void) killFire
 {
     snuffedFire = [CCParticleSmoke node];
-	CGSize winSize = [[CCDirector sharedDirector] winSize];
-	snuffedFire.position = CGPointMake(winSize.width / 2, winSize.height / 2);
-	[self addChild:snuffedFire z:101];
+	[progressBar1 addChild:snuffedFire z:101];
 }
+
+-(void) removeFireEffect
+{
+    [progressBar1 removeChild:snuffedFire];
+}
+
 
 -(void) killWater
 {
     dryWater = [CCParticleSmoke node];
-	CGSize winSize = [[CCDirector sharedDirector] winSize];
-	dryWater.position = CGPointMake(winSize.width / 2, winSize.height / 2);
-	[self addChild:dryWater z:101];
+	[progressBar2 addChild:dryWater z:101];
 }
 
+-(void) removeWaterEffect
+{
+    [progressBar2 removeChild:dryWater];
+}
+
+-(void) runDeathSeqOn:(NSString *) effectName
+{
+    if ([effectName isEqualToString:@"grass"] == true) {
+    id execute = [CCCallFunc actionWithTarget:self selector:@selector(killGrass)];
+    id delay = [CCDelayTime actionWithDuration:1.0f];
+    id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeGrassEffect)];
+    CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
+    [self runAction:deathSeq];
+    }
+    
+    if ([effectName isEqualToString:@"fire"] == true) {
+        id execute = [CCCallFunc actionWithTarget:self selector:@selector(killFire)];
+        id delay = [CCDelayTime actionWithDuration:1.0f];
+        id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeFireEffect)];
+        CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
+        [self runAction:deathSeq];
+    }
+    
+    if ([effectName isEqualToString:@"water"] == true) {
+        id execute = [CCCallFunc actionWithTarget:self selector:@selector(killWater)];
+        id delay = [CCDelayTime actionWithDuration:1.0f];
+        id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeWaterEffect)];
+        CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
+        [self runAction:deathSeq];
+    }
+}
 
 
 -(void) runEffect
@@ -827,6 +865,7 @@
         {
 //            playerScore = playerScore + (scoreAdd * pointMultiplier);
              [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [self runDeathSeqOn:@"grass"];
             pointMultiplier -= 1;
         } else if (section3StartAngle > section3EndAngle)
         {
@@ -835,6 +874,7 @@
             {
 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                  [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [self runDeathSeqOn:@"grass"];
                 pointMultiplier -= 1;
             }
             
@@ -842,6 +882,7 @@
             {
 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                  [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [self runDeathSeqOn:@"grass"];
                 pointMultiplier -= 1;
             }
         } 
@@ -878,6 +919,7 @@
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
              [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [self runDeathSeqOn:@"fire"];
             pointMultiplier -= 1;
         } else if (section1StartAngle > section1EndAngle)
         {
@@ -886,6 +928,7 @@
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                  [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [self runDeathSeqOn:@"fire"];
                 pointMultiplier -= 1;
             }
             
@@ -893,6 +936,7 @@
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [self runDeathSeqOn:@"fire"];
                 pointMultiplier -= 1;
             }
         }
@@ -976,6 +1020,7 @@
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
              [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [self runDeathSeqOn:@"water"];
             pointMultiplier -= 1;
         } else if (section2StartAngle > section2EndAngle)
         {
@@ -984,6 +1029,7 @@
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                  [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [self runDeathSeqOn:@"water"];
                 pointMultiplier -= 1;
             }
             
@@ -991,6 +1037,7 @@
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                  [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [self runDeathSeqOn:@"water"];
                 pointMultiplier -= 1;
             }
         }
@@ -1023,6 +1070,7 @@
 -(void) addInfiniteArrayPoints
 {
     playerScore = playerScore + (scoreAdd * pointMultiplier);
+    [self increaseMultiplier];
 }
 
 -(void) removeInfiniteArraySprite:(id) sender
@@ -1482,6 +1530,21 @@
     } */
 }
 
+-(void) updateEffectPositions
+{
+    burnGrass.position = progressBar3.position; //progressBar3.position;
+    snuffedFire.position = progressBar1.position;
+    dryWater.position = progressBar2.position;
+
+//    [burnGrass setAnchorPoint:screenCenter];
+//    snuffedFire.anchorPoint = screenCenter;
+//    dryWater.anchorPoint = screenCenter;
+    
+    burnGrass.rotation = progressBar3.rotation + 180;
+    snuffedFire.rotation = progressBar1.rotation + 60;
+    dryWater.rotation = progressBar2.rotation - 60;
+}
+
 -(void) divideAngularSections
 {
     float normalizedStart1Ang = player.rotation;
@@ -1694,7 +1757,9 @@
 
 -(void) initChallenges
 {
-
+    if (playerScore > 100) {
+//        numSpritesPerArray = 10;
+    }
     
     //    if (playerScore > 20) {
     //        shipSpeed = 4.2f;
@@ -1754,6 +1819,25 @@
     
 }
 
+
+
+// CUSTOM FUNCTIONS TO INCREASE PRODUCTIVITY
+-(void) flashWithRed:(int) red green:(int) green blue:(int) blue alpha:(int) alpha actionWithDuration:(float) duration
+{
+    colorLayer = [CCLayerColor layerWithColor:ccc4(red, green, blue, alpha)];
+    [self addChild:colorLayer z:0];
+    id delay = [CCDelayTime actionWithDuration:duration];
+    id fadeOut = [CCFadeOut actionWithDuration:0.5f];
+    id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeFlashColor)];
+    [colorLayer runAction:[CCSequence actions:delay, fadeOut, nil]];
+    
+}
+
+-(void) removeFlashColor
+{
+    [self removeChild:colorLayer cleanup:YES];
+}
+
 -(void) setDimensionsInPixelsOnSprite:(CCSprite *) spriteToSetDimensions width:(int) width height:(int) height
 {
     spriteToSetDimensions.scaleX = width/[spriteToSetDimensions boundingBox].size.width;
@@ -1780,8 +1864,14 @@
     screenflashLabel.visible = false;
 }
 
+
+
+
+
+
 -(void) goToGameOver
 {
+    [self flashWithRed:255 green:0 blue:0 alpha:255 actionWithDuration:0.1f];
     [ship1 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
     //    [ship2 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
     id particleEffects = [CCCallFunc actionWithTarget:self selector:@selector(runEffect)];
@@ -1912,6 +2002,7 @@
     [self divideAngularSections]; // divide the angle borders to differentiate between colors
     [self updateScore]; // update the labels for player data
     [self updateLabelPositions];
+    [self updateEffectPositions];
     [self initChallenges]; // start challenges to throw at the player
 }
 

@@ -1,15 +1,14 @@
 //
-//  UpgradesLayer.m
+//  SettingsLayer.m
 //  Moon Landing
 //
-//  Created by Gautam Mittal on 7/2/13.
+//  Created by Gautam Mittal on 7/8/13.
 //
 //
 
-#import "UpgradesLayer.h"
-#import "StartMenuLayer.h"
+#import "SettingsLayer.h"
 
-@implementation UpgradesLayer
+@implementation SettingsLayer
 
 -(id) init
 {
@@ -18,45 +17,11 @@
         glClearColor(255, 255, 255, 255);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"SpaceraLT-Regular" fontSize:28];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"SETTINGS" fontName:@"SpaceraLT-Regular" fontSize:28];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 210);
         [self addChild:gameTitle];
         
-        NSNumber *CoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
-        //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
-        coins = [CoinNumber intValue];
-        CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
-        coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"Roboto-Light" fontSize:20];
-        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 60);
-        coinsLabel.color = ccc3(0, 0, 0);
-        [self addChild:coinsLabel];
-        
-        CCMenuItemFont *powerup1 = [CCMenuItemFont itemFromString: @"Slow Motion Power - 100 Coins" target:self selector:@selector(powerup1)];
-        [powerup1 setFontName:@"Roboto-Light"];
-        [powerup1 setFontSize:20];
-        powerup1.color = ccc3(0, 0, 0);
-        
-        CCMenuItemFont *powerup2 = [CCMenuItemFont itemFromString: @"Point Boost - 200 Coins" target:self selector:@selector(powerup2)];
-        [powerup2 setFontName:@"Roboto-Light"];
-        [powerup2 setFontSize:20];
-        powerup2.color = ccc3(0, 0, 0);
-        
-        CCMenuItemFont *powerup3 = [CCMenuItemFont itemFromString: @"Explode - 500 Coins" target:self selector:@selector(powerup3)];
-        [powerup3 setFontName:@"Roboto-Light"];
-        [powerup3 setFontSize:20];
-        powerup3.color = ccc3(0, 0, 0);
-        
-        CCMenuItemFont *powerup4 = [CCMenuItemFont itemFromString: @"Ressurection - 750 Coins" target:self selector:@selector(powerup4)];
-        [powerup4 setFontName:@"Roboto-Light"];
-        [powerup4 setFontSize:20];
-        powerup4.color = ccc3(0, 0, 0);
-        
-        CCMenuItemFont *powerup5 = [CCMenuItemFont itemFromString: @"Lives Boost - 500 Coins" target:self selector:@selector(powerup5)];
-        [powerup5 setFontName:@"Roboto-Light"];
-        [powerup5 setFontSize:20];
-        powerup5.color = ccc3(0, 0, 0);
-
         
         
         NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
@@ -78,8 +43,8 @@
         
         //        [MGWU submitHighScore:highScore byPlayer:@"gmittal" forLeaderboard:@"defaultLeaderboard"];
         
-//        NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-//        [MGWU submitHighScore:highScore byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
+        //        NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+        //        [MGWU submitHighScore:highScore byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
         
         //        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
         //                                 onTarget:self];

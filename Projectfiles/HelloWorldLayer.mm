@@ -328,7 +328,7 @@
         infiniteBorderPowerUp1.scale = 0;
         infiniteBorderPowerUp1.position = screenCenter;
         
-        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"SpaceraLT-Regular" fontSize:18];
+        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:20];
         screenflashLabel.position = ccp(size.width/2, 405);
         screenflashLabel.color = ccc3(255,0,0);
         [self addChild:screenflashLabel z:110];
@@ -375,6 +375,8 @@
         
         [self scheduleUpdate]; // schedule the framely update
         
+//        [self startTutorial]; // start the tutorial (if needed)
+        
 	}
 
 	return self;
@@ -387,6 +389,16 @@
     [scene addChild:layer];
     return scene;
 }
+
+
+-(void) startTutorial
+{
+    [self flashLabel:@"Rotate the circle by /n moving your finger in a circle." actionWithDuration:5.0f font:@"spacera" fontSize:20 color:@"black"];
+    [self flashLabel:@"Match the incoming projectiles /n into the correctly colored sectors." actionWithDuration:5.0f font:@"spacera" fontSize:20 color:@"black"];
+    [self flashLabel:@"Use the powerups at /n the bottom for help in tough situations." actionWithDuration:5.0f font:@"spacera" fontSize:20 color:@"black"];
+}
+
+
 
 
 -(void) killGrass
@@ -1109,7 +1121,7 @@
     // powerup that allows any ship to go ANYWHERE on the player and still grant points
     
     if (numPower1Left > 0) {
-        [self flashLabel:@"ENERGY SHIELD UP" forTime:5.0f];
+        [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:5.0f font:@"spacera" fontSize:18 color:@"red"];
         id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
         id delayRemoval = [CCDelayTime actionWithDuration:5.0f];
         id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
@@ -1917,8 +1929,44 @@
     [spriteToSetDimensions runAction:scaleX];
 }
 
--(void) flashLabel:(NSString *) stringToFlashOnScreen forTime:(float) numSecondsToFlash
+-(void) flashLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash font:(NSString *) fontName fontSize:(int) fontSizeint color:(NSString *) colorString
 {
+    if ([fontName isEqualToString:@"spacera"] == true) {
+//    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"SpaceraLT-Regular" fontSize:fontSizeint];
+//        [screenflashLabel setFntFile:@"Spacera.ttf"];
+    }
+
+    if ([fontName isEqualToString:@"roboto"] == true) {
+//    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
+        
+    }
+//
+//    screenflashLabel.position = ccp(size.width/2, 405);
+//    
+//    
+//    if ([colorString isEqualToString:@"red"] == true) {
+//    screenflashLabel.color = ccc3(255,0,0);
+//    }
+//    
+//    if ([colorString isEqualToString:@"blue"] == true) {
+//        screenflashLabel.color = ccc3(0,0,255);
+//    }
+//    
+//    if ([colorString isEqualToString:@"green"] == true) {
+//        screenflashLabel.color = ccc3(0,255,0);
+//    }
+//    
+//    if ([colorString isEqualToString:@"black"] == true) {
+//        screenflashLabel.color = ccc3(0,0,0);
+//    }
+//    
+//    if ([colorString isEqualToString:@"white"] == true) {
+//        screenflashLabel.color = ccc3(255,255,255);
+//    }
+//    
+//    screenflashLabel.color = ccc3(255, 0, 0);
+//
+//    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
     [screenflashLabel setString:stringToFlashOnScreen];
     id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelVisible)];
     id delayInvis = [CCDelayTime actionWithDuration:numSecondsToFlash];

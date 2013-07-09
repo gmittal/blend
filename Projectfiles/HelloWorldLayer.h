@@ -162,6 +162,8 @@
     CCSprite *multiplierWrapper;
     
     CCLayerColor* colorLayer;
+    
+    int generationInterval;
 
 }
 

@@ -78,7 +78,7 @@
 	if ((self = [super init]))
 	{
         // initialize game variables
-		glClearColor(255, 255, 255, 255); // default background color
+		glClearColor(0.32, 0.46, 0.73, 1.0); // default background color
         director = [CCDirector sharedDirector];
         size = [[CCDirector sharedDirector] winSize];
         screenCenter = CGPointMake(size.width/2, size.height/2);
@@ -223,9 +223,9 @@
         powerUpType2 = [[NSMutableArray alloc] init];
         powerUpType3 = [[NSMutableArray alloc] init];
         
-        ship1 = [[CCSprite alloc] init];
-        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
-        ship1.scale = 0.15f;
+//        ship1 = [[CCSprite alloc] init];
+//        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
+//        ship1.scale = 0.15f;
         
         ship2 = [[CCSprite alloc] init];
         ship2 = [CCSprite spriteWithFile:@"ship1.png"];
@@ -374,6 +374,7 @@
 //        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
         
         [self scheduleUpdate]; // schedule the framely update
+        
 	}
 
 	return self;
@@ -391,7 +392,7 @@
 -(void) killGrass
 {
     burnGrass = [CCParticleFire node];
-	[progressBar3 addChild:burnGrass z:101];
+	[progressBar3 addChild:burnGrass z:1001];
 }
 
 -(void) removeGrassEffect
@@ -403,7 +404,7 @@
 -(void) killFire
 {
     snuffedFire = [CCParticleSmoke node];
-	[progressBar1 addChild:snuffedFire z:101];
+	[progressBar1 addChild:snuffedFire z:1001];
 }
 
 -(void) removeFireEffect
@@ -415,7 +416,7 @@
 -(void) killWater
 {
     dryWater = [CCParticleSmoke node];
-	[progressBar2 addChild:dryWater z:101];
+	[progressBar2 addChild:dryWater z:1001];
 }
 
 -(void) removeWaterEffect
@@ -427,7 +428,7 @@
 {
     if ([effectName isEqualToString:@"grass"] == true) {
     id execute = [CCCallFunc actionWithTarget:self selector:@selector(killGrass)];
-    id delay = [CCDelayTime actionWithDuration:1.0f];
+    id delay = [CCDelayTime actionWithDuration:2.0f];
     id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeGrassEffect)];
     CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
     [self runAction:deathSeq];
@@ -435,7 +436,7 @@
     
     if ([effectName isEqualToString:@"fire"] == true) {
         id execute = [CCCallFunc actionWithTarget:self selector:@selector(killFire)];
-        id delay = [CCDelayTime actionWithDuration:1.0f];
+        id delay = [CCDelayTime actionWithDuration:2.0f];
         id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeFireEffect)];
         CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
         [self runAction:deathSeq];
@@ -443,7 +444,7 @@
     
     if ([effectName isEqualToString:@"water"] == true) {
         id execute = [CCCallFunc actionWithTarget:self selector:@selector(killWater)];
-        id delay = [CCDelayTime actionWithDuration:1.0f];
+        id delay = [CCDelayTime actionWithDuration:2.0f];
         id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeWaterEffect)];
         CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
         [self runAction:deathSeq];
@@ -524,7 +525,9 @@
     system = [CCParticleExplosion node];
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
 	system.position = CGPointMake(winSize.width / 2, winSize.height / 2);
-	[self addChild:system z:101 tag:7];
+    
+    
+	[self addChild:system z:101 tag:7]; // execute the explosion
 	
 }
 
@@ -538,7 +541,7 @@
     for(NSUInteger i = 0; i < [circle2 count]; i++)
     {
         CCSprite* tempSprite = [circle2 objectAtIndex:i];
-        [self infiniteBorderCollisionWith:tempSprite];
+        [self infiniteBorderCollisionWith:tempSprite withObject:i];
         float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
         // NSLog(@"Circle 1 Radius: %f", c1radius);
         float c2radius = [tempSprite boundingBox].size.width/2; // circle 2 radius
@@ -755,7 +758,7 @@
             id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
             [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
             //            [self removeChild:circle2 cleanup:YES];
-            [self initShips];
+//            [self initShips];
             //            numSpritesCollided++;
             //            if (numSpritesCollided > 2) {
             //            [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
@@ -783,13 +786,20 @@
 
 -(void) removeArraySprite:(id)sender
 {
-    //    NSLog(@"SPRITE REMOVED");
+    NSLog(@"Array Count: %d", [section1Ships count]);
     [self removeChild:sender cleanup:YES];
     numSpritesCollided++;
-    if (numSpritesCollided == numSpritesPerArray) {
+//    if (numSpritesCollided == [section1Ships count]) {
+//        numSpritesCollided = 0;
+//        [self initShips];
+//    }
+    
+    
+    if ([section1Ships count] == 0) {
         numSpritesCollided = 0;
         [self initShips];
     }
+    
 }
 
 -(void) removeSprite:(id)sender
@@ -1046,7 +1056,7 @@
 }
 
 
--(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith
+-(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith withObject:(int) index
 {
     float c1radius = [infiniteBorderPowerUp1 boundingBox].size.width/2; // circle 1 radius
     float c2radius = [shipToCollideWith boundingBox].size.width/2; // circle 2 radius
@@ -1061,7 +1071,7 @@
         id grantPoints = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteArrayPoints)];
         id removeSpriteInfin = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
         [shipToCollideWith runAction:[CCSequence actions:dockInfin, grantPoints, removeSpriteInfin, nil]];
-        
+        [section1Ships removeObjectAtIndex:index];
         //        [self removeChild:shipToCollideWith cleanup:YES];
         //        [self initShips];
     }
@@ -1079,11 +1089,17 @@
     playerScore += scoreAdd;
     [self removeChild:sender cleanup:YES];
     numSpritesCollidedWithShield++;
-    if (numSpritesCollidedWithShield == numSpritesPerArray) {
-        numSpritesCollidedWithShield = 0;
-        [self removeInfiniteBorder];
+//    if (numSpritesCollidedWithShield == [section1Ships count]) {
+//        numSpritesCollidedWithShield = 0;
+//        [self removeInfiniteBorder];
+//        [self initShips];
+//    }
+    
+    if ([section1Ships count] == 0) {
+        numSpritesCollided = 0;
         [self initShips];
     }
+    
 }
 
 // INITIALIZE SHIPS AND POWERUPS
@@ -1138,17 +1154,26 @@
 -(void) enablePowerUp3
 {
     if (numPower3Left > 0) {
-        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
-        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
-        [ship1 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
-        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
-        [ship3 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+
+//        [ship1 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+//        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+//        [ship3 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
         //        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
         //    [self removeChild:ship1 cleanup:YES];
-        [self unscheduleUpdate];
-        [self initShips];
+        
+        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
+        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+        
+        for (NSUInteger k = 0; k < [section1Ships count]; k++) {
+            CCSprite *tempSpriteToRemove = [section1Ships objectAtIndex:k];
+            [tempSpriteToRemove runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+            [section1Ships removeObjectAtIndex:k];
+        }
+        
         numPower3Left -= 1;
-        [self scheduleUpdate];
+        [self initShips];
+        
+//        [self scheduleUpdate];
     } else {
         // do nothing
     }
@@ -1157,19 +1182,19 @@
 
 -(void) shipPauseAllActions
 {
-    [ship1 pauseSchedulerAndActions];
-    [ship2 pauseSchedulerAndActions];
-    [ship3 pauseSchedulerAndActions];
+//    [ship1 pauseSchedulerAndActions];
+//    [ship2 pauseSchedulerAndActions];
+//    [ship3 pauseSchedulerAndActions];
     //    [ship2 pauseSchedulerAndActions];
     
 }
 
 -(void) shipResumeAllActions
 {
-    [ship1 resumeSchedulerAndActions];
-    [ship2 resumeSchedulerAndActions];
-    [ship3 resumeSchedulerAndActions];
-    //    [ship2 pauseSchedulerAndActions];
+//    [ship1 resumeSchedulerAndActions];
+//    [ship2 resumeSchedulerAndActions];
+//    [ship3 resumeSchedulerAndActions];
+//    //    [ship2 pauseSchedulerAndActions];
     
 }
 
@@ -1236,11 +1261,12 @@
 	
 	for (int i = 0; i < numShips1; i++)
 	{
-        id initShip = [CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)];
-        id moveShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
+        [self initializeShip1Sprite];
+//        id initShip = [CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)];
+//        id moveShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
         //        id delayMove = [CCDelayTime actionWithDuration:1.0f];
         //        id moveTheShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
-        [self runAction:[CCSequence actions:initShip, moveShip, nil]];
+//        [self runAction:[CCSequence actions:initShip, moveShip, nil]];
 	}
 }
 
@@ -1248,30 +1274,34 @@
 {
     // Creating a spider sprite, positioning will be done later
     [self pickColor];
+    CCSprite *ship;
     if (shipColor == 1) {
-        ship1 = [CCSprite spriteWithFile:@"element1.png"];
-        ship1.tag = 1;
+        ship = [CCSprite spriteWithFile:@"element1.png"];
+        ship.tag = 1;
     }
     
     if (shipColor == 2) {
-        ship1 = [CCSprite spriteWithFile:@"element2.png"];
-        ship1.tag = 2;
+        ship = [CCSprite spriteWithFile:@"element2.png"];
+        ship.tag = 2;
     }
     
     if (shipColor == 3) {
-        ship1 = [CCSprite spriteWithFile:@"element3.png"];
-        ship1.tag = 3;
+        ship = [CCSprite spriteWithFile:@"element3.png"];
+        ship.tag = 3;
     }
     
-    ship1.scale = 0.15f;
+    ship.scale = 0.15f;
     
 
-    [self createShipCoord:ship1 topBottomChoose:topBottomVariable];
-    [self addChild:ship1 z:50];
+    [self createShipCoord:ship topBottomChoose:topBottomVariable];
+    [self addChild:ship z:50];
     
     // Also add the spider to the spiders array so it can be accessed more easily.
-    [section1Ships addObject:ship1];
-    //    [self moveShip:ship1];
+    [section1Ships addObject:ship];
+//    [self moveShip:ship];
+    
+//    float randomDelay = (arc4random()%(3-1+1))+1;
+    [self performSelector:@selector(moveShip:) withObject:ship afterDelay:1];
 }
 
 -(void) moveShip1
@@ -1427,13 +1457,13 @@
     float previousShipDelay;
     int slowestSpeed = shipSpeed + 1;
     int fastestSpeed = shipSpeed - 1;
-    
+
     float speed = arc4random()%(slowestSpeed-fastestSpeed+1)+fastestSpeed;
-    
+
     float delayInSeconds = arc4random()%(5-2+1)+2;
     if (delayInSeconds == previousShipDelay) {
         delayInSeconds = arc4random()%(5-2+1) + 2;
-        
+
     }
     id delayMove = [CCDelayTime actionWithDuration:delayInSeconds];
     shipMove = [CCMoveTo actionWithDuration:speed position:screenCenter]; // initialize the action to run when the ship is appeneded to the layer
@@ -1757,14 +1787,50 @@
 
 -(void) initChallenges
 {
-    if (playerScore > 100) {
-//        numSpritesPerArray = 10;
+    
+    if (playerScore > 20) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 2;
+        
     }
     
-    //    if (playerScore > 20) {
-    //        shipSpeed = 4.2f;
-    //
-    //    }
+    if (playerScore > 50) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 3;
+        
+    }
+    
+    
+    if (playerScore > 90) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 4;
+        
+    }
+    
+    if (playerScore > 200) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 6;
+        
+    }
+    
+    if (playerScore > 400) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 6;
+        
+    }
+    
+    if (playerScore > 800) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 7;
+        
+    }
+    
+    if (playerScore > 1000) {
+        //            shipSpeed = 4.2f;
+        numSpritesPerArray = 10;
+        
+    }
+    
     // speed challenge
     /*if (playerScore > 6) {
      shipSpeed = 3.5f;
@@ -1816,9 +1882,8 @@
 
 -(void) initMenuItems
 {
-    
-}
 
+}
 
 
 // CUSTOM FUNCTIONS TO INCREASE PRODUCTIVITY
@@ -1842,6 +1907,14 @@
 {
     spriteToSetDimensions.scaleX = width/[spriteToSetDimensions boundingBox].size.width;
     spriteToSetDimensions.scaleY = height/[spriteToSetDimensions boundingBox].size.height;
+}
+
+-(void) setDimensionsInPixelsGraduallyOnSprite:(CCSprite *) spriteToSetDimensions width:(int) width height:(int) height
+{
+    float scaleXDimensions = width/[spriteToSetDimensions boundingBox].size.width;
+    float scaleYDimensions = height/[spriteToSetDimensions boundingBox].size.height;
+    id scaleX = [CCScaleTo actionWithDuration:0.5f scaleX:scaleXDimensions scaleY:scaleYDimensions];
+    [spriteToSetDimensions runAction:scaleX];
 }
 
 -(void) flashLabel:(NSString *) stringToFlashOnScreen forTime:(float) numSecondsToFlash
@@ -1907,13 +1980,13 @@
     numCollisions = 0;
     livesSubtract = 1;
     scoreAdd = 5;
-    pointMultiplier = 1;
+    pointMultiplier = 2; // starting multiplier to prevent killing the user almost instantly
     
     numPower1Left = 1;
     numPower2Left = 5;
     numPower3Left = 5;
     
-    
+    generationInterval = 700;
     
     warning = false;
     collisionDidHappen = false;
@@ -1921,7 +1994,7 @@
     numSpritesCollided = 0;
     numSpritesCollidedWithShield = 0;
     
-    numSpritesPerArray = 3;
+    numSpritesPerArray = 1;
     
     spriteTagNum = 0;
     
@@ -1988,7 +2061,10 @@
     collisionDidHappen = false;
     framesPassed++;
     secondsPassed = framesPassed/60; // divide by framerate;
-
+//    if ((framesPassed % generationInterval) == 0) {
+//        [self initShips];
+//    }
+    
     [self divideAngularSections]; // divide angle borders
     //    [self circleCollisionWithSprite:player andThis:ship1];
     //    [self infiniteBorderCollisionWith:ship1];

@@ -164,6 +164,8 @@
     CCLayerColor* colorLayer;
     
     int generationInterval;
+    
+    bool playedTutorial;
 
 }
 

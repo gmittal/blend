@@ -14,7 +14,7 @@
 {
 	if ((self = [super init]))
 	{
-        glClearColor(255, 255, 255, 255);
+        glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"SETTINGS" fontName:@"SpaceraLT-Regular" fontSize:28];

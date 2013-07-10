@@ -78,7 +78,7 @@
 	if ((self = [super init]))
 	{
         // initialize game variables
-		glClearColor(0.32, 0.46, 0.73, 1.0); // default background color
+		glClearColor(0.0, 0.75, 1.0, 1.0); // default background color
         director = [CCDirector sharedDirector];
         size = [[CCDirector sharedDirector] winSize];
         screenCenter = CGPointMake(size.width/2, size.height/2);
@@ -357,7 +357,7 @@
 //        [self addChild:topBar z:1000];
         
         CCSprite *background = [CCSprite spriteWithFile:@"backgroundip5.png"];
-        background.position = screenCenter;
+        background.position = screenCenter; 
 //        [self addChild:background z:-100];
         
         
@@ -375,7 +375,7 @@
         
         [self scheduleUpdate]; // schedule the framely update
         
-//        [self startTutorial]; // start the tutorial (if needed)
+        [self startTutorial]; // start the tutorial (if needed)
         
 	}
 
@@ -393,12 +393,36 @@
 
 -(void) startTutorial
 {
-    [self flashLabel:@"Rotate the circle by /n moving your finger in a circle." actionWithDuration:5.0f font:@"spacera" fontSize:20 color:@"black"];
-    [self flashLabel:@"Match the incoming projectiles /n into the correctly colored sectors." actionWithDuration:5.0f font:@"spacera" fontSize:20 color:@"black"];
-    [self flashLabel:@"Use the powerups at /n the bottom for help in tough situations." actionWithDuration:5.0f font:@"spacera" fontSize:20 color:@"black"];
+    if (playedTutorial == false) {
+        playedTutorial = true;
+        id delay = [CCDelayTime actionWithDuration:5.0f];
+        id part1 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial1)];
+        id part2 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial2)];
+        id part3 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial3)];
+        CCSequence *tutorialSeq = [CCSequence actions:part1, delay, part2, delay, part3, delay, nil];
+        [self runAction:tutorialSeq];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
+    }
+    
+
 }
 
+-(void) tutorial1
+{
+        [self flashLabel:@"Rotate the circle by \n moving your finger in a circle." actionWithDuration:5.0f color:@"black"];
+}
 
+-(void) tutorial2
+{
+        [self flashLabel:@"Match the incoming projectiles \n into the correctly colored sectors." actionWithDuration:5.0f color:@"black"];
+}
+
+-(void) tutorial3
+{
+    NSLog(@"Hi");
+        [self flashLabel:@"Use the powerups at the bottom \n for help in tough situations." actionWithDuration:5.0f color:@"black"];
+}
 
 
 -(void) killGrass
@@ -415,7 +439,7 @@
 
 -(void) killFire
 {
-    snuffedFire = [CCParticleSmoke node];
+    snuffedFire = [CCParticleRain node];
 	[progressBar1 addChild:snuffedFire z:1001];
 }
 
@@ -427,7 +451,7 @@
 
 -(void) killWater
 {
-    dryWater = [CCParticleSmoke node];
+    dryWater = [CCParticleRain node];
 	[progressBar2 addChild:dryWater z:1001];
 }
 
@@ -1121,7 +1145,7 @@
     // powerup that allows any ship to go ANYWHERE on the player and still grant points
     
     if (numPower1Left > 0) {
-        [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:5.0f font:@"spacera" fontSize:18 color:@"red"];
+        [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:5.0f color:@"red"];
         id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
         id delayRemoval = [CCDelayTime actionWithDuration:5.0f];
         id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
@@ -1929,43 +1953,33 @@
     [spriteToSetDimensions runAction:scaleX];
 }
 
--(void) flashLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash font:(NSString *) fontName fontSize:(int) fontSizeint color:(NSString *) colorString
+-(void) flashLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash color:(NSString *) colorString
 {
-    if ([fontName isEqualToString:@"spacera"] == true) {
-//    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"SpaceraLT-Regular" fontSize:fontSizeint];
-//        [screenflashLabel setFntFile:@"Spacera.ttf"];
-    }
-
-    if ([fontName isEqualToString:@"roboto"] == true) {
-//    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
-        
+//
+//    
+    if ([colorString isEqualToString:@"red"] == true) {
+    screenflashLabel.color = ccc3(255,0,0);
     }
 //
-//    screenflashLabel.position = ccp(size.width/2, 405);
-//    
-//    
-//    if ([colorString isEqualToString:@"red"] == true) {
-//    screenflashLabel.color = ccc3(255,0,0);
-//    }
-//    
-//    if ([colorString isEqualToString:@"blue"] == true) {
-//        screenflashLabel.color = ccc3(0,0,255);
-//    }
-//    
-//    if ([colorString isEqualToString:@"green"] == true) {
-//        screenflashLabel.color = ccc3(0,255,0);
-//    }
-//    
-//    if ([colorString isEqualToString:@"black"] == true) {
-//        screenflashLabel.color = ccc3(0,0,0);
-//    }
-//    
-//    if ([colorString isEqualToString:@"white"] == true) {
-//        screenflashLabel.color = ccc3(255,255,255);
-//    }
-//    
+    if ([colorString isEqualToString:@"blue"] == true) {
+        screenflashLabel.color = ccc3(0,0,255);
+    }
+//
+    if ([colorString isEqualToString:@"green"] == true) {
+        screenflashLabel.color = ccc3(0,255,0);
+    }
+//
+    if ([colorString isEqualToString:@"black"] == true) {
+        screenflashLabel.color = ccc3(0,0,0);
+    }
+//
+    if ([colorString isEqualToString:@"white"] == true) {
+        screenflashLabel.color = ccc3(255,255,255);
+    }
+//
 //    screenflashLabel.color = ccc3(255, 0, 0);
-//
+
+//    [screenflashLabel setFontSize:fontSizeint];
 //    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
     [screenflashLabel setString:stringToFlashOnScreen];
     id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelVisible)];
@@ -2047,6 +2061,15 @@
     spriteTagNum = 0;
     
     rotation = 0.0f;
+    
+    bool tutorialStatusCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialStatus"];
+    
+    if (tutorialStatusCheck == nil) {
+        playedTutorial = false;
+    } else {
+        playedTutorial = [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialStatus"];
+    }
+    
     
     NSNumber *curHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     playerHighScore = [curHighScore intValue]; // read from the devices memory

@@ -14,7 +14,7 @@
 {
 	if ((self = [super init]))
 	{
-        glClearColor(0.32, 0.46, 0.73, 1.0);
+        glClearColor(0.0, 0.75, 1.0, 1.0);
         [self unscheduleAllSelectors];
         
         // have everything stop

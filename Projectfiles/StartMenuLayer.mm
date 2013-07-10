@@ -14,10 +14,10 @@
 {
 	if ((self = [super init]))
 	{
-        glClearColor(255, 255, 255, 255);
+        glClearColor(0.0, 0.75, 1.0, 1.0);
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"dOck SHIPS" fontName:@"SpaceraLT-Regular" fontSize:30];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"ELEMENTS" fontName:@"SpaceraLT-Regular" fontSize:30];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 130);
         [self addChild:gameTitle];

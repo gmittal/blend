@@ -439,7 +439,7 @@
 
 -(void) killFire
 {
-    snuffedFire = [CCParticleRain node];
+    snuffedFire = [CCParticleSnow node];
 	[progressBar1 addChild:snuffedFire z:1001];
 }
 
@@ -451,7 +451,7 @@
 
 -(void) killWater
 {
-    dryWater = [CCParticleRain node];
+    dryWater = [CCParticleSnow node];
 	[progressBar2 addChild:dryWater z:1001];
 }
 
@@ -632,18 +632,20 @@
             
             shipAngle = shipAngle;
             
-            
+            if (shipAngle == 0.f) {
+                shipAngle = 90.f;
+            }
             
             
             [self divideAngularSections];
             numCollisions++;
-//            NSLog(@"%f", shipAngle);
-//            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-//            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-//            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-//            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-//            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-//            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+            NSLog(@"%f", shipAngle);
+            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
             [self scoreCheck:shipAngle withSprite:tempSprite];
             
             collisionDidHappen = true;
@@ -1327,17 +1329,16 @@
     }
     
     ship.scale = 0.15f;
-    
 
-    [self createShipCoord:ship topBottomChoose:topBottomVariable];
-    [self addChild:ship z:50];
+    [self createShipCoord:ship topBottomChoose:topBottomVariable withColor:ship.tag]; // create coordinate
+    [self addChild:ship z:50]; // add sprite to scene
     
     // Also add the spider to the spiders array so it can be accessed more easily.
-    [section1Ships addObject:ship];
-//    [self moveShip:ship];
+    [section1Ships addObject:ship]; // add sprite to array
+    [self moveShip:ship]; // moves the ship
     
 //    float randomDelay = (arc4random()%(3-1+1))+1;
-    [self performSelector:@selector(moveShip:) withObject:ship afterDelay:1];
+//    [self performSelector:@selector(moveShip:) withObject:ship afterDelay:1];
 }
 
 -(void) moveShip1
@@ -1480,7 +1481,7 @@
     //        ship2.scale = 0.15;
     //          [self initSect3Ships];
     //    }
-    
+
     //    [self createShipCoord:ship1]; // create coordinate for ship to spawn to
     //    [self moveShip:ship1];
     //    [self createShipCoord:ship2]; // create coordinate for ship to spawn to
@@ -1490,58 +1491,125 @@
 
 -(void) moveShip:(CCSprite *) shipToMove
 {
-    float previousShipDelay;
-    int slowestSpeed = shipSpeed + 1;
-    int fastestSpeed = shipSpeed - 1;
+//    NSLog(@"Previous Delay: %f", previousShipDelay);
+//    NSLog(@"Previous Delay: %f", previousShipSpeed);
+    int slowestSpeed = 8; //shipSpeed + 2;
+    int fastestSpeed = 5; //shipSpeed - 1;
 
-    float speed = arc4random()%(slowestSpeed-fastestSpeed+1)+fastestSpeed;
-
-    float delayInSeconds = arc4random()%(5-2+1)+2;
-    if (delayInSeconds == previousShipDelay) {
-        delayInSeconds = arc4random()%(5-2+1) + 2;
-
+    float speed = arc4random()%(slowestSpeed-fastestSpeed+1)+fastestSpeed; // pick a random number between the 5 and 8
+//    NSLog(@"Speed: %f", speed);
+    
+    if (speed < previousShipSpeed + 1 && speed > previousShipSpeed - 1) {
+        speed = previousShipSpeed + 1;
+//        NSLog(@"Changed Speed: %f", speed);
     }
+    
+    float delayInSeconds = arc4random()%(2-1+1)+1;
+//    NSLog(@"Current Delay: %f", delayInSeconds);
+    
+    if (delayInSeconds == previousShipDelay) {
+        delayInSeconds = previousShipDelay + 1;
+//        NSLog(@"Changed Delay: %f", delayInSeconds);
+    }
+    
+    
     id delayMove = [CCDelayTime actionWithDuration:delayInSeconds];
     shipMove = [CCMoveTo actionWithDuration:speed position:screenCenter]; // initialize the action to run when the ship is appeneded to the layer
     [shipToMove runAction:[CCSequence actions:delayMove, shipMove, nil]]; // run the action initialized
     previousShipDelay = delayInSeconds;
+    previousShipSpeed = speed;
 }
 
--(void) createShipCoord:(CCSprite *)shipForCoord topBottomChoose:(int) decidingVariable
+-(void) createShipCoord:(CCSprite *)shipForCoord topBottomChoose:(int) decidingVariable withColor:(int) color
 {
     // Temporary way of generating random coordinates to spawn to
-    int fromNumber = -220;
-    int toNumber = 580;
+    int fromNumber = 0;
+    int toNumber = 360;
+
+//    int fromNumber = 0;
+//    int toNumber = 320;
     
-    if (decidingVariable == 1) {
-        shipRandY = 500;
+//    if (decidingVariable == 1) {
+//        shipRandY = 500;
+//        
+//        if (previousShipRandX == 0) {
+//            shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//        } else {
+//            if (color == previousShipColor) {
+//                shipRandX = previousShipRandX;
+//            } else {
+//                shipRandX = previousShipRandX + ((arc4random()%(50-10+1))+10) + 100;
+//
+//            }
+//        }
+//    } else {
+//        shipRandY = -20;
+//        
+//        if (previousShipRandX == 0) {
+//            shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+//        } else {
+//            if (color == previousShipColor) {
+//                shipRandX = previousShipRandX;
+//            } else {
+//                shipRandX = previousShipRandX - ((arc4random()%(50-10+1))+10) + 100;
+//            }
+//        }
+//    }
+//    
+//    
+//    shipForCoord.position = ccp(shipRandX, shipRandY);
+    
+    
+    if (numSpritesPerArray == 1) {
+    randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
     } else {
-        shipRandY = -20;
+        
+        randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+       
+        if (color != previousShipColor) {
+            // if the new sprite in the array is within 15 degrees of the previously generated angle
+            if (randGeneratedAngle > previousGeneratedAngle - 15 && randGeneratedAngle < previousGeneratedAngle + 15) {
+                randGeneratedAngle = previousGeneratedAngle + 120;
+                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+            } else {
+                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+            }
+        }
+        
+        if (color == previousShipColor) {
+            if (randGeneratedAngle > previousGeneratedAngle - 100 && randGeneratedAngle < previousGeneratedAngle + 100)
+            {
+                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+            } else {
+                randGeneratedAngle = previousGeneratedAngle + 120;
+                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+            }
+        }
+        
+        
     }
     
-    shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //    shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    previousGeneratedAngle = randGeneratedAngle;
+    previousShipColor = color;
     
-    //    if (shipRandX < 320) {
-    //        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //    }
+//    NSLog(@"");
     
-    //    if (shipRandY < 480) {
-    //        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //    }
-    
-    //    if (shipRandX < 320 && shipRandY < 480) {
-    //        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //    }
-    
-    //    while (shipRandY < 280 && shipRandY > 200) {
-    //        shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //        shipRandY = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-    //    }
-    
-    shipForCoord.position = ccp(shipRandX, shipRandY);
-    //    [self addChild:shipForCoord z:7];
+//    previousShipRandX = shipRandX;
+//    previousShipColor = color;
+}
+
+
+-(CGPoint) generatePointByAngle:(float) angle distance:(float) someDistance startPoint:(CGPoint) point
+{
+    float addedX = cos(angle-90.f) * someDistance;
+    float addedY = sin(angle-90.f) * someDistance;
+//    NSLog(@"ADDED X: %f", addedX);
+//    NSLog(@"ADDED Y: %f", addedY);
+//    NSLog(NSStringFromCGPoint(point));
+    CGPoint endPoint = ccp(point.x + addedX, point.y + addedY);
+//    NSLog(NSStringFromCGPoint(endPoint));
+    return endPoint;
 }
 
 
@@ -2033,7 +2101,7 @@
 {
     gameOver = false;
     // reset all game variables
-    shipSpeed = 4.8f; // default speed
+    shipSpeed = 5.8f; // default speed
     playerScore = 0;
     startLives = 10;
     playerLives = 10;
@@ -2047,6 +2115,10 @@
     numPower1Left = 1;
     numPower2Left = 5;
     numPower3Left = 5;
+    
+    previousShipRandX = 0;
+    
+    spawnDistance = 400.f;
     
     generationInterval = 700;
     

@@ -167,6 +167,16 @@
     
     bool playedTutorial;
 
+    float previousShipDelay;
+    float previousShipSpeed;
+    
+    int previousShipRandX;
+    
+    int previousShipColor;
+    float randGeneratedAngle;
+    float spawnDistance;
+    
+    float previousGeneratedAngle;
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

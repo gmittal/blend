@@ -177,6 +177,23 @@
     float spawnDistance;
     
     float previousGeneratedAngle;
+    
+    int numFramesBetweenCollisions;
+    
+    bool updateMoveCounter;
+    
+    int moveDelayInFrames;
+    
+    NSUInteger previousCount;
+    
+    int numTimesIndexMoves;
+    NSUInteger previousIndexMoves;
+    
+    int previousIndex;
+    bool didRun;
+    
+    int kevinTest;
+    
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

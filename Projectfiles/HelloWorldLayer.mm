@@ -5,7 +5,6 @@
  * Released under MIT License in Germany (LICENSE-Kobold2D.txt).
  */
 
-// NOT OPTIMIZED FOR 4-Inch RETINA SCREENS YET
 /*
  
 
@@ -128,6 +127,7 @@
         [self addChild:player z:20];
         //        [player runAction:explode];
         
+        
         section1 = [CCSprite spriteWithFile:@"element1.png"];
         progressBar1 = [CCProgressTimer progressWithSprite:section1];
         progressBar1.type = kCCProgressTimerTypeRadial;
@@ -154,6 +154,14 @@
         progressBar3.rotation = 240.0f;
         progressTo3 = [CCProgressTo actionWithDuration:1 percent:33.333f];
         
+        // iPhone 5 Optimizations
+        if ([director winSizeInPixels].height == 1136)
+        {
+            progressBar1.position = ccp(size.width/2 - 65, size.height/2 - 189);
+            progressBar2.position = ccp(size.width/2 - 65, size.height/2 - 189);
+            progressBar3.position = ccp(size.width/2 - 65, size.height/2 - 189);
+        }
+        
         
         [progressBar1 runAction:progressTo1];
         [progressBar2 runAction:progressTo2];
@@ -178,7 +186,7 @@
         /*    lifeBarBorder = [CCSprite spriteWithFile:@"healthbarBorder.png"];
          lifeBarBorder.position = ccp(screenCenter.x, size.height - 15);
          [self addChild:lifeBarBorder];
-         M
+         
          lifeBarSprite = [CCSprite spriteWithFile:@"healthBarFill.png"];
          lifeBar = [CCProgressTimer progressWithSprite:lifeBarSprite];
          lifeBar.type = kCCProgressTimerTypeBar;

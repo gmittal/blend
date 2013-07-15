@@ -194,6 +194,14 @@
     
     int kevinTest;
     
+    int spriteMoveIndex;
+    
+    int frameCountForShipInit;
+    
+    int initDelayInFrames;
+    
+    int initCounter;
+    
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

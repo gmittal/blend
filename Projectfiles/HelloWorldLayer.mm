@@ -8,9 +8,6 @@
 // NOT OPTIMIZED FOR 4-Inch RETINA SCREENS YET
 /*
  
- CURRENT BUGS:
- - LIVES DO NOT SUBTRACT FOR ALL INCORRECT COLLISIONS (BUT WORKS WELL ENOUGH WHEN LIVES ARE NOT DISPLAYED)
- */
 
 /* SUGGESTIONS:
  - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL, OPTIONAL)
@@ -181,7 +178,7 @@
         /*    lifeBarBorder = [CCSprite spriteWithFile:@"healthbarBorder.png"];
          lifeBarBorder.position = ccp(screenCenter.x, size.height - 15);
          [self addChild:lifeBarBorder];
-         
+         M
          lifeBarSprite = [CCSprite spriteWithFile:@"healthBarFill.png"];
          lifeBar = [CCProgressTimer progressWithSprite:lifeBarSprite];
          lifeBar.type = kCCProgressTimerTypeBar;
@@ -573,7 +570,7 @@
 
 -(void) circleCollisionWith:(NSMutableArray *) circle2
 {
-    [self updateCollisionCounter];
+//    [self updateCollisionCounter];
     
     for(NSUInteger i = 0; i < [circle2 count]; i++)
     {
@@ -659,7 +656,6 @@
                 
             } else {
                 [tempSprite stopAction:shipMove];
-                didRun = false;
                 id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
                 id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
                 [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
@@ -1224,6 +1220,10 @@
 
 -(void) shipPauseAllActions
 {
+    for (int shipPauseIndex = 0; shipPauseIndex < [section1Ships count]; shipPauseIndex++)
+    {
+        [[section1Ships objectAtIndex:shipPauseIndex] pauseSchedulerAndActions];
+    }
 //    [ship1 pauseSchedulerAndActions];
 //    [ship2 pauseSchedulerAndActions];
 //    [ship3 pauseSchedulerAndActions];
@@ -1233,6 +1233,11 @@
 
 -(void) shipResumeAllActions
 {
+    for (int shipResumeIndex = 0; shipResumeIndex < [section1Ships count]; shipResumeIndex++)
+    {
+        [[section1Ships objectAtIndex:shipResumeIndex] resumeSchedulerAndActions];
+    }
+    
 //    [ship1 resumeSchedulerAndActions];
 //    [ship2 resumeSchedulerAndActions];
 //    [ship3 resumeSchedulerAndActions];
@@ -1301,15 +1306,22 @@
 	//NSAssert1(section1Ships == nil, @"%@: spiders array is already initialized!", NSStringFromSelector(_cmd));
 	section1Ships = [[NSMutableArray alloc] init];
 	
-	for (int i = 0; i < numShips1; i++)
-	{
-        [self initializeShip1Sprite];
+    [self schedule:@selector(initializeTheShipArray:)];
+    
+//	for (int i = 0; i < numShips1; i++)
+//	{
+//        [self initializeShip1Sprite];
+    
+//        [self performSelector:@selector(initializeShip1Sprite) withObject:nil afterDelay:0.5f];
+//        [self runAction:[CCSequence actions:[CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)], [CCDelayTime actionWithDuration:1.0f], nil]];
+        
+// [self performSelector:@selector(initializeShip1Sprite) withObject:self afterDelay:0.5f];
 //        id initShip = [CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)];
 //        id moveShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
         //        id delayMove = [CCDelayTime actionWithDuration:1.0f];
         //        id moveTheShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
 //        [self runAction:[CCSequence actions:initShip, moveShip, nil]];
-	}
+//	}
 }
 
 -(void) initializeShip1Sprite
@@ -1339,9 +1351,13 @@
     
     // Also add the spider to the spiders array so it can be accessed more easily.
     [section1Ships addObject:ship]; // add sprite to array
-//    [self moveShip:ship]; // moves the ship
+    [self moveShip:ship]; // moves the ship
     
 //    float randomDelay = (arc4random()%(3-1+1))+1;
+    
+//    [self performSelector:@selector(delayShipMove) onThread:[NSThread currentThread] withObject:self waitUntilDone:YES];
+//    [self moveShip:ship];
+    
     didRun = false;
 }
 
@@ -1350,6 +1366,10 @@
     [self moveShip:ship1];
 }
 
+-(void) delayShipMove
+{
+    [self runAction:[CCDelayTime actionWithDuration:0.5f]];
+}
 
 -(void) initSect2Ships
 {
@@ -1458,39 +1478,12 @@
 
 -(void) initShips
 {
-    //    [self pickArray];
     [self pickShape];
     topBottomVariable = (arc4random()%(2-1+1))+1;
-    //    if (shipArray == 1) {
-    //        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
-    //        ship1.scale = 0.15;
-    //        ship2 = [CCSprite spriteWithFile:@"ship1.png"];
-    //        ship2.scale = 0.15;
+
     [self initSect1Ships];
     updateMoveCounter = true;
-    //    }
-    
-    
-    //    if (shipArray == 2) {
-    //        ship1 = [CCSprite spriteWithFile:@"ship2.png"];
-    //        ship1.scale = 0.15;
-    //        ship2 = [CCSprite spriteWithFile:@"ship2.png"];
-    //        ship2.scale = 0.15;
-    //            [self initSect2Ships];
-    //    }
-    
-    //    if (shipArray == 3) {
-    //        ship1 = [CCSprite spriteWithFile:@"ship3.png"];
-    //        ship1.scale = 0.15;
-    //        ship2 = [CCSprite spriteWithFile:@"ship3.png"];
-    //        ship2.scale = 0.15;
-    //          [self initSect3Ships];
-    //    }
-
-    //    [self createShipCoord:ship1]; // create coordinate for ship to spawn to
-    //    [self moveShip:ship1];
-    //    [self createShipCoord:ship2]; // create coordinate for ship to spawn to
-    //    [self moveShip:ship2];
+    spriteMoveIndex = 0;
 }
 
 
@@ -1522,7 +1515,8 @@
     id resetBool = [CCCallFunc actionWithTarget:self selector:@selector(setToFalse)];
     shipMove = [CCMoveTo actionWithDuration:shipSpeed position:screenCenter]; // initialize the action to run when the ship is appeneded to the layer
     [shipToMove runAction:[CCSequence actions:shipMove, resetBool, nil]]; // run the action initialized
-    
+             didRun = false;
+    spriteMoveIndex++;
 //    previousShipDelay = delayInSeconds;
 //    previousShipSpeed = speed;
 }
@@ -2156,11 +2150,14 @@
 
 -(void) resetVariables
 {
+    initCounter = 0;
+    frameCountForShipInit = 0;
+    initDelayInFrames = 90;
     didRun = false;
     updateMoveCounter = false;
     gameOver = false;
     // reset all game variables
-    shipSpeed = 10.f; // default speed
+    shipSpeed = 7.5f; // default speed
     playerScore = 0;
     startLives = 10;
     playerLives = 10;
@@ -2179,7 +2176,7 @@
     
     previousShipRandX = 0;
     
-    spawnDistance = 250.f;
+    spawnDistance = 300.f;
     
     generationInterval = 700;
     
@@ -2264,36 +2261,25 @@
 -(void) updateCollisionCounter
 {
     NSUInteger previousCount;
-    
+
     int numTimesIndexMoves = 0;
     NSUInteger previousIndexMoves = 0;
     
     int previousIndex = 0;
-    int previousKevin = 0;
     
     for (int a = 0; a < [section1Ships count]; a++)
     {
         CCSprite *spriteToMove = [section1Ships objectAtIndex:a];
-        if ((numFramesBetweenCollisions % (moveDelayInFrames+12)) == 0) {
-//            if (didRun == true) {
-//                didRun = false;
-//            }
-            
+        if ((numFramesBetweenCollisions % moveDelayInFrames) == 0) {
             if ([section1Ships count] != previousCount) {
                 if (didRun == false) {
                     [self moveShip:spriteToMove];
                     didRun = true;
                 }
-//                numFramesBetweenCollisions = 0;
             }
             previousCount = [section1Ships count];
-            
         }
-        previousKevin = kevinTest;
-        
     }
-    
-//    didRun = false;
 }
 
 -(void) updateMoveDelayCounter:(ccTime) dt
@@ -2301,21 +2287,37 @@
     numFramesBetweenCollisions++;
 }
 
+
+
+
+-(void) initializeTheShipArray:(ccTime) dt
+{
+    frameCountForShipInit++;
+    if ((frameCountForShipInit % initDelayInFrames) == 0)
+    {
+        if (initCounter < numSpritesPerArray) {
+        [self initializeShip1Sprite];
+        initCounter++;
+        } else {
+            [self unschedule:@selector(initializeTheShipArray:)];
+            initCounter = 0;
+            frameCountForShipInit = 0;
+        }
+    }
+}
+
+
+
 -(void)update:(ccTime)dt // update method
 {
     
     collisionDidHappen = false;
+    
     if (updateMoveCounter == true) {
         numFramesBetweenCollisions++;
     }
     
-//    if ((framesPassed % 10) == 0)
-//    {
-//        kevinTest--;
-//    }
-    
-    NSLog(@"KEVIN TEST: %i", kevinTest);
-    
+//    [self updateCollisionCounter];
     
     framesPassed++;
     secondsPassed = framesPassed/60; // divide by framerate;

@@ -78,7 +78,7 @@
 -(void) startGame
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+	 [CCTransitionFadeDown transitionWithDuration:1.0f scene:[HelloWorldLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 

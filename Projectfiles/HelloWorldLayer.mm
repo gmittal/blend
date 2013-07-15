@@ -2325,8 +2325,6 @@
         numFramesBetweenCollisions++;
     }
     
-//    [self updateCollisionCounter];
-    
     framesPassed++;
     secondsPassed = framesPassed/60; // divide by framerate;
     

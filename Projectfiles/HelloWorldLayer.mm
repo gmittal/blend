@@ -5,8 +5,6 @@
  * Released under MIT License in Germany (LICENSE-Kobold2D.txt).
  */
 
-/*
- 
 
 /* SUGGESTIONS:
  - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL, OPTIONAL)
@@ -170,7 +168,7 @@
         // score label
         score = [[NSString alloc]initWithFormat:@"%i", playerScore];
         scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
-        scoreLabel.position = ccp(45, size.height - 19);
+        scoreLabel.position = ccp(55, size.height - 22);
         scoreLabel.color = ccc3(0,0,0);
         scoreLabel.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:scoreLabel z:1001];
@@ -239,29 +237,29 @@
         //        ship1.tag = spriteTagNum;
         
         powerUpCreator1 = [[CCMenuItemImage alloc] init];
-        powerUpCreator1 = [CCMenuItemImage itemWithNormalImage:@"element1.png"
-                                                 selectedImage: @"element1.png"
+        powerUpCreator1 = [CCMenuItemImage itemWithNormalImage:@"shield.png"
+                                                 selectedImage: @"shield.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp1)];
-        powerUpCreator1.scale = 0.15f;
+        powerUpCreator1.scale = 0.3f;
         powerUpCreator1.position = ccp(size.width/3 - 70, 20);
         //        [self addChild:powerUpCreator1 z:5];
         
         powerUpCreator2 = [[CCMenuItemImage alloc] init];
-        powerUpCreator2 = [CCMenuItemImage itemWithNormalImage:@"element2.png"
-                                                 selectedImage: @"element2.png"
+        powerUpCreator2 = [CCMenuItemImage itemWithNormalImage:@"stop.png"
+                                                 selectedImage: @"stop.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp2)];
-        powerUpCreator2.scale = 0.15f;
+        powerUpCreator2.scale = 0.3f;
         powerUpCreator2.position = ccp(size.width/2 - 20, 20);
         //        [self addChild:powerUpCreator2 z:5];
         
         powerUpCreator3 = [[CCMenuItemImage alloc] init];
-        powerUpCreator3 = [CCMenuItemImage itemWithNormalImage:@"element3.png"
-                                                 selectedImage: @"element3.png"
+        powerUpCreator3 = [CCMenuItemImage itemWithNormalImage:@"shock.png"
+                                                 selectedImage: @"shock.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp3)];
-        powerUpCreator3.scale = 0.15f;
+        powerUpCreator3.scale = 0.3f;
         powerUpCreator3.position = ccp(size.width/1.5 + 30, 20);
         //        [self addChild:powerUpCreator3 z:5];
         
@@ -342,14 +340,14 @@
         
         multiplierWrapper = [CCSprite spriteWithFile:@"multiplier_wrapper.png"];
         multiplierWrapper.position = ccp(15, size.height - 19);
-        [self setDimensionsInPixelsOnSprite:multiplierWrapper width:50 height:50];
+        [self setDimensionsInPixelsOnSprite:multiplierWrapper width:70 height:70];
         [self addChild:multiplierWrapper z:scoreLabel.zOrder];
         
         multiplierString = [[NSString alloc] initWithFormat:@"x%i", pointMultiplier];
         multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:25];
-        multiplierLabel.position = ccp(multiplierWrapper.position.x - 7, multiplierWrapper.position.y);
+        multiplierLabel.position = ccp(multiplierWrapper.position.x + 10, multiplierWrapper.position.y - 3);
         multiplierLabel.color = ccc3(255,255,255);
-        multiplierLabel.anchorPoint = ccp(0.0f,0.5f);
+//        multiplierLabel.anchorPoint = ccp(0.0f,0.5f); // left justify
         [self addChild:multiplierLabel z:scoreLabel.zOrder+1];
         
         
@@ -858,9 +856,17 @@
 -(void) increaseMultiplier
 {
     numHitsUntilNextMultiplier++;
-    if (numHitsUntilNextMultiplier >= pointMultiplier) {
+    
+    if (p3Enabler == true) {
+        // if the powerup is enabled, do this
+        pointMultiplier +=1;
         numHitsUntilNextMultiplier = 0;
-        pointMultiplier += 1;
+    } else {
+        // if the powerup is not enabled do this
+        if (numHitsUntilNextMultiplier >= pointMultiplier) {
+            numHitsUntilNextMultiplier = 0;
+            pointMultiplier += 1;
+        }
     }
 }
 
@@ -1207,14 +1213,22 @@
         //        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
         //    [self removeChild:ship1 cleanup:YES];
         
-        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
-        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
+//        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
+//        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
+//        
+//        for (NSUInteger k = 0; k < [section1Ships count]; k++) {
+//            CCSprite *tempSpriteToRemove = [section1Ships objectAtIndex:k];
+//            [tempSpriteToRemove runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+//            [section1Ships removeObjectAtIndex:k];
+//        }
         
-        for (NSUInteger k = 0; k < [section1Ships count]; k++) {
-            CCSprite *tempSpriteToRemove = [section1Ships objectAtIndex:k];
-            [tempSpriteToRemove runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
-            [section1Ships removeObjectAtIndex:k];
-        }
+        [self flashLabel:@"MULTIPLIER BOOST!" actionWithDuration:5.0f color:@"red"];
+        
+        id enableIncrease = [CCCallFunc actionWithTarget:self selector:@selector(enableShipMultiplierIncrease)];
+        id delayDecrease = [CCDelayTime actionWithDuration:5.0f];
+        id disable = [CCCallFunc actionWithTarget:self selector:@selector(disableShipMultiplierIncrease)];
+        
+        [self runAction:[CCSequence actions:enableIncrease, delayDecrease, disable, nil]];
         
         numPower3Left -= 1;
 //        [self initShips];
@@ -1224,6 +1238,17 @@
         // do nothing
     }
 }
+
+-(void) enableShipMultiplierIncrease
+{
+    p3Enabler = true;
+}
+
+-(void) disableShipMultiplierIncrease
+{
+    p3Enabler = false;
+}
+
 
 
 -(void) shipPauseAllActions
@@ -1657,7 +1682,7 @@
 
 -(CGPoint) generatePointByAngle:(float) angle distance:(float) someDistance startPoint:(CGPoint) point
 {
-    NSLog(@"%f", angle);
+//    NSLog(@"%f", angle);
     angle = CC_DEGREES_TO_RADIANS(angle);
     float addedX = cos(angle) * someDistance;
     float addedY = sin(angle) * someDistance;
@@ -1665,7 +1690,7 @@
 //    NSLog(@"ADDED Y: %f", addedY);
 //    NSLog(NSStringFromCGPoint(point));
     CGPoint endPoint = ccp(point.x + addedX, point.y + addedY);
-     NSLog(NSStringFromCGPoint(endPoint));
+//     NSLog(NSStringFromCGPoint(endPoint));
 //    NSLog(NSStringFromCGPoint(endPoint));
     return endPoint;
 }
@@ -1916,25 +1941,10 @@
         
         //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
+    
         
         
-        /*        if ([input isAnyTouchOnNode:powerUp1 touchPhase:KKTouchPhaseAny]) {
-         CGPoint powerUp1Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-         powerUp1.position = powerUp1Pos;
-         }
-         
-         if ([input isAnyTouchOnNode:powerUp2 touchPhase:KKTouchPhaseAny]) {
-         CGPoint powerUp2Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-         powerUp2.position = powerUp2Pos;
-         }
-         
-         if ([input isAnyTouchOnNode:powerUp3 touchPhase:KKTouchPhaseAny]) {
-         CGPoint powerUp3Pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
-         powerUp3.position = powerUp3Pos;
-         } */
-        
-        
-        // PAUSE BUTTON
+        // PAUSE BUTTON 
         if ([input isAnyTouchOnNode:pauseButton touchPhase:KKTouchPhaseAny]) {
             
             [self pauseGame];
@@ -1948,99 +1958,84 @@
     
 }
 
+
+
+
 -(void) initChallenges
 {
     
+    if (playerScore < 20) {
+        initDelayInFrames = 1; // there is only one sprite on screen, so there is no need to have a delay between initializations
+        shipSpeed = 6.0f;
+        // by default the numSpritesPerArray is set to 1
+    }
+    
     if (playerScore > 20) {
-        //            shipSpeed = 4.2f;
+    
+        initDelayInFrames = 80;
+        shipSpeed = 6.0f;
         numSpritesPerArray = 2;
         
     }
     
     if (playerScore > 50) {
-        //            shipSpeed = 4.2f;
+        
+        shipSpeed = 5.5f;
         numSpritesPerArray = 3;
         
     }
     
     
     if (playerScore > 90) {
-        //            shipSpeed = 4.2f;
+    
         numSpritesPerArray = 4;
         
     }
     
     if (playerScore > 200) {
-        //            shipSpeed = 4.2f;
+    
+        initDelayInFrames = 70;
         numSpritesPerArray = 6;
+        shipSpeed = 5.0f;
         
     }
     
     if (playerScore > 400) {
-        //            shipSpeed = 4.2f;
+  
+        initDelayInFrames = 60;
         numSpritesPerArray = 6;
+        shipSpeed = 4.5f;
         
     }
     
     if (playerScore > 800) {
-        //            shipSpeed = 4.2f;
+     
+        initDelayInFrames = 55;
         numSpritesPerArray = 7;
+        shipSpeed = 4.3f;
         
     }
     
     if (playerScore > 1000) {
-        //            shipSpeed = 4.2f;
-        numSpritesPerArray = 10;
-        
+        initDelayInFrames = 40;
+//        numSpritesPerArray = 8;
     }
     
-    // speed challenge
-    /*if (playerScore > 6) {
-     shipSpeed = 3.5f;
-     }
-     
-     if (playerScore > 9) {
-     shipSpeed = 2.0f;
-     }
-     
-     if (playerScore > 10) {
-     shipSpeed = 3.7f;
-     }
-     
-     if (playerScore > 15) {
-     shipSpeed = 2.8f;
-     }
-     
-     if (playerScore > 19) {
-     shipSpeed = 1.5f;
-     }
-     
-     if (playerScore > 20) {
-     shipSpeed = 2.2f;
-     }
-     
-     if (playerScore > 29) {
-     shipSpeed = 2.0f;
-     }*/
+    if (playerScore > 1300) {
+        initDelayInFrames = 40;
+        numSpritesPerArray = 8;
+    }
     
-    //    if (playerScore > 39) {
-    //        shipSpeed = 1.9f;
-    //    }
-    
-    //    if (playerScore > 59) {
-    //        shipSpeed = 1.9f;
-    //    }
-    
-    //    if (playerScore > 79) {
-    //        shipSpeed = 1.9f;
-    //    }
-    
-    //    if (playerScore > 99) {
-    //        shipSpeed = 1.0f;
-    //    }
+    if (playerScore > 2000)
+    {
+        initDelayInFrames = 40;
+        numSpritesPerArray = 10;
+    }
     
     
 }
+
+
 
 
 -(void) initMenuItems
@@ -2158,6 +2153,7 @@
 
 -(void) resetVariables
 {
+    p3Enabler = false;
     initCounter = 0;
     frameCountForShipInit = 0;
     initDelayInFrames = 90;
@@ -2176,15 +2172,11 @@
     scoreAdd = 5;
     pointMultiplier = 2; // starting multiplier to prevent killing the user almost instantly
     
-    numPower1Left = 1;
-    numPower2Left = 5;
-    numPower3Left = 5;
-    
     moveDelayInFrames = 20;
     
     previousShipRandX = 0;
     
-    spawnDistance = 300.f;
+    spawnDistance = 350.f;
     
     generationInterval = 700;
     
@@ -2200,6 +2192,29 @@
     spriteTagNum = 0;
     
     rotation = 0.0f;
+    
+    
+    // grab powerup values
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"] == nil) {
+        numPower1Left = 1;
+    } else {
+        numPower1Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"] == nil) {
+        numPower2Left = 5;
+    } else {
+        numPower2Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"] == nil) {
+        numPower3Left = 3;
+    } else {
+        numPower3Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"];
+    }
+    
+    
+    
     
     bool tutorialStatusCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialStatus"];
     
@@ -2251,7 +2266,9 @@
         [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
     }
     
-    
+    [[NSUserDefaults standardUserDefaults] setInteger:numPower1Left forKey:@"power1Status"];
+    [[NSUserDefaults standardUserDefaults] setInteger:numPower2Left forKey:@"power2Status"];
+    [[NSUserDefaults standardUserDefaults] setInteger:numPower3Left forKey:@"power3Status"];
     
     //    NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     //    NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
@@ -2263,7 +2280,7 @@
 -(void) pauseGame
 {
     [[CCDirector sharedDirector] pushScene:
-	 [CCTransitionSlideInR transitionWithDuration:0.5f scene:[PauseLayer node]]];
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[PauseLayer node]]];
 }
 
 -(void) updateCollisionCounter

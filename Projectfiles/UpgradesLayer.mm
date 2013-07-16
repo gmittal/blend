@@ -20,7 +20,7 @@
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"SpaceraLT-Regular" fontSize:28];
         gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 210);
+        gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
         
         NSNumber *CoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
@@ -32,57 +32,28 @@
         coinsLabel.color = ccc3(0, 0, 0);
         [self addChild:coinsLabel];
         
-        CCMenuItemFont *powerup1 = [CCMenuItemFont itemFromString: @"Slow Motion Power - 100 Coins" target:self selector:@selector(powerup1)];
-        [powerup1 setFontName:@"Roboto-Light"];
-        [powerup1 setFontSize:20];
-        powerup1.color = ccc3(0, 0, 0);
         
-        CCMenuItemFont *powerup2 = [CCMenuItemFont itemFromString: @"Point Boost - 200 Coins" target:self selector:@selector(powerup2)];
-        [powerup2 setFontName:@"Roboto-Light"];
-        [powerup2 setFontSize:20];
-        powerup2.color = ccc3(0, 0, 0);
+        numPower1 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"];
+        p1String = [[NSString alloc] initWithFormat:@"%i", numPower1];
+        p1Label = [CCLabelTTF labelWithString:p1String fontName:@"Roboto-Light" fontSize:20];
+        p1Label.position = ccp(screenSize.width/2 - 100, screenCenter.y + 70);
+        p1Label.color = ccc3(0, 0, 0);
+        [self addChild:p1Label];
         
-        CCMenuItemFont *powerup3 = [CCMenuItemFont itemFromString: @"Explode - 500 Coins" target:self selector:@selector(powerup3)];
-        [powerup3 setFontName:@"Roboto-Light"];
-        [powerup3 setFontSize:20];
-        powerup3.color = ccc3(0, 0, 0);
+        numPower2 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"];
+        p2String = [[NSString alloc] initWithFormat:@"%i", numPower2];
+        p2Label = [CCLabelTTF labelWithString:p2String fontName:@"Roboto-Light" fontSize:20];
+        p2Label.position = ccp(screenSize.width/2 - 100, screenCenter.y);
+        p2Label.color = ccc3(0, 0, 0);
+        [self addChild:p2Label];
         
-        CCMenuItemFont *powerup4 = [CCMenuItemFont itemFromString: @"Ressurection - 750 Coins" target:self selector:@selector(powerup4)];
-        [powerup4 setFontName:@"Roboto-Light"];
-        [powerup4 setFontSize:20];
-        powerup4.color = ccc3(0, 0, 0);
-        
-        CCMenuItemFont *powerup5 = [CCMenuItemFont itemFromString: @"Lives Boost - 500 Coins" target:self selector:@selector(powerup5)];
-        [powerup5 setFontName:@"Roboto-Light"];
-        [powerup5 setFontSize:20];
-        powerup5.color = ccc3(0, 0, 0);
+        numPower3 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"];
+        p3String = [[NSString alloc] initWithFormat:@"%i", numPower3];
+        p3Label = [CCLabelTTF labelWithString:p3String fontName:@"Roboto-Light" fontSize:20];
+        p3Label.position = ccp(screenSize.width/2 - 100, screenCenter.y - 70);
+        p3Label.color = ccc3(0, 0, 0);
+        [self addChild:p3Label];
 
-        
-        
-        NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
-        int highScore = [savedHighScore intValue];
-        NSString *highScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", highScore];
-        CCLabelBMFont *highScoreLabel = [CCLabelTTF labelWithString:highScoreString fontName:@"Roboto-Light" fontSize:20];
-        highScoreLabel.position = ccp(screenSize.width/2, screenSize.height/2);
-        highScoreLabel.color = ccc3(0, 0, 0);
-        //        [self addChild:highScoreLabel];
-        
-        
-        NSNumber *lastRoundScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
-        int lastRoundPlayedScore = [lastRoundScore intValue];
-        NSString *lastRoundString = [[NSString alloc]initWithFormat:@"Last Round: %i", lastRoundPlayedScore];
-        CCLabelBMFont *lastRoundPlayed = [CCLabelTTF labelWithString:lastRoundString fontName:@"Roboto-Light" fontSize:20];
-        lastRoundPlayed.position = ccp(screenSize.width/2, screenSize.height/2 - 40);
-        lastRoundPlayed.color = ccc3(0, 0, 0);
-        //        [self addChild:lastRoundPlayed];
-        
-        //        [MGWU submitHighScore:highScore byPlayer:@"gmittal" forLeaderboard:@"defaultLeaderboard"];
-        
-//        NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-//        [MGWU submitHighScore:highScore byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
-        
-        //        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
-        //                                 onTarget:self];
         
         
         CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
@@ -95,14 +66,109 @@
         goHomeMenu.position = ccp(screenSize.width/2, 40);
         [self addChild:goHomeMenu];
         
+        
+        CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"shield.png" selectedImage:@"shield.png" target:self selector:@selector(buyCash1)];
+        BuyCash1Label.scale = 0.5f;
+        
+        CCMenuItemImage *BuyCash2Label = [CCMenuItemImage itemWithNormalImage:@"stop.png" selectedImage:@"stop.png" target:self selector:@selector(buyCash2)];
+        BuyCash2Label.scale = 0.5f;
+        
+        
+        CCMenuItemFont *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"shock.png" selectedImage:@"shock.png" target:self selector:@selector(buyCash3)];
+        BuyCash3Label.scale = 0.5f;
+        
+        CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"1000 Coins" fontName:@"Roboto-Light" fontSize:18];
+        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 70);
+        price1.color = ccc3(0, 0, 0);
+        [self addChild:price1];
+        
+        CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"500 Coins" fontName:@"Roboto-Light" fontSize:18];
+        price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2);
+        price2.color = ccc3(0, 0, 0);
+        [self addChild:price2];
+        
+        CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"800 Coins" fontName:@"Roboto-Light" fontSize:18];
+        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 70);
+        price3.color = ccc3(0, 0, 0);
+        [self addChild:price3];
+        
+        CCMenu *cashStoreMenu = [CCMenu menuWithItems:BuyCash1Label, BuyCash2Label, BuyCash3Label, nil];
+        [cashStoreMenu alignItemsVerticallyWithPadding:10.f];
+        cashStoreMenu.position = ccp(screenSize.width/2 - 40, screenSize.height/2);
+        [self addChild:cashStoreMenu];
+        
+        [self scheduleUpdate];
+        
     }
     return self;
 }
+
+-(void) buyCash1
+{
+    if (coins > 0) {
+        coins -= 1000;
+        NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
+        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+        
+        numPower1 += 1;
+        [[NSUserDefaults standardUserDefaults] setInteger:numPower1 forKey:@"power1Status"];
+        
+        [MGWU showMessage:@"1 Energy Shield Bought" withImage:nil];
+    }
+}
+
+-(void) buyCash2
+{
+    if (coins > 0) {
+        coins -= 500;
+        NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
+        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+        
+        numPower2 += 1;
+        [[NSUserDefaults standardUserDefaults] setInteger:numPower2 forKey:@"power2Status"];
+        
+        [MGWU showMessage:@"1 Delay Drone Bought" withImage:nil];
+    }
+}
+
+-(void) buyCash3
+{
+    if (coins > 0) {
+        
+        coins -= 800;
+        NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
+        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+        
+        numPower3 += 1;
+        [[NSUserDefaults standardUserDefaults] setInteger:numPower3 forKey:@"power3Status"];
+        
+        [MGWU showMessage:@"1 Multiplier Boost Bought" withImage:nil];
+    }
+}
+
+
 
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
+
+
+-(void) update:(ccTime)delta
+{
+    CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
+    [coinsLabel setString:CoinString];
+    
+    p1String = [[NSString alloc] initWithFormat:@"%i", numPower1];
+    [p1Label setString:p1String];
+    
+    p2String = [[NSString alloc] initWithFormat:@"%i", numPower2];
+    [p2Label setString:p2String];
+    
+    p3String = [[NSString alloc] initWithFormat:@"%i", numPower3];
+    [p3Label setString:p3String];
+}
+
 
 @end

@@ -14,6 +14,19 @@
     int coins;
     NSString *CoinString;
     CCLabelBMFont *coinsLabel;
+    
+    int numPower1;
+    int numPower2;
+    int numPower3;
+    
+    NSString *p1String;
+    CCLabelBMFont *p1Label;
+    
+    NSString *p2String;
+    CCLabelBMFont *p2Label;
+    
+    NSString *p3String;
+    CCLabelBMFont *p3Label;
 }
 
 @end

@@ -202,6 +202,8 @@
     
     int initCounter;
     
+    bool p3Enabler;
+    
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

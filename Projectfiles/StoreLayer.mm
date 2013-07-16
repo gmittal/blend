@@ -26,7 +26,7 @@ CCLabelBMFont *coinsLabel;
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"SpaceraLT-Regular" fontSize:28];
         gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 210);
+        gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
 
         NSNumber *CoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];

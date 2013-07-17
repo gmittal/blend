@@ -23,7 +23,7 @@
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
         
-        NSNumber *CoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+        NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         coins = [CoinNumber intValue];
         CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
@@ -53,7 +53,7 @@
         p3Label.position = ccp(screenSize.width/2 - 100, screenCenter.y - 70);
         p3Label.color = ccc3(0, 0, 0);
         [self addChild:p3Label];
-
+        
         
         
         CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
@@ -106,28 +106,35 @@
 -(void) buyCash1
 {
     if (coins > 0) {
-        coins -= 1000;
-        NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
-        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
-        
-        numPower1 += 1;
-        [[NSUserDefaults standardUserDefaults] setInteger:numPower1 forKey:@"power1Status"];
-        
-        [MGWU showMessage:@"1 Energy Shield Bought" withImage:nil];
+        if (coins > 1000) {
+            coins -= 1000;
+            NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
+            //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+            [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
+            
+            numPower1 += 1;
+            [[NSUserDefaults standardUserDefaults] setInteger:numPower1 forKey:@"power1Status"];
+            
+            [MGWU showMessage:@"1 Energy Shield Bought" withImage:nil];
+        }
     }
 }
 
 -(void) buyCash2
 {
     if (coins > 0) {
-        coins -= 500;
-        NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
-        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
-        
-        numPower2 += 1;
-        [[NSUserDefaults standardUserDefaults] setInteger:numPower2 forKey:@"power2Status"];
-        
-        [MGWU showMessage:@"1 Delay Drone Bought" withImage:nil];
+        if (coins > 500) {
+            coins -= 500;
+            NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
+            //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+            [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
+            
+            
+            numPower2 += 1;
+            [[NSUserDefaults standardUserDefaults] setInteger:numPower2 forKey:@"power2Status"];
+            
+            [MGWU showMessage:@"1 Delay Drone Bought" withImage:nil];
+        }
     }
 }
 
@@ -135,14 +142,19 @@
 {
     if (coins > 0) {
         
-        coins -= 800;
-        NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
-        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
-        
-        numPower3 += 1;
-        [[NSUserDefaults standardUserDefaults] setInteger:numPower3 forKey:@"power3Status"];
-        
-        [MGWU showMessage:@"1 Multiplier Boost Bought" withImage:nil];
+        if (coins > 800) {
+            
+            coins -= 800;
+            NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
+            //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+            [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
+            
+            
+            numPower3 += 1;
+            [[NSUserDefaults standardUserDefaults] setInteger:numPower3 forKey:@"power3Status"];
+            
+            [MGWU showMessage:@"1 Multiplier Boost Bought" withImage:nil];
+        }
     }
 }
 
@@ -151,7 +163,7 @@
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 

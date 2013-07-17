@@ -67,7 +67,7 @@ int endingHighScore;
         endScore.position = ccp(screenSize.width/2, 100);
         [self addChild:endScore];
         
-        NSNumber *endingHighScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
 //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         endingHighScore = [endingHighScoreNumber intValue];
         NSString *endHighScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", endingHighScore];
@@ -75,7 +75,7 @@ int endingHighScore;
         endHighScore.position = ccp(screenSize.width/2, 60);
         [self addChild:endHighScore];
         
-        NSNumber *endingCoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+        NSNumber *endingCoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         int endingCoins = [endingCoinNumber intValue];
         NSString *endCoinString = [[NSString alloc] initWithFormat:@"Coins: %i", endingCoins];

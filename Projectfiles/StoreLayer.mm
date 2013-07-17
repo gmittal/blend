@@ -29,7 +29,7 @@ CCLabelBMFont *coinsLabel;
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
 
-        NSNumber *CoinNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+        NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         coins = [CoinNumber intValue];
         CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
@@ -127,7 +127,8 @@ CCLabelBMFont *coinsLabel;
         [self boughtCashMessage:1];
         coins += 1000;
         NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
-        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+//        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+        [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
     }
     
     if ([powerupToBuy isEqualToString:@"com.gbm.mlg.3000C"] == true)
@@ -136,7 +137,8 @@ CCLabelBMFont *coinsLabel;
         [self boughtCashMessage:2];
         coins += 3000;
         NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
-        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+//        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+        [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
         
     }
     
@@ -146,7 +148,8 @@ CCLabelBMFont *coinsLabel;
         [self boughtCashMessage:3];
         coins += 10000;
         NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
-        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+//        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
+        [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
     }
     
 }
@@ -155,7 +158,7 @@ CCLabelBMFont *coinsLabel;
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 

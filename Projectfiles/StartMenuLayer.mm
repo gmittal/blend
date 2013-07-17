@@ -72,32 +72,32 @@
 -(void) goToSettings
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeBL transitionWithDuration:1.0f scene:[SettingsLayer node]]];
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[SettingsLayer node]]];
 }
 
 -(void) startGame
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionZoomFlipAngular transitionWithDuration:1.0f scene:[HelloWorldLayer node]]];
+	 [CCTransitionZoomFlipAngular transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 
 -(void) gameStats
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeBL transitionWithDuration:1.0f scene:[StatLayer node]]];
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[StatLayer node]]];
 }
 
 -(void) gameStore
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeBL transitionWithDuration:1.0f scene:[StoreLayer node]]];
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[StoreLayer node]]];
 }
 
 -(void) gameUpgrades
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeBL transitionWithDuration:1.0f scene:[UpgradesLayer node]]];
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
 }
 
 -(void) about

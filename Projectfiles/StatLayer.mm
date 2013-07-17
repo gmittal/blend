@@ -25,7 +25,7 @@ CGSize screenSize;
         [self addChild:gameTitle];
         
         
-        NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+        NSNumber *savedHighScore = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
         int highScore = [savedHighScore intValue];
         NSString *highScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", highScore];
         CCLabelBMFont *highScoreLabel = [CCLabelTTF labelWithString:highScoreString fontName:@"Roboto-Light" fontSize:20];
@@ -68,7 +68,7 @@ CGSize screenSize;
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 

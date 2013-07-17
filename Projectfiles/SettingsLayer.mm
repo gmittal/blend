@@ -24,7 +24,7 @@
         
         
         
-        NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+        NSNumber *savedHighScore = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
         int highScore = [savedHighScore intValue];
         NSString *highScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", highScore];
         CCLabelBMFont *highScoreLabel = [CCLabelTTF labelWithString:highScoreString fontName:@"Roboto-Light" fontSize:20];
@@ -48,6 +48,19 @@
         
         //        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
         //                                 onTarget:self];
+    
+        
+        
+        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"shock.png" selectedImage:@"shock.png" target:self selector:@selector(selfDestruct)];
+        CCMenu *resetMenu = [CCMenu menuWithItems:resetButton, nil];
+        [resetMenu alignItemsVertically];
+        resetMenu.position = ccp(screenCenter.x, screenCenter.y + 80);
+        [self addChild:resetMenu z:1000];
+        
+        CCLabelBMFont *resetLabel = [CCLabelTTF labelWithString:@"Reset Game Data" fontName:@"Roboto-Light" fontSize:20];
+        resetLabel.position = ccp(screenCenter.x, resetMenu.position.y - 60);
+        resetLabel.color = ccc3(0, 0, 0);
+        [self addChild:resetLabel];
         
         
         CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
@@ -67,7 +80,23 @@
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
+
+-(void) selfDestruct
+{
+    // Reset all game data
+    
+    [MGWU removeObjectForKey:@"sharedCoins"]; // reset coins
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"power1Status"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"power2Status"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"power3Status"]; // reset powerups
+    [MGWU removeObjectForKey:@"sharedHighScore"]; // reset high score, but not leaderboard
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"sharedScore"]; // reset last played score
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    
+    [MGWU showMessage:@"All game data has been reset." withImage:nil];
+}
+
 
 @end

@@ -198,7 +198,7 @@
         lifeBarBorder = [CCSprite spriteWithFile: @"healthbarBorder.png"];
         lifeBarBorder.scale = 0.85f;
         [lifeBarBorder setPosition:ccp(screenCenter.x + 7, size.height - 20)];
-//        [self addChild:lifeBarBorder z:1001];
+        //        [self addChild:lifeBarBorder z:1001];
         
         lifeBarSprite = [CCSprite spriteWithFile:@"healthbarFill.png"];
         lifeBar = [CCProgressTimer progressWithSprite:lifeBarSprite];
@@ -208,7 +208,7 @@
         lifeBar.midpoint = ccp(0.f, 0.5f);
         //        lifeBar.midpoint = ccp(screenCenter.x, size.height - 20);
         lifeBar.barChangeRate = ccp(1,0);
-//        [self addChild:lifeBar z:1002];
+        //        [self addChild:lifeBar z:1002];
         [lifeBar setAnchorPoint: ccp(0,0)];
         lifeBar.percentage = 100;
         //        lifeUpdater = [CCProgressTo actionWithDuration:1 percent:100];
@@ -226,9 +226,9 @@
         powerUpType2 = [[NSMutableArray alloc] init];
         powerUpType3 = [[NSMutableArray alloc] init];
         
-//        ship1 = [[CCSprite alloc] init];
-//        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
-//        ship1.scale = 0.15f;
+        //        ship1 = [[CCSprite alloc] init];
+        //        ship1 = [CCSprite spriteWithFile:@"ship1.png"];
+        //        ship1.scale = 0.15f;
         
         ship2 = [[CCSprite alloc] init];
         ship2 = [CCSprite spriteWithFile:@"ship1.png"];
@@ -332,7 +332,7 @@
         infiniteBorderPowerUp1.position = screenCenter;
         
         screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:20];
-        screenflashLabel.position = ccp(size.width/2, 405);
+        screenflashLabel.position = ccp(size.width/2, size.height - 85);
         screenflashLabel.color = ccc3(255,0,0);
         [self addChild:screenflashLabel z:110];
         screenflashLabel.visible = false;
@@ -347,7 +347,7 @@
         multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:25];
         multiplierLabel.position = ccp(multiplierWrapper.position.x + 10, multiplierWrapper.position.y - 3);
         multiplierLabel.color = ccc3(255,255,255);
-//        multiplierLabel.anchorPoint = ccp(0.0f,0.5f); // left justify
+        //        multiplierLabel.anchorPoint = ccp(0.0f,0.5f); // left justify
         [self addChild:multiplierLabel z:scoreLabel.zOrder+1];
         
         
@@ -357,11 +357,11 @@
         CCSprite *topBar = [CCSprite spriteWithFile:@"topbar.png"];
         topBar.position = ccp(screenCenter.x, size.height - 20);
         topBar.scaleX = 3.0f;
-//        [self addChild:topBar z:1000];
+        //        [self addChild:topBar z:1000];
         
         CCSprite *background = [CCSprite spriteWithFile:@"backgroundip5.png"];
-        background.position = screenCenter; 
-//        [self addChild:background z:-100];
+        background.position = screenCenter;
+        //        [self addChild:background z:-100];
         
         
         [self divideAngularSections];
@@ -373,15 +373,15 @@
         // preload sound effects so that there is no delay when playing sound effect
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"click1.mp3"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"gameover1.mp3"];
-
-//        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
+        
+        //        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
         
         [self scheduleUpdate]; // schedule the framely update
         
         [self startTutorial]; // start the tutorial (if needed)
         
 	}
-
+    
 	return self;
 }
 
@@ -408,23 +408,23 @@
         [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
     }
     
-
+    
 }
 
 -(void) tutorial1
 {
-        [self flashLabel:@"Rotate the circle by \n moving your finger in a circle." actionWithDuration:5.0f color:@"black"];
+    [self flashLabel:@"Rotate the circle by \n moving your finger in a circle." actionWithDuration:5.0f color:@"black"];
 }
 
 -(void) tutorial2
 {
-        [self flashLabel:@"Match the incoming projectiles \n into the correctly colored sectors." actionWithDuration:5.0f color:@"black"];
+    [self flashLabel:@"Match the incoming projectiles \n into the correctly colored sectors." actionWithDuration:5.0f color:@"black"];
 }
 
 -(void) tutorial3
 {
     NSLog(@"Hi");
-        [self flashLabel:@"Use the powerups at the bottom \n for help in tough situations." actionWithDuration:5.0f color:@"black"];
+    [self flashLabel:@"Use the powerups at the bottom \n for help in tough situations." actionWithDuration:5.0f color:@"black"];
 }
 
 
@@ -466,11 +466,11 @@
 -(void) runDeathSeqOn:(NSString *) effectName
 {
     if ([effectName isEqualToString:@"grass"] == true) {
-    id execute = [CCCallFunc actionWithTarget:self selector:@selector(killGrass)];
-    id delay = [CCDelayTime actionWithDuration:2.0f];
-    id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeGrassEffect)];
-    CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
-    [self runAction:deathSeq];
+        id execute = [CCCallFunc actionWithTarget:self selector:@selector(killGrass)];
+        id delay = [CCDelayTime actionWithDuration:2.0f];
+        id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeGrassEffect)];
+        CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
+        [self runAction:deathSeq];
     }
     
     if ([effectName isEqualToString:@"fire"] == true) {
@@ -576,7 +576,7 @@
 
 -(void) circleCollisionWith:(NSMutableArray *) circle2
 {
-//    [self updateCollisionCounter];
+    //    [self updateCollisionCounter];
     
     for(NSUInteger i = 0; i < [circle2 count]; i++)
     {
@@ -643,13 +643,13 @@
             
             [self divideAngularSections];
             numCollisions++;
-//            NSLog(@"%f", shipAngle);
-//            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-//            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-//            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-//            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-//            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-//            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+            //            NSLog(@"%f", shipAngle);
+            //            NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+            //            NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+            //            NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+            //            NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+            //            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+            //            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
             [self scoreCheck:shipAngle withSprite:tempSprite];
             
             collisionDidHappen = true;
@@ -786,13 +786,13 @@
         NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
         NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
         NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
-//        [self scoreCheck:shipAngle withColor:shipColor];
+        //        [self scoreCheck:shipAngle withColor:shipColor];
         
         collisionDidHappen = true;
         
         if (playerLives == 0) {
             [self removeChild:circle2 cleanup:YES];
-//            [self initShips];
+            //            [self initShips];
             //            warning = true;
             [self gameOver];
         } else {
@@ -802,7 +802,7 @@
             id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
             [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
             //            [self removeChild:circle2 cleanup:YES];
-//            [self initShips];
+            //            [self initShips];
             //            numSpritesCollided++;
             //            if (numSpritesCollided > 2) {
             //            [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
@@ -833,10 +833,10 @@
     NSLog(@"Array Count: %d", [section1Ships count]);
     [self removeChild:sender cleanup:YES];
     numSpritesCollided++;
-//    if (numSpritesCollided == [section1Ships count]) {
-//        numSpritesCollided = 0;
-//        [self initShips];
-//    }
+    //    if (numSpritesCollided == [section1Ships count]) {
+    //        numSpritesCollided = 0;
+    //        [self initShips];
+    //    }
     
     
     if ([section1Ships count] == 0) {
@@ -899,10 +899,10 @@
                 [self increaseMultiplier];
             }
         }
-    
+        
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
-        
+            
             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section2StartAngle > section2EndAngle)
@@ -910,23 +910,23 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section2EndAngle)
             {
-//                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
-//                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
-    
+        
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
-//            playerScore = playerScore + (scoreAdd * pointMultiplier);
-             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self runDeathSeqOn:@"grass"];
             pointMultiplier -= 1;
         } else if (section3StartAngle > section3EndAngle)
@@ -934,20 +934,20 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section3EndAngle)
             {
-//                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"grass"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
-//                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"grass"];
                 pointMultiplier -= 1;
             }
-        } 
+        }
         
     }
     else if (spriteWithArray.tag == 2)
@@ -975,12 +975,12 @@
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
-        } 
+        }
         
         if (angle > section1StartAngle && angle < section1EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
-             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self runDeathSeqOn:@"fire"];
             pointMultiplier -= 1;
         } else if (section1StartAngle > section1EndAngle)
@@ -989,7 +989,7 @@
             if (angle < 119 && angle < section1EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"fire"];
                 pointMultiplier -= 1;
             }
@@ -1006,7 +1006,7 @@
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
-             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section3StartAngle > section3EndAngle)
         {
@@ -1014,19 +1014,19 @@
             if (angle < 119 && angle < section3EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
         
-
+        
         
         
     } else if (spriteWithArray.tag == 3) {
@@ -1058,7 +1058,7 @@
         if (angle > section1StartAngle && angle < section1EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
-             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             pointMultiplier -= 1;
         } else if (section1StartAngle > section1EndAngle)
         {
@@ -1066,14 +1066,14 @@
             if (angle < 119 && angle < section1EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
             
             if (angle > 241 && angle > section1StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 pointMultiplier -= 1;
             }
         }
@@ -1081,7 +1081,7 @@
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
             //            playerScore = playerScore + (scoreAdd * pointMultiplier);
-             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self runDeathSeqOn:@"water"];
             pointMultiplier -= 1;
         } else if (section2StartAngle > section2EndAngle)
@@ -1090,7 +1090,7 @@
             if (angle < 119 && angle < section2EndAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"water"];
                 pointMultiplier -= 1;
             }
@@ -1098,7 +1098,7 @@
             if (angle > 241 && angle > section2StartAngle)
             {
                 //                playerScore = playerScore + (scoreAdd * pointMultiplier);
-                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
+                [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"water"];
                 pointMultiplier -= 1;
             }
@@ -1141,11 +1141,11 @@
     playerScore += scoreAdd;
     [self removeChild:sender cleanup:YES];
     numSpritesCollidedWithShield++;
-//    if (numSpritesCollidedWithShield == [section1Ships count]) {
-//        numSpritesCollidedWithShield = 0;
-//        [self removeInfiniteBorder];
-//        [self initShips];
-//    }
+    //    if (numSpritesCollidedWithShield == [section1Ships count]) {
+    //        numSpritesCollidedWithShield = 0;
+    //        [self removeInfiniteBorder];
+    //        [self initShips];
+    //    }
     
     if ([section1Ships count] == 0) {
         numSpritesCollided = 0;
@@ -1206,21 +1206,21 @@
 -(void) enablePowerUp3
 {
     if (numPower3Left > 0) {
-
-//        [ship1 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
-//        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
-//        [ship3 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+        
+        //        [ship1 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+        //        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+        //        [ship3 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
         //        [ship2 runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
         //    [self removeChild:ship1 cleanup:YES];
         
-//        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
-//        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
-//        
-//        for (NSUInteger k = 0; k < [section1Ships count]; k++) {
-//            CCSprite *tempSpriteToRemove = [section1Ships objectAtIndex:k];
-//            [tempSpriteToRemove runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
-//            [section1Ships removeObjectAtIndex:k];
-//        }
+        //        id removeEffect = [CCFadeOut actionWithDuration:0.2f];
+        //        id removeSpriteForP3 = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
+        //
+        //        for (NSUInteger k = 0; k < [section1Ships count]; k++) {
+        //            CCSprite *tempSpriteToRemove = [section1Ships objectAtIndex:k];
+        //            [tempSpriteToRemove runAction:[CCSequence actions:removeEffect, removeSpriteForP3, nil]];
+        //            [section1Ships removeObjectAtIndex:k];
+        //        }
         
         [self flashLabel:@"MULTIPLIER BOOST!" actionWithDuration:5.0f color:@"red"];
         
@@ -1231,9 +1231,9 @@
         [self runAction:[CCSequence actions:enableIncrease, delayDecrease, disable, nil]];
         
         numPower3Left -= 1;
-//        [self initShips];
+        //        [self initShips];
         
-//        [self scheduleUpdate];
+        //        [self scheduleUpdate];
     } else {
         // do nothing
     }
@@ -1257,9 +1257,9 @@
     {
         [[section1Ships objectAtIndex:shipPauseIndex] pauseSchedulerAndActions];
     }
-//    [ship1 pauseSchedulerAndActions];
-//    [ship2 pauseSchedulerAndActions];
-//    [ship3 pauseSchedulerAndActions];
+    //    [ship1 pauseSchedulerAndActions];
+    //    [ship2 pauseSchedulerAndActions];
+    //    [ship3 pauseSchedulerAndActions];
     //    [ship2 pauseSchedulerAndActions];
     
 }
@@ -1271,10 +1271,10 @@
         [[section1Ships objectAtIndex:shipResumeIndex] resumeSchedulerAndActions];
     }
     
-//    [ship1 resumeSchedulerAndActions];
-//    [ship2 resumeSchedulerAndActions];
-//    [ship3 resumeSchedulerAndActions];
-//    //    [ship2 pauseSchedulerAndActions];
+    //    [ship1 resumeSchedulerAndActions];
+    //    [ship2 resumeSchedulerAndActions];
+    //    [ship3 resumeSchedulerAndActions];
+    //    //    [ship2 pauseSchedulerAndActions];
     
 }
 
@@ -1341,20 +1341,20 @@
 	
     [self schedule:@selector(initializeTheShipArray:)];
     
-//	for (int i = 0; i < numShips1; i++)
-//	{
-//        [self initializeShip1Sprite];
+    //	for (int i = 0; i < numShips1; i++)
+    //	{
+    //        [self initializeShip1Sprite];
     
-//        [self performSelector:@selector(initializeShip1Sprite) withObject:nil afterDelay:0.5f];
-//        [self runAction:[CCSequence actions:[CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)], [CCDelayTime actionWithDuration:1.0f], nil]];
-        
-// [self performSelector:@selector(initializeShip1Sprite) withObject:self afterDelay:0.5f];
-//        id initShip = [CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)];
-//        id moveShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
-        //        id delayMove = [CCDelayTime actionWithDuration:1.0f];
-        //        id moveTheShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
-//        [self runAction:[CCSequence actions:initShip, moveShip, nil]];
-//	}
+    //        [self performSelector:@selector(initializeShip1Sprite) withObject:nil afterDelay:0.5f];
+    //        [self runAction:[CCSequence actions:[CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)], [CCDelayTime actionWithDuration:1.0f], nil]];
+    
+    // [self performSelector:@selector(initializeShip1Sprite) withObject:self afterDelay:0.5f];
+    //        id initShip = [CCCallFunc actionWithTarget:self selector:@selector(initializeShip1Sprite)];
+    //        id moveShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
+    //        id delayMove = [CCDelayTime actionWithDuration:1.0f];
+    //        id moveTheShip = [CCCallFunc actionWithTarget:self selector:@selector(moveShip1)];
+    //        [self runAction:[CCSequence actions:initShip, moveShip, nil]];
+    //	}
 }
 
 -(void) initializeShip1Sprite
@@ -1378,7 +1378,7 @@
     }
     
     ship.scale = 0.15f;
-
+    
     [self createShipCoord:ship topBottomChoose:topBottomVariable withColor:ship.tag]; // create coordinate
     [self addChild:ship z:50]; // add sprite to scene
     
@@ -1386,10 +1386,10 @@
     [section1Ships addObject:ship]; // add sprite to array
     [self moveShip:ship]; // moves the ship
     
-//    float randomDelay = (arc4random()%(3-1+1))+1;
+    //    float randomDelay = (arc4random()%(3-1+1))+1;
     
-//    [self performSelector:@selector(delayShipMove) onThread:[NSThread currentThread] withObject:self waitUntilDone:YES];
-//    [self moveShip:ship];
+    //    [self performSelector:@selector(delayShipMove) onThread:[NSThread currentThread] withObject:self waitUntilDone:YES];
+    //    [self moveShip:ship];
     
     didRun = false;
 }
@@ -1495,7 +1495,7 @@
         ship3.tag = 3;
     }
     ship3.scale = 0.15f;
-
+    
     [self createShipCoord:ship3 topBottomChoose:topBottomVariable];
     [self addChild:ship3 z:50];
     
@@ -1513,7 +1513,7 @@
 {
     [self pickShape];
     topBottomVariable = (arc4random()%(2-1+1))+1;
-
+    
     [self initSect1Ships];
     updateMoveCounter = true;
     spriteMoveIndex = 0;
@@ -1522,36 +1522,36 @@
 
 -(void) moveShip:(CCSprite *) shipToMove
 {
-//    NSLog(@"Previous Delay: %f", previousShipDelay);
-//    NSLog(@"Previous Delay: %f", previousShipSpeed);
-//    int slowestSpeed = 8; //shipSpeed + 2;
-//    int fastestSpeed = 5; //shipSpeed - 1;
-
-//    float speed = arc4random()%(slowestSpeed-fastestSpeed+1)+fastestSpeed; // pick a random number between the 5 and 8
-//    NSLog(@"Speed: %f", speed);
+    //    NSLog(@"Previous Delay: %f", previousShipDelay);
+    //    NSLog(@"Previous Delay: %f", previousShipSpeed);
+    //    int slowestSpeed = 8; //shipSpeed + 2;
+    //    int fastestSpeed = 5; //shipSpeed - 1;
     
-//    if (speed < previousShipSpeed + 1 && speed > previousShipSpeed - 1) {
-//        speed = previousShipSpeed + 1;
-//        NSLog(@"Changed Speed: %f", speed);
-//    }
+    //    float speed = arc4random()%(slowestSpeed-fastestSpeed+1)+fastestSpeed; // pick a random number between the 5 and 8
+    //    NSLog(@"Speed: %f", speed);
     
-//    float delayInSeconds = arc4random()%(2-1+1)+1;
-//    NSLog(@"Current Delay: %f", delayInSeconds);
+    //    if (speed < previousShipSpeed + 1 && speed > previousShipSpeed - 1) {
+    //        speed = previousShipSpeed + 1;
+    //        NSLog(@"Changed Speed: %f", speed);
+    //    }
     
-//    if (delayInSeconds == previousShipDelay) {
-//        delayInSeconds = previousShipDelay + 1;
-//        NSLog(@"Changed Delay: %f", delayInSeconds);
-//    }
-
+    //    float delayInSeconds = arc4random()%(2-1+1)+1;
+    //    NSLog(@"Current Delay: %f", delayInSeconds);
     
-//    id delayMove = [CCDelayTime actionWithDuration:delayInSeconds];
+    //    if (delayInSeconds == previousShipDelay) {
+    //        delayInSeconds = previousShipDelay + 1;
+    //        NSLog(@"Changed Delay: %f", delayInSeconds);
+    //    }
+    
+    
+    //    id delayMove = [CCDelayTime actionWithDuration:delayInSeconds];
     id resetBool = [CCCallFunc actionWithTarget:self selector:@selector(setToFalse)];
     shipMove = [CCMoveTo actionWithDuration:shipSpeed position:screenCenter]; // initialize the action to run when the ship is appeneded to the layer
     [shipToMove runAction:[CCSequence actions:shipMove, resetBool, nil]]; // run the action initialized
-             didRun = false;
+    didRun = false;
     spriteMoveIndex++;
-//    previousShipDelay = delayInSeconds;
-//    previousShipSpeed = speed;
+    //    previousShipDelay = delayInSeconds;
+    //    previousShipSpeed = speed;
 }
 
 -(void) setToFalse
@@ -1565,115 +1565,115 @@
     // Temporary way of generating random coordinates to spawn to
     int fromNumber = 0;
     int toNumber = 360;
-
-//    int fromNumber = 0;
-//    int toNumber = 320;
     
-//    if (decidingVariable == 1) {
-//        shipRandY = 500;
-//        
-//        if (previousShipRandX == 0) {
-//            shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-//        } else {
-//            if (color == previousShipColor) {
-//                shipRandX = previousShipRandX;
-//            } else {
-//                shipRandX = previousShipRandX + ((arc4random()%(50-10+1))+10) + 100;
-//
-//            }
-//        }
-//    } else {
-//        shipRandY = -20;
-//        
-//        if (previousShipRandX == 0) {
-//            shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-//        } else {
-//            if (color == previousShipColor) {
-//                shipRandX = previousShipRandX;
-//            } else {
-//                shipRandX = previousShipRandX - ((arc4random()%(50-10+1))+10) + 100;
-//            }
-//        }
-//    }
-//    
-//    
-//    shipForCoord.position = ccp(shipRandX, shipRandY);
+    //    int fromNumber = 0;
+    //    int toNumber = 320;
     
-   
+    //    if (decidingVariable == 1) {
+    //        shipRandY = 500;
+    //
+    //        if (previousShipRandX == 0) {
+    //            shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    //        } else {
+    //            if (color == previousShipColor) {
+    //                shipRandX = previousShipRandX;
+    //            } else {
+    //                shipRandX = previousShipRandX + ((arc4random()%(50-10+1))+10) + 100;
+    //
+    //            }
+    //        }
+    //    } else {
+    //        shipRandY = -20;
+    //
+    //        if (previousShipRandX == 0) {
+    //            shipRandX = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+    //        } else {
+    //            if (color == previousShipColor) {
+    //                shipRandX = previousShipRandX;
+    //            } else {
+    //                shipRandX = previousShipRandX - ((arc4random()%(50-10+1))+10) + 100;
+    //            }
+    //        }
+    //    }
+    //
+    //
+    //    shipForCoord.position = ccp(shipRandX, shipRandY);
+    
+    
     
     // THE KEVIN ALGORITHM
     
- /*   if (numSpritesPerArray == 1) {
-        NSLog(@"HI");
-//        randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-//        shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
-        if (color == 1) {
-            NSLog(@"COLOR IS ORANGE");
-            shipForCoord.position = [self generatePointByAngle:section1StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
-        }
-        
-        if (color == 2) {
-            NSLog(@"COLOR IS BLUE");
-            shipForCoord.position = [self generatePointByAngle:section2StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
-        }
-        
-        if (color == 3) {
-            NSLog(@"COLOR IS GREEN");
-            shipForCoord.position = [self generatePointByAngle:section3StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
-        }
-    } else {
-        
-        randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
-        
-        if (color != previousShipColor) {
-            // if the new sprite in the array is within 15 degrees of the previously generated angle
-//            if (randGeneratedAngle > previousGeneratedAngle - 15 && randGeneratedAngle < previousGeneratedAngle + 15) {
-//                randGeneratedAngle = previousGeneratedAngle + 120;
-//                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
-//            } else {
-//                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
-//            }
-            
-            if (color == 1) {
-                NSLog(@"COLOR IS ORANGE");
-                shipForCoord.position = [self generatePointByAngle:section1StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
-            }
-            
-            if (color == 2) {
-                NSLog(@"COLOR IS BLUE");
-                shipForCoord.position = [self generatePointByAngle:section2StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
-            }
-            
-            if (color == 3) {
-                NSLog(@"COLOR IS GREEN");
-                shipForCoord.position = [self generatePointByAngle:section3StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
-            }
-            
-        }
-        
-        if (color == previousShipColor) {
-            if (randGeneratedAngle > previousGeneratedAngle - 50 && randGeneratedAngle < previousGeneratedAngle + 50)
-            {
-                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
-                
-            } else {
-                
-                randGeneratedAngle = previousGeneratedAngle + 50;
-                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
-            
-            }
-        }
-        
-        
-    }
-    
-    previousGeneratedAngle = randGeneratedAngle;
-    previousShipColor = color;
-
-//    NSLog(@"");
-
-//    previousShipRandX = shipRandX;
-//    previousShipColor = color; */
+    /*   if (numSpritesPerArray == 1) {
+     NSLog(@"HI");
+     //        randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+     //        shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+     if (color == 1) {
+     NSLog(@"COLOR IS ORANGE");
+     shipForCoord.position = [self generatePointByAngle:section1StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
+     }
+     
+     if (color == 2) {
+     NSLog(@"COLOR IS BLUE");
+     shipForCoord.position = [self generatePointByAngle:section2StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
+     }
+     
+     if (color == 3) {
+     NSLog(@"COLOR IS GREEN");
+     shipForCoord.position = [self generatePointByAngle:section3StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
+     }
+     } else {
+     
+     randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+     
+     if (color != previousShipColor) {
+     // if the new sprite in the array is within 15 degrees of the previously generated angle
+     //            if (randGeneratedAngle > previousGeneratedAngle - 15 && randGeneratedAngle < previousGeneratedAngle + 15) {
+     //                randGeneratedAngle = previousGeneratedAngle + 120;
+     //                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+     //            } else {
+     //                shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+     //            }
+     
+     if (color == 1) {
+     NSLog(@"COLOR IS ORANGE");
+     shipForCoord.position = [self generatePointByAngle:section1StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
+     }
+     
+     if (color == 2) {
+     NSLog(@"COLOR IS BLUE");
+     shipForCoord.position = [self generatePointByAngle:section2StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
+     }
+     
+     if (color == 3) {
+     NSLog(@"COLOR IS GREEN");
+     shipForCoord.position = [self generatePointByAngle:section3StartAngle + 60 distance:spawnDistance startPoint:screenCenter];
+     }
+     
+     }
+     
+     if (color == previousShipColor) {
+     if (randGeneratedAngle > previousGeneratedAngle - 50 && randGeneratedAngle < previousGeneratedAngle + 50)
+     {
+     shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+     
+     } else {
+     
+     randGeneratedAngle = previousGeneratedAngle + 50;
+     shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
+     
+     }
+     }
+     
+     
+     }
+     
+     previousGeneratedAngle = randGeneratedAngle;
+     previousShipColor = color;
+     
+     //    NSLog(@"");
+     
+     //    previousShipRandX = shipRandX;
+     //    previousShipColor = color; */
     
     randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
     shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
@@ -1682,16 +1682,16 @@
 
 -(CGPoint) generatePointByAngle:(float) angle distance:(float) someDistance startPoint:(CGPoint) point
 {
-//    NSLog(@"%f", angle);
+    //    NSLog(@"%f", angle);
     angle = CC_DEGREES_TO_RADIANS(angle);
     float addedX = cos(angle) * someDistance;
     float addedY = sin(angle) * someDistance;
-//    NSLog(@"ADDED X: %f", addedX);
-//    NSLog(@"ADDED Y: %f", addedY);
-//    NSLog(NSStringFromCGPoint(point));
+    //    NSLog(@"ADDED X: %f", addedX);
+    //    NSLog(@"ADDED Y: %f", addedY);
+    //    NSLog(NSStringFromCGPoint(point));
     CGPoint endPoint = ccp(point.x + addedX, point.y + addedY);
-//     NSLog(NSStringFromCGPoint(endPoint));
-//    NSLog(NSStringFromCGPoint(endPoint));
+    //     NSLog(NSStringFromCGPoint(endPoint));
+    //    NSLog(NSStringFromCGPoint(endPoint));
     return endPoint;
 }
 
@@ -1740,11 +1740,11 @@
 
 -(void) updateLabelPositions
 {
-   /* if (score.length == 1) {
-        scoreLabel.position = ccp(15, scoreLabel.position.y);
-    } else {
-    scoreLabel.position = ccp((score.length * 10), scoreLabel.position.y);
-    } */
+    /* if (score.length == 1) {
+     scoreLabel.position = ccp(15, scoreLabel.position.y);
+     } else {
+     scoreLabel.position = ccp((score.length * 10), scoreLabel.position.y);
+     } */
 }
 
 -(void) updateEffectPositions
@@ -1752,10 +1752,10 @@
     burnGrass.position = progressBar3.position; //progressBar3.position;
     snuffedFire.position = progressBar1.position;
     dryWater.position = progressBar2.position;
-
-//    [burnGrass setAnchorPoint:screenCenter];
-//    snuffedFire.anchorPoint = screenCenter;
-//    dryWater.anchorPoint = screenCenter;
+    
+    //    [burnGrass setAnchorPoint:screenCenter];
+    //    snuffedFire.anchorPoint = screenCenter;
+    //    dryWater.anchorPoint = screenCenter;
     
     burnGrass.rotation = progressBar3.rotation + 180;
     snuffedFire.rotation = progressBar1.rotation + 60;
@@ -1786,7 +1786,7 @@
     section2EndAngle = normalizedEnd2Ang;
     section3StartAngle = normalizedEnd2Ang; // the line below's problem applies to this line
     section3EndAngle = normalizedStart1Ang; // right now does not work for some reason
-
+    
     //    [self normalizeAngle:section1StartAngle];
     //    [self normalizeAngle:section1EndAngle];
     //    [self normalizeAngle:section2StartAngle];
@@ -1941,10 +1941,10 @@
         
         //        NSLog(@"%f", player.rotation);
         [self divideAngularSections];
-    
         
         
-        // PAUSE BUTTON 
+        
+        // PAUSE BUTTON
         if ([input isAnyTouchOnNode:pauseButton touchPhase:KKTouchPhaseAny]) {
             
             [self pauseGame];
@@ -1971,7 +1971,7 @@
     }
     
     if (playerScore > 20) {
-    
+        
         initDelayInFrames = 80;
         shipSpeed = 6.0f;
         numSpritesPerArray = 2;
@@ -1987,13 +1987,13 @@
     
     
     if (playerScore > 90) {
-    
+        
         numSpritesPerArray = 4;
         
     }
     
     if (playerScore > 200) {
-    
+        
         initDelayInFrames = 70;
         numSpritesPerArray = 6;
         shipSpeed = 5.0f;
@@ -2001,7 +2001,7 @@
     }
     
     if (playerScore > 400) {
-  
+        
         initDelayInFrames = 60;
         numSpritesPerArray = 6;
         shipSpeed = 4.5f;
@@ -2009,7 +2009,7 @@
     }
     
     if (playerScore > 800) {
-     
+        
         initDelayInFrames = 55;
         numSpritesPerArray = 7;
         shipSpeed = 4.3f;
@@ -2018,7 +2018,7 @@
     
     if (playerScore > 1000) {
         initDelayInFrames = 40;
-//        numSpritesPerArray = 8;
+        //        numSpritesPerArray = 8;
     }
     
     if (playerScore > 1300) {
@@ -2040,7 +2040,7 @@
 
 -(void) initMenuItems
 {
-
+    
 }
 
 
@@ -2067,6 +2067,7 @@
     spriteToSetDimensions.scaleY = height/[spriteToSetDimensions boundingBox].size.height;
 }
 
+
 -(void) setDimensionsInPixelsGraduallyOnSprite:(CCSprite *) spriteToSetDimensions width:(int) width height:(int) height
 {
     float scaleXDimensions = width/[spriteToSetDimensions boundingBox].size.width;
@@ -2077,32 +2078,32 @@
 
 -(void) flashLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash color:(NSString *) colorString
 {
-//
-//    
+    //
+    //
     if ([colorString isEqualToString:@"red"] == true) {
-    screenflashLabel.color = ccc3(255,0,0);
+        screenflashLabel.color = ccc3(255,0,0);
     }
-//
+    //
     if ([colorString isEqualToString:@"blue"] == true) {
         screenflashLabel.color = ccc3(0,0,255);
     }
-//
+    //
     if ([colorString isEqualToString:@"green"] == true) {
         screenflashLabel.color = ccc3(0,255,0);
     }
-//
+    //
     if ([colorString isEqualToString:@"black"] == true) {
         screenflashLabel.color = ccc3(0,0,0);
     }
-//
+    //
     if ([colorString isEqualToString:@"white"] == true) {
         screenflashLabel.color = ccc3(255,255,255);
     }
-//
-//    screenflashLabel.color = ccc3(255, 0, 0);
-
-//    [screenflashLabel setFontSize:fontSizeint];
-//    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
+    //
+    //    screenflashLabel.color = ccc3(255, 0, 0);
+    
+    //    [screenflashLabel setFontSize:fontSizeint];
+    //    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
     [screenflashLabel setString:stringToFlashOnScreen];
     id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelVisible)];
     id delayInvis = [CCDelayTime actionWithDuration:numSecondsToFlash];
@@ -2225,10 +2226,10 @@
     }
     
     
-    NSNumber *curHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
+    NSNumber *curHighScore = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     playerHighScore = [curHighScore intValue]; // read from the devices memory
     
-    NSNumber *curCoins = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
+    NSNumber *curCoins = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
     playerCoins = [curCoins intValue]; // read from devices memory
 }
 
@@ -2244,31 +2245,34 @@
     if (playerHighScore == 0) {
         playerHighScore = playerScore;
         sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
-        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
-        //        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
+        //        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
+        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
     }
     
     if (playerScore > playerHighScore) {
         playerHighScore = playerScore;
         sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
-        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
-        //        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
+        //        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
+        [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
     }
     
     if (playerCoins == 0) {
         playerCoins = playerScore;
         sharedCoins = [NSNumber numberWithInteger:playerCoins];
-        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
+        //        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
+        [MGWU setObject:sharedCoins forKey:@"sharedCoins"];
     }
     if (playerCoins > 0) {
         playerCoins = playerCoins + playerScore;
         sharedCoins = [NSNumber numberWithInteger:playerCoins];
-        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
+        //        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
+        [MGWU setObject:sharedCoins forKey:@"sharedCoins"];
     }
     
     [[NSUserDefaults standardUserDefaults] setInteger:numPower1Left forKey:@"power1Status"];
     [[NSUserDefaults standardUserDefaults] setInteger:numPower2Left forKey:@"power2Status"];
     [[NSUserDefaults standardUserDefaults] setInteger:numPower3Left forKey:@"power3Status"];
+    
     
     //    NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     //    NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
@@ -2286,7 +2290,7 @@
 -(void) updateCollisionCounter
 {
     NSUInteger previousCount;
-
+    
     int numTimesIndexMoves = 0;
     NSUInteger previousIndexMoves = 0;
     
@@ -2321,8 +2325,8 @@
     if ((frameCountForShipInit % initDelayInFrames) == 0)
     {
         if (initCounter < numSpritesPerArray) {
-        [self initializeShip1Sprite];
-        initCounter++;
+            [self initializeShip1Sprite];
+            initCounter++;
         } else {
             [self unschedule:@selector(initializeTheShipArray:)];
             initCounter = 0;

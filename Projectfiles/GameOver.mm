@@ -60,7 +60,7 @@ int endingHighScore;
         CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
         [gameOver runAction:repeatJump]; */
         
-        NSNumber *endingScoreNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
+        NSNumber *endingScoreNumber = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         int endingScore = [endingScoreNumber intValue];
         NSString *endScoreString = [[NSString alloc] initWithFormat:@"Final Score: %i", endingScore];
         CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"Roboto-Light" fontSize:20];

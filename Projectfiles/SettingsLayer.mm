@@ -33,7 +33,7 @@
         //        [self addChild:highScoreLabel];
         
         
-        NSNumber *lastRoundScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
+        NSNumber *lastRoundScore = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         int lastRoundPlayedScore = [lastRoundScore intValue];
         NSString *lastRoundString = [[NSString alloc]initWithFormat:@"Last Round: %i", lastRoundPlayedScore];
         CCLabelBMFont *lastRoundPlayed = [CCLabelTTF labelWithString:lastRoundString fontName:@"Roboto-Light" fontSize:20];
@@ -51,7 +51,7 @@
     
         
         
-        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"shock.png" selectedImage:@"shock.png" target:self selector:@selector(selfDestruct)];
+        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"shock.png" selectedImage:@"shock.png" target:self selector:@selector(resetGameData)];
         CCMenu *resetMenu = [CCMenu menuWithItems:resetButton, nil];
         [resetMenu alignItemsVertically];
         resetMenu.position = ccp(screenCenter.x, screenCenter.y + 80);
@@ -87,15 +87,41 @@
 {
     // Reset all game data
     
+    
     [MGWU removeObjectForKey:@"sharedCoins"]; // reset coins
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"power1Status"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"power2Status"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"power3Status"]; // reset powerups
     [MGWU removeObjectForKey:@"sharedHighScore"]; // reset high score, but not leaderboard
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"sharedScore"]; // reset last played score
+    [MGWU removeObjectForKey:@"sharedScore"]; // reset last played score
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"tutorialStatus"];
     
     [MGWU showMessage:@"All game data has been reset." withImage:nil];
+}
+
+- (void)resetGameData
+{
+    UIAlertView *alert = [[UIAlertView alloc] init];
+    [alert setTitle:@"Reset Game Data"];
+    [alert setMessage:@"Are you sure you would like to reset all of the game data? This action cannot be reversed."];
+    [alert setDelegate:self];
+    [alert addButtonWithTitle:@"Yes"];
+    [alert addButtonWithTitle:@"No"];
+    [alert show];
+//    [alert removeFromSuperview];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        [self selfDestruct];
+    }
+    else if (buttonIndex == 1)
+    {
+        [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+    }
 }
 
 

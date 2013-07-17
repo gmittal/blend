@@ -76,7 +76,7 @@
 -(void) quitGame
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionSlideInL transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
 
 -(void) restartGame

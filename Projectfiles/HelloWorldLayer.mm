@@ -376,6 +376,20 @@
         
         //        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
         
+        
+        burnGrass = [CCParticleFire node];
+        [progressBar3 addChild:burnGrass z:1001];
+        burnGrass.visible = false;
+        
+        snuffedFire = [CCParticleSnow node];
+        [progressBar1 addChild:snuffedFire z:1001];
+        snuffedFire.visible = false;
+        
+        dryWater = [CCParticleSnow node];
+        [progressBar2 addChild:dryWater z:1001];
+        dryWater.visible = false;
+        
+        
         [self scheduleUpdate]; // schedule the framely update
         
         [self startTutorial]; // start the tutorial (if needed)
@@ -430,37 +444,43 @@
 
 -(void) killGrass
 {
-    burnGrass = [CCParticleFire node];
-	[progressBar3 addChild:burnGrass z:1001];
+//    burnGrass = [CCParticleFire node];
+//	[progressBar3 addChild:burnGrass z:1001];
+    burnGrass.visible = true;
 }
 
 -(void) removeGrassEffect
 {
-    [progressBar3 removeChild:burnGrass];
+//    [progressBar3 removeChild:burnGrass];
+    burnGrass.visible = false;
 }
 
 
 -(void) killFire
 {
-    snuffedFire = [CCParticleSnow node];
-	[progressBar1 addChild:snuffedFire z:1001];
+//    snuffedFire = [CCParticleSnow node];
+//	[progressBar1 addChild:snuffedFire z:1001];
+    snuffedFire.visible = true;
 }
 
 -(void) removeFireEffect
 {
-    [progressBar1 removeChild:snuffedFire];
+//    [progressBar1 removeChild:snuffedFire];
+    snuffedFire.visible = false;
 }
 
 
 -(void) killWater
 {
-    dryWater = [CCParticleSnow node];
-	[progressBar2 addChild:dryWater z:1001];
+//    dryWater = [CCParticleSnow node];
+//	[progressBar2 addChild:dryWater z:1001];
+    dryWater.visible = true;
 }
 
 -(void) removeWaterEffect
 {
-    [progressBar2 removeChild:dryWater];
+//    [progressBar2 removeChild:dryWater];
+    dryWater.visible = false;
 }
 
 -(void) runDeathSeqOn:(NSString *) effectName
@@ -857,6 +877,7 @@
 {
     numHitsUntilNextMultiplier++;
     
+    if (pointMultiplier < 99) {
     if (p3Enabler == true) {
         // if the powerup is enabled, do this
         pointMultiplier +=1;
@@ -867,6 +888,7 @@
             numHitsUntilNextMultiplier = 0;
             pointMultiplier += 1;
         }
+    }
     }
 }
 
@@ -1727,7 +1749,8 @@
     [power3Left setString:power3Num];
     
     sharedScore = [NSNumber numberWithInteger:playerScore];
-    [[NSUserDefaults standardUserDefaults] setObject:sharedScore forKey:@"sharedScore"];
+//    [[NSUserDefaults standardUserDefaults] setObject:sharedScore forKey:@"sharedScore"];
+    [MGWU setObject:sharedScore forKey:@"sharedScore"];
     
     if (warning == true) {
         warningLabel.visible = true;
@@ -2032,7 +2055,37 @@
         numSpritesPerArray = 10;
     }
     
+    if (playerScore > 2500)
+    {
+        initDelayInFrames = 35;
+        numSpritesPerArray = 11;
+    }
     
+    if (playerScore > 3000)
+    {
+        initDelayInFrames = 35;
+        numSpritesPerArray = 12;
+    }
+   
+    if (playerScore > 4000) // if the user makes it this far, definitely make it harder, making it this far is pretty impressive.
+    {
+        initDelayInFrames = 35;
+        numSpritesPerArray = 13;
+        shipSpeed = 4.0f;
+    }
+    
+    if (playerScore > 5000)
+    {
+        initDelayInFrames = 35;
+        numSpritesPerArray = 15;
+        shipSpeed = 3.7f;
+    }
+    
+    if (playerScore > 6000)
+    {
+        initDelayInFrames = 30;
+        numSpritesPerArray = 13;
+    }
 }
 
 

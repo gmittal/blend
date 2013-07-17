@@ -389,6 +389,7 @@
         [progressBar2 addChild:dryWater z:1001];
         dryWater.visible = false;
         
+        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
         [self scheduleUpdate]; // schedule the framely update
         
@@ -752,9 +753,9 @@
         //        } else {
         
         
-        float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
-        float shipAngleRadians = asin(ratio); // arcsin of ratio
-        float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
+//        float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
+//        float shipAngleRadians = asin(ratio); // arcsin of ratio
+//        float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
         //    float shipAngle; // shipAngle
         
         CGPoint pos1 = [circle2 position];
@@ -1183,13 +1184,16 @@
     // powerup that allows any ship to go ANYWHERE on the player and still grant points
     
     if (numPower1Left > 0) {
-        [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:5.0f color:@"red"];
+        if (numTimesP1Used > 0) {
+        [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:timeShieldEnabled color:@"red"];
         id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
-        id delayRemoval = [CCDelayTime actionWithDuration:5.0f];
+        id delayRemoval = [CCDelayTime actionWithDuration:timeShieldEnabled];
         id removeBorder = [CCCallFunc actionWithTarget:self selector:@selector(removeInfiniteBorder)];
         CCSequence *powerUp1Seq = [CCSequence actions:addBorder, delayRemoval, removeBorder, nil];
-        numPower1Left--;
+        numPower1Left-=1;
+        numTimesP1Used-=1;
         [self runAction:powerUp1Seq];
+        }
     } else {
         // do nothing
     }
@@ -1212,12 +1216,15 @@
 -(void) enablePowerUp2
 {
     if (numPower2Left > 0) {
+        if (numTimesP2Used > 0) {
         id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
         id delayShip = [CCDelayTime actionWithDuration:1.5f];
         id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
         CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
         numPower2Left -= 1;
+        numTimesP2Used-=1;
         [self runAction:powerUp2Seq];
+        }
     } else {
         // do nothing
     }
@@ -1244,6 +1251,8 @@
         //            [section1Ships removeObjectAtIndex:k];
         //        }
         
+        if (numTimesP3Used > 0) {
+        
         [self flashLabel:@"MULTIPLIER BOOST!" actionWithDuration:5.0f color:@"red"];
         
         id enableIncrease = [CCCallFunc actionWithTarget:self selector:@selector(enableShipMultiplierIncrease)];
@@ -1253,6 +1262,8 @@
         [self runAction:[CCSequence actions:enableIncrease, delayDecrease, disable, nil]];
         
         numPower3Left -= 1;
+        numTimesP3Used -= 1;
+        }
         //        [self initShips];
         
         //        [self scheduleUpdate];
@@ -1810,12 +1821,11 @@
     section3StartAngle = normalizedEnd2Ang; // the line below's problem applies to this line
     section3EndAngle = normalizedStart1Ang; // right now does not work for some reason
     
-    //    [self normalizeAngle:section1StartAngle];
-    //    [self normalizeAngle:section1EndAngle];
-    //    [self normalizeAngle:section2StartAngle];
-    //    [self normalizeAngle:section2EndAngle];
-    //    [self normalizeAngle:section3StartAngle];
-    //    [self normalizeAngle:section3EndAngle];
+
+    
+    
+    
+    
     
     
     //       NSLog(@"%f", player.rotation);
@@ -1845,12 +1855,12 @@
     if(pos.x != 0 && pos.y != 0)
     {
         [self divideAngularSections];
-        //        player.rotation = ((pos.x/360)*360) * (-1);
+        
         float distX = pos.x - screenCenter.x;
         float distY = pos.y - screenCenter.y;
         float touchDistance = sqrtf((distX * distX) + (distY * distY));
         
-        //            [self circleCollisionWithSprite:c];
+       
         float ratio = distY/touchDistance; // ratio of distance in terms of Y to distance from player
         float shipAngleRadians = asin(ratio); // arcsin of ratio
         float antiShipAngle = CC_RADIANS_TO_DEGREES(shipAngleRadians) * (-1); // convert to degrees from radians
@@ -2131,32 +2141,28 @@
 
 -(void) flashLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash color:(NSString *) colorString
 {
-    //
-    //
+
     if ([colorString isEqualToString:@"red"] == true) {
         screenflashLabel.color = ccc3(255,0,0);
     }
-    //
+    
     if ([colorString isEqualToString:@"blue"] == true) {
         screenflashLabel.color = ccc3(0,0,255);
     }
-    //
+    
     if ([colorString isEqualToString:@"green"] == true) {
         screenflashLabel.color = ccc3(0,255,0);
     }
-    //
+    
     if ([colorString isEqualToString:@"black"] == true) {
         screenflashLabel.color = ccc3(0,0,0);
     }
-    //
+    
     if ([colorString isEqualToString:@"white"] == true) {
         screenflashLabel.color = ccc3(255,255,255);
     }
-    //
-    //    screenflashLabel.color = ccc3(255, 0, 0);
+
     
-    //    [screenflashLabel setFontSize:fontSizeint];
-    //    screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:fontSizeint];
     [screenflashLabel setString:stringToFlashOnScreen];
     id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelVisible)];
     id delayInvis = [CCDelayTime actionWithDuration:numSecondsToFlash];
@@ -2207,6 +2213,7 @@
 
 -(void) resetVariables
 {
+    
     p3Enabler = false;
     initCounter = 0;
     frameCountForShipInit = 0;
@@ -2267,7 +2274,11 @@
         numPower3Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"];
     }
     
+    numTimesP1Used = 1;
+    numTimesP2Used = numPower2Left;
+    numTimesP3Used = numPower3Left;
     
+    timeShieldEnabled = 10.0f;
     
     
     bool tutorialStatusCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialStatus"];
@@ -2300,6 +2311,7 @@
         sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
         //        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
         [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"newHighScore"];
     }
     
     if (playerScore > playerHighScore) {
@@ -2307,6 +2319,7 @@
         sharedHighScore = [NSNumber numberWithInteger:playerHighScore];
         //        [[NSUserDefaults standardUserDefaults] setObject:sharedHighScore forKey:@"sharedHighScore"];
         [MGWU setObject:sharedHighScore forKey:@"sharedHighScore"];
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"newHighScore"];
     }
     
     if (playerCoins == 0) {

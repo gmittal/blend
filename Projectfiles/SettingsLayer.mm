@@ -51,14 +51,14 @@
     
         
         
-        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"shock.png" selectedImage:@"shock.png" target:self selector:@selector(resetGameData)];
+        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"reset.png" selectedImage:@"reset.png" target:self selector:@selector(resetGameData)];
         CCMenu *resetMenu = [CCMenu menuWithItems:resetButton, nil];
         [resetMenu alignItemsVertically];
         resetMenu.position = ccp(screenCenter.x, screenCenter.y + 80);
         [self addChild:resetMenu z:1000];
         
         CCLabelBMFont *resetLabel = [CCLabelTTF labelWithString:@"Reset Game Data" fontName:@"Roboto-Light" fontSize:20];
-        resetLabel.position = ccp(screenCenter.x, resetMenu.position.y - 60);
+        resetLabel.position = ccp(screenCenter.x, resetMenu.position.y - 70);
         resetLabel.color = ccc3(0, 0, 0);
         [self addChild:resetLabel];
         

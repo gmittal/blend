@@ -94,6 +94,11 @@ int endingHighScore;
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
         [self addChild:gameOverMenu];
         
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"newHighScore"] == true) {
+            [self showNewHighScoreAlert];
+        }
+        
+        
         nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 220, 250, 25)];
         [[[CCDirector sharedDirector] view] addSubview:nameField];
         nameField.delegate = self;
@@ -139,6 +144,16 @@ int endingHighScore;
 	}
 }
 
+
+-(void) showNewHighScoreAlert
+{
+    UIAlertView *alert = [[UIAlertView alloc] init];
+    [alert setTitle:@"New High Score"];
+    [alert setMessage:[[NSString alloc] initWithFormat:@"You have a new high score of %i", endingHighScore]];
+    [alert setDelegate:self];
+    [alert addButtonWithTitle:@"OK"];
+    [alert show];
+}
 
 
 -(void) quitGame

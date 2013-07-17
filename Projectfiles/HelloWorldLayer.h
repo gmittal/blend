@@ -204,6 +204,12 @@
     
     bool p3Enabler;
     
+    int numTimesP1Used;
+    int numTimesP2Used;
+    int numTimesP3Used;
+    
+    float timeShieldEnabled;
+    
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

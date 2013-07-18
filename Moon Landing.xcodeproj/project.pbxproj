@@ -59,6 +59,9 @@
 		C79A1564178E1B7100BC8C22 /* buy3.png in Resources */ = {isa = PBXBuildFile; fileRef = C79A155E178E1B7100BC8C22 /* buy3.png */; };
 		C7A1C505179745EA00CB09E2 /* reset.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A1C503179745EA00CB09E2 /* reset.png */; };
 		C7A1C506179745EA00CB09E2 /* reset-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A1C504179745EA00CB09E2 /* reset-hd.png */; };
+		C7DBDBFF17986E1600D56358 /* skybgip5-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DBDBFD17986E1600D56358 /* skybgip5-hd.png */; };
+		C7DBDC0017986E1600D56358 /* skybgip5.png in Resources */ = {isa = PBXBuildFile; fileRef = C7DBDBFE17986E1600D56358 /* skybgip5.png */; };
+		C7DBDC021798A67B00D56358 /* circula.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7DBDC011798A67B00D56358 /* circula.ttf */; };
 		C7E0F3DD178B297200E90D84 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = C7E0F3DC178B297200E90D84 /* incorrect.wav */; };
 		C7E0F3E0178B493700E90D84 /* multiplier_wrapper-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E0F3DE178B493700E90D84 /* multiplier_wrapper-hd.png */; };
 		C7E0F3E1178B493700E90D84 /* multiplier_wrapper.png in Resources */ = {isa = PBXBuildFile; fileRef = C7E0F3DF178B493700E90D84 /* multiplier_wrapper.png */; };
@@ -239,6 +242,9 @@
 		C79A155E178E1B7100BC8C22 /* buy3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buy3.png; sourceTree = "<group>"; };
 		C7A1C503179745EA00CB09E2 /* reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reset.png; sourceTree = "<group>"; };
 		C7A1C504179745EA00CB09E2 /* reset-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reset-hd.png"; sourceTree = "<group>"; };
+		C7DBDBFD17986E1600D56358 /* skybgip5-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skybgip5-hd.png"; sourceTree = "<group>"; };
+		C7DBDBFE17986E1600D56358 /* skybgip5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybgip5.png; sourceTree = "<group>"; };
+		C7DBDC011798A67B00D56358 /* circula.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = circula.ttf; sourceTree = "<group>"; };
 		C7E0F3DC178B297200E90D84 /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incorrect.wav; sourceTree = "<group>"; };
 		C7E0F3DE178B493700E90D84 /* multiplier_wrapper-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplier_wrapper-hd.png"; sourceTree = "<group>"; };
 		C7E0F3DF178B493700E90D84 /* multiplier_wrapper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplier_wrapper.png; sourceTree = "<group>"; };
@@ -622,6 +628,9 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C7DBDC011798A67B00D56358 /* circula.ttf */,
+				C7DBDBFD17986E1600D56358 /* skybgip5-hd.png */,
+				C7DBDBFE17986E1600D56358 /* skybgip5.png */,
 				C7A1C503179745EA00CB09E2 /* reset.png */,
 				C7A1C504179745EA00CB09E2 /* reset-hd.png */,
 				C73E795A1795EABE0049AF1A /* stop.png */,
@@ -907,6 +916,9 @@
 				C73E79651795EABE0049AF1A /* stop-hd.png in Resources */,
 				C7A1C505179745EA00CB09E2 /* reset.png in Resources */,
 				C7A1C506179745EA00CB09E2 /* reset-hd.png in Resources */,
+				C7DBDBFF17986E1600D56358 /* skybgip5-hd.png in Resources */,
+				C7DBDC0017986E1600D56358 /* skybgip5.png in Resources */,
+				C7DBDC021798A67B00D56358 /* circula.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -991,6 +1003,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/mgwuSDK.embeddedframework\"",
@@ -1001,6 +1014,7 @@
 					"$(KKFRAMEWORKS_IOS)",
 					"$(inherited)",
 				);
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D28190B7-6545-48A2-8865-E904F718F8D1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1009,6 +1023,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/mgwuSDK.embeddedframework\"",
@@ -1019,6 +1034,7 @@
 					"$(KKFRAMEWORKS_IOS)",
 					"$(inherited)",
 				);
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D28190B7-6545-48A2-8865-E904F718F8D1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

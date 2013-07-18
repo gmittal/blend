@@ -27,9 +27,10 @@
         
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
+        CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"SpaceraLT-Regular" fontSize:40];
-        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2);
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"Circula-Medium" fontSize:70];
+        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2 + 100);
         [self addChild:gameOver z:100 tag:100];
         
         // game over label runs 3 different actions at the same time to create the combined effect
@@ -45,18 +46,18 @@
         [gameOver runAction:repeatTint];
         
         // 2) rotation with ease
-        CCRotateTo* rotate1 = [CCRotateTo actionWithDuration:2 angle:3];
-        CCEaseBounceInOut* bounce1 = [CCEaseBounceInOut actionWithAction:rotate1];
-        CCRotateTo* rotate2 = [CCRotateTo actionWithDuration:2 angle:-3];
-        CCEaseBounceInOut* bounce2 = [CCEaseBounceInOut actionWithAction:rotate2];
-        CCSequence* rotateSequence = [CCSequence actions:bounce1, bounce2, nil];
-        CCRepeatForever* repeatBounce = [CCRepeatForever actionWithAction:rotateSequence];
-        [gameOver runAction:repeatBounce];
+//        CCRotateTo* rotate1 = [CCRotateTo actionWithDuration:2 angle:3];
+//        CCEaseBounceInOut* bounce1 = [CCEaseBounceInOut actionWithAction:rotate1];
+//        CCRotateTo* rotate2 = [CCRotateTo actionWithDuration:2 angle:-3];
+//        CCEaseBounceInOut* bounce2 = [CCEaseBounceInOut actionWithAction:rotate2];
+//        CCSequence* rotateSequence = [CCSequence actions:bounce1, bounce2, nil];
+//        CCRepeatForever* repeatBounce = [CCRepeatForever actionWithAction:rotateSequence];
+//        [gameOver runAction:repeatBounce];
         
         // 3) jumping
-        CCJumpBy* jump = [CCJumpBy actionWithDuration:3 position:CGPointZero height:screenSize.height / 3 jumps:1];
-        CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
-        [gameOver runAction:repeatJump];
+//        CCJumpBy* jump = [CCJumpBy actionWithDuration:3 position:CGPointZero height:screenSize.height / 3 jumps:1];
+//        CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
+//        [gameOver runAction:repeatJump];
         
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Resume" target:self selector:@selector(unPause)];
         CCMenuItemFont *restart = [CCMenuItemFont itemFromString: @"Restart" target:self selector:@selector(restartGame)];
@@ -69,6 +70,11 @@
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 80);
         gameOverMenu.color = ccc3(0, 0, 0);
         [self addChild:gameOverMenu];
+        
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
     }
     return self;
 }

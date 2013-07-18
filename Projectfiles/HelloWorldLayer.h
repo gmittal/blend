@@ -210,6 +210,11 @@
     
     float timeShieldEnabled;
     
+    CCParticleSystem *deathSystem;
+    
+    bool grassBeingKilled;
+    bool fireBeingKilled;
+    bool waterBeingKilled;
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

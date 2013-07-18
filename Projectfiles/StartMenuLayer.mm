@@ -17,9 +17,9 @@
         glClearColor(0.0, 0.75, 1.0, 1.0);
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"ELEMENTS" fontName:@"SpaceraLT-Regular" fontSize:30];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"THE ELEMENTS" fontName:@"Circula-Medium" fontSize:50];
         gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 130);
+        gameTitle.position = ccp(screenCenter.x, screenCenter.y + 140);
         [self addChild:gameTitle];
         
         
@@ -63,8 +63,13 @@
         
         CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, upgrades, store, about, crosspromo, nil];
         [startMenu alignItemsVertically];
-        startMenu.position = ccp(screenSize.width/2, screenSize.height/2);
+        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 10);
         [self addChild:startMenu];
+        
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
     }
     return self;
 }

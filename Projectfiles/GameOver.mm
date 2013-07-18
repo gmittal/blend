@@ -29,8 +29,9 @@ int endingHighScore;
         
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
+        CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"SpaceraLT-Regular" fontSize:25];
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"Circula-Medium" fontSize:50];
         gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 100);
         [self addChild:gameOver z:100 tag:100];
         
@@ -60,11 +61,19 @@ int endingHighScore;
         CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
         [gameOver runAction:repeatJump]; */
         
+        
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
+        
+        
         NSNumber *endingScoreNumber = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         int endingScore = [endingScoreNumber intValue];
         NSString *endScoreString = [[NSString alloc] initWithFormat:@"Final Score: %i", endingScore];
         CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"Roboto-Light" fontSize:20];
         endScore.position = ccp(screenSize.width/2, 100);
+        endScore.color = ccc3(0, 0, 0);
         [self addChild:endScore];
         
         NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
@@ -73,6 +82,7 @@ int endingHighScore;
         NSString *endHighScoreString = [[NSString alloc] initWithFormat:@"High Score: %i", endingHighScore];
         CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:20];
         endHighScore.position = ccp(screenSize.width/2, 60);
+        endHighScore.color = ccc3(0, 0, 0);
         [self addChild:endHighScore];
         
         NSNumber *endingCoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
@@ -81,17 +91,22 @@ int endingHighScore;
         NSString *endCoinString = [[NSString alloc] initWithFormat:@"Coins: %i", endingCoins];
         CCLabelBMFont *endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"Roboto-Light" fontSize:20];
         endCoins.position = ccp(screenSize.width/2, 20);
+        endCoins.color = ccc3(0, 0, 0);
         [self addChild:endCoins];
 
         
         
         CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Play Again" target:self selector:@selector(playAgain)];
         CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
+        playAgain.color = ccc3(0, 0, 0);
+        quit.color = ccc3(0, 0, 0);
+//        [quit setColor:ccc3(0, 0, 0)];
         [playAgain setFontName:@"Roboto-Light"];
         [quit setFontName:@"Roboto-Light"];
         CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, quit, nil];
         [gameOverMenu alignItemsVertically];
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
+        gameOverMenu.color = ccc3(0, 0, 0);
         [self addChild:gameOverMenu];
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"newHighScore"] == true) {

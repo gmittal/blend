@@ -17,7 +17,7 @@
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"SETTINGS" fontName:@"SpaceraLT-Regular" fontSize:28];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"SETTINGS" fontName:@"Circula-Medium" fontSize:50];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
@@ -72,6 +72,11 @@
         [goHomeMenu alignItemsVertically];
         goHomeMenu.position = ccp(screenSize.width/2, 40);
         [self addChild:goHomeMenu];
+        
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
         
     }
     return self;

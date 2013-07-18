@@ -51,7 +51,7 @@
 
 /*
  PROJECTILE IDEAS:
- - MAGENTA SHIP (IMPLEMENTED, SHPIP1)
+ - MAGENTA SHIP (IMPLEMENTED, SHIP1)
  - BLUE SHIP (IMPLEMENTED, SHIP2)
  - YELLOW SHIP (IMPLEMENTED, SHIP3)
  - BAG OF COINS: GIVES USER 10 COINS IF PLACED IN CORRECT SECTOR
@@ -359,9 +359,9 @@
         topBar.scaleX = 3.0f;
         //        [self addChild:topBar z:1000];
         
-        CCSprite *background = [CCSprite spriteWithFile:@"backgroundip5.png"];
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
         background.position = screenCenter;
-        //        [self addChild:background z:-100];
+        [self addChild:background z:-100];
         
         
         [self divideAngularSections];
@@ -377,17 +377,17 @@
         //        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
         
         
-        burnGrass = [CCParticleFire node];
-        [progressBar3 addChild:burnGrass z:1001];
-        burnGrass.visible = false;
-        
-        snuffedFire = [CCParticleSnow node];
-        [progressBar1 addChild:snuffedFire z:1001];
-        snuffedFire.visible = false;
-        
-        dryWater = [CCParticleSnow node];
-        [progressBar2 addChild:dryWater z:1001];
-        dryWater.visible = false;
+//        burnGrass = [CCParticleFire node];
+//        [progressBar3 addChild:burnGrass z:1001];
+//        burnGrass.visible = false;
+//        
+//        snuffedFire = [CCParticleSnow node];
+//        [progressBar1 addChild:snuffedFire z:1001];
+//        snuffedFire.visible = false;
+//        
+//        dryWater = [CCParticleSnow node];
+//        [progressBar2 addChild:dryWater z:1001];
+//        dryWater.visible = false;
         
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
@@ -438,76 +438,92 @@
 
 -(void) tutorial3
 {
-    NSLog(@"Hi");
     [self flashLabel:@"Use the powerups at the bottom \n for help in tough situations." actionWithDuration:5.0f color:@"black"];
 }
 
 
 -(void) killGrass
 {
-//    burnGrass = [CCParticleFire node];
-//	[progressBar3 addChild:burnGrass z:1001];
+    burnGrass = [CCParticleFire node];
+	[progressBar3 addChild:burnGrass z:1101];
     burnGrass.visible = true;
+    grassBeingKilled = true;
+    fireBeingKilled = false;
+    waterBeingKilled = false;
 }
 
 -(void) removeGrassEffect
 {
-//    [progressBar3 removeChild:burnGrass];
+    [progressBar3 removeChild:burnGrass];
     burnGrass.visible = false;
+    grassBeingKilled = false;
 }
 
 
 -(void) killFire
 {
-//    snuffedFire = [CCParticleSnow node];
-//	[progressBar1 addChild:snuffedFire z:1001];
+    snuffedFire = [CCParticleFire node];
+	[progressBar1 addChild:snuffedFire z:1101];
     snuffedFire.visible = true;
+    grassBeingKilled = false;
+    fireBeingKilled = true;
+    waterBeingKilled = false;
 }
 
 -(void) removeFireEffect
 {
-//    [progressBar1 removeChild:snuffedFire];
+    [progressBar1 removeChild:snuffedFire];
     snuffedFire.visible = false;
+    fireBeingKilled = false;
 }
 
 
 -(void) killWater
 {
-//    dryWater = [CCParticleSnow node];
-//	[progressBar2 addChild:dryWater z:1001];
+    dryWater = [CCParticleFire node];
+	[progressBar2 addChild:dryWater z:1101];
     dryWater.visible = true;
-}
+    grassBeingKilled = false;
+    fireBeingKilled = false;
+    waterBeingKilled = true;}
 
 -(void) removeWaterEffect
 {
-//    [progressBar2 removeChild:dryWater];
+    [progressBar2 removeChild:dryWater];
     dryWater.visible = false;
+    waterBeingKilled = false;
 }
 
 -(void) runDeathSeqOn:(NSString *) effectName
 {
     if ([effectName isEqualToString:@"grass"] == true) {
+//        if (grassBeingKilled == true) {
         id execute = [CCCallFunc actionWithTarget:self selector:@selector(killGrass)];
-        id delay = [CCDelayTime actionWithDuration:2.0f];
+        id delay = [CCDelayTime actionWithDuration:0.5f];
         id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeGrassEffect)];
         CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
         [self runAction:deathSeq];
+//        }
     }
     
     if ([effectName isEqualToString:@"fire"] == true) {
+//        if (fireBeingKilled == true) {
         id execute = [CCCallFunc actionWithTarget:self selector:@selector(killFire)];
-        id delay = [CCDelayTime actionWithDuration:2.0f];
+        id delay = [CCDelayTime actionWithDuration:0.5f];
         id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeFireEffect)];
         CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
         [self runAction:deathSeq];
+//        }
     }
     
     if ([effectName isEqualToString:@"water"] == true) {
+//        if (waterBeingKilled == true) {
         id execute = [CCCallFunc actionWithTarget:self selector:@selector(killWater)];
-        id delay = [CCDelayTime actionWithDuration:2.0f];
+        id delay = [CCDelayTime actionWithDuration:0.5f];
         id remove = [CCCallFunc actionWithTarget:self selector:@selector(removeWaterEffect)];
         CCSequence* deathSeq = [CCSequence actions:execute, delay, remove, nil];
         [self runAction:deathSeq];
+//        }
     }
 }
 
@@ -2067,7 +2083,7 @@
     
     if (playerScore > 2500)
     {
-        initDelayInFrames = 35;
+        initDelayInFrames = 40;
         numSpritesPerArray = 11;
     }
     
@@ -2081,20 +2097,21 @@
     {
         initDelayInFrames = 35;
         numSpritesPerArray = 13;
-        shipSpeed = 4.0f;
+//        shipSpeed = 4.0f;
     }
     
     if (playerScore > 5000)
     {
         initDelayInFrames = 35;
         numSpritesPerArray = 15;
-        shipSpeed = 3.7f;
+//        shipSpeed = 3.7f;
     }
     
     if (playerScore > 6000)
     {
-        initDelayInFrames = 30;
+        initDelayInFrames = 32;
         numSpritesPerArray = 13;
+        shipSpeed = 4.1f;
     }
 }
 
@@ -2400,6 +2417,7 @@
         }
     }
 }
+
 
 
 

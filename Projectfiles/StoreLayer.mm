@@ -24,7 +24,7 @@ CCLabelBMFont *coinsLabel;
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"SpaceraLT-Regular" fontSize:28];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"Circula-Medium" fontSize:50];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
@@ -34,7 +34,7 @@ CCLabelBMFont *coinsLabel;
         coins = [CoinNumber intValue];
         CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
         coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"Roboto-Light" fontSize:20];
-        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 60);
+        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 70);
         coinsLabel.color = ccc3(0, 0, 0);
         [self addChild:coinsLabel];
         
@@ -50,6 +50,17 @@ CCLabelBMFont *coinsLabel;
         [self addChild:goHomeMenu];
         
         
+        
+//        CCMenuItemFont *restore = [CCMenuItemFont itemWithString:@"Restore Products" target:self selector:@selector(restore)];
+//        [restore setFontName:@"Roboto-Light"];
+//        [restore setFontSize:20];
+//        restore.color = ccc3(255, 0, 0);
+//
+//        CCMenu *restoreMenu = [CCMenu menuWithItems:restore, nil];
+//        [restoreMenu alignItemsVertically];
+//        restoreMenu.position = ccp(screenCenter.x, screenSize.height - 85);
+//        [self addChild:restoreMenu z:1000];
+        
         CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"buy1.png" selectedImage:@"buy1.png" target:self selector:@selector(buyCash1)];
         BuyCash1Label.scale = 0.5f;
         
@@ -57,34 +68,64 @@ CCLabelBMFont *coinsLabel;
         BuyCash2Label.scale = 0.5f;
         
         
-        CCMenuItemFont *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"buy3.png" selectedImage:@"buy3.png" target:self selector:@selector(buyCash3)];
+        CCMenuItemImage *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"buy3.png" selectedImage:@"buy3.png" target:self selector:@selector(buyCash3)];
         BuyCash3Label.scale = 0.5f;
         
         CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"0.99" fontName:@"Roboto-Light" fontSize:18];
-        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 100);
+        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 80);
         price1.color = ccc3(0, 0, 0);
         [self addChild:price1];
 
         CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"1.99" fontName:@"Roboto-Light" fontSize:18];
-        price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2);
+        price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 20);
         price2.color = ccc3(0, 0, 0);
         [self addChild:price2];
         
         CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"4.99" fontName:@"Roboto-Light" fontSize:18];
-        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 100);
+        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 120);
         price3.color = ccc3(0, 0, 0);
         [self addChild:price3];
         
         CCMenu *cashStoreMenu = [CCMenu menuWithItems:BuyCash1Label, BuyCash2Label, BuyCash3Label, nil];
         [cashStoreMenu alignItemsVerticallyWithPadding:10.f];
-        cashStoreMenu.position = ccp(screenSize.width/2 - 50, screenSize.height/2);
+        cashStoreMenu.position = ccp(screenSize.width/2 - 50, screenSize.height/2 - 20);
         [self addChild:cashStoreMenu];
+        
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
+        
         
         [self scheduleUpdate];
         
     }
+    
     return self;
 }
+
+
+-(void) restore
+{
+    [MGWU testRestoreProducts:@[@"com.gbm.mlg.1000C", @"com.gbm.mlg.3000C", @"com.gbm.mlg.10000C"] withCallback:@selector(restoredProducts:) onTarget:self];
+}
+
+-(void) restoredProducts:(NSArray *) products
+{
+    if (products == nil) {
+        [MGWU showMessage:@"There were no products to restore." withImage:nil]; // tell use why nothing interesting happened
+    }
+    
+    if ([products isEqual: @[@"com.gbm.mlg.1000C", @"com.gbm.mlg.3000C", @"com.gbm.mlg.10000C"]])
+    {
+        coins += 20000; // arbitrary at the moment
+        NSNumber *restoredCoinValue = [NSNumber numberWithInt:coins];
+        [MGWU setObject:restoredCoinValue forKey:@"sharedCoins"];
+        [MGWU showMessage:@"Products restored." withImage:nil];
+    }
+}
+
+
 
 -(void) buyCash1
 {

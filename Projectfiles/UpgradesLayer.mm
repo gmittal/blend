@@ -18,7 +18,7 @@
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"SpaceraLT-Regular" fontSize:28];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"Circula-Medium" fontSize:50];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
@@ -28,7 +28,7 @@
         coins = [CoinNumber intValue];
         CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
         coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"Roboto-Light" fontSize:20];
-        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 60);
+        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 70);
         coinsLabel.color = ccc3(0, 0, 0);
         [self addChild:coinsLabel];
         
@@ -97,6 +97,11 @@
         cashStoreMenu.position = ccp(screenSize.width/2 - 40, screenSize.height/2);
         [self addChild:cashStoreMenu];
         
+        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        background.position = screenCenter;
+        [self addChild:background z:-100];
+        
+        
         [self scheduleUpdate];
         
     }
@@ -106,7 +111,7 @@
 -(void) buyCash1
 {
     if (coins > 0) {
-        if (coins > 1000) {
+        if (coins >= 1000) {
             coins -= 1000;
             NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
             //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
@@ -123,7 +128,7 @@
 -(void) buyCash2
 {
     if (coins > 0) {
-        if (coins > 500) {
+        if (coins >= 500) {
             coins -= 500;
             NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
             //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
@@ -142,7 +147,7 @@
 {
     if (coins > 0) {
         
-        if (coins > 800) {
+        if (coins >= 800) {
             
             coins -= 800;
             NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];

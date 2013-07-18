@@ -1,4 +1,4 @@
-moon-landing-game
+The Elements
 =================
 
-Repo for iOS Game in development.
+Created by Gautam Mittal in collaboration with MakeGamesWithUs.

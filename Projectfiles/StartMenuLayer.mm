@@ -17,7 +17,7 @@
         glClearColor(0.0, 0.75, 1.0, 1.0);
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"THE ELEMENTS" fontName:@"Circula-Medium" fontSize:50];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"THE ELEMENTS" fontName:@"NexaBold" fontSize:36];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 140);
         [self addChild:gameTitle];

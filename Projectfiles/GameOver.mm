@@ -31,7 +31,7 @@ int endingHighScore;
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"Circula-Medium" fontSize:50];
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"NexaBold" fontSize:40];
         gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 100);
         [self addChild:gameOver z:100 tag:100];
         

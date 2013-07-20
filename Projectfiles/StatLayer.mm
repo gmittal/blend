@@ -19,7 +19,7 @@ CGSize screenSize;
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"Circula-Medium" fontSize:50];
+        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:36];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
         [self addChild:gameTitle];
@@ -31,7 +31,7 @@ CGSize screenSize;
         CCLabelBMFont *highScoreLabel = [CCLabelTTF labelWithString:highScoreString fontName:@"Roboto-Light" fontSize:20];
         highScoreLabel.position = ccp(screenSize.width/2, screenSize.height/2);
         highScoreLabel.color = ccc3(0, 0, 0);
-//        [self addChild:highScoreLabel];
+        //        [self addChild:highScoreLabel];
         
         
         NSNumber *lastRoundScore = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
@@ -40,15 +40,15 @@ CGSize screenSize;
         CCLabelBMFont *lastRoundPlayed = [CCLabelTTF labelWithString:lastRoundString fontName:@"Roboto-Light" fontSize:20];
         lastRoundPlayed.position = ccp(screenSize.width/2, screenSize.height/2 - 40);
         lastRoundPlayed.color = ccc3(0, 0, 0);
-//        [self addChild:lastRoundPlayed];
+        //        [self addChild:lastRoundPlayed];
         
-//        [MGWU submitHighScore:highScore byPlayer:@"gmittal" forLeaderboard:@"defaultLeaderboard"];
+        //        [MGWU submitHighScore:highScore byPlayer:@"gmittal" forLeaderboard:@"defaultLeaderboard"];
         
         NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    
-//        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
-//                                 onTarget:self];
-
+        
+        //        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
+        //                                 onTarget:self];
+        
         [self getScores];
         
         CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
@@ -66,6 +66,21 @@ CGSize screenSize;
         background.position = screenCenter;
         [self addChild:background z:-100];
         
+        CCMenuItemImage *facebookSel = [CCMenuItemImage itemWithNormalImage:@"facebookHighscoreButton.png" selectedImage:@"facebookHighscoreButtonSel.png" target:self selector:@selector(displayFacebookStats)];
+        //        facebookSel.position = ccp(screenSize.width/2 + ([facebookSel boundingBox].size.width/2), screenSize.height - 85);
+        //        [self addChild:facebookSel];
+        
+        CCMenuItemImage *globalSel = [CCMenuItemImage itemWithNormalImage:@"globalHighscoreButton.png" selectedImage:@"globalHighscoreButtonSel.png" target:self selector:@selector(displayGlobalStats)];
+        //        globalSel.position = ccp(screenSize.width/2 - ([globalSel boundingBox].size.width/2), screenSize.height - 85);
+        //        [self addChild:globalSel];
+        
+        CCMenu *boardChoice = [CCMenu menuWithItems:globalSel, facebookSel, nil];
+        [boardChoice alignItemsHorizontallyWithPadding:0.0f];
+        boardChoice.position = ccp(screenSize.width/2, screenSize.height - 85);
+        [self addChild:boardChoice];
+        
+        global1 = false;
+        fb1 = true;
         
     }
     return self;
@@ -78,56 +93,184 @@ CGSize screenSize;
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 
-    -(void) getScores
-    {
-        [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
-                                 onTarget:self];
-    }
+-(void) getScores
+{
+    [MGWU getHighScoresForLeaderboard:@"defaultLeaderboard" withCallback:@selector(receivedScores:)
+                             onTarget:self];
+}
 
 -(void)receivedScores:(NSDictionary*)scores
 {
     //Do stuff with scores in here! Display them!
-//    NSString *leaderBoardString = [[NSString alloc] initWithFormat:@"%@", scores];
-//    CCLabelBMFont *leaderBoard = [CCLabelTTF labelWithString:leaderBoardString fontName:@"Roboto-Light" fontSize:15];
-//    leaderBoard.position = ccp(screenSize.width/2, screenSize.height/2);
-//    [self addChild:leaderBoard];
-//    NSLog(@"%@", scores);
+    //    NSString *leaderBoardString = [[NSString alloc] initWithFormat:@"%@", scores];
+    //    CCLabelBMFont *leaderBoard = [CCLabelTTF labelWithString:leaderBoardString fontName:@"Roboto-Light" fontSize:15];
+    //    leaderBoard.position = ccp(screenSize.width/2, screenSize.height/2);
+    //    [self addChild:leaderBoard];
+    //    NSLog(@"%@", scores);
     
-//    NSString *object = [[NSString alloc]initWithFormat:
+    //    NSString *object = [[NSString alloc]initWithFormat:
     
-//    for(NSString *key in [scores allKeys]) {
-//        NSLog(@"%@",[scores objectForKey:key]);
-//        NSString *rankStr = [scores objectForKey:@"score"];
-//        NSString *rank = [NSString stringWithFormat: @"%@", [scores objectForKey:@"all"]];
-//        CCLabelBMFont *rankLabel = [CCLabelTTF labelWithString:rank fontName:@"Roboto-Light" fontSize:20];
-//        rankLabel.position = ccp(screenSize.width/2, screenSize.height/2);
-//        rankLabel.color = ccc3(0,0,0);
-//        [self addChild:rankLabel];
+    //    for(NSString *key in [scores allKeys]) {
+    //        NSLog(@"%@",[scores objectForKey:key]);
+    //        NSString *rankStr = [scores objectForKey:@"score"];
+    //        NSString *rank = [NSString stringWithFormat: @"%@", [scores objectForKey:@"all"]];
+    //        CCLabelBMFont *rankLabel = [CCLabelTTF labelWithString:rank fontName:@"Roboto-Light" fontSize:20];
+    //        rankLabel.position = ccp(screenSize.width/2, screenSize.height/2);
+    //        rankLabel.color = ccc3(0,0,0);
+    //        [self addChild:rankLabel];
     
-//    }
+    //    }
     
-//    NSDictionary *userDict = [scores objectForKey:@"user"];
-//    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-//	if (!userName)
-//		userName = @"player";
-//    NSNumber *userHighScore = [userDict objectForKey:@"score"];
-//    NSNumber *userRank = [userDict objectForKey:@"rank"];
-//    
-//    CCLabelTTF *label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Your name: %@, Most Kills: %@, Rank: %@", userName, userHighScore, userRank]
-//                                           fontName:@"Marker Felt"
-//                                           fontSize:16];
+    //    NSDictionary *userDict = [scores objectForKey:@"user"];
+    //    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    //	if (!userName)
+    //		userName = @"player";
+    //    NSNumber *userHighScore = [userDict objectForKey:@"score"];
+    //    NSNumber *userRank = [userDict objectForKey:@"rank"];
+    //
+    //    CCLabelTTF *label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Your name: %@, Most Kills: %@, Rank: %@", userName, userHighScore, userRank]
+    //                                           fontName:@"Marker Felt"
+    //                                           fontSize:16];
     
-//    label.position = ccp(screenSize.width / 2, screenSize.height-15);
-//    [self addChild:label z: 2];
+    //    label.position = ccp(screenSize.width / 2, screenSize.height-15);
+    //    [self addChild:label z: 2];
+    
+    scoreDict = scores;
+    
+    facebookInfo = [scores objectForKey:@"friends"];
+    
+    userInfo = [scores objectForKey:@"user"];
+    playerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    if (playerName == nil) {
+        playerName = @"Player";
+    }
+    
+    if (playerName.length > 12) {
+        playerName = [[playerName substringToIndex:13] stringByAppendingString:@"..."];
+    }
+    
+    playerHighScore = [userInfo objectForKey:@"score"];
+    playerRank = [userInfo objectForKey:@"rank"];
+    
+    userStatus = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]
+                                    fontName:@"Roboto-Light"
+                                    fontSize:16];
+    
+    userscoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", playerHighScore] fontName:@"NexaBold" fontSize:16];
+    
+    userStatus.anchorPoint = ccp(0.0f,0.5f);
+    userStatus.position = ccp(screenSize.width/2 - 130, screenSize.height - 125);
+    [self addChild:userStatus z:2];
+    
+    userscoreLabel.anchorPoint = ccp(1.0f,0.5f);
+    userscoreLabel.position = ccp(screenSize.width/2 + 130, screenSize.height - 127);
+    [self addChild:userscoreLabel z:2];
     
     
-    NSMutableArray *otherPlayers = [scores objectForKey:@"all"];
+    otherPlayers = [scoreDict objectForKey:@"all"];
     int count = [otherPlayers count];
     
-//    if([otherPlayers count] > 250)
-//    {
-//        count = 250;
-//    }
+    for (int i = 0; i < count; i ++)
+    {
+        //        otherPlayers = [scoreDict objectForKey:@"friends"];
+        NSMutableDictionary *playerDict = [otherPlayers objectAtIndex:i];
+        NSNumber * score = [playerDict objectForKey:@"score"];
+        NSString *name = [playerDict objectForKey:@"name"];
+        if (!name) {
+            name = @"player";
+        }
+        //        NSNumber *rank = [playerDict objectForKey:@"rank"];
+        NSNumber *rank = [NSNumber numberWithInt:i + 1];
+        
+        LeaderBoardPlayer *p = [[LeaderBoardPlayer alloc] init];
+        p.name = name;
+        p.score = score;
+        p.rank = rank;
+        
+        if (name.length > 16) { // add ellipsis
+            name = [[name substringToIndex:17] stringByAppendingString:@"..."];
+        }
+        
+        label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                   fontName:@"Roboto-Light"
+                                   fontSize:16];
+        
+        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+        
+        
+        label.anchorPoint = ccp(0.0f,0.5f);
+        label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
+        label.color = ccc3(0, 0, 0);
+        [self addChild:label z: 2 tag:i];
+        
+        scoreLabel.anchorPoint = ccp(1.0f,0.5f);
+        scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
+        scoreLabel.color = ccc3(0, 0, 0);
+        [self addChild:scoreLabel z: 2 tag:i + 10000];
+        
+        [allPlayers addObject:p];
+    }
+    
+    
+    
+    //    if([otherPlayers count] > 250)
+    //    {
+    //        count = 250;
+    //    }
+    
+}
+
+
+-(void) getFacebook
+{
+    otherPlayers = [scoreDict objectForKey:@"friends"];
+    count = [otherPlayers count];
+    
+    for (int i = 0; i < count; i ++)
+    {
+        NSMutableDictionary *playerDict = [otherPlayers objectAtIndex:i];
+        NSNumber * score = [playerDict objectForKey:@"score"];
+        NSString *name = [playerDict objectForKey:@"username"];
+        if (!name) {
+            name = @"player";
+        }
+        //        NSNumber *rank = [playerDict objectForKey:@"rank"];
+        NSNumber *rank = [NSNumber numberWithInt:i + 1];
+        
+        LeaderBoardPlayer *p = [[LeaderBoardPlayer alloc] init];
+        p.name = name;
+        p.score = score;
+        p.rank = rank;
+        
+        if (name.length > 16) { // add ellipsis
+            name = [[name substringToIndex:17] stringByAppendingString:@"..."];
+        }
+        
+        label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                   fontName:@"Roboto-Light"
+                                   fontSize:16];
+        
+        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+        
+        
+        label.anchorPoint = ccp(0.0f,0.5f);
+        label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
+        label.color = ccc3(0, 0, 0);
+        [self addChild:label z: 2 tag:i];
+        
+        scoreLabel.anchorPoint = ccp(1.0f,0.5f);
+        scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
+        scoreLabel.color = ccc3(0, 0, 0);
+        [self addChild:scoreLabel z: 2 tag:i + 10000];
+        
+        [allPlayers addObject:p];
+    }
+}
+
+-(void) getGlobal
+{
+    otherPlayers = [scoreDict objectForKey:@"all"];
+    count = [otherPlayers count];
     
     for (int i = 0; i < count; i ++)
     {
@@ -137,25 +280,116 @@ CGSize screenSize;
         if (!name) {
             name = @"player";
         }
-//        NSNumber *rank = [playerDict objectForKey:@"rank"];
+        //        NSNumber *rank = [playerDict objectForKey:@"rank"];
         NSNumber *rank = [NSNumber numberWithInt:i + 1];
-    
+        
         LeaderBoardPlayer *p = [[LeaderBoardPlayer alloc] init];
         p.name = name;
         p.score = score;
         p.rank = rank;
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@ : %@", rank, name, score]
-                                               fontName:@"Roboto-Light"
-                                               fontSize:16];
+        if (name.length > 16) { // add ellipsis
+            name = [[name substringToIndex:17] stringByAppendingString:@"..."];
+        }
         
-        label.position = ccp(screenSize.width / 2, screenSize.height - 65 - i * 20);
+        label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                   fontName:@"Roboto-Light"
+                                   fontSize:16];
+        
+        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+        
+        
+        label.anchorPoint = ccp(0.0f,0.5f);
+        label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
         label.color = ccc3(0, 0, 0);
-        [self addChild:label z: 2];
+        [self addChild:label z: 2 tag:i];
+        
+        scoreLabel.anchorPoint = ccp(1.0f,0.5f);
+        scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
+        scoreLabel.color = ccc3(0, 0, 0);
+        [self addChild:scoreLabel z: 2 tag:i + 10000];
         
         [allPlayers addObject:p];
     }
+}
 
+
+-(void) displayFacebookStats
+{
+    displayFacebook = true;
+    displayGlobal = false;
+    global1 = true;
+    facebookSel = [CCSprite spriteWithFile:@"facebookHighscoreButtonSel.png"];
+    globalSel = [CCSprite spriteWithFile:@"globalHighscoreButton.png"];
+    
+    [self selectBoard];
+}
+
+-(void) displayGlobalStats
+{
+    displayFacebook = false;
+    displayGlobal = true;
+    fb1 = true;
+    facebookSel = [CCSprite spriteWithFile:@"facebookHighscoreButton.png"];
+    globalSel = [CCSprite spriteWithFile:@"globalHighscoreButtonSel.png"];
+    
+    [self selectBoard];
+    
+}
+
+-(void) selectBoard
+{
+    if (displayFacebook == true && fb1 == true) {
+        // display Facebook leaderboards
+        
+        fb1 = false;
+        NSMutableArray *global = [scoreDict objectForKey:@"all"];
+        int numglobal = [global count];
+        
+        for (int j = 0; j < numglobal; j++) {
+            [self removeChildByTag:j cleanup:YES];
+            [self removeChildByTag:j + 10000 cleanup:YES];
+        }
+        
+        playerRank = [userInfo objectForKey:@"friendrank"];
+        playerName = [userInfo objectForKey:@"username"];
+        
+        if (playerName.length > 12) {
+            playerName = [[playerName substringToIndex:13] stringByAppendingString:@"..."];
+        }
+        
+        [userStatus setString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]];
+        [userscoreLabel setString:[NSString stringWithFormat:@"%@", playerHighScore]];
+        
+        [self getFacebook];
+        
+    }
+    
+    if (displayGlobal == true && global1 == true) {
+        // display global
+        global1 = false;
+        NSMutableArray *global = [scoreDict objectForKey:@"friends"];
+        int numglobal = [global count];
+        
+        for (int j = 0; j < numglobal; j++) {
+            [self removeChildByTag:j cleanup:YES];
+            [self removeChildByTag:j + 10000 cleanup:YES];
+        }
+        
+        playerRank = [userInfo objectForKey:@"rank"];
+        playerName = [userInfo objectForKey:@"name"];
+        
+        if (playerName.length > 12) {
+            playerName = [[playerName substringToIndex:13] stringByAppendingString:@"..."];
+        }
+        
+        [userStatus setString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]];
+        [userscoreLabel setString:[NSString stringWithFormat:@"%@", playerHighScore]];
+        
+        [self getGlobal];
+        
+    }
+    
 }
 
 @end

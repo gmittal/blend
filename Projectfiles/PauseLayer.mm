@@ -29,7 +29,7 @@
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"Circula-Medium" fontSize:70];
+        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"NexaBold" fontSize:50];
         gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2 + 100);
         [self addChild:gameOver z:100 tag:100];
         

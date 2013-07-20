@@ -13,6 +13,28 @@
 @interface StatLayer : CCScene
 {
     NSMutableArray *allPlayers;
+    CCSprite *facebookSel;
+    CCSprite *globalSel;
+    bool displayGlobal;
+    bool displayFacebook;
+    CCLabelTTF *userStatus;
+    CCLabelTTF *userscoreLabel;
+    NSDictionary *userInfo;
+    NSString *playerName;
+    NSNumber *playerHighScore;
+    NSNumber *playerRank;
+    NSDictionary *facebookInfo;
+    CCLabelTTF *label;
+    CCLabelTTF *scoreLabel;
+    NSMutableArray *otherPlayers;
+    
+    int count;
+    
+    NSDictionary *scoreDict;
+    
+    bool global1;
+    bool fb1;
+    
 }
 
 @end

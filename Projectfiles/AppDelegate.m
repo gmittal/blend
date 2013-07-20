@@ -21,12 +21,37 @@
 #endif
     
     [MGWU loadMGWU:@"natcrvZe5ytd9slSi2juce99D7Km0qeWI8OGvUgIWlKihnOvpOk6MXZY1cXy7VkduwchOwBgWshqj5VNBCZ2i3ARAOK1IgQkn7SP"];
-    [MGWU preFacebook]; //Temporarily disables Facebook until you integrate it later
+//    [MGWU preFacebook]; //Temporarily disables Facebook until you integrate it later
 }
 
 -(id) alternateView
 {
 	return nil;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [MGWU handleURL:url];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [director stopAnimation];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [director startAnimation];
+}
+
+-(void) applicationWillResignActive:(UIApplication *)application
+{
+    [director pause];
+}
+
+-(void) applicationDidBecomeActive:(UIApplication *)application
+{
+    [director resume];
 }
 
 @end

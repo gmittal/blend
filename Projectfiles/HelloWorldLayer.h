@@ -215,6 +215,8 @@
     bool grassBeingKilled;
     bool fireBeingKilled;
     bool waterBeingKilled;
+    
+    float deviceFPS; // variable that stores the device frames/second
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

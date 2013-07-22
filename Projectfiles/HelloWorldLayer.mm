@@ -647,6 +647,7 @@
             //            NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
             //            NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
             [self scoreCheck:shipAngle withSprite:tempSprite];
+            [self updateScore]; // update here instead of in update to save FPS (CCLabel updates are slow)
             
             collisionDidHappen = true;
             
@@ -1721,27 +1722,28 @@
 
 -(void) updateScore
 {
-    score = [[NSString alloc] initWithFormat:@"%i",playerScore];
-    [scoreLabel setString:score];
-    lives = [[NSString alloc] initWithFormat:@"Lives: %i",playerLives];
-    [liveLabel setString:lives];
-    
-    multiplierString = [[NSString alloc] initWithFormat:@"x%i", pointMultiplier];
-    [multiplierLabel setString:multiplierString];
-    
-    power1Num = [[NSString alloc] initWithFormat:@"%i",numPower1Left];
-    [power1Left setString:power1Num];
-    
-    power2Num = [[NSString alloc] initWithFormat:@"%i",numPower2Left];
-    [power2Left setString:power2Num];
-    
-    power3Num = [[NSString alloc] initWithFormat:@"%i",numPower3Left];
-    [power3Left setString:power3Num];
-    
-    sharedScore = [NSNumber numberWithInteger:playerScore];
-//    [[NSUserDefaults standardUserDefaults] setObject:sharedScore forKey:@"sharedScore"];
-    [MGWU setObject:sharedScore forKey:@"sharedScore"];
-    
+//    if ((framesPassed % 10) == 0) {
+        score = [[NSString alloc] initWithFormat:@"%i",playerScore];
+        [scoreLabel setString:score];
+        lives = [[NSString alloc] initWithFormat:@"Lives: %i",playerLives];
+        [liveLabel setString:lives];
+        
+        multiplierString = [[NSString alloc] initWithFormat:@"x%i", pointMultiplier];
+        [multiplierLabel setString:multiplierString];
+        
+        power1Num = [[NSString alloc] initWithFormat:@"%i",numPower1Left];
+        [power1Left setString:power1Num];
+        
+        power2Num = [[NSString alloc] initWithFormat:@"%i",numPower2Left];
+        [power2Left setString:power2Num];
+        
+        power3Num = [[NSString alloc] initWithFormat:@"%i",numPower3Left];
+        [power3Left setString:power3Num];
+        
+        sharedScore = [NSNumber numberWithInteger:playerScore];
+        //    [[NSUserDefaults standardUserDefaults] setObject:sharedScore forKey:@"sharedScore"];
+        [MGWU setObject:sharedScore forKey:@"sharedScore"];
+//    }
     if (warning == true) {
         warningLabel.visible = true;
         //        [warningLabel runAction:[CCFadeIn actionWithDuration:0.5]];
@@ -1751,14 +1753,6 @@
     }
 }
 
--(void) updateLabelPositions
-{
-    /* if (score.length == 1) {
-     scoreLabel.position = ccp(15, scoreLabel.position.y);
-     } else {
-     scoreLabel.position = ccp((score.length * 10), scoreLabel.position.y);
-     } */
-}
 
 -(void) updateEffectPositions
 {
@@ -1984,7 +1978,7 @@
     
     if (playerScore > 20) {
         
-        initDelayInFrames = 80;
+        initDelayInFrames = 80; //deviceFPS * 1.33333f; //80;
         shipSpeed = 6.0f;
         numSpritesPerArray = 2;
         
@@ -2006,7 +2000,7 @@
     
     if (playerScore > 200) {
         
-        initDelayInFrames = 70;
+        initDelayInFrames = 70; //deviceFPS * 1.16666667f; //70; // if the FPS is 60 the commented out numbers would make sense
         numSpritesPerArray = 6;
         shipSpeed = 5.0f;
         
@@ -2014,7 +2008,7 @@
     
     if (playerScore > 400) {
         
-        initDelayInFrames = 60;
+        initDelayInFrames = 60; //deviceFPS; //60;
         numSpritesPerArray = 6;
         shipSpeed = 4.5f;
         
@@ -2022,57 +2016,57 @@
     
     if (playerScore > 800) {
         
-        initDelayInFrames = 55;
+        initDelayInFrames = 55; //deviceFPS * 0.91666667f; //55;
         numSpritesPerArray = 7;
         shipSpeed = 4.3f;
         
     }
     
     if (playerScore > 1000) {
-        initDelayInFrames = 40;
+        initDelayInFrames = 40; //deviceFPS * 0.66666667f; //40;
         //        numSpritesPerArray = 8;
     }
     
     if (playerScore > 1300) {
-        initDelayInFrames = 40;
+        initDelayInFrames = 40; //deviceFPS * 0.66666667f; // 40;
         numSpritesPerArray = 8;
     }
     
     if (playerScore > 2000)
     {
-        initDelayInFrames = 40;
+        initDelayInFrames = 40; //deviceFPS * 0.66666667f; //40;
         numSpritesPerArray = 10;
     }
     
     if (playerScore > 2500)
     {
-        initDelayInFrames = 40;
+        initDelayInFrames = 40; //deviceFPS * 0.66666667f; //40;
         numSpritesPerArray = 11;
     }
     
     if (playerScore > 3000)
     {
-        initDelayInFrames = 35;
+        initDelayInFrames = 35; //deviceFPS * 0.58333333f; //35;
         numSpritesPerArray = 12;
     }
    
     if (playerScore > 4000) // if the user makes it this far, definitely make it harder, making it this far is pretty impressive.
     {
-        initDelayInFrames = 35;
+        initDelayInFrames = 35; //deviceFPS * 0.58333333f; //35;
         numSpritesPerArray = 13;
 //        shipSpeed = 4.0f;
     }
     
     if (playerScore > 5000)
     {
-        initDelayInFrames = 35;
+        initDelayInFrames = 35; //deviceFPS * 0.58333333f; //35;
         numSpritesPerArray = 15;
 //        shipSpeed = 3.7f;
     }
     
     if (playerScore > 6000)
     {
-        initDelayInFrames = 32;
+        initDelayInFrames = 32; //deviceFPS * 0.53333333f; //32;
         numSpritesPerArray = 13;
         shipSpeed = 4.1f;
     }
@@ -2385,7 +2379,9 @@
 
 
 -(void)update:(ccTime)dt // update method
-{   
+{
+    deviceFPS = 1/dt;
+
     collisionDidHappen = false;
     
     if (updateMoveCounter == true) {
@@ -2406,8 +2402,7 @@
     [self circleCollisionWith:section3Ships];
     [self handleUserInput]; // handle the player's touch and rotation
     [self divideAngularSections]; // divide the angle borders to differentiate between colors
-    [self updateScore]; // update the labels for player data
-    [self updateLabelPositions];
+//    [self updateScore]; // update the labels for player data
     [self updateEffectPositions];
     [self initChallenges]; // start challenges to throw at the player
 }

@@ -391,6 +391,8 @@
         
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
+        
+        
         [self scheduleUpdate]; // schedule the framely update
         
         [self startTutorial]; // start the tutorial (if needed)
@@ -440,7 +442,6 @@
 {
     [self flashLabel:@"Use the powerups at the bottom \n for help in tough situations." actionWithDuration:5.0f color:@"black"];
 }
-
 
 -(void) killGrass
 {

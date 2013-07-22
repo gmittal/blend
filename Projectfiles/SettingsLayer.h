@@ -12,5 +12,7 @@
 @interface SettingsLayer : CCScene
 {
     CGSize screenSize;
+    UIAlertView *alert;
+    UIAlertView *FBalert;
 }
 @end

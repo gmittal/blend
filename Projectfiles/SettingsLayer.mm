@@ -73,6 +73,14 @@
         goHomeMenu.position = ccp(screenSize.width/2, 40);
         [self addChild:goHomeMenu];
         
+        CCMenuItemImage *fbLogin = [CCMenuItemImage itemWithNormalImage:@"fblogin.png" selectedImage:@"fbloginSel.png" target:self selector:@selector(loginWithFacebook)];
+        CCMenu *facebookLogin = [CCMenu menuWithItems:fbLogin, nil];
+        [facebookLogin alignItemsVertically];
+        facebookLogin.position = ccp(screenCenter.x, screenCenter.y - 100);
+        [self addChild:facebookLogin z:1000];
+        
+        
+        
         CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
         background.position = screenCenter;
         [self addChild:background z:-100];
@@ -87,6 +95,27 @@
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
 }
+
+-(void) loginWithFacebook
+{
+    if ([MGWU isFacebookActive] == false) {
+        [MGWU loginToFacebook];
+    } else {
+        [self openFBPrompt];
+    }
+}
+
+- (void)openFBPrompt
+{
+    FBalert = [[UIAlertView alloc] init];
+    [FBalert setTitle:@"Logged into Facebook"];
+    [FBalert setMessage:@"You are already logged into Facebook!"];
+    [FBalert setDelegate:self];
+    [FBalert addButtonWithTitle:@"OK"];
+    [FBalert show];
+    //    [alert removeFromSuperview];
+}
+
 
 -(void) selfDestruct
 {
@@ -107,7 +136,7 @@
 
 - (void)resetGameData
 {
-    UIAlertView *alert = [[UIAlertView alloc] init];
+    alert = [[UIAlertView alloc] init];
     [alert setTitle:@"Reset Game Data"];
     [alert setMessage:@"Are you sure you would like to reset all of the game data? This action cannot be reversed."];
     [alert setDelegate:self];
@@ -119,13 +148,22 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
-    {
-        [self selfDestruct];
+    if (alertView == (UIAlertView *)alert) {
+        if (buttonIndex == 0)
+        {
+            [self selfDestruct];
+        }
+        else if (buttonIndex == 1)
+        {
+            [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+        }
     }
-    else if (buttonIndex == 1)
-    {
-        [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+    
+    if (alertView == (UIAlertView *)FBalert) {
+        if (buttonIndex == 0)
+        {
+//            [self selfDestruct];
+        }
     }
 }
 

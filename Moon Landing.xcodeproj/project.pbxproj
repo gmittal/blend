@@ -88,6 +88,10 @@
 		C7EC4A2617849B74007A2DCA /* healthbarBorder-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7EC4A2217849B74007A2DCA /* healthbarBorder-hd.png */; };
 		C7EC4A2717849B74007A2DCA /* healthbarFill-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7EC4A2317849B74007A2DCA /* healthbarFill-hd.png */; };
 		C7EC4A2817849B74007A2DCA /* healthbarFill.png in Resources */ = {isa = PBXBuildFile; fileRef = C7EC4A2417849B74007A2DCA /* healthbarFill.png */; };
+		C7F1081B179DAA6100B29A90 /* fbloginSel-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F10817179DAA6100B29A90 /* fbloginSel-hd.png */; };
+		C7F1081C179DAA6100B29A90 /* fbloginSel.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F10818179DAA6100B29A90 /* fbloginSel.png */; };
+		C7F1081D179DAA6100B29A90 /* fblogin.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F10819179DAA6100B29A90 /* fblogin.png */; };
+		C7F1081E179DAA6100B29A90 /* fblogin-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7F1081A179DAA6100B29A90 /* fblogin-hd.png */; };
 		C7F1D722177E1AAB000FEE67 /* LeaderBoardPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F1D721177E1AAB000FEE67 /* LeaderBoardPlayer.m */; };
 		C7F1D725177E495F000FEE67 /* StoreLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7F1D724177E495F000FEE67 /* StoreLayer.mm */; };
 		C7FC27F5177CBD04000B5D59 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7FC27F4177CBD04000B5D59 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -285,6 +289,10 @@
 		C7EC4A2217849B74007A2DCA /* healthbarBorder-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "healthbarBorder-hd.png"; sourceTree = "<group>"; };
 		C7EC4A2317849B74007A2DCA /* healthbarFill-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "healthbarFill-hd.png"; sourceTree = "<group>"; };
 		C7EC4A2417849B74007A2DCA /* healthbarFill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = healthbarFill.png; sourceTree = "<group>"; };
+		C7F10817179DAA6100B29A90 /* fbloginSel-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fbloginSel-hd.png"; sourceTree = "<group>"; };
+		C7F10818179DAA6100B29A90 /* fbloginSel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fbloginSel.png; sourceTree = "<group>"; };
+		C7F10819179DAA6100B29A90 /* fblogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fblogin.png; sourceTree = "<group>"; };
+		C7F1081A179DAA6100B29A90 /* fblogin-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fblogin-hd.png"; sourceTree = "<group>"; };
 		C7F1D720177E1AAA000FEE67 /* LeaderBoardPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderBoardPlayer.h; sourceTree = "<group>"; };
 		C7F1D721177E1AAB000FEE67 /* LeaderBoardPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderBoardPlayer.m; sourceTree = "<group>"; };
 		C7F1D723177E495F000FEE67 /* StoreLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreLayer.h; sourceTree = "<group>"; };
@@ -652,6 +660,10 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C7F10817179DAA6100B29A90 /* fbloginSel-hd.png */,
+				C7F10818179DAA6100B29A90 /* fbloginSel.png */,
+				C7F10819179DAA6100B29A90 /* fblogin.png */,
+				C7F1081A179DAA6100B29A90 /* fblogin-hd.png */,
 				C7848B4F1799ECA800DFCEB2 /* Logo.png */,
 				C7848B501799ECA800DFCEB2 /* Logo@2x.png */,
 				C7848B3F1799DB1B00DFCEB2 /* facebookHighscoreButton-hd.png */,
@@ -967,6 +979,10 @@
 				C7848B4E1799DB1B00DFCEB2 /* globalHighscoreButtonSel.png in Resources */,
 				C7848B511799ECA800DFCEB2 /* Logo.png in Resources */,
 				C7848B521799ECA800DFCEB2 /* Logo@2x.png in Resources */,
+				C7F1081B179DAA6100B29A90 /* fbloginSel-hd.png in Resources */,
+				C7F1081C179DAA6100B29A90 /* fbloginSel.png in Resources */,
+				C7F1081D179DAA6100B29A90 /* fblogin.png in Resources */,
+				C7F1081E179DAA6100B29A90 /* fblogin-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

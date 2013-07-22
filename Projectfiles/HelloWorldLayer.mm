@@ -1302,6 +1302,8 @@
 
 -(void) shipPauseAllActions
 {
+    [self unschedule:@selector(initializeTheShipArray:)]; // be careful with this! was just implemented
+    
     for (int shipPauseIndex = 0; shipPauseIndex < [section1Ships count]; shipPauseIndex++)
     {
         [[section1Ships objectAtIndex:shipPauseIndex] pauseSchedulerAndActions];
@@ -1315,6 +1317,8 @@
 
 -(void) shipResumeAllActions
 {
+    [self schedule:@selector(initializeTheShipArray:)];
+    
     for (int shipResumeIndex = 0; shipResumeIndex < [section1Ships count]; shipResumeIndex++)
     {
         [[section1Ships objectAtIndex:shipResumeIndex] resumeSchedulerAndActions];

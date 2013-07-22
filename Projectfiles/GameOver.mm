@@ -139,7 +139,7 @@ int endingHighScore;
         [nameField removeFromSuperview];
         // here is where you should do something with the data they entered
         NSString *result = nameField.text;
-        
+        NSLog(result);
 //        username = result;
         [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"username"];
         [MGWU submitHighScore:endingHighScore byPlayer:result forLeaderboard:@"defaultLeaderboard"];

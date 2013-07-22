@@ -141,7 +141,7 @@ CGSize screenSize;
     
     userInfo = [scores objectForKey:@"user"];
     playerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    if (playerName == nil) {
+    if (!playerName) {
         playerName = @"Player";
     }
     
@@ -221,49 +221,56 @@ CGSize screenSize;
 }
 
 
+
 -(void) getFacebook
 {
-    otherPlayers = [scoreDict objectForKey:@"friends"];
-    count = [otherPlayers count];
-    
-    for (int i = 0; i < count; i ++)
-    {
-        NSMutableDictionary *playerDict = [otherPlayers objectAtIndex:i];
-        NSNumber * score = [playerDict objectForKey:@"score"];
-        NSString *name = [playerDict objectForKey:@"username"];
-        if (!name) {
-            name = @"player";
+    if ([MGWU isFacebookActive] == true) {
+        
+        otherPlayers = [scoreDict objectForKey:@"friends"];
+        count = [otherPlayers count];
+        
+        for (int i = 0; i < count; i ++)
+        {
+            NSMutableDictionary *playerDict = [otherPlayers objectAtIndex:i];
+            NSNumber * score = [playerDict objectForKey:@"score"];
+            NSString *name = [playerDict objectForKey:@"username"];
+            if (!name) {
+                name = @"player";
+            }
+            //        NSNumber *rank = [playerDict objectForKey:@"rank"];
+            NSNumber *rank = [NSNumber numberWithInt:i + 1];
+            
+            LeaderBoardPlayer *p = [[LeaderBoardPlayer alloc] init];
+            p.name = name;
+            p.score = score;
+            p.rank = rank;
+            
+            if (name.length > 16) { // add ellipsis
+                name = [[name substringToIndex:17] stringByAppendingString:@"..."];
+            }
+            
+            label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                       fontName:@"Roboto-Light"
+                                       fontSize:16];
+            
+            scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+            
+            
+            label.anchorPoint = ccp(0.0f,0.5f);
+            label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
+            label.color = ccc3(0, 0, 0);
+            [self addChild:label z: 2 tag:i];
+            
+            scoreLabel.anchorPoint = ccp(1.0f,0.5f);
+            scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
+            scoreLabel.color = ccc3(0, 0, 0);
+            [self addChild:scoreLabel z: 2 tag:i + 10000];
+            
+            [allPlayers addObject:p];
         }
-        //        NSNumber *rank = [playerDict objectForKey:@"rank"];
-        NSNumber *rank = [NSNumber numberWithInt:i + 1];
-        
-        LeaderBoardPlayer *p = [[LeaderBoardPlayer alloc] init];
-        p.name = name;
-        p.score = score;
-        p.rank = rank;
-        
-        if (name.length > 16) { // add ellipsis
-            name = [[name substringToIndex:17] stringByAppendingString:@"..."];
-        }
-        
-        label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
-                                   fontName:@"Roboto-Light"
-                                   fontSize:16];
-        
-        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
-        
-        
-        label.anchorPoint = ccp(0.0f,0.5f);
-        label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
-        label.color = ccc3(0, 0, 0);
-        [self addChild:label z: 2 tag:i];
-        
-        scoreLabel.anchorPoint = ccp(1.0f,0.5f);
-        scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
-        scoreLabel.color = ccc3(0, 0, 0);
-        [self addChild:scoreLabel z: 2 tag:i + 10000];
-        
-        [allPlayers addObject:p];
+    } else {
+        [self loginToFB];
+//        [self getScores];
     }
 }
 
@@ -391,5 +398,31 @@ CGSize screenSize;
     }
     
 }
+
+- (void)loginToFB
+{
+    UIAlertView *alert = [[UIAlertView alloc] init];
+    [alert setTitle:@"Login to Facebook"];
+    [alert setMessage:@"You must be logged into Facebook for this leaderboard to be displayed. Log into Facebook?"];
+    [alert setDelegate:self];
+    [alert addButtonWithTitle:@"Login"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert show];
+    //    [alert removeFromSuperview];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        [MGWU loginToFacebook];
+//        [self selfDestruct];
+    }
+    else if (buttonIndex == 1)
+    {
+//        [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+    }
+}
+
 
 @end

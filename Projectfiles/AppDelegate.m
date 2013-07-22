@@ -22,6 +22,11 @@
     
     [MGWU loadMGWU:@"natcrvZe5ytd9slSi2juce99D7Km0qeWI8OGvUgIWlKihnOvpOk6MXZY1cXy7VkduwchOwBgWshqj5VNBCZ2i3ARAOK1IgQkn7SP"];
 //    [MGWU preFacebook]; //Temporarily disables Facebook until you integrate it later
+    
+    //In Kobold+iOS 5 the call to initializationComplete occurs after applicationDidBecomeActive
+	//This causes a problem in the mgwuSDK, so here is dirty hack to fix it
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] < 6.0)
+		[[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 -(id) alternateView

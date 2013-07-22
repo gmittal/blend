@@ -70,6 +70,11 @@
         background.position = screenCenter;
         [self addChild:background z:-100];
         
+        if ([MGWU isOpenGraphActive] == false) // toggle open graph on app startup
+        {
+            [MGWU toggleOpenGraph];
+        }
+        
     }
     return self;
 }

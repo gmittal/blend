@@ -14,48 +14,6 @@
  - HAVE A SHAPE ASSOCIATED WITH EACH COLOR AND IF THE SHAPE AND COLOR OF THE SHIP MATCHES THE SECTOR, THEN GRANT EXTRA POINTS
  */
 
-/* SHAPES ASSOSCIATED WITH COLORS
- - RED = SQUARE
- - BLUE = HEXAGON
- - YELLOW = TRIANGLE
- */
-
-/*
- POWERUP IDEAS:
- - ENERGY SHEILD (IMPLEMENTED, POWERUP1)
- - PAUSE POWER (IMPLEMENTED, POWERUP2)
- - DESTROY SHIP POWER (IMPLEMENTED, POWERUP3)
- 
- (4) E - SLOW MOTION POWER
- (3) I - WORLD SPlITS INTO 2 COLORS FOR A CERTAIN AMOUNT OF TIME
- - COLORS BECOME INVERSE (RED GOES TO BLUE, BLUE TO YELLOW, YELLOW TO RED)
- (2) E - SUICIDE POWERUP (BLOW EVERYTHING UP)
- - ATMOSPHERE POWERUP (certain section can be broken by each ship collision, but the rest of the section will remain intact)
- - MORE SECTIONS POWERUP (creates more colored sections on the middle wheel)
- (3) A - UNLEASH MONSTER POWERUP (releases monster that shoots ships, redirecting to a minigame where you shoot ships)
- (3) I - STORE POWER (buy anything midway through a game, but with limited time)
- (2) E - MUSIC MODE (play music to increase focus and coordination)
- (1) I - NEGATIVE COLOR MODE (inverts the colors on screen)
- (3) I - GOLF MODE (try and get the most ships into the wrong sectors as possible)
- (3) E - POINT BOOST (any ship that collides with the player will grant some extra number of points)
- (2) I - RED SHIP BOOST (only creates red ships for some amount of time)
- (2) I - BLUE SHIP BOOST (only creates blue ships for some amount of time)
- (2) I - YELLOW SHIP BOOST (only creates yellow ships for some amount of time)
- (2) E - LIVES BOOST (gain lives every time a ship correctly lands into a sector)
- (2) E - CHANGE THE DEATH OF THE PLANET (change the death of the planet randomly, will it explode? will it melt? will it burn?)
- (3) E - ZOMBIE PLANET (right before death, activate powerup to ressurect the planet and give you an additional life)
- (1) A - KATAMARI PLANET (enable this powerup to allow any ship that collides with the planet to add on to the ships mass for a certain amount of time)
- - INVERSE STEERING (does what its name claims)
- (1) E/I - BOUNCE OFF POWERUP (all ships that collide with the planet bounce off)
- */
-
-/*
- PROJECTILE IDEAS:
- - MAGENTA SHIP (IMPLEMENTED, SHIP1)
- - BLUE SHIP (IMPLEMENTED, SHIP2)
- - YELLOW SHIP (IMPLEMENTED, SHIP3)
- - BAG OF COINS: GIVES USER 10 COINS IF PLACED IN CORRECT SECTOR
- */
 
 
 
@@ -2427,8 +2385,7 @@
 
 
 -(void)update:(ccTime)dt // update method
-{
-    
+{   
     collisionDidHappen = false;
     
     if (updateMoveCounter == true) {

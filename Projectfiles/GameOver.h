@@ -14,5 +14,7 @@
 @interface GameOver : CCScene
 {
     UITextField *nameField;
+    int endingScore;
+    int endingHighScore;
 }
 @end

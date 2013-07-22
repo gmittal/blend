@@ -79,8 +79,6 @@
         facebookLogin.position = ccp(screenCenter.x, screenCenter.y - 100);
         [self addChild:facebookLogin z:1000];
         
-        
-        
         CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
         background.position = screenCenter;
         [self addChild:background z:-100];

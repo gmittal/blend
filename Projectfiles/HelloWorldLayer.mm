@@ -2046,7 +2046,7 @@
     
     if (playerScore > 3000)
     {
-        initDelayInFrames = 35; //deviceFPS * 0.58333333f; //35;
+        initDelayInFrames = 40; //35; //deviceFPS * 0.58333333f; //35;
         numSpritesPerArray = 12;
     }
    

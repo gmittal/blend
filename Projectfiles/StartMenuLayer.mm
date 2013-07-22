@@ -20,7 +20,11 @@
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"THE ELEMENTS" fontName:@"NexaBold" fontSize:36];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 140);
-        [self addChild:gameTitle];
+//        [self addChild:gameTitle];
+        
+        CCSprite *titleSprite = [CCSprite spriteWithFile:@"title_logo.png"];
+        titleSprite.position = ccp(screenCenter.x, screenCenter.y + 140);
+        [self addChild:titleSprite z:1000];
         
         
         CCMenuItemImage *settings = [CCMenuItemImage itemWithNormalImage:@"settings_gear.png" selectedImage:@"settings_gear.png" target:self selector:@selector(goToSettings)];
@@ -63,7 +67,7 @@
         
         CCMenu *startMenu = [CCMenu menuWithItems:playNow, statsNow, upgrades, store, about, crosspromo, nil];
         [startMenu alignItemsVertically];
-        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 10);
+        startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 30);
         [self addChild:startMenu];
         
         CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];

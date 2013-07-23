@@ -59,7 +59,7 @@
         
         
         for (int i = 0; i <= 11; i ++)
-            
+        
         {
             
             [explodingFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%d.png", i]]];
@@ -74,7 +74,6 @@
         
         explode = [CCRepeat actionWithAction:[CCAnimate actionWithAnimation:explosion] times:1];
         
-        //tell the bear to run the taunting action
         
         player = [[CCSprite alloc] init];
         player = [CCSprite spriteWithFile:@"border.png"];
@@ -1132,6 +1131,7 @@
 {
     playerScore = playerScore + (scoreAdd * pointMultiplier);
     [self increaseMultiplier];
+    [self updateScore];
 }
 
 -(void) removeInfiniteArraySprite:(id) sender
@@ -1169,6 +1169,7 @@
         numPower1Left-=1;
         numTimesP1Used-=1;
         [self runAction:powerUp1Seq];
+        [self updateScore];
         }
     } else {
         // do nothing
@@ -1200,6 +1201,7 @@
         numPower2Left -= 1;
         numTimesP2Used-=1;
         [self runAction:powerUp2Seq];
+        [self updateScore];
         }
     } else {
         // do nothing
@@ -1239,6 +1241,8 @@
         
         numPower3Left -= 1;
         numTimesP3Used -= 1;
+            
+        [self updateScore];
         }
         //        [self initShips];
         

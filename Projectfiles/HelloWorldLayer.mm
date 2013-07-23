@@ -78,13 +78,16 @@
         player = [[CCSprite alloc] init];
         player = [CCSprite spriteWithFile:@"border.png"];
         player.position = ccp(size.width/2, size.height/2);
+        player.scale = 0.85f;
         playerWidth = [player boundingBox].size.width; // get player width
         [self addChild:player z:20];
         //        [player runAction:explode];
         
         
         section1 = [CCSprite spriteWithFile:@"element1.png"];
+        section1.scale = 0.85f;
         progressBar1 = [CCProgressTimer progressWithSprite:section1];
+//        progressBar1.scale = 0.8f;
         progressBar1.type = kCCProgressTimerTypeRadial;
         [player addChild:progressBar1 z:21];
         progressBar1.position = ccp(size.width/2 - 65, size.height/2 - 145);
@@ -92,7 +95,9 @@
         progressTo1 = [CCProgressTo actionWithDuration:1 percent:33.333f];
         
         section2 = [CCSprite spriteWithFile:@"element2.png"];
+        section2.scale = 0.85f;
         progressBar2 = [CCProgressTimer progressWithSprite:section2];
+//        progressBar2.scale = 0.8f;
         progressBar2.type = kCCProgressTimerTypeRadial;
         [player addChild:progressBar2 z:21];
         progressBar2.position = ccp(size.width/2 - 65, size.height/2 - 145);
@@ -101,7 +106,9 @@
         progressTo2 = [CCProgressTo actionWithDuration:1 percent:33.333f];
         
         section3 = [CCSprite spriteWithFile:@"element3.png"];
+        section3.scale = 0.85f;
         progressBar3 = [CCProgressTimer progressWithSprite:section3];
+//        progressBar3.scale = 0.8f;
         progressBar3.type = kCCProgressTimerTypeRadial;
         [player addChild:progressBar3 z:21];
         progressBar3.position = ccp(size.width/2 - 65, size.height/2 - 145);

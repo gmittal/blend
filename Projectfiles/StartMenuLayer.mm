@@ -23,8 +23,13 @@
 //        [self addChild:gameTitle];
         
         CCSprite *titleSprite = [CCSprite spriteWithFile:@"title_logo.png"];
-        titleSprite.position = ccp(screenCenter.x, screenCenter.y + 140);
+        titleSprite.position = ccp(screenCenter.x, screenSize.height + 100);
         [self addChild:titleSprite z:1000];
+        
+        id dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 140)];
+        id jump = [CCJumpBy actionWithDuration:0.75f position:CGPointZero height:15 jumps:3];
+        id repeatJump = [CCRepeat actionWithAction:jump times:1];
+        [titleSprite runAction:[CCSequence actions:dropdown, repeatJump, nil]];
         
         
         CCMenuItemImage *settings = [CCMenuItemImage itemWithNormalImage:@"settings_gear.png" selectedImage:@"settings_gear.png" target:self selector:@selector(goToSettings)];

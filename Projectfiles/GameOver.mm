@@ -187,17 +187,25 @@
     NSString *messageToShare = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of The Elements! @makegameswithus", endingScore];
     if ([MGWU isTwitterActive] == true) {
         [MGWU postToTwitter:messageToShare];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] init];
+        [alert setTitle:@"Twitter Sign-in"];
+        [alert setMessage:@"You must be logged into Twitter in order to use this feature."];
+        [alert setDelegate:self];
+        [alert addButtonWithTitle:@"OK"];
+        [alert show];
     }
 }
 
 -(void) shareFB
 {
+    NSString *caption = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     NSString *messageToPost = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of The Elements! #makegameswithus", endingScore];
     if ([MGWU isFacebookActive] == true) {
-        [MGWU shareWithTitle:@"The Elements" caption:@"New Score!" andDescription:messageToPost];
+        [MGWU shareWithTitle:@"The Elements" caption:caption andDescription:messageToPost];
     } else {
         [MGWU loginToFacebook];
-        [MGWU shareWithTitle:@"The Elements" caption:@"New Score!" andDescription:messageToPost];
+        [MGWU shareWithTitle:@"The Elements" caption:caption andDescription:messageToPost];
     }
 }
 

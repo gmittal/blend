@@ -1119,6 +1119,7 @@
 					"$(KKFRAMEWORKS_IOS)",
 					"$(inherited)",
 				);
+				PRODUCT_NAME = "Moon Landing-iOS";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E975645-99EC-4714-B166-063EED5B5BDE";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1140,6 +1141,7 @@
 					"$(KKFRAMEWORKS_IOS)",
 					"$(inherited)",
 				);
+				PRODUCT_NAME = "Moon Landing-iOS";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E975645-99EC-4714-B166-063EED5B5BDE";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1150,6 +1152,7 @@
 			baseConfigurationReference = DC9C33E713B5024400931BF2 /* BuildSettings-Debug-Mac.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_NAME = "Moon Landing-Mac";
 			};
 			name = Debug;
 		};
@@ -1158,6 +1161,7 @@
 			baseConfigurationReference = DC9C33E913B5024400931BF2 /* BuildSettings-Release-Mac.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_NAME = "Moon Landing-Mac";
 			};
 			name = Release;
 		};

@@ -217,6 +217,9 @@
     bool waterBeingKilled;
     
     float deviceFPS; // variable that stores the device frames/second
+    
+    CCSprite *rotateArrow;
+    CCSprite *powerupArrow;
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

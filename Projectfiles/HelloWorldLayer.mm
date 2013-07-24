@@ -353,6 +353,19 @@
 //        [progressBar2 addChild:dryWater z:1001];
 //        dryWater.visible = false;
         
+        rotateArrow = [CCSprite spriteWithFile:@"rotate.png"];
+        rotateArrow.position = ccp(player.position.x, player.position.y + 5);
+        [self addChild:rotateArrow z:1000];
+        rotateArrow.visible = false;
+        [self setDimensionsInPixelsOnSprite:rotateArrow width:270 height:320];
+        
+        powerupArrow = [CCSprite spriteWithFile:@"powerupTutorial.png"];
+        powerupArrow.position = ccp(screenCenter.x, 80);
+        [self addChild:powerupArrow z:1000];
+        powerupArrow.visible = false;
+//        [self setDimensionsInPixelsOnSprite:rotateArrow width:-270 height:-320];
+        
+        
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
         
@@ -383,7 +396,8 @@
         id part1 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial1)];
         id part2 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial2)];
         id part3 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial3)];
-        CCSequence *tutorialSeq = [CCSequence actions:part1, delay, part2, delay, part3, delay, nil];
+        id cleanupTutorial = [CCCallFunc actionWithTarget:self selector:@selector(hideAllTutorialSprites)];
+        CCSequence *tutorialSeq = [CCSequence actions:part1, delay, part2, delay, part3, delay, cleanupTutorial, delay, nil];
         [self runAction:tutorialSeq];
         
         [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
@@ -394,17 +408,26 @@
 
 -(void) tutorial1
 {
-    [self flashLabel:@"Rotate the circle by \n moving your finger in a circle." actionWithDuration:5.0f color:@"black"];
+    [self flashLabel:@"Move the circle with your \n finger." actionWithDuration:5.0f color:@"black"];
+    rotateArrow.visible = true;
 }
 
 -(void) tutorial2
 {
-    [self flashLabel:@"Match the incoming projectiles \n into the correctly colored sectors." actionWithDuration:5.0f color:@"black"];
+    rotateArrow.visible = false;
+    [self flashLabel:@"Match the colored sections \n with the projectiles." actionWithDuration:5.0f color:@"black"];
 }
 
 -(void) tutorial3
 {
-    [self flashLabel:@"Use the powerups at the bottom \n for help in tough situations." actionWithDuration:5.0f color:@"black"];
+    [self flashLabel:@"Use the powerups at the bottom" actionWithDuration:5.0f color:@"black"];
+    powerupArrow.visible = true;
+}
+
+-(void) hideAllTutorialSprites
+{
+    powerupArrow.visible = false;
+    rotateArrow.visible = false;
 }
 
 -(void) killGrass

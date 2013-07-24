@@ -20,7 +20,7 @@
 	CCLOG(@"ARC is either not available or not enabled");
 #endif
     
-    [MGWU loadMGWU:@"natcrvZe5ytd9slSi2juce99D7Km0qeWI8OGvUgIWlKihnOvpOk6MXZY1cXy7VkduwchOwBgWshqj5VNBCZ2i3ARAOK1IgQkn7SP"];
+    [MGWU loadMGWU:@""];
 //    [MGWU preFacebook]; //Temporarily disables Facebook until you integrate it later
     
     //In Kobold+iOS 5 the call to initializationComplete occurs after applicationDidBecomeActive

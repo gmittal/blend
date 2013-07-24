@@ -140,7 +140,7 @@ CGSize screenSize;
     facebookInfo = [scores objectForKey:@"friends"];
     
     userInfo = [scores objectForKey:@"user"];
-    playerName = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    playerName = [userInfo objectForKey:@"name"];
     if (!playerName) {
         playerName = @"Player";
     }
@@ -152,11 +152,16 @@ CGSize screenSize;
     playerHighScore = [userInfo objectForKey:@"score"];
     playerRank = [userInfo objectForKey:@"rank"];
     
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+    [numberFormatter setGroupingSeparator:@","];
+    NSString* commaPlayerScore = [numberFormatter stringForObjectValue:playerHighScore];
+    
     userStatus = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]
                                     fontName:@"Roboto-Light"
                                     fontSize:16];
     
-    userscoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", playerHighScore] fontName:@"NexaBold" fontSize:16];
+    userscoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
     
     userStatus.anchorPoint = ccp(0.0f,0.5f);
     userStatus.position = ccp(screenSize.width/2 - 130, screenSize.height - 125);
@@ -191,12 +196,18 @@ CGSize screenSize;
             name = [[name substringToIndex:17] stringByAppendingString:@"..."];
         }
         
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* commaScore = [numberFormatter stringForObjectValue:score];
+        
+        
         label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
                                    fontName:@"Roboto-Light"
                                    fontSize:16];
         
-        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
-        
+//        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+        scoreLabel = [CCLabelTTF labelWithString:commaScore fontName:@"NexaBold" fontSize:16];
         
         label.anchorPoint = ccp(0.0f,0.5f);
         label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
@@ -249,11 +260,16 @@ CGSize screenSize;
                 name = [[name substringToIndex:17] stringByAppendingString:@"..."];
             }
             
+            NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+            [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+            [numberFormatter setGroupingSeparator:@","];
+            NSString* commaPlayerScore = [numberFormatter stringForObjectValue:score];
+            
             label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
                                        fontName:@"Roboto-Light"
                                        fontSize:16];
             
-            scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+            scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
             
             
             label.anchorPoint = ccp(0.0f,0.5f);
@@ -287,6 +303,7 @@ CGSize screenSize;
         if (!name) {
             name = @"player";
         }
+        
         //        NSNumber *rank = [playerDict objectForKey:@"rank"];
         NSNumber *rank = [NSNumber numberWithInt:i + 1];
         
@@ -299,11 +316,16 @@ CGSize screenSize;
             name = [[name substringToIndex:17] stringByAppendingString:@"..."];
         }
         
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* commaPlayerScore = [numberFormatter stringForObjectValue:score];
+        
         label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
                                    fontName:@"Roboto-Light"
                                    fontSize:16];
         
-        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+        scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
         
         
         label.anchorPoint = ccp(0.0f,0.5f);
@@ -365,8 +387,13 @@ CGSize screenSize;
             playerName = [[playerName substringToIndex:13] stringByAppendingString:@"..."];
         }
         
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* commaPlayerScore = [numberFormatter stringForObjectValue:playerHighScore];
+        
         [userStatus setString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]];
-        [userscoreLabel setString:[NSString stringWithFormat:@"%@", playerHighScore]];
+        [userscoreLabel setString:commaPlayerScore];
         
         [self getFacebook];
         
@@ -386,12 +413,17 @@ CGSize screenSize;
         playerRank = [userInfo objectForKey:@"rank"];
         playerName = [userInfo objectForKey:@"name"];
         
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* commaPlayerScore = [numberFormatter stringForObjectValue:playerHighScore];
+        
         if (playerName.length > 12) {
             playerName = [[playerName substringToIndex:13] stringByAppendingString:@"..."];
         }
         
         [userStatus setString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]];
-        [userscoreLabel setString:[NSString stringWithFormat:@"%@", playerHighScore]];
+        [userscoreLabel setString:commaPlayerScore];
         
         [self getGlobal];
         

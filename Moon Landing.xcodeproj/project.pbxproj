@@ -1112,13 +1112,14 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/mgwuSDK.embeddedframework\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				New_Setting = "";
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
 					"$(KKFRAMEWORKS_IOS)",
 					"$(inherited)",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D28190B7-6545-48A2-8865-E904F718F8D1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E975645-99EC-4714-B166-063EED5B5BDE";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1132,13 +1133,14 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/mgwuSDK.embeddedframework\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				New_Setting = "";
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
 					"$(KKFRAMEWORKS_IOS)",
 					"$(inherited)",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D28190B7-6545-48A2-8865-E904F718F8D1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E975645-99EC-4714-B166-063EED5B5BDE";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

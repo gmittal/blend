@@ -2027,7 +2027,7 @@
     
     if (playerScore > 800) {
         
-        initDelayInFrames = 55; //deviceFPS * 0.91666667f; //55;
+        initDelayInFrames = 50; //deviceFPS * 0.91666667f; //55;
         numSpritesPerArray = 7;
         shipSpeed = 4.3f;
         

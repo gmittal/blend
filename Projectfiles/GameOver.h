@@ -10,6 +10,7 @@
 #import "GameOver.h"
 #import "HelloWorldLayer.h"
 #import "StartMenuLayer.h"
+#import "StatLayer.h"
 
 @interface GameOver : CCScene
 {

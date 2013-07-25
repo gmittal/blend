@@ -354,16 +354,16 @@
 //        dryWater.visible = false;
         
         rotateArrow = [CCSprite spriteWithFile:@"rotate.png"];
-        rotateArrow.position = ccp(player.position.x, player.position.y + 5);
+        rotateArrow.position = ccp(player.position.x + 20, player.position.y);
         [self addChild:rotateArrow z:1000];
         rotateArrow.visible = false;
-        [self setDimensionsInPixelsOnSprite:rotateArrow width:270 height:320];
+//        [self setDimensionsInPixelsOnSprite:rotateArrow width:270 height:320];
         
         powerupArrow = [CCSprite spriteWithFile:@"powerupTutorial.png"];
         powerupArrow.position = ccp(screenCenter.x, 80);
         [self addChild:powerupArrow z:1000];
         powerupArrow.visible = false;
-//        [self setDimensionsInPixelsOnSprite:rotateArrow width:-270 height:-320];
+        [self setDimensionsInPixelsOnSprite:rotateArrow width:300 height:300];
         
         
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
@@ -1224,6 +1224,7 @@
 {
     if (numPower2Left > 0) {
         if (numTimesP2Used > 0) {
+        [self flashLabel:@"PROJECTILES PAUSED" actionWithDuration:1.5f color:@"red"];
         id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
         id delayShip = [CCDelayTime actionWithDuration:1.5f];
         id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];

@@ -59,16 +59,31 @@
 //        CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
 //        [gameOver runAction:repeatJump];
         
-        CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Resume" target:self selector:@selector(unPause)];
-        CCMenuItemFont *restart = [CCMenuItemFont itemFromString: @"Restart" target:self selector:@selector(restartGame)];
-        CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
-        [playAgain setFontName:@"Roboto-Light"];
-        [restart setFontName:@"Roboto-Light"];
-        [quit setFontName:@"Roboto-Light"];
+        CCLabelTTF *playAgainLabel = [CCLabelTTF labelWithString:@"Play Again" fontName:@"NexaBold" fontSize:22];
+        playAgainLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 30);
+        [self addChild:playAgainLabel z:7];
+        
+        CCLabelTTF *restartLabel = [CCLabelTTF labelWithString:@"Restart" fontName:@"NexaBold" fontSize:22];
+        restartLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 80);
+        [self addChild:restartLabel z:7];
+        
+        CCLabelTTF *quitLabel = [CCLabelTTF labelWithString:@"Quit" fontName:@"NexaBold" fontSize:22];
+        quitLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 130);
+        [self addChild:quitLabel z:7];
+        
+        
+        CCMenuItemImage *playAgain = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(unPause)];
+        playAgain.scale = 1.5f;
+        CCMenuItemImage *restart = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(restartGame)];
+        restart.scale = 1.5f;
+        CCMenuItemImage *quit = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(quitGame)];
+        quit.scale = 1.5f;
+//        [playAgain setFontName:@"Roboto-Light"];
+//        [restart setFontName:@"Roboto-Light"];
+//        [quit setFontName:@"Roboto-Light"];
         CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, restart, quit, nil];
         [gameOverMenu alignItemsVertically];
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 80);
-        gameOverMenu.color = ccc3(0, 0, 0);
         [self addChild:gameOverMenu];
         
         CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];

@@ -51,10 +51,14 @@ CGSize screenSize;
         
         [self getScores];
         
-        CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
-        [goBackToHome setFontName:@"Roboto-Light"];
-        [goBackToHome setFontSize:25];
-        goBackToHome.color = ccc3(0, 0, 0);
+        CCLabelTTF *goBackLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"NexaBold" fontSize:22];
+        goBackLabel.position = ccp(screenSize.width/2, 40);
+        [self addChild:goBackLabel z:7];
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(goHome)];
+        goBackToHome.scale = 1.5f;
+//        [goBackToHome setFontName:@"Roboto-Light"];
+//        [goBackToHome setFontSize:25];
+//        goBackToHome.color = ccc3(0, 0, 0);
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
@@ -89,7 +93,7 @@ CGSize screenSize;
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[GameOver node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
 

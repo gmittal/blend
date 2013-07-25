@@ -39,10 +39,15 @@ CCLabelBMFont *coinsLabel;
         [self addChild:coinsLabel];
         
         
-        CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
-        [goBackToHome setFontName:@"Roboto-Light"];
-        [goBackToHome setFontSize:25];
-        goBackToHome.color = ccc3(0, 0, 0);
+        CCLabelTTF *goBackToHomeLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"NexaBold" fontSize:22];
+//        [goBackToHome setFontName:@"Roboto-Light"];
+//        [goBackToHome setFontSize:25];
+//        goBackToHome.color = ccc3(0, 0, 0);
+        goBackToHomeLabel.position = ccp(screenSize.width/2, 40);
+        [self addChild:goBackToHomeLabel z:7];
+        
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(goHome)];
+        goBackToHome.scale = 1.5f;
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
@@ -199,7 +204,7 @@ CCLabelBMFont *coinsLabel;
 -(void) goHome
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
 }
 
 

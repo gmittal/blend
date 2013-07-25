@@ -63,10 +63,14 @@
         [self addChild:resetLabel];
         
         
-        CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
-        [goBackToHome setFontName:@"Roboto-Light"];
-        [goBackToHome setFontSize:25];
-        goBackToHome.color = ccc3(0, 0, 0);
+        CCLabelTTF *goBackToHomeLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"NexaBold" fontSize:22];
+        goBackToHomeLabel.position = ccp(screenSize.width/2, 40);
+        [self addChild:goBackToHomeLabel z:7];
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(goHome)];
+        goBackToHome.scale = 1.5f;
+//        [goBackToHome setFontName:@"Roboto-Light"];
+//        [goBackToHome setFontSize:25];
+//        goBackToHome.color = ccc3(0, 0, 0);
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
         [goHomeMenu alignItemsVertically];

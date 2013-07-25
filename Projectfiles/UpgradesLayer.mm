@@ -8,6 +8,7 @@
 
 #import "UpgradesLayer.h"
 #import "StartMenuLayer.h"
+#import "StoreLayer.h"
 
 @implementation UpgradesLayer
 
@@ -20,16 +21,23 @@
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:36];
         gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
+//        gameTitle.anchorPoint = ccp(0.0f,0.5f);
+        gameTitle.position = ccp(screenSize.width/2, screenSize.height - 60);
         [self addChild:gameTitle];
+        
+        
+        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin.png"];
+        coinIcon.position = ccp(15, screenSize.height - 20);
+        [self addChild:coinIcon z:1000];
         
         NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         coins = [CoinNumber intValue];
-        CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
-        coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"Roboto-Light" fontSize:20];
-        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 70);
+        CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
+        coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:18];
+        coinsLabel.position = ccp(coinIcon.position.x + 17, screenSize.height - 22);
         coinsLabel.color = ccc3(0, 0, 0);
+        coinsLabel.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:coinsLabel];
         
         
@@ -55,15 +63,25 @@
         [self addChild:p3Label];
         
         
+        CCLabelTTF *buyCashLabel = [CCLabelTTF labelWithString:@"Buy Cash" fontName:@"NexaBold" fontSize:20];
+        buyCashLabel.position = ccp(screenCenter.x, 85);
+        [self addChild:buyCashLabel z:7];
         
-        CCMenuItemFont *goBackToHome = [CCMenuItemFont itemFromString: @"Back to Menu" target:self selector:@selector(goHome)];
-        [goBackToHome setFontName:@"Roboto-Light"];
-        [goBackToHome setFontSize:25];
-        goBackToHome.color = ccc3(0, 0, 0);
+        CCMenuItemImage *buyMoreCash = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyMoreCash)];
+        buyMoreCash.scale = 1.5f;
+//        [buyMoreCash setFontName:@"Roboto-Light"];
+//        [buyMoreCash setFontSize:25];
+//        buyMoreCash.color = ccc3(0, 0, 0);
         
-        CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"playNowButton.png" selectedImage:@"playNowButtonSel.png" target:self selector:@selector(playAgain)];
+        goBackToHome.scale = 1.5f;
+//        [goBackToHome setFontName:@"Roboto-Light"];
+//        [goBackToHome setFontSize:25];
+//        goBackToHome.color = ccc3(0, 0, 0);
+        
+        CCMenu *goHomeMenu = [CCMenu menuWithItems:buyMoreCash, goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
-        goHomeMenu.position = ccp(screenSize.width/2, 40);
+        goHomeMenu.position = ccp(screenSize.width/2, 60);
         [self addChild:goHomeMenu];
         
         
@@ -165,16 +183,22 @@
 
 
 
--(void) goHome
+-(void) playAgain
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+}
+
+-(void) buyMoreCash
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StoreLayer node]]];
 }
 
 
 -(void) update:(ccTime)delta
 {
-    CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
+    CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
     [coinsLabel setString:CoinString];
     
     p1String = [[NSString alloc] initWithFormat:@"%i", numPower1];

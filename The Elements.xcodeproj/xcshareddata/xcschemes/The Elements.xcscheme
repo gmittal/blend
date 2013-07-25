@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-               BuildableName = "Moon Landing-iOS.app"
+               BuildableName = "The Elements-iOS.app"
                BlueprintName = "The Elements-iOS"
                ReferencedContainer = "container:The Elements.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "Moon Landing-iOS.app"
+            BuildableName = "The Elements-iOS.app"
             BlueprintName = "The Elements-iOS"
             ReferencedContainer = "container:The Elements.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "Moon Landing-iOS.app"
+            BuildableName = "The Elements-iOS.app"
             BlueprintName = "The Elements-iOS"
             ReferencedContainer = "container:The Elements.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "Moon Landing-iOS.app"
+            BuildableName = "The Elements-iOS.app"
             BlueprintName = "The Elements-iOS"
             ReferencedContainer = "container:The Elements.xcodeproj">
          </BuildableReference>

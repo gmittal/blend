@@ -9,6 +9,7 @@
 #import "CCScene.h"
 #import "StartMenuLayer.h"
 #import "LeaderBoardPlayer.h"
+#import "GameOver.h"
 
 @interface StatLayer : CCScene
 {

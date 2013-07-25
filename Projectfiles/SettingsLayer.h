@@ -15,4 +15,6 @@
     UIAlertView *alert;
     UIAlertView *FBalert;
 }
+
+-(void) goHome;
 @end

@@ -31,7 +31,7 @@
         CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
         CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"NexaBold" fontSize:40];
-        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 150);
+        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 130);
         [self addChild:gameOver z:100 tag:100];
         
         // game over label runs 3 different actions at the same time to create the combined effect
@@ -69,10 +69,11 @@
         
         NSNumber *endingScoreNumber = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         endingScore = [endingScoreNumber intValue];
-        NSString *endScoreString = [[NSString alloc] initWithFormat:@"Final Score: %i", endingScore];
-        CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"Roboto-Light" fontSize:20];
-        endScore.position = ccp(screenSize.width/2, 100);
-        endScore.color = ccc3(0, 0, 0);
+        NSString *endScoreString = [[NSString alloc] initWithFormat:@"WITH A SCORE OF %i", endingScore];
+        CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"NexaBold" fontSize:20];
+        endScore.position = ccp(gameOver.position.x - [gameOver boundingBox].size.width/2, gameOver.position.y - 24);
+        endScore.color = ccc3(255, 255, 255);
+        endScore.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:endScore];
         
         NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
@@ -82,15 +83,21 @@
         CCLabelBMFont *endHighScore = [CCLabelTTF labelWithString:endHighScoreString fontName:@"Roboto-Light" fontSize:20];
         endHighScore.position = ccp(screenSize.width/2, 60);
         endHighScore.color = ccc3(0, 0, 0);
-        [self addChild:endHighScore];
+//        [self addChild:endHighScore];
+        
+        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin.png"];
+        coinIcon.position = ccp(20, screenSize.height - 20);
+        coinIcon.scale = 1.25f;
+        [self addChild:coinIcon z:1000];
         
         NSNumber *endingCoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         int endingCoins = [endingCoinNumber intValue];
-        NSString *endCoinString = [[NSString alloc] initWithFormat:@"Coins: %i", endingCoins];
-        CCLabelBMFont *endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"Roboto-Light" fontSize:20];
-        endCoins.position = ccp(screenSize.width/2, 20);
+        NSString *endCoinString = [[NSString alloc] initWithFormat:@"%i", endingCoins];
+        CCLabelBMFont *endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"NexaBold" fontSize:22];
+        endCoins.position = ccp(coinIcon.position.x + 18, screenSize.height - 22);
         endCoins.color = ccc3(0, 0, 0);
+        endCoins.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:endCoins];
         
         
@@ -106,26 +113,40 @@
         
         
         
+        CCLabelTTF *playAgainLabel = [CCLabelTTF labelWithString:@"Play Again" fontName:@"NexaBold" fontSize:22];
+        CCLabelTTF *leaderLabel = [CCLabelTTF labelWithString:@"Leaderboards" fontName:@"NexaBold" fontSize:22];
+        CCLabelTTF *upgradesLabel = [CCLabelTTF labelWithString:@"Upgrades" fontName:@"NexaBold" fontSize:22];
         
-        CCMenuItemFont *playAgain = [CCMenuItemFont itemFromString: @"Play Again" target:self selector:@selector(playAgain)];
-        CCMenuItemFont *quit = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(quitGame)];
-        playAgain.color = ccc3(0, 0, 0);
-        quit.color = ccc3(0, 0, 0);
-        //        [quit setColor:ccc3(0, 0, 0)];
-        [playAgain setFontName:@"Roboto-Light"];
-        [quit setFontName:@"Roboto-Light"];
-        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, quit, nil];
+        playAgainLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 10);
+        leaderLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
+        upgradesLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 110);
+
+        [self addChild:playAgainLabel z:7];
+        [self addChild:leaderLabel z:7];
+        [self addChild:upgradesLabel z:7];
+        
+        CCMenuItemImage *playAgain = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(playAgain)];
+        playAgain.scaleY = 1.5f;
+        playAgain.scaleX = 1.8f;
+        CCMenuItemImage *leaderboards = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(statsGame)];
+        leaderboards.scaleY = 1.5f;
+        leaderboards.scaleX = 1.8f;
+        CCMenuItemImage *upgrades = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(gameUpgrades)];
+        upgrades.scaleY = 1.5f;
+        upgrades.scaleX = 1.8f;
+
+        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, leaderboards, upgrades, nil];
         [gameOverMenu alignItemsVertically];
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
-        gameOverMenu.color = ccc3(0, 0, 0);
         [self addChild:gameOverMenu];
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"newHighScore"] == true) {
             [self showNewHighScoreAlert];
+            [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"];
         }
         
         
-        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 220, 250, 25)];
+        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 25)];
         [[[CCDirector sharedDirector] view] addSubview:nameField];
         nameField.delegate = self;
         nameField.placeholder = @"Tap to Enter Username";
@@ -170,6 +191,14 @@
 	}
 }
 
+-(void) gameUpgrades
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
+    //Hide keyboard when "done" clicked
+    //  [textField resignFirstResponder];
+    [nameField removeFromSuperview];
+}
 
 -(void) showNewHighScoreAlert
 {
@@ -199,7 +228,7 @@
 
 -(void) shareFB
 {
-    NSString *caption = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    NSString *caption = @"Try and beat this awesome score!";
     NSString *messageToPost = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of The Elements! #makegameswithus", endingScore];
     if ([MGWU isFacebookActive] == true) {
         [MGWU shareWithTitle:@"The Elements" caption:caption andDescription:messageToPost];
@@ -210,10 +239,10 @@
 }
 
 
--(void) quitGame
+-(void) statsGame
 {
     [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[StatLayer node]]];
     //Hide keyboard when "done" clicked
     //  [textField resignFirstResponder];
     [nameField removeFromSuperview];

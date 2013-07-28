@@ -21,7 +21,7 @@
 #endif
     
     
-    [MGWU loadMGWU:@"L6h3Mz8zY6JQhzPi0mVvDe1XM7ci6uecoLhtTXnV4HK2TsshxumGCxIHXgd6ZZnDYbPJDt1NnndoUTZhjzotRhm38lz4vsYF81G7"];
+    [MGWU loadMGWU:@"natcrvZe5ytd9slSi2juce99D7Km0qeWI8OGvUgIWlKihnOvpOk6MXZY1cXy7VkduwchOwBgWshqj5VNBCZ2i3ARAOK1IgQkn7SP"];
 //    [MGWU preFacebook]; //Temporarily disables Facebook until you integrate it later
     
     //In Kobold+iOS 5 the call to initializationComplete occurs after applicationDidBecomeActive

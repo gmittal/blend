@@ -26,15 +26,21 @@ CCLabelBMFont *coinsLabel;
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"NexaBold" fontSize:36];
         gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
+        gameTitle.position = ccp(screenCenter.x, screenSize.height-60);
         [self addChild:gameTitle];
 
+        
+        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin.png"];
+        coinIcon.position = ccp(15, screenSize.height - 20);
+        [self addChild:coinIcon z:1000];
+        
         NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
         coins = [CoinNumber intValue];
-        CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
-        coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"Roboto-Light" fontSize:20];
-        coinsLabel.position = ccp(screenSize.width/2, screenSize.height - 70);
+        CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
+        coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:18];
+        coinsLabel.position = ccp(coinIcon.position.x + 17, screenSize.height - 22);
+        coinsLabel.anchorPoint = ccp(0.0f,0.5f);
         coinsLabel.color = ccc3(0, 0, 0);
         [self addChild:coinsLabel];
         
@@ -210,7 +216,7 @@ CCLabelBMFont *coinsLabel;
 
 -(void) update:(ccTime)delta
 {
-    CoinString = [[NSString alloc] initWithFormat:@"Coins: %i", coins];
+    CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
     [coinsLabel setString:CoinString];
 }
 

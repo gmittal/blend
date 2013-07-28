@@ -69,7 +69,7 @@
         
         NSNumber *endingScoreNumber = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         endingScore = [endingScoreNumber intValue];
-        NSString *endScoreString = [[NSString alloc] initWithFormat:@"WITH A SCORE OF %i", endingScore];
+        NSString *endScoreString = [[NSString alloc] initWithFormat:@"SCORE %i", endingScore];
         CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"NexaBold" fontSize:20];
         endScore.position = ccp(gameOver.position.x - [gameOver boundingBox].size.width/2, gameOver.position.y - 24);
         endScore.color = ccc3(255, 255, 255);
@@ -146,18 +146,32 @@
         }
         
         
-        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 25)];
+//        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 25)];
+//        [[[CCDirector sharedDirector] view] addSubview:nameField];
+//        nameField.delegate = self;
+//        nameField.placeholder = @"Tap to Enter Username";
+//        nameField.borderStyle = UITextBorderStyleRoundedRect;
+//        [nameField setReturnKeyType:UIReturnKeyDone];
+//        [nameField setAutocorrectionType:UITextAutocorrectionTypeNo];
+//        [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+        
+        // text field that uses an image as background (aka "skinning")
+        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 30)];
         [[[CCDirector sharedDirector] view] addSubview:nameField];
+//        textFieldSkinned.text = @"  With background image";
         nameField.delegate = self;
         nameField.placeholder = @"Tap to Enter Username";
-        nameField.borderStyle = UITextBorderStyleRoundedRect;
+        // load and assign the UIImage as background of the text field
+        NSString* imageFile = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"flatText.png"];
+//        CCLOG(@"imageFile with path = %@", imageFile);
+        UIImage* image = [[UIImage alloc] initWithContentsOfFile:imageFile];
+        nameField.background = image;
+        [nameField setFont:[UIFont systemFontOfSize:22]];
+        [nameField setTextAlignment:UITextAlignmentCenter];
         [nameField setReturnKeyType:UIReturnKeyDone];
         [nameField setAutocorrectionType:UITextAutocorrectionTypeNo];
         [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-        //        textField.visible = true;
-        //        [glView addSubview:textField];
-        //        [self addChild:textField];
-        
+    
     }
     return self;
 }

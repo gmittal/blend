@@ -43,21 +43,21 @@
         
         numPower1 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"];
         p1String = [[NSString alloc] initWithFormat:@"%i", numPower1];
-        p1Label = [CCLabelTTF labelWithString:p1String fontName:@"Roboto-Light" fontSize:20];
-        p1Label.position = ccp(screenSize.width/2 - 100, screenCenter.y + 70);
+        p1Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:20];
+        p1Label.position = ccp(screenSize.width/2 - 100, screenCenter.y + 67);
         p1Label.color = ccc3(0, 0, 0);
         [self addChild:p1Label];
         
         numPower2 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"];
         p2String = [[NSString alloc] initWithFormat:@"%i", numPower2];
-        p2Label = [CCLabelTTF labelWithString:p2String fontName:@"Roboto-Light" fontSize:20];
+        p2Label = [CCLabelTTF labelWithString:p2String fontName:@"NexaBold" fontSize:20];
         p2Label.position = ccp(screenSize.width/2 - 100, screenCenter.y);
         p2Label.color = ccc3(0, 0, 0);
         [self addChild:p2Label];
         
         numPower3 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"];
         p3String = [[NSString alloc] initWithFormat:@"%i", numPower3];
-        p3Label = [CCLabelTTF labelWithString:p3String fontName:@"Roboto-Light" fontSize:20];
+        p3Label = [CCLabelTTF labelWithString:p3String fontName:@"NexaBold" fontSize:20];
         p3Label.position = ccp(screenSize.width/2 - 100, screenCenter.y - 70);
         p3Label.color = ccc3(0, 0, 0);
         [self addChild:p3Label];
@@ -85,6 +85,24 @@
         [self addChild:goHomeMenu];
         
         
+        CCMenuItemImage *BuyC1 = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyCash1)];
+        BuyC1.scaleX = 2.0f;
+        BuyC1.scaleY = 1.9f;
+        
+        CCMenuItemImage *BuyC2 = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyCash2)];
+        BuyC2.scaleX = 2.0f;
+        BuyC2.scaleY = 1.9f;
+        
+        
+        CCMenuItemFont *BuyC3 = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyCash3)];
+        BuyC3.scaleX = 2.0f;
+        BuyC3.scaleY = 1.9f;
+        
+        CCMenu *bgcashStoreMenu = [CCMenu menuWithItems:BuyC1, BuyC2, BuyC3, nil];
+        [bgcashStoreMenu alignItemsVerticallyWithPadding:10.f];
+        bgcashStoreMenu.position = ccp(screenSize.width/2 + 20, screenSize.height/2);
+        [self addChild:bgcashStoreMenu z:-1];
+        
         CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"shield.png" selectedImage:@"shield.png" target:self selector:@selector(buyCash1)];
         BuyCash1Label.scale = 0.5f;
         
@@ -95,19 +113,19 @@
         CCMenuItemFont *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"shock.png" selectedImage:@"shock.png" target:self selector:@selector(buyCash3)];
         BuyCash3Label.scale = 0.5f;
         
-        CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"1000 Coins" fontName:@"Roboto-Light" fontSize:18];
-        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 70);
-        price1.color = ccc3(0, 0, 0);
+        CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"1000 COINS" fontName:@"NexaBold" fontSize:18];
+        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 67);
+        price1.color = ccc3(255, 255, 255);
         [self addChild:price1];
         
-        CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"500 Coins" fontName:@"Roboto-Light" fontSize:18];
+        CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"500 COINS" fontName:@"NexaBold" fontSize:18];
         price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2);
-        price2.color = ccc3(0, 0, 0);
+        price2.color = ccc3(255, 255, 255);
         [self addChild:price2];
         
-        CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"800 Coins" fontName:@"Roboto-Light" fontSize:18];
+        CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"800 COINS" fontName:@"NexaBold" fontSize:18];
         price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 70);
-        price3.color = ccc3(0, 0, 0);
+        price3.color = ccc3(255, 255, 255);
         [self addChild:price3];
         
         CCMenu *cashStoreMenu = [CCMenu menuWithItems:BuyCash1Label, BuyCash2Label, BuyCash3Label, nil];

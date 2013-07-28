@@ -59,7 +59,7 @@
 //        CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
 //        [gameOver runAction:repeatJump];
         
-        CCLabelTTF *playAgainLabel = [CCLabelTTF labelWithString:@"Play Again" fontName:@"NexaBold" fontSize:22];
+        CCLabelTTF *playAgainLabel = [CCLabelTTF labelWithString:@"Resume" fontName:@"NexaBold" fontSize:22];
         playAgainLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 30);
         [self addChild:playAgainLabel z:7];
         
@@ -102,7 +102,7 @@
 
 -(void) restartGame
 {
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInL transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionFadeTR transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
 }
 
 -(void) unPause

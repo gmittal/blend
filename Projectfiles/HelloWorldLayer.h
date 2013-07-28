@@ -220,6 +220,18 @@
     
     CCSprite *rotateArrow;
     CCSprite *powerupArrow;
+    
+    int multiplierDecrease;
+    
+    bool p1Enabled;
+    bool p2Enabled;
+    
+    NSMutableArray *spiralEffectPositions;
+    
+    bool createSpiralEffectWithCoords;
+    int numLivesForSpiral;
+    
+    bool explodedAlready;
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

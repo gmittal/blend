@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-               BuildableName = "The Elements-iOS.app"
-               BlueprintName = "The Elements-iOS"
-               ReferencedContainer = "container:The Elements.xcodeproj">
+               BuildableName = "Juicemania-iOS.app"
+               BlueprintName = "Juicemania-iOS"
+               ReferencedContainer = "container:Juicemania.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "The Elements-iOS.app"
-            BlueprintName = "The Elements-iOS"
-            ReferencedContainer = "container:The Elements.xcodeproj">
+            BuildableName = "Juicemania-iOS.app"
+            BlueprintName = "Juicemania-iOS"
+            ReferencedContainer = "container:Juicemania.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

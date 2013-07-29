@@ -179,6 +179,10 @@ CGSize screenSize;
     otherPlayers = [scoreDict objectForKey:@"all"];
     int count = [otherPlayers count];
     
+    if (count > 15) {
+        count = 15;
+    }
+    
     for (int i = 0; i < count; i ++)
     {
         //        otherPlayers = [scoreDict objectForKey:@"friends"];
@@ -244,6 +248,10 @@ CGSize screenSize;
         otherPlayers = [scoreDict objectForKey:@"friends"];
         count = [otherPlayers count];
         
+        if (count > 15) {
+            count = 15;
+        }
+        
         for (int i = 0; i < count; i ++)
         {
             NSMutableDictionary *playerDict = [otherPlayers objectAtIndex:i];
@@ -298,6 +306,10 @@ CGSize screenSize;
 {
     otherPlayers = [scoreDict objectForKey:@"all"];
     count = [otherPlayers count];
+    
+    if (count > 15) {
+        count = 15;
+    }
     
     for (int i = 0; i < count; i ++)
     {

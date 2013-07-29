@@ -2217,28 +2217,28 @@
         
         if (framesPassed > 300) {
 //            shipSpeed = 3.0f;
-            spiralIncrement = 67;
+            spiralIncrement = 77;
 //            initDelayInFrames = 35;
 //            numSpritesPerArray = 7;
         }
         
         if (framesPassed > 600) {
             shipSpeed = 2.5f;
-            spiralIncrement = 87;
+            spiralIncrement = 107;
 //            initDelayInFrames = 30 ;
 //            numSpritesPerArray = 10;
         }
         
         if (framesPassed > 900) {
             shipSpeed = 2.5f;
-            spiralIncrement = 107;
+            spiralIncrement = 137;
 //            initDelayInFrames = 35;
 //            numSpritesPerArray = 13;
         }
         
         if (framesPassed > 1200) {
 //            shipSpeed = 2.0f;
-            spiralIncrement = 127;
+            spiralIncrement = 167;
 //            initDelayInFrames = 30;
 //            numSpritesPerArray = 17;
         }
@@ -2246,14 +2246,14 @@
         if (framesPassed > 1500) {
             shipSpeed = 2.0f;
             initDelayInFrames = 20;
-            spiralIncrement = 147;
+            spiralIncrement = 197;
 //            initDelayInFrames = 25;
 //            numSpritesPerArray = 22;
         }
         
         if (framesPassed > 1800) {
             shipSpeed = 2.0f;
-            spiralIncrement = 167;
+            spiralIncrement = 227;
 //            initDelayInFrames = 25;
 //            numSpritesPerArray = 27;
         }
@@ -2261,7 +2261,7 @@
         if (framesPassed > 2100) {
             shipSpeed = 2.0f;
             initDelayInFrames = 10;
-            spiralIncrement = 187;
+            spiralIncrement = 257;
 //            numSpritesPerArray = 35;
         }
     }

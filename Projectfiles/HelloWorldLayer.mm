@@ -698,6 +698,7 @@
             }
             
             if (pointMultiplier <= 0) {
+                pointMultiplier = 0;
                 [tempSprite stopAction:shipMove];
                 id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
                 id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
@@ -1753,7 +1754,7 @@
      //    previousShipColor = color; */
     if (createSpiralEffectWithCoords == true) {
         shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
-        randGeneratedAngle += 47;
+        randGeneratedAngle += spiralIncrement;
     } else {
         randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
         shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
@@ -2209,52 +2210,59 @@
     } else {
         
         if (framesPassed < 300) {
-            shipSpeed = 3.0f;
+            shipSpeed = 2.5f;
             initDelayInFrames = 25;
-            numSpritesPerArray = 6;
+            numSpritesPerArray = 100;
         }
         
         if (framesPassed > 300) {
-            shipSpeed = 3.0f;
+//            shipSpeed = 3.0f;
+            spiralIncrement = 67;
 //            initDelayInFrames = 35;
-            numSpritesPerArray = 7;
+//            numSpritesPerArray = 7;
         }
         
         if (framesPassed > 600) {
             shipSpeed = 2.5f;
-//            initDelayInFrames = 30;
-            numSpritesPerArray = 10;
+            spiralIncrement = 87;
+//            initDelayInFrames = 30 ;
+//            numSpritesPerArray = 10;
         }
         
         if (framesPassed > 900) {
             shipSpeed = 2.5f;
+            spiralIncrement = 107;
 //            initDelayInFrames = 35;
-            numSpritesPerArray = 13;
+//            numSpritesPerArray = 13;
         }
         
         if (framesPassed > 1200) {
-            shipSpeed = 2.0f;
+//            shipSpeed = 2.0f;
+            spiralIncrement = 127;
 //            initDelayInFrames = 30;
-            numSpritesPerArray = 17;
+//            numSpritesPerArray = 17;
         }
         
         if (framesPassed > 1500) {
             shipSpeed = 2.0f;
             initDelayInFrames = 20;
+            spiralIncrement = 147;
 //            initDelayInFrames = 25;
-            numSpritesPerArray = 22;
+//            numSpritesPerArray = 22;
         }
         
         if (framesPassed > 1800) {
             shipSpeed = 2.0f;
+            spiralIncrement = 167;
 //            initDelayInFrames = 25;
-            numSpritesPerArray = 27;
+//            numSpritesPerArray = 27;
         }
         
         if (framesPassed > 2100) {
             shipSpeed = 2.0f;
             initDelayInFrames = 10;
-            numSpritesPerArray = 35;
+            spiralIncrement = 187;
+//            numSpritesPerArray = 35;
         }
     }
 }
@@ -2374,6 +2382,7 @@
 
 -(void) resetVariables
 {
+    spiralIncrement = 47;
     explodedAlready = false;
     numLivesForSpiral = 1;
     p1Enabled = false;

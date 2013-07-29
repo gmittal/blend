@@ -232,6 +232,8 @@
     int numLivesForSpiral;
     
     bool explodedAlready;
+    
+    int spiralIncrement;
 }
 
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;

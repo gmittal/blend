@@ -300,7 +300,7 @@
         infiniteBorderPowerUp1.scale = 0;
         infiniteBorderPowerUp1.position = screenCenter;
         
-        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:20];
+        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"NexaBold" fontSize:20];
         screenflashLabel.position = ccp(size.width/2, size.height - 85);
         screenflashLabel.color = ccc3(255,0,0);
         [self addChild:screenflashLabel z:110];
@@ -1793,7 +1793,7 @@
 -(void) enableSpiralEffect
 {
     createSpiralEffectWithCoords = true;
-    randGeneratedAngle = 20;
+    randGeneratedAngle = section1StartAngle + 60;
     numLivesForSpiral = 1;
     framesPassed = 0;
     
@@ -2222,33 +2222,34 @@
         if (framesPassed < 300) {
             shipSpeed = 2.5f;
             initDelayInFrames = 25;
-            numSpritesPerArray = 100;
+            numSpritesPerArray = 200;
         }
         
         if (framesPassed > 300) {
 //            shipSpeed = 3.0f;
-            spiralIncrement = 77;
+            spiralIncrement = 87;
 //            initDelayInFrames = 35;
 //            numSpritesPerArray = 7;
         }
         
         if (framesPassed > 600) {
             shipSpeed = 2.5f;
-            spiralIncrement = 107;
+            spiralIncrement = 127;
 //            initDelayInFrames = 30 ;
 //            numSpritesPerArray = 10;
         }
         
         if (framesPassed > 900) {
             shipSpeed = 2.5f;
-            spiralIncrement = 137;
+            spiralIncrement = 167;
+//            initDelayInFrames = 15;
 //            initDelayInFrames = 35;
 //            numSpritesPerArray = 13;
         }
         
         if (framesPassed > 1200) {
 //            shipSpeed = 2.0f;
-            spiralIncrement = 167;
+            spiralIncrement = 207;
 //            initDelayInFrames = 30;
 //            numSpritesPerArray = 17;
         }
@@ -2256,14 +2257,14 @@
         if (framesPassed > 1500) {
             shipSpeed = 2.0f;
             initDelayInFrames = 20;
-            spiralIncrement = 197;
+            spiralIncrement = 247;
 //            initDelayInFrames = 25;
 //            numSpritesPerArray = 22;
         }
         
         if (framesPassed > 1800) {
             shipSpeed = 2.0f;
-            spiralIncrement = 227;
+            spiralIncrement = 287;
 //            initDelayInFrames = 25;
 //            numSpritesPerArray = 27;
         }
@@ -2271,8 +2272,15 @@
         if (framesPassed > 2100) {
             shipSpeed = 2.0f;
             initDelayInFrames = 10;
-            spiralIncrement = 257;
+            spiralIncrement = 327;
 //            numSpritesPerArray = 35;
+        }
+        
+        if (framesPassed > 2400) {
+            shipSpeed = 1.5f;
+//            initDelayInFrames = 10;
+            spiralIncrement = 327;
+            //            numSpritesPerArray = 35;
         }
     }
 }
@@ -2340,7 +2348,6 @@
     if ([colorString isEqualToString:@"white"] == true) {
         screenflashLabel.color = ccc3(255,255,255);
     }
-
     
     [screenflashLabel setString:stringToFlashOnScreen];
     id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFlashLabelVisible)];

@@ -109,6 +109,13 @@
         background.position = screenCenter;
 //        [self addChild:background z:-100];
         
+        // iPhone 5 Optimizations
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136)
+        {
+            aboutLabel.position = ccp(aboutLabel.position.x, aboutLabel.position.y + 44);
+            promoLabel.position = ccp(promoLabel.position.x, promoLabel.position.y + 44);
+        }
+        
         if ([MGWU isOpenGraphActive] == false) // toggle open graph on app startup
         {
             [MGWU toggleOpenGraph];

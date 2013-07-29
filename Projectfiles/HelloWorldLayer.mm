@@ -30,7 +30,8 @@
 	if ((self = [super init]))
 	{
         // initialize game variables
-		glClearColor(0.0, 0.75, 1.0, 1.0); // default background color
+//		glClearColor(0.0, 0.75, 1.0, 1.0); // default background color
+        glClearColor(0.91, 0.92, 0.91, 1.0);
         director = [CCDirector sharedDirector];
         size = [[CCDirector sharedDirector] winSize];
         screenCenter = CGPointMake(size.width/2, size.height/2);
@@ -705,8 +706,9 @@
                 [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
                 //            [self removeChild:circle2 cleanup:YES];
                 [circle2 removeObjectAtIndex:i];
+                [self removeAllSpritesFromArray];
 
-//                [self gameOver];
+                
                 [self enableSpiralEffect];
                 [multiplierWrapper runAction:[CCFadeOut actionWithDuration:1.0f]];
                 [multiplierLabel runAction:[CCFadeOut actionWithDuration:1.0f]];
@@ -750,7 +752,15 @@
 }
 
 
-
+-(void) removeAllSpritesFromArray
+{
+    for (int object  = 0; object < [section1Ships count]; object++)
+    {
+        CCSprite *tmp = [section1Ships objectAtIndex:object];
+        [self removeChild:tmp cleanup:YES];
+        [section1Ships removeObjectAtIndex:object];
+    }
+}
 
 
 
@@ -1522,7 +1532,7 @@
     
     ship2.scale = 0.15f;
     //        topBottomVariable = (arc4random()%(2-1+1))+1;
-    [self createShipCoord:ship2 topBottomChoose:topBottomVariable];
+//    [self createShipCoord:ship2 topBottomChoose:topBottomVariable];
     [self addChild:ship2 z:50];
     
     // Also add the spider to the spiders array so it can be accessed more easily.
@@ -1575,7 +1585,7 @@
     }
     ship3.scale = 0.15f;
     
-    [self createShipCoord:ship3 topBottomChoose:topBottomVariable];
+//    [self createShipCoord:ship3 topBottomChoose:topBottomVariable];
     [self addChild:ship3 z:50];
     
     [section3Ships addObject:ship3];

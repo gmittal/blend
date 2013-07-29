@@ -14,7 +14,8 @@
 {
 	if ((self = [super init]))
 	{
-        glClearColor(0.0, 0.75, 1.0, 1.0);
+//        glClearColor(0.0, 0.75, 1.0, 1.0);
+        glClearColor(0.91, 0.92, 0.91, 1.0);
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"THE ELEMENTS" fontName:@"NexaBold" fontSize:36];
@@ -106,7 +107,7 @@
         
         CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
         background.position = screenCenter;
-        [self addChild:background z:-100];
+//        [self addChild:background z:-100];
         
         if ([MGWU isOpenGraphActive] == false) // toggle open graph on app startup
         {

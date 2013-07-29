@@ -236,9 +236,10 @@
     int spiralIncrement;
 }
 
++(id)scene;
 -(void) scoreCheck:(int) angle withSprite: (CCSprite *) spriteWithArray;
 -(void) circleCollisionWithSprite:(CCSprite *) circle1 andThis:(CCSprite *) circle2;
--(void) createShipCoord:(CCSprite *)shipForCoord topBottomChoose:(int) decidingVariable;
+-(void) createShipCoord:(CCSprite *)shipForCoord topBottomChoose:(int) decidingVariable withColor:(int) color;
 -(void) moveShip:(CCSprite *) shipToMove;
 -(void) initShips;
 -(void) handleUserInput;
@@ -264,9 +265,9 @@
 -(void) removeArraySprite:(id)sender;
 -(void) removeSprite:(id)sender;
 -(void) increaseMultiplier;
--(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith;
+-(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith withObject:(int) index;
 -(void) addInfiniteArrayPoints;
--(void) removeInfiniteArraySprite:(id)sender;
+-(void) removeInfiniteArraySprite:(id) sender;
 -(void) enablePowerUp1;
 -(void) enablePowerUp2;
 -(void) enablePowerUp3;
@@ -287,11 +288,44 @@
 -(void) updateLabelPositions;
 -(void) normalizeThisToStandards:(CGPoint) rot_pos1 andThis:(CGPoint) rot_pos2 withRotVariable:(float) rotationVar;
 -(void) initMenuItems;
--(void) flashLabel:(NSString *) stringToFlashOnScreen forTime:(float) numSecondsToFlash;
+-(void) flashLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash color:(NSString *) colorString;
 -(void) makeFlashLabelVisible;
 -(void) makeFlashLabelInvisible;
 -(void) goToGameOver;
 -(void) resetVariables;
 -(void) pauseGame;
+-(void) startTutorial;
+-(void) tutorial1;
+-(void) tutorial2;
+-(void) tutorial3;
+-(void) hideAllTutorialSprites;
+-(void) removeGrassEffect;
+-(void) removeFireEffect;
+-(void) removeWaterEffect;
+-(void) runDeathSeqOn:(NSString *) effectName;
+-(void) removeAllSpritesFromArray;
+-(void) penalizePlayer;
+-(void) enableShipMultiplierIncrease;
+-(void) disableShipMultiplierIncrease;
+-(void) delayShipMove;
+-(void) setToFalse;
+-(CGPoint) generatePointByAngle:(float) angle distance:(float) someDistance startPoint:(CGPoint) point;
+-(void) enableSpiralEffect;
+-(void) disableSpiralEffect;
+-(void) updateEffectPositions;
+-(void) flashWithRed:(int) red green:(int) green blue:(int) blue alpha:(int) alpha actionWithDuration:(float) duration;
+-(void) removeFlashColor;
+-(void) setDimensionsInPixelsOnSprite:(CCSprite *) spriteToSetDimensions width:(int) width height:(int) height;
+-(void) setDimensionsInPixelsGraduallyOnSprite:(CCSprite *) spriteToSetDimensions width:(int) width height:(int) height;
+-(void) updateCollisionCounter;
+-(void) updateMoveDelayCounter:(ccTime) dt;
+-(void) initializeTheShipArray:(ccTime) dt;
+
+
+
+
+
+
+
 
 @end

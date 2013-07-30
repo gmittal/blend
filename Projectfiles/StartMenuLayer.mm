@@ -24,10 +24,23 @@
 //        [self addChild:gameTitle];
         
         CCSprite *titleSprite = [CCSprite spriteWithFile:@"title_logo.png"];
-        titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);
+        
+        
+        id dropdown;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            titleSprite.scale = 2.0f;
+            titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);
+            dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 150)];
+        } else {
+            titleSprite.scale = 1.0f;
+            titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);
+            dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 110)];
+        }
+        
         [self addChild:titleSprite z:1000];
         
-        id dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 110)];
+        
+
         id jump = [CCJumpBy actionWithDuration:0.25f position:CGPointZero height:15 jumps:1];
         id repeatJump = [CCRepeat actionWithAction:jump times:1];
         [titleSprite runAction:[CCSequence actions:dropdown, repeatJump, nil]];
@@ -98,14 +111,35 @@
         id repeatMenuJump = [CCRepeat actionWithAction:menujump times:1];
         [startMenu runAction:[CCSequence actions:dropup, repeatMenuJump, nil]];
         
-        id dropup1 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 210)];
+        id dropup1;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            dropup1 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 480)];
+        } else {
+            dropup1 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 210)];
+        }
+        
         [aboutLabel runAction:dropup1];
         
-        id dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 160)];
+        id dropup2;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 430)];
+        } else {
+            dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 160)];
+        }
+        
         [promoLabel runAction:dropup2];
 
         
-        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        CCSprite *background;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
+            background = [CCSprite spriteWithFile:@"skybgipad.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            background = [CCSprite spriteWithFile:@"skybgipad-hd.png"];
+        } else {
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        }
+        
         background.position = screenCenter;
 //        [self addChild:background z:-100];
         

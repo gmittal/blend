@@ -83,7 +83,16 @@
         facebookLogin.position = ccp(screenCenter.x, screenCenter.y - 100);
         [self addChild:facebookLogin z:1000];
         
-        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        CCSprite *background;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
+            background = [CCSprite spriteWithFile:@"skybgipad.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            background = [CCSprite spriteWithFile:@"skybgipad-hd.png"];
+        } else {
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        }
+        
         background.position = screenCenter;
         [self addChild:background z:-100];
         

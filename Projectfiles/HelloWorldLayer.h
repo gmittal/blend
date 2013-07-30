@@ -234,6 +234,8 @@
     bool explodedAlready;
     
     int spiralIncrement;
+    
+    bool oniPad;
 }
 
 +(id)scene;

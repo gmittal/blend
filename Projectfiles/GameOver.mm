@@ -30,8 +30,17 @@
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"NexaBold" fontSize:40];
-        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 130);
+        CCLabelTTF* gameOver;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"NexaBold" fontSize:80];
+            gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 230);
+        
+        } else {
+            gameOver = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"NexaBold" fontSize:40];
+            gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height - 130);
+        }
+        
         [self addChild:gameOver z:100 tag:100];
         
         // game over label runs 3 different actions at the same time to create the combined effect
@@ -61,7 +70,16 @@
          [gameOver runAction:repeatJump]; */
         
         
-        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        CCSprite *background;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
+            background = [CCSprite spriteWithFile:@"skybgipad.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            background = [CCSprite spriteWithFile:@"skybgipad-hd.png"];
+        } else {
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        }
+        
         background.position = screenCenter;
         [self addChild:background z:-100];
         
@@ -70,8 +88,18 @@
         NSNumber *endingScoreNumber = [MGWU objectForKey:@"sharedScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedScore"];
         endingScore = [endingScoreNumber intValue];
         NSString *endScoreString = [[NSString alloc] initWithFormat:@"SCORE %i", endingScore];
-        CCLabelBMFont *endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"NexaBold" fontSize:20];
-        endScore.position = ccp(gameOver.position.x - [gameOver boundingBox].size.width/2, gameOver.position.y - 24);
+        
+        CCLabelBMFont *endScore;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"NexaBold" fontSize:30];
+            endScore.position = ccp(gameOver.position.x - [gameOver boundingBox].size.width/2, gameOver.position.y - 39);
+            
+        } else {
+            endScore = [CCLabelTTF labelWithString:endScoreString fontName:@"NexaBold" fontSize:20];
+            endScore.position = ccp(gameOver.position.x - [gameOver boundingBox].size.width/2, gameOver.position.y - 24);
+        }
+        
+
         endScore.color = ccc3(255, 255, 255);
         endScore.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:endScore];
@@ -156,7 +184,14 @@
 //        [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
         
         // text field that uses an image as background (aka "skinning")
-        nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 30)];
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            nameField = [[UITextField alloc] initWithFrame:CGRectMake(screenCenter.x - 125, screenCenter.y - 150, 250, 30)];
+            
+        } else {
+            nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 30)];
+        }
+        
         [[[CCDirector sharedDirector] view] addSubview:nameField];
 //        textFieldSkinned.text = @"  With background image";
         nameField.delegate = self;

@@ -19,9 +19,20 @@ CGSize screenSize;
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:36];
+        CCLabelBMFont *gameTitle;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:70];
+        } else {
+            gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:36];
+        }
         gameTitle.color = ccc3(0,0,0);
+        
         gameTitle.position = ccp(screenCenter.x, screenSize.height-30);
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+//            gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:70];
+            gameTitle.position = ccp(screenCenter.x, screenSize.height-40);
+        }
         [self addChild:gameTitle];
         
         
@@ -66,9 +77,20 @@ CGSize screenSize;
         [self addChild:goHomeMenu];
         
         
-        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        CCSprite *background;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
+            background = [CCSprite spriteWithFile:@"skybgipad.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            background = [CCSprite spriteWithFile:@"skybgipad-hd.png"];
+        } else {
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        }
+        
         background.position = screenCenter;
         [self addChild:background z:-100];
+        
+        
         
         CCMenuItemImage *facebookSel = [CCMenuItemImage itemWithNormalImage:@"facebookHighscoreButton.png" selectedImage:@"facebookHighscoreButtonSel.png" target:self selector:@selector(displayFacebookStats)];
         //        facebookSel.position = ccp(screenSize.width/2 + ([facebookSel boundingBox].size.width/2), screenSize.height - 85);
@@ -81,6 +103,11 @@ CGSize screenSize;
         CCMenu *boardChoice = [CCMenu menuWithItems:globalSel, facebookSel, nil];
         [boardChoice alignItemsHorizontallyWithPadding:0.0f];
         boardChoice.position = ccp(screenSize.width/2, screenSize.height - 85);
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            //            gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:70];
+            boardChoice.position = ccp(screenSize.width/2, screenSize.height - 100);
+        }
+        
         [self addChild:boardChoice];
         
         global1 = false;
@@ -161,6 +188,23 @@ CGSize screenSize;
     [numberFormatter setGroupingSeparator:@","];
     NSString* commaPlayerScore = [numberFormatter stringForObjectValue:playerHighScore];
     
+    if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+        //            gameTitle = [CCLabelTTF labelWithString:@"LEADERBOARDS" fontName:@"NexaBold" fontSize:70];
+        userStatus = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]
+                                        fontName:@"Roboto-Light"
+                                        fontSize:30];
+        
+        userscoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:30];
+        
+        userStatus.anchorPoint = ccp(0.0f,0.5f);
+        userStatus.position = ccp(screenSize.width/2 - 270, screenSize.height - 145);
+        [self addChild:userStatus z:2];
+        
+        userscoreLabel.anchorPoint = ccp(1.0f,0.5f);
+        userscoreLabel.position = ccp(screenSize.width/2 + 270, screenSize.height - 147);
+        [self addChild:userscoreLabel z:2];
+    } else {
+
     userStatus = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Rank: %@) %@", playerRank, playerName]
                                     fontName:@"Roboto-Light"
                                     fontSize:16];
@@ -174,7 +218,7 @@ CGSize screenSize;
     userscoreLabel.anchorPoint = ccp(1.0f,0.5f);
     userscoreLabel.position = ccp(screenSize.width/2 + 130, screenSize.height - 127);
     [self addChild:userscoreLabel z:2];
-    
+    }
     
     otherPlayers = [scoreDict objectForKey:@"all"];
     int count = [otherPlayers count];
@@ -210,12 +254,24 @@ CGSize screenSize;
         NSString* commaScore = [numberFormatter stringForObjectValue:score];
         
         
-        label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
-                                   fontName:@"Roboto-Light"
-                                   fontSize:16];
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                       fontName:@"Roboto-Light"
+                                       fontSize:26];
+            
+            //        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+            scoreLabel = [CCLabelTTF labelWithString:commaScore fontName:@"NexaBold" fontSize:26];
+        } else {
+            label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                       fontName:@"Roboto-Light"
+                                       fontSize:16];
+            
+            //        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+            scoreLabel = [CCLabelTTF labelWithString:commaScore fontName:@"NexaBold" fontSize:16];
+        }
+
         
-//        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
-        scoreLabel = [CCLabelTTF labelWithString:commaScore fontName:@"NexaBold" fontSize:16];
+        
         
         label.anchorPoint = ccp(0.0f,0.5f);
         label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
@@ -226,6 +282,11 @@ CGSize screenSize;
         scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
         scoreLabel.color = ccc3(0, 0, 0);
         [self addChild:scoreLabel z: 2 tag:i + 10000];
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            label.position = ccp(screenSize.width / 2 - 270, screenSize.height - 175 - i * 32);
+            scoreLabel.position = ccp(screenSize.width / 2 + 270, screenSize.height - 177 - i * 32);
+        }
         
         [allPlayers addObject:p];
     }
@@ -277,11 +338,21 @@ CGSize screenSize;
             [numberFormatter setGroupingSeparator:@","];
             NSString* commaPlayerScore = [numberFormatter stringForObjectValue:score];
             
-            label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
-                                       fontName:@"Roboto-Light"
-                                       fontSize:16];
-            
-            scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
+            if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+                label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                           fontName:@"Roboto-Light"
+                                           fontSize:26];
+                
+                //        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+                scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:26];
+            } else {
+                label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                           fontName:@"Roboto-Light"
+                                           fontSize:16];
+                
+                //        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+                scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
+            }
             
             
             label.anchorPoint = ccp(0.0f,0.5f);
@@ -293,6 +364,11 @@ CGSize screenSize;
             scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
             scoreLabel.color = ccc3(0, 0, 0);
             [self addChild:scoreLabel z: 2 tag:i + 10000];
+            
+            if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+                label.position = ccp(screenSize.width / 2 - 270, screenSize.height - 175 - i * 32);
+                scoreLabel.position = ccp(screenSize.width / 2 + 270, screenSize.height - 177 - i * 32);
+            }
             
             [allPlayers addObject:p];
         }
@@ -337,11 +413,21 @@ CGSize screenSize;
         [numberFormatter setGroupingSeparator:@","];
         NSString* commaPlayerScore = [numberFormatter stringForObjectValue:score];
         
-        label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
-                                   fontName:@"Roboto-Light"
-                                   fontSize:16];
-        
-        scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                       fontName:@"Roboto-Light"
+                                       fontSize:26];
+            
+            //        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+            scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:26];
+        } else {
+            label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@) %@", rank, name]
+                                       fontName:@"Roboto-Light"
+                                       fontSize:16];
+            
+            //        scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@", score] fontName:@"NexaBold" fontSize:16];
+            scoreLabel = [CCLabelTTF labelWithString:commaPlayerScore fontName:@"NexaBold" fontSize:16];
+        }
         
         
         label.anchorPoint = ccp(0.0f,0.5f);
@@ -353,6 +439,11 @@ CGSize screenSize;
         scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
         scoreLabel.color = ccc3(0, 0, 0);
         [self addChild:scoreLabel z: 2 tag:i + 10000];
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            label.position = ccp(screenSize.width / 2 - 270, screenSize.height - 175 - i * 32);
+            scoreLabel.position = ccp(screenSize.width / 2 + 270, screenSize.height - 177 - i * 32);
+        }
         
         [allPlayers addObject:p];
     }

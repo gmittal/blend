@@ -129,6 +129,26 @@
             progressBar3.position = ccp(size.width/2 - 65, size.height/2 - 189);
         }
         
+        if ([director winSizeInPixels].height == 1024)
+        {
+            oniPad = true;
+            progressBar1.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            progressBar2.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            progressBar3.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            player.scale = 1.8f;
+            playerWidth = [player boundingBox].size.width; // calibrate collision detection
+            section1.scale = 1.8f;
+            section2.scale = 1.8f;
+            section3.scale = 1.8f;
+            spawnDistance = 600;
+            
+        } else if ([director winSizeInPixels].height == 2048)
+        {
+            oniPad = true;
+        } else {
+            oniPad = false;
+        }
+        
         
         [progressBar1 runAction:progressTo1];
         [progressBar2 runAction:progressTo2];
@@ -211,6 +231,7 @@
                                                         target:self
                                                       selector:@selector(enablePowerUp1)];
         powerUpCreator1.scale = 0.3f;
+        
         powerUpCreator1.position = ccp(size.width/3 - 70, 20);
         //        [self addChild:powerUpCreator1 z:5];
         
@@ -234,6 +255,13 @@
         
         powerUpCreatorsMenu = [CCMenu menuWithItems:powerUpCreator1, powerUpCreator2, powerUpCreator3, nil];
         powerUpCreatorsMenu.position = ccp(size.width/2-160, 0);
+        if (oniPad == true) {
+            powerUpCreator1.position = ccp(size.width/3 - 65, 20);
+            powerUpCreator2.position = ccp(size.width/2 - 85, 20);
+            powerUpCreator3.position = ccp(size.width/1.5 - 105, 20);
+            powerUpCreatorsMenu.position = ccp(size.width/2-320, 0);
+        }
+        
         [self addChild:powerUpCreatorsMenu z:5 tag:10];
         
         // init pausebutton
@@ -265,13 +293,19 @@
         power3Left.color = ccc3(0,0,0);
         [self addChild:power3Left z:200];
         
+        if (oniPad == true) {
+            power1Left.position = ccp(size.width/3 + 40, 20);
+            power2Left.position = ccp(size.width/2 + 20, 20);
+            power3Left.position = ccp(size.width/1.5, 20);
+        }
+        
         
         powerUpBorder1 = [[CCMenuItemImage alloc] init];
         powerUpBorder1 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
                                                 selectedImage: @"PowerupBorder.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp1)];
-        powerUpBorder1.position = ccp(size.width/3 - 53, 20);
+//        powerUpBorder1.position = ccp(size.width/3 - 53, 20);
         //        [self addChild:powerUpBorder1 z:-5];
         
         powerUpBorder2 = [[CCMenuItemImage alloc] init];
@@ -279,7 +313,7 @@
                                                 selectedImage: @"PowerupBorder.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp2)];
-        powerUpBorder2.position = ccp(size.width/2, 20);
+//        powerUpBorder2.position = ccp(size.width/2, 20);
         //        [self addChild:powerUpBorder2 z:-5];
         
         powerUpBorder3 = [[CCMenuItemImage alloc] init];
@@ -287,11 +321,12 @@
                                                 selectedImage: @"PowerupBorder.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp3)];
-        powerUpBorder3.position = ccp(size.width/1.5 + 53, 20);
+//        powerUpBorder3.position = ccp(size.width/1.5 + 53, 20);
         //        [self addChild:powerUpBorder3 z:-5];
         
         CCMenu *powerBorderMenu = [CCMenu menuWithItems:powerUpBorder1, powerUpBorder2, powerUpBorder3, nil];
-        powerBorderMenu.position = ccp(size.width/2-160, 0);
+        powerBorderMenu.position = ccp(size.width/2, 20);
+        [powerBorderMenu alignItemsHorizontallyWithPadding:0.0f];
         [self addChild:powerBorderMenu z:-5];
         
         // init the border sprite for powerup1
@@ -300,8 +335,15 @@
         infiniteBorderPowerUp1.scale = 0;
         infiniteBorderPowerUp1.position = screenCenter;
         
-        screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"NexaBold" fontSize:20];
-        screenflashLabel.position = ccp(size.width/2, size.height - 85);
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"NexaBold" fontSize:40];
+            screenflashLabel.position = ccp(size.width/2, size.height - 125);
+            
+        } else {
+            screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"NexaBold" fontSize:20];
+            screenflashLabel.position = ccp(size.width/2, size.height - 85);
+        }
+        
         screenflashLabel.color = ccc3(255,0,0);
         [self addChild:screenflashLabel z:110];
         screenflashLabel.visible = false;
@@ -328,7 +370,16 @@
         topBar.scaleX = 3.0f;
         //        [self addChild:topBar z:1000];
         
-        CCSprite *background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        CCSprite *background;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
+            background = [CCSprite spriteWithFile:@"skybgipad.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            background = [CCSprite spriteWithFile:@"skybgipad-hd.png"];
+        } else {
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+        }
+        
         background.position = screenCenter;
         [self addChild:background z:-100];
         
@@ -1258,6 +1309,9 @@
     p1Enabled = true;
     infiniteBorderPowerUp1.scale = 1.3f;
     [self addChild:infiniteBorderPowerUp1 z:-10 tag:50];
+    if (oniPad == true) {
+        infiniteBorderPowerUp1.scale = 2.7f;
+    }
 }
 
 -(void) removeInfiniteBorder
@@ -1467,6 +1521,10 @@
     }
     
     ship.scale = 0.15f;
+    
+    if (oniPad == true) {
+        ship.scale = 0.3f;
+    }
     
     [self createShipCoord:ship topBottomChoose:topBottomVariable withColor:ship.tag]; // create coordinate
     [self addChild:ship z:50]; // add sprite to scene
@@ -2399,6 +2457,7 @@
 
 -(void) resetVariables
 {
+    oniPad = false;
     spiralIncrement = 47;
     explodedAlready = false;
     numLivesForSpiral = 1;

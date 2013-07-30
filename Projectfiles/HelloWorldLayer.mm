@@ -373,9 +373,7 @@
         CCSprite *background;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgipad.png"];
-        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
-            background = [CCSprite spriteWithFile:@"skybgipad-hd.png"];
+            background = [CCSprite spriteWithFile:@"skybg.png"];
         } else {
             background = [CCSprite spriteWithFile:@"skybgip5.png"];
         }
@@ -444,6 +442,7 @@
     [scene addChild:layer];
     return scene;
 }
+
 
 
 -(void) startTutorial
@@ -2425,7 +2424,23 @@
     screenflashLabel.visible = false;
 }
 
-
+-(NSString *) deviceInfo
+{
+    NSString *currentDevice;
+    if ([[CCDirector sharedDirector] winSizeInPixels].height == 480) {
+        currentDevice = @"iPhone";
+    } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 960) {
+        currentDevice = @"iPhone Retina";
+    } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+        currentDevice = @"iPhone 5";
+    } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
+        currentDevice = @"iPad";
+    } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+        currentDevice = @"iPad Retina";
+    }
+    
+    return currentDevice;
+}
 
 
 
@@ -2690,6 +2705,5 @@
     [self updateEffectPositions];
     [self initChallenges]; // start challenges to throw at the player
 }
-
 
 @end

@@ -372,6 +372,7 @@ CGSize screenSize;
         }
     } else {
         [self loginToFB];
+//        [self loginToFB];
 //        [self getScores];
     }
 }

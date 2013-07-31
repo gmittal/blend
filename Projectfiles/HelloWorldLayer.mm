@@ -772,14 +772,10 @@
                 [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
                 //            [self removeChild:circle2 cleanup:YES];
                 [circle2 removeObjectAtIndex:i];
-                [self removeAllSpritesFromArray];
 
                 
                 [self enableSpiralEffect];
-                [multiplierWrapper runAction:[CCFadeOut actionWithDuration:1.0f]];
-                [multiplierLabel runAction:[CCFadeOut actionWithDuration:1.0f]];
                 
-                [scoreLabel runAction:[CCMoveTo actionWithDuration:1.0f position:ccp(multiplierLabel.position.x - 10, multiplierLabel.position.y)]];
                 
             } else {
                 [tempSprite stopAction:shipMove];
@@ -1865,14 +1861,21 @@
 
 -(void) enableSpiralEffect
 {
-    createSpiralEffectWithCoords = true;
-    randGeneratedAngle = section1StartAngle + 60;
-    numLivesForSpiral = 1;
-    framesPassed = 0;
-    
-//    [MGWU showMessage:@"FURY MODE!" withImage:nil];
-    [self flashLabel:@"FURY MODE!" actionWithDuration:5.0f color:@"red"];
-    
+    if (createSpiralEffectWithCoords == false) {
+        [self removeAllSpritesFromArray];
+        createSpiralEffectWithCoords = true;
+        randGeneratedAngle = section1StartAngle + 60;
+        numLivesForSpiral = 1;
+        framesPassed = 0;
+        
+        [multiplierWrapper runAction:[CCFadeOut actionWithDuration:1.0f]];
+        [multiplierLabel runAction:[CCFadeOut actionWithDuration:1.0f]];
+        
+        [scoreLabel runAction:[CCMoveTo actionWithDuration:1.0f position:ccp(multiplierLabel.position.x - 10, multiplierLabel.position.y)]];
+        
+        //    [MGWU showMessage:@"FURY MODE!" withImage:nil];
+        [self flashLabel:@"FURY MODE!" actionWithDuration:5.0f color:@"red"];
+    }
 //    if ([section1Ships count] > 0) {
 //        [section1Ships removeAllObjects];
 //    }

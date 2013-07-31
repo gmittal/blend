@@ -77,7 +77,10 @@
         
         
         player = [[CCSprite alloc] init];
+        
         player = [CCSprite spriteWithFile:@"border.png"];
+    
+        
         player.position = ccp(size.width/2, size.height/2);
         player.scale = 0.85f;
         playerWidth = [player boundingBox].size.width; // get player width
@@ -98,6 +101,7 @@
         
         
 //        section2 = [CCSprite spriteWithFile:@"element2.png"];
+        
         section2 = [CCSprite spriteWithFile:@"element2.png"];
         section2.scale = 0.85f;
         
@@ -145,6 +149,15 @@
         } else if ([director winSizeInPixels].height == 2048)
         {
             oniPad = true;
+            progressBar1.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            progressBar2.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            progressBar3.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            player.scale = 1.8f;
+            playerWidth = [player boundingBox].size.width; // calibrate collision detection
+            section1.scale = 1.8f;
+            section2.scale = 1.8f;
+            section3.scale = 1.8f;
+            spawnDistance = 600;
         } else {
             oniPad = false;
         }
@@ -373,7 +386,7 @@
         CCSprite *background;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybg.png"];
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
         } else {
             background = [CCSprite spriteWithFile:@"skybgip5.png"];
         }
@@ -411,15 +424,18 @@
         rotateArrow.position = ccp(player.position.x + 20, player.position.y);
         [self addChild:rotateArrow z:1000];
         rotateArrow.visible = false;
+        
+        
+        
 //        [self setDimensionsInPixelsOnSprite:rotateArrow width:270 height:320];
         
         powerupArrow = [CCSprite spriteWithFile:@"powerupTutorial.png"];
         powerupArrow.position = ccp(screenCenter.x, 80);
         [self addChild:powerupArrow z:1000];
         powerupArrow.visible = false;
+
         [self setDimensionsInPixelsOnSprite:rotateArrow width:300 height:300];
-        
-        
+    
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
         
@@ -2278,7 +2294,11 @@
         
         if (framesPassed < 300) {
             shipSpeed = 2.5f;
-            initDelayInFrames = 25;
+            if (oniPad == true) {
+                initDelayInFrames = 15;
+            } else {
+                initDelayInFrames = 25;
+            }
             numSpritesPerArray = 200;
         }
         
@@ -2313,7 +2333,11 @@
         
         if (framesPassed > 1500) {
             shipSpeed = 2.0f;
-            initDelayInFrames = 20;
+            if (oniPad == true) {
+                initDelayInFrames = 10;
+            } else {
+                initDelayInFrames = 20;
+            }
             spiralIncrement = 247;
 //            initDelayInFrames = 25;
 //            numSpritesPerArray = 22;

@@ -105,7 +105,7 @@ CCLabelBMFont *coinsLabel;
         CCSprite *background;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybg.png"];
+            background = [CCSprite spriteWithFile:@"skybgip5.png"];
         } else {
             background = [CCSprite spriteWithFile:@"skybgip5.png"];
         }

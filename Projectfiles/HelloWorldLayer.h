@@ -236,6 +236,12 @@
     int spiralIncrement;
     
     bool oniPad;
+    
+    int targetScore;
+    
+    int dbTapFrames;
+    
+    bool startDbTapCheck;
 }
 
 +(id)scene;

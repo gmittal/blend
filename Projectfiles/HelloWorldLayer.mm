@@ -1004,6 +1004,11 @@
     numLivesForSpiral -= 1;
 }
 
+-(void) rewardPlayer
+{
+    targetScore = playerScore + (scoreAdd * pointMultiplier);
+}
+
 -(void) scoreCheck:(int) angle withSprite:(CCSprite *) spriteWithArray
 {
     if (spriteWithArray.tag == 1)
@@ -1011,7 +1016,7 @@
         [self divideAngularSections];
         
         if (angle > section1StartAngle && angle < section1EndAngle) {
-            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
             [self increaseMultiplier];
             
@@ -1019,7 +1024,7 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section1EndAngle)
             {
-                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
                 
@@ -1027,7 +1032,7 @@
             
             if (angle > 241 && angle > section1StartAngle)
             {
-                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
@@ -1044,14 +1049,14 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section2EndAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self penalizePlayer];
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self penalizePlayer];
             }
@@ -1059,7 +1064,7 @@
         
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
-            //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            //            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self runDeathSeqOn:@"grass"];
             [self penalizePlayer];
@@ -1068,7 +1073,7 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section3EndAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"grass"];
                 [self penalizePlayer];
@@ -1076,7 +1081,7 @@
             
             if (angle > 241 && angle > section3StartAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"grass"];
                 [self penalizePlayer];
@@ -1090,7 +1095,7 @@
         
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
-            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
             [self increaseMultiplier];
         } else if (section2StartAngle > section2EndAngle)
@@ -1098,14 +1103,14 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section2EndAngle)
             {
-                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
             
             if (angle > 241 && angle > section2StartAngle)
             {
-                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
@@ -1113,7 +1118,7 @@
         
         if (angle > section1StartAngle && angle < section1EndAngle)
         {
-            //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            //            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self runDeathSeqOn:@"fire"];
             [self penalizePlayer];
@@ -1122,7 +1127,7 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section1EndAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"fire"];
                 [self penalizePlayer];
@@ -1130,7 +1135,7 @@
             
             if (angle > 241 && angle > section1StartAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"fire"];
                 [self penalizePlayer];
@@ -1139,7 +1144,7 @@
         
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
-            //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            //            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self penalizePlayer];
         } else if (section3StartAngle > section3EndAngle)
@@ -1147,14 +1152,14 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section3EndAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self penalizePlayer];
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self penalizePlayer];
             }
@@ -1168,7 +1173,7 @@
         
         if (angle > section3StartAngle && angle < section3EndAngle)
         {
-            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
             [self increaseMultiplier];
         } else if (section3StartAngle > section3EndAngle)
@@ -1176,14 +1181,14 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section3EndAngle)
             {
-                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
             
             if (angle > 241 && angle > section3StartAngle)
             {
-                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
                 [self increaseMultiplier];
             }
@@ -1191,7 +1196,7 @@
         
         if (angle > section1StartAngle && angle < section1EndAngle)
         {
-            //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            //            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self penalizePlayer];
         } else if (section1StartAngle > section1EndAngle)
@@ -1199,14 +1204,14 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section1EndAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self penalizePlayer];
             }
             
             if (angle > 241 && angle > section1StartAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self penalizePlayer];
             }
@@ -1214,7 +1219,7 @@
         
         if (angle > section2StartAngle && angle < section2EndAngle)
         {
-            //            playerScore = playerScore + (scoreAdd * pointMultiplier);
+            //            [self rewardPlayer];
             [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
             [self runDeathSeqOn:@"water"];
             [self penalizePlayer];
@@ -1223,7 +1228,7 @@
             [self divideAngularSections];
             if (angle < 119 && angle < section2EndAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"water"];
                 [self penalizePlayer];
@@ -1231,7 +1236,7 @@
             
             if (angle > 241 && angle > section2StartAngle)
             {
-                //                playerScore = playerScore + (scoreAdd * pointMultiplier);
+                //                [self rewardPlayer];
                 [[SimpleAudioEngine sharedEngine] playEffect:@"incorrect.wav"];
                 [self runDeathSeqOn:@"water"];
                 [self penalizePlayer];
@@ -1265,7 +1270,7 @@
 
 -(void) addInfiniteArrayPoints
 {
-    playerScore = playerScore + (scoreAdd * pointMultiplier);
+    [self rewardPlayer];
     [self increaseMultiplier];
     [self updateScore];
 }
@@ -1836,6 +1841,16 @@
         randGeneratedAngle += spiralIncrement;
     } else {
         randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
+        
+        if (randGeneratedAngle == 270) { // for whatever reason when the angle is 270, the collision never works
+            int chooseWhichSide = (arc4random()%(2-1+1))+1;
+            if (chooseWhichSide == 1) {
+                randGeneratedAngle = 271;
+            } else if (chooseWhichSide == 2) {
+                randGeneratedAngle = 272;
+            }
+        
+        }
         shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
     }
 }
@@ -1914,8 +1929,12 @@
 -(void) updateScore
 {
 //    if ((framesPassed % 10) == 0) {
-        score = [[NSString alloc] initWithFormat:@"%i",playerScore];
-        [scoreLabel setString:score];
+//    while (playerScore < targetScore) {
+//        playerScore += 1;
+//        score = [[NSString alloc] initWithFormat:@"%i",playerScore];
+//        [scoreLabel setString:score];
+//    }
+    
         lives = [[NSString alloc] initWithFormat:@"Lives: %i",playerLives];
         [liveLabel setString:lives];
         
@@ -2147,6 +2166,14 @@
             [self pauseGame];
             
         }
+        
+//        startDbTapCheck = true;
+//
+//        if (dbTapFrames < 40 && dbTapFrames > 0) {
+//            NSLog(@"DOUBLE TAP!");
+//            startDbTapCheck = false;
+//        }
+
     }
 }
 
@@ -2499,6 +2526,9 @@
 
 -(void) resetVariables
 {
+    startDbTapCheck = false;
+    
+    
     oniPad = false;
     spiralIncrement = 47;
     explodedAlready = false;
@@ -2702,6 +2732,17 @@
 -(void)update:(ccTime)dt // update method
 {
     deviceFPS = 1/dt;
+    
+    
+    if (playerScore < targetScore) {
+        int increment = (targetScore - playerScore)/2;
+        if (increment < 1) {
+            increment = 1;
+        }
+        playerScore += increment;
+        score = [[NSString alloc] initWithFormat:@"%i",playerScore];
+        [scoreLabel setString:score];
+    }
 
     collisionDidHappen = false;
     

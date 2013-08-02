@@ -33,8 +33,13 @@
         
         NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* startcoinStr = [numberFormatter stringForObjectValue:CoinNumber];
+        
         coins = [CoinNumber intValue];
-        CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
+        CoinString = startcoinStr; //[[NSString alloc] initWithFormat:@"%i", coins];
         coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:18];
         coinsLabel.position = ccp(coinIcon.position.x + 17, screenSize.height - 22);
         coinsLabel.color = ccc3(0, 0, 0);
@@ -152,6 +157,7 @@
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
+        
     }
     return self;
 }
@@ -169,6 +175,7 @@
             [[NSUserDefaults standardUserDefaults] setInteger:numPower1 forKey:@"power1Status"];
             
             [MGWU showMessage:@"1 Energy Shield Bought" withImage:nil];
+            [self updateString];
         }
     }
 }
@@ -187,6 +194,7 @@
             [[NSUserDefaults standardUserDefaults] setInteger:numPower2 forKey:@"power2Status"];
             
             [MGWU showMessage:@"1 Delay Drone Bought" withImage:nil];
+            [self updateString];
         }
     }
 }
@@ -207,6 +215,7 @@
             [[NSUserDefaults standardUserDefaults] setInteger:numPower3 forKey:@"power3Status"];
             
             [MGWU showMessage:@"1 Multiplier Boost Bought" withImage:nil];
+            [self updateString];
         }
     }
 }
@@ -226,10 +235,24 @@
 }
 
 
+
+-(void) updateString
+{
+    NSNumber *formattedCoins = [NSNumber numberWithInt:coins];
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+    [numberFormatter setGroupingSeparator:@","];
+    NSString* coinStr = [numberFormatter stringForObjectValue:formattedCoins];
+    CoinString = coinStr; //[[NSString alloc] initWithFormat:@"%i", coins];
+    [coinsLabel setString:CoinString];
+}
+
+
 -(void) update:(ccTime)delta
 {
-    CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
-    [coinsLabel setString:CoinString];
+//    CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
+//    [coinsLabel setString:CoinString];
     
     p1String = [[NSString alloc] initWithFormat:@"%i", numPower1];
     [p1Label setString:p1String];

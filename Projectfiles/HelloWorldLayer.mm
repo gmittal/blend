@@ -2782,7 +2782,15 @@
             increment = 1;
         }
         playerScore += increment;
-        score = [[NSString alloc] initWithFormat:@"%i",playerScore];
+        NSNumber *formattedScore = [NSNumber numberWithInt:playerScore];
+        
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* scoreStr = [numberFormatter stringForObjectValue:formattedScore];
+        
+        
+        score = scoreStr; //[[NSString alloc] initWithFormat:@"%i",playerScore];
         [scoreLabel setString:score];
     }
 

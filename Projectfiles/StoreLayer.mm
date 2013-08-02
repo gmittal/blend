@@ -37,8 +37,13 @@ CCLabelBMFont *coinsLabel;
         
         NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* startcoinStr = [numberFormatter stringForObjectValue:CoinNumber];
+        
         coins = [CoinNumber intValue];
-        CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
+        CoinString = startcoinStr; //[[NSString alloc] initWithFormat:@"%i", coins];
         coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:18];
         coinsLabel.position = ccp(coinIcon.position.x + 17, screenSize.height - 22);
         coinsLabel.anchorPoint = ccp(0.0f,0.5f);
@@ -116,7 +121,7 @@ CCLabelBMFont *coinsLabel;
         
         
         
-        [self scheduleUpdate];
+//        [self scheduleUpdate];
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
@@ -145,6 +150,7 @@ CCLabelBMFont *coinsLabel;
         NSNumber *restoredCoinValue = [NSNumber numberWithInt:coins];
         [MGWU setObject:restoredCoinValue forKey:@"sharedCoins"];
         [MGWU showMessage:@"Products restored." withImage:nil];
+        [self updateString];
     }
 }
 
@@ -170,14 +176,17 @@ CCLabelBMFont *coinsLabel;
 {
     if (numProduct == 1) {
         [MGWU showMessage:@"1000 Coins added! Consider this purchase successful." withImage:nil];
+        [self updateString];
     }
     
     if (numProduct == 2) {
         [MGWU showMessage:@"3000 Coins added! Consider this purchase successful." withImage:nil];
+        [self updateString];
     }
     
     if (numProduct == 3) {
         [MGWU showMessage:@"5000 Coins added! Consider this purchase successful." withImage:nil];
+        [self updateString];
     }
 }
 
@@ -193,6 +202,7 @@ CCLabelBMFont *coinsLabel;
         NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
 //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
         [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
+        [self updateString];
     }
     
     if ([powerupToBuy isEqualToString:@"com.gbm.mlg.3000C"] == true)
@@ -203,6 +213,7 @@ CCLabelBMFont *coinsLabel;
         NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
 //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
         [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
+        [self updateString];
         
     }
     
@@ -214,6 +225,7 @@ CCLabelBMFont *coinsLabel;
         NSNumber *boughtCoinVal = [NSNumber numberWithInt:coins];
 //        [[NSUserDefaults standardUserDefaults] setObject:boughtCoinVal forKey:@"sharedCoins"];
         [MGWU setObject:boughtCoinVal forKey:@"sharedCoins"];
+        [self updateString];
     }
     
 }
@@ -225,12 +237,19 @@ CCLabelBMFont *coinsLabel;
 	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
 }
 
-
--(void) update:(ccTime)delta
+-(void) updateString
 {
-    CoinString = [[NSString alloc] initWithFormat:@"%i", coins];
+    NSNumber *formattedCoins = [NSNumber numberWithInt:coins];
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+    [numberFormatter setGroupingSeparator:@","];
+    NSString* coinStr = [numberFormatter stringForObjectValue:formattedCoins];
+    CoinString = coinStr; //[[NSString alloc] initWithFormat:@"%i", coins];
     [coinsLabel setString:CoinString];
 }
+
+
 
 
 @end

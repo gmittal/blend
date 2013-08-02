@@ -12,6 +12,7 @@
 		C710221D1784CB68001A474B /* topbar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C710221B1784CB68001A474B /* topbar-hd.png */; };
 		C71022201784CD86001A474B /* backgroundip5-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C710221E1784CD86001A474B /* backgroundip5-hd.png */; };
 		C71022211784CD86001A474B /* backgroundip5.png in Resources */ = {isa = PBXBuildFile; fileRef = C710221F1784CD86001A474B /* backgroundip5.png */; };
+		C726B43117AC24370064A1F2 /* dpgl_bg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C726B43017AC24370064A1F2 /* dpgl_bg.mp3 */; };
 		C72A9D6817889D7700A9C1DB /* element1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C72A9D6217889D7700A9C1DB /* element1-hd.png */; };
 		C72A9D6917889D7700A9C1DB /* element2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C72A9D6317889D7700A9C1DB /* element2-hd.png */; };
 		C72A9D6A17889D7700A9C1DB /* element1.png in Resources */ = {isa = PBXBuildFile; fileRef = C72A9D6417889D7700A9C1DB /* element1.png */; };
@@ -266,6 +267,7 @@
 		C710221B1784CB68001A474B /* topbar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topbar-hd.png"; sourceTree = "<group>"; };
 		C710221E1784CD86001A474B /* backgroundip5-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundip5-hd.png"; sourceTree = "<group>"; };
 		C710221F1784CD86001A474B /* backgroundip5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundip5.png; sourceTree = "<group>"; };
+		C726B43017AC24370064A1F2 /* dpgl_bg.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dpgl_bg.mp3; sourceTree = "<group>"; };
 		C72A9D6217889D7700A9C1DB /* element1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "element1-hd.png"; sourceTree = "<group>"; };
 		C72A9D6317889D7700A9C1DB /* element2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "element2-hd.png"; sourceTree = "<group>"; };
 		C72A9D6417889D7700A9C1DB /* element1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = element1.png; sourceTree = "<group>"; };
@@ -776,6 +778,7 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C726B43017AC24370064A1F2 /* dpgl_bg.mp3 */,
 				C7EC482217A2E71600E358C0 /* blankelement.png */,
 				C7EC482017A2E68E00E358C0 /* blankelement-hd.png */,
 				C73E849D17A1C87C007F509E /* flatText-hd.png */,
@@ -1215,6 +1218,7 @@
 				C7A388B517A9A31A00C0B452 /* rotate-ipadhd.png in Resources */,
 				C7A388B717A9A33C00C0B452 /* powerupTutorial-ipadhd.png in Resources */,
 				C7A388B917A9A3CC00C0B452 /* settings_gear-ipadhd.png in Resources */,
+				C726B43117AC24370064A1F2 /* dpgl_bg.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "StatLayer.h"
+#import "SimpleAudioEngine.h"
 
 @implementation StatLayer
 
@@ -110,6 +111,11 @@ CGSize screenSize;
         
         global1 = false;
         fb1 = true;
+        
+        if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+        }
+        
         
     }
     return self;

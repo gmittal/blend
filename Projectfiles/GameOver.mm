@@ -7,6 +7,7 @@
 //
 
 #import "GameOver.h"
+#import "SimpleAudioEngine.h"
 
 @implementation GameOver
 
@@ -118,8 +119,13 @@
         
         NSNumber *endingCoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
         //        NSNumber *endingHighScoreNumber = [MGWU objectForKey:@"sharedHighScore"];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:kCFNumberFormatterDecimalStyle];
+        [numberFormatter setGroupingSeparator:@","];
+        NSString* coinStr = [numberFormatter stringForObjectValue:endingCoinNumber];
+        
         int endingCoins = [endingCoinNumber intValue];
-        NSString *endCoinString = [[NSString alloc] initWithFormat:@"%i", endingCoins];
+        NSString *endCoinString = coinStr; //[[NSString alloc] initWithFormat:@"%i", endingCoins];
         CCLabelBMFont *endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"NexaBold" fontSize:22];
         endCoins.position = ccp(coinIcon.position.x + 18, screenSize.height - 22);
         endCoins.color = ccc3(0, 0, 0);
@@ -204,6 +210,10 @@
         [nameField setReturnKeyType:UIReturnKeyDone];
         [nameField setAutocorrectionType:UITextAutocorrectionTypeNo];
         [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+        
+        if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+        }
     
     }
     return self;

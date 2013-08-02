@@ -9,6 +9,7 @@
 #import "UpgradesLayer.h"
 #import "StartMenuLayer.h"
 #import "StoreLayer.h"
+#import "SimpleAudioEngine.h"
 
 @implementation UpgradesLayer
 
@@ -147,6 +148,10 @@
         
         [self scheduleUpdate];
         
+        
+        if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+        }
     }
     return self;
 }

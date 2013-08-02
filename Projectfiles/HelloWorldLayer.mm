@@ -8,10 +8,6 @@
 
 /* SUGGESTIONS:
  - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL, OPTIONAL)
- - LEADERBOARDS (IMPLEMENTED)
- - HAVE A 'SWEET-SPOT' WHICH GETS ENABLED EVERY ONCE IN A WHILE WHERE IF THE USER LANDS THE SHIP THERE, THEY GET BONUS POINTS
- - (NEW POSSIBLE GAMEPLAY FEATURE): HAVE THE USER COAT THE OUTSIDE OF THE BALL WITH SHIPS TO PROCEED TO THE NEXT ROUND
- - HAVE A SHAPE ASSOCIATED WITH EACH COLOR AND IF THE SHAPE AND COLOR OF THE SHIP MATCHES THE SECTOR, THEN GRANT EXTRA POINTS
  */
 
 
@@ -444,6 +440,9 @@
         
         [self startTutorial]; // start the tutorial (if needed)
         
+        if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+        }
 //        [self enableSpiralEffect];
         
 	}
@@ -904,13 +903,13 @@
         
         [self divideAngularSections];
         numCollisions++;
-        NSLog(@"%f", shipAngle);
-        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
-        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
-        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
-        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
-        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
-        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
+//        NSLog(@"%f", shipAngle);
+//        NSLog(@"Section 1 StartAngle: %f", section1StartAngle);
+//        NSLog(@"Section 1 EndAngle: %f", section1EndAngle);
+//        NSLog(@"Section 2 StartAngle: %f", section2StartAngle);
+//        NSLog(@"Section 2 EndAngle: %f", section2EndAngle);
+//        NSLog(@"Section 3 StartAngle: %f", section3StartAngle);
+//        NSLog(@"Section 3 EndAngle: %f", section3EndAngle);
         //        [self scoreCheck:shipAngle withColor:shipColor];
         
         collisionDidHappen = true;
@@ -955,7 +954,7 @@
 
 -(void) removeArraySprite:(id)sender
 {
-    NSLog(@"Array Count: %d", [section1Ships count]);
+//    NSLog(@"Array Count: %d", [section1Ships count]);
     [self removeChild:sender cleanup:YES];
     numSpritesCollided++;
     //    if (numSpritesCollided == [section1Ships count]) {
@@ -973,7 +972,7 @@
 
 -(void) removeSprite:(id)sender
 {
-    NSLog(@"SPRITE REMOVED");
+//    NSLog(@"SPRITE REMOVED");
     [self removeChild:sender cleanup:YES];
 }
 
@@ -2175,7 +2174,48 @@
 //        }
 
     }
+
+
+    if (input.touchesAvailable == true) {
+//        userIsTapping = true;
+        userIsTapping = false;
+//        playerVelocity = 6.0f;
+    } else {
+        userIsTapping = false;
+    }
+
+
+
+
+    // momentum
+    if ([input anyTouchBeganThisFrame] == true) {
+        startRotationAngleForLog = player.rotation;
+        [self schedule:@selector(momentumCount:)];
+    }
+
+    if ([input anyTouchEndedThisFrame])
+    {
+        [self unschedule:@selector(momentumCount:)];
+        endRotationAngleForLog = player.rotation;
+        
+        if (endRotationAngleForLog < startRotationAngleForLog) {
+            endRotationAngleForLog += 360;
+        }
+        
+        
+        int angleDiff = endRotationAngleForLog - startRotationAngleForLog;
+        
+        playerVelocity = angleDiff; //(angleDiff/360)/velocityFrames;
+    }
+
 }
+
+-(void) momentumCount:(ccTime)dt
+{
+    velocityFrames = 0;
+    velocityFrames++;
+}
+
 
 -(void) normalizeThisToStandards:(CGPoint) rot_pos1 andThis:(CGPoint) rot_pos2 withRotVariable:(float) rotationVar
 {
@@ -2526,6 +2566,8 @@
 
 -(void) resetVariables
 {
+//    playerVelocity = 100.0f;
+    
     startDbTapCheck = false;
     
     
@@ -2744,6 +2786,26 @@
         [scoreLabel setString:score];
     }
 
+    if (userIsTapping == false) {
+//        player.rotation += playerVelocity;
+        if (playerVelocity <= 0) {
+            playerVelocity = 0.0f;
+        } else {
+            playerVelocity -= 0.5f;
+        }
+    }
+    
+//    playerMomentum = velocityFrames * playerVelocity;
+//    NSLog(@"%i", playerMomentum);
+    if ((framesPassed % 20) == 0) {
+//        NSLog(@"%f", playerVelocity);
+        if (playerVelocity > 0) {
+            playerVelocity = sqrtf(playerVelocity);
+        }
+    }
+    
+//    player.rotation += playerVelocity;
+    
     collisionDidHappen = false;
     
     if (updateMoveCounter == true) {

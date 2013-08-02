@@ -242,6 +242,17 @@
     int dbTapFrames;
     
     bool startDbTapCheck;
+    
+    bool userIsTapping;
+    
+    float playerVelocity;
+    
+    int startRotationAngleForLog;
+    int endRotationAngleForLog;
+    
+    float playerMomentum;
+    
+    int velocityFrames;
 }
 
 +(id)scene;

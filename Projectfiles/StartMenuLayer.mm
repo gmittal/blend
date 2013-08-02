@@ -7,6 +7,7 @@
 //
 
 #import "StartMenuLayer.h"
+#import "SimpleAudioEngine.h"
 
 @implementation StartMenuLayer
 
@@ -152,6 +153,12 @@
         {
             [MGWU toggleOpenGraph];
         }
+        
+        // startbackground music
+        if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
+        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+        }
+        
         
     }
     return self;

@@ -231,8 +231,9 @@
         NSLog(result);
         //        username = result;
         [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"username"];
-        [MGWU submitHighScore:endingHighScore byPlayer:result forLeaderboard:@"defaultLeaderboard"];
-        
+        if (endingHighScore != 0 || endingHighScore != nil) {
+            [MGWU submitHighScore:endingHighScore byPlayer:result forLeaderboard:@"defaultLeaderboard"];
+        }
     }
 }
 

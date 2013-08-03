@@ -255,6 +255,8 @@
     int velocityFrames;
     
     bool spriteIsColliding;
+    
+    CCLabelBMFont *furyLabel;
 }
 
 +(id)scene;

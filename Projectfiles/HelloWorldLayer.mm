@@ -401,6 +401,8 @@
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"click1.mp3"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"gameover1.mp3"];
         
+        
+        
         //        [self flashWithRed:0 green:0 blue:255 alpha:255 actionWithDuration:1.0f];
         
         
@@ -415,6 +417,13 @@
 //        dryWater = [CCParticleSnow node];
 //        [progressBar2 addChild:dryWater z:1001];
 //        dryWater.visible = false;
+        
+        furyLabel = [CCLabelTTF labelWithString:@"FURY MODE" fontName:@"NexaBold" fontSize:30];
+        furyLabel.position = screenflashLabel.position;
+        furyLabel.color = ccc3(192, 57, 43);
+        [self addChild:furyLabel z:screenflashLabel.zOrder];
+        furyLabel.visible = false;
+        
         
         rotateArrow = [CCSprite spriteWithFile:@"rotate.png"];
         rotateArrow.position = ccp(player.position.x + 20, player.position.y);
@@ -1860,8 +1869,31 @@
             } else if (chooseWhichSide == 2) {
                 randGeneratedAngle = 272;
             }
-        
         }
+       
+        /*
+        if (randGeneratedAngle < 205 && randGeneratedAngle > 155) { // for whatever reason when the angle is 270, the collision never works
+            int chooseWhichSide = (arc4random()%(2-1+1))+1;
+            if (chooseWhichSide == 1) {
+                randGeneratedAngle += 40;
+            } else if (chooseWhichSide == 2) {
+                randGeneratedAngle -= 40;
+            }
+        }
+        
+        if (randGeneratedAngle < 25 || (randGeneratedAngle > 335 && randGeneratedAngle < 360)) { // for whatever reason when the angle is 270, the collision never works
+            int chooseWhichSide = (arc4random()%(2-1+1))+1;
+            if (chooseWhichSide == 1) {
+                randGeneratedAngle += 40;
+            } else if (chooseWhichSide == 2) {
+                randGeneratedAngle -= 40;
+                if (randGeneratedAngle < 0) {
+                    randGeneratedAngle += 360;
+                }
+            }
+        } */
+
+        
         shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
     }
 }
@@ -1888,8 +1920,9 @@
 -(void) enableSpiralEffect
 {
     if (createSpiralEffectWithCoords == false) {
+        
         [self removeAllSpritesFromArray];
-        createSpiralEffectWithCoords = true;
+                createSpiralEffectWithCoords = true;
         randGeneratedAngle = section1StartAngle + 60;
         numLivesForSpiral = 1;
         framesPassed = 0;
@@ -1899,8 +1932,9 @@
         
         [scoreLabel runAction:[CCMoveTo actionWithDuration:1.0f position:ccp(multiplierLabel.position.x - 10, multiplierLabel.position.y)]];
         
+        [self furyLabel:@"FURY MODE!" actionWithDuration:5.0f];
         //    [MGWU showMessage:@"FURY MODE!" withImage:nil];
-        [self flashLabel:@"FURY MODE!" actionWithDuration:5.0f color:@"red"];
+        
     }
 //    if ([section1Ships count] > 0) {
 //        [section1Ships removeAllObjects];
@@ -2548,7 +2582,28 @@
     return currentDevice;
 }
 
+-(void) furyLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash
+{
+    [furyLabel setString:stringToFlashOnScreen];
+    id addVisibility = [CCCallFunc actionWithTarget:self selector:@selector(makeFuryLabelVisible)];
+    id delayInvis = [CCDelayTime actionWithDuration:numSecondsToFlash];
+    id addInvis = [CCCallFunc actionWithTarget:self selector:@selector(makeFuryLabelInvisible)];
+    CCSequence *flashLabelSeq = [CCSequence actions:addVisibility, delayInvis, addInvis, nil];
+    [self runAction:flashLabelSeq];
+    
+}
 
+-(void) makeFuryLabelVisible
+{
+    furyLabel.visible = true;
+    [furyLabel runAction:[CCFadeIn actionWithDuration:0.2f]];
+}
+
+-(void) makeFuryLabelInvisible
+{
+    [furyLabel runAction:[CCFadeOut actionWithDuration:0.2f]];
+    furyLabel.visible = false;
+}
 
 
 -(void) goToGameOver
@@ -2556,8 +2611,18 @@
     [self flashWithRed:255 green:0 blue:0 alpha:255 actionWithDuration:0.1f];
     [ship1 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
     //    [ship2 stopAction:shipMove]; // stop any currently moving ships to avoid the explosion from happening twice
+//    if ([section1Ships count] > 0) {
+////     [self removeAllSpritesFromArray];
+////        [section1Ships removeAllObjects];
+//    }
+    [self enablePowerUp2]; // pause all ships
+    
+
+    
+    [self removeChild:pauseButton cleanup:YES];
+    
     id particleEffects = [CCCallFunc actionWithTarget:self selector:@selector(runEffect)];
-    id effectDelay = [CCDelayTime actionWithDuration:2.4f];
+    id effectDelay = [CCDelayTime actionWithDuration:2.0f];
     id goToScene = [CCCallFunc actionWithTarget:self selector:@selector(transferToGameOverScene)];
     [self removeChild:player cleanup:YES];
     [self removeChild:ship1 cleanup:YES];

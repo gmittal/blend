@@ -156,7 +156,7 @@
         
         // startbackground music
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+//        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
         
         

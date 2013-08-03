@@ -212,7 +212,7 @@
         [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+//            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
     
     }
@@ -262,7 +262,7 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] init];
     [alert setTitle:@"New High Score"];
-    [alert setMessage:[[NSString alloc] initWithFormat:@"You have a new high score of %i", endingHighScore]];
+    [alert setMessage:[[NSString alloc] initWithFormat:@"You have a new high score of %i", endingScore]];
     [alert setDelegate:self];
     [alert addButtonWithTitle:@"OK"];
     [alert show];

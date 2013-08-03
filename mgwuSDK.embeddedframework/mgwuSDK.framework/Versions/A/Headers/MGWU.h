@@ -10,7 +10,7 @@
 //
 //  Contains open source code and SDKs from Crashlytics, Inc. (SecureUDID, CrashlyticsSDK), Matej Bukovinski (MBProgressHUD), Stig Brautaset (SBJson), Ray Wenderlich (iAPHelper), Facebook (FacebookConnect iOS), Tapjoy (TapjoyConnect), Arash Payan (Appirater), Benjamin Borowski and Stephane Peter (GKAchievementNotification) thank you to all!
 //
-//  MGWU_BUILD_NUMBER 304
+//  MGWU_BUILD_NUMBER 333
 //
 
 #import <UIKit/UIKit.h>
@@ -92,6 +92,7 @@
 //Global High Scores:
 //
 + (void)submitHighScore:(int)score byPlayer:(NSString*)player forLeaderboard:(NSString*)leaderboard;
++ (NSDictionary*)getMyHighScoreForLeaderboard:(NSString*)l;
 + (void)getHighScoresForLeaderboard:(NSString*)l withCallback:(SEL)m onTarget:(id)t;
 + (void)submitHighScore:(int)score byPlayer:(NSString*)player forLeaderboard:(NSString *)leaderboard withCallback:(SEL)m onTarget:(id)t;
 //Depricated
@@ -136,6 +137,7 @@
 
 //Single Player Games
 + (void)loginToFacebook;
++ (void)loginToFacebookWithCallback:(SEL)m onTarget:(id)t;
 + (NSMutableArray *)playingFriends;
 + (BOOL)canInviteFriends;
 + (void)inviteFriendsWithMessage:(NSString*)message; //*
@@ -152,6 +154,13 @@
 //Twitter
 + (BOOL)isTwitterActive;
 + (void)postToTwitter:(NSString*)message; //*
++ (void)postToTwitter:(NSString*)message withImage:(UIImage*)image;
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+//Facebook Native
++ (BOOL)isFacebookNativeActive;
++ (void)postToFacebook:(NSString*)message withImage:(UIImage*)image;
 
 /////////////////////////////////////////////////////////////////////////////////
 //

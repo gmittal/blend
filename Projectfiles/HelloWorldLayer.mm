@@ -78,14 +78,14 @@
     
         
         player.position = ccp(size.width/2, size.height/2);
-        player.scale = 0.85f;
+        player.scale = 0.7f;
         playerWidth = [player boundingBox].size.width; // get player width
         [self addChild:player z:20];
         //        [player runAction:explode];
         
         
         section1 = [CCSprite spriteWithFile:@"element1.png"];
-        section1.scale = 0.85f;
+        section1.scale = 0.7f;
         progressBar1 = [CCProgressTimer progressWithSprite:section1];
 //        progressBar1.scale = 0.8f;
         progressBar1.type = kCCProgressTimerTypeRadial;
@@ -99,7 +99,7 @@
 //        section2 = [CCSprite spriteWithFile:@"element2.png"];
         
         section2 = [CCSprite spriteWithFile:@"element2.png"];
-        section2.scale = 0.85f;
+        section2.scale = 0.7f;
         
         progressBar2 = [CCProgressTimer progressWithSprite:section2];
 //        progressBar2.scale = 0.8f;
@@ -111,7 +111,7 @@
         progressTo2 = [CCProgressTo actionWithDuration:1 percent:33.333f];
         
         section3 = [CCSprite spriteWithFile:@"element3.png"];
-        section3.scale = 0.85f;
+        section3.scale = 0.7f;
         progressBar3 = [CCProgressTimer progressWithSprite:section3];
 //        progressBar3.scale = 0.8f;
         progressBar3.type = kCCProgressTimerTypeRadial;
@@ -441,7 +441,7 @@
         [self startTutorial]; // start the tutorial (if needed)
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+//            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
 //        [self enableSpiralEffect];
         
@@ -492,7 +492,7 @@
 
 -(void) tutorial3
 {
-    [self flashLabel:@"Use the powerups at the bottom" actionWithDuration:5.0f color:@"black"];
+    [self flashLabel:@"Use the powerups" actionWithDuration:5.0f color:@"black"];
     powerupArrow.visible = true;
 }
 
@@ -679,7 +679,7 @@
     {
         CCSprite* tempSprite = [circle2 objectAtIndex:i];
         [self infiniteBorderCollisionWith:tempSprite withObject:i];
-        float c1radius = playerWidth/2; //[circle1 boundingBox].size.width/2; // circle 1 radius
+        float c1radius = (playerWidth/2) - 3; //[circle1 boundingBox].size.width/2; // circle 1 radius
         // NSLog(@"Circle 1 Radius: %f", c1radius);
         float c2radius = [tempSprite boundingBox].size.width/2; // circle 2 radius
         //        float c2radius = c.contentSize.width/2;
@@ -690,6 +690,8 @@
         
         
         if (distance <= radii) { // did the two circles collide at all??
+            spriteIsColliding = true;
+            
             
             float ratio = distY/distance; // ratio of distance in terms of Y to distance from player
             float shipAngleRadians = asin(ratio); // arcsin of ratio
@@ -766,7 +768,7 @@
             if (pointMultiplier <= 0) {
                 pointMultiplier = 0;
                 [tempSprite stopAction:shipMove];
-                id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
+                id dock = [CCScaleTo actionWithDuration:0.1f scale:0];
                 id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
                 [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
                 //            [self removeChild:circle2 cleanup:YES];
@@ -778,7 +780,7 @@
                 
             } else {
                 [tempSprite stopAction:shipMove];
-                id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
+                id dock = [CCScaleTo actionWithDuration:0.1f scale:0];
                 id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
                 [tempSprite runAction:[CCSequence actions:dock, removeSprite, nil]];
                 //            [self removeChild:circle2 cleanup:YES];
@@ -922,7 +924,7 @@
         } else {
             [self stopAction:shipMove];
             [[SimpleAudioEngine sharedEngine] playEffect:@"click1.mp3"];
-            id dock = [CCScaleTo actionWithDuration:0.2f scale:0];
+            id dock = [CCScaleTo actionWithDuration:0.1f scale:0];
             id removeSprite = [CCCallFuncN actionWithTarget:self selector:@selector(removeSprite:)];
             [circle2 runAction:[CCSequence actions:dock, removeSprite, nil]];
             //            [self removeChild:circle2 cleanup:YES];
@@ -956,6 +958,7 @@
 {
 //    NSLog(@"Array Count: %d", [section1Ships count]);
     [self removeChild:sender cleanup:YES];
+    spriteIsColliding = false;
     numSpritesCollided++;
     //    if (numSpritesCollided == [section1Ships count]) {
     //        numSpritesCollided = 0;
@@ -1248,6 +1251,7 @@
 
 -(void) infiniteBorderCollisionWith:(CCSprite *) shipToCollideWith withObject:(int) index
 {
+    
     float c1radius = [infiniteBorderPowerUp1 boundingBox].size.width/2; // circle 1 radius
     float c2radius = [shipToCollideWith boundingBox].size.width/2; // circle 2 radius
     //        float c2radius = c.contentSize.width/2;
@@ -1257,6 +1261,11 @@
     float cdistance = sqrtf((distX * distX) + (distY * distY));
     
     if (cdistance <= cradii) {
+        if (p2Enabled == true) { // if the sprite is already paused, prevent it from getting stuck in the shield
+            [shipToCollideWith resumeSchedulerAndActions];
+        }
+        
+        spriteIsColliding = true;
         id dockInfin = [CCFadeTo actionWithDuration:0.1f opacity:0];
         id grantPoints = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteArrayPoints)];
         id removeSpriteInfin = [CCCallFuncN actionWithTarget:self selector:@selector(removeArraySprite:)];
@@ -1279,6 +1288,7 @@
     //    NSLog(@"SPRITE REMOVED");
     playerScore += scoreAdd;
     [self removeChild:sender cleanup:YES];
+    spriteIsColliding = false;
     numSpritesCollidedWithShield++;
     //    if (numSpritesCollidedWithShield == [section1Ships count]) {
     //        numSpritesCollidedWithShield = 0;
@@ -1342,15 +1352,17 @@
     if (numPower2Left > 0) {
         if (numTimesP2Used > 0) {
             if (p2Enabled == false) {
-                [self flashLabel:@"PROJECTILES PAUSED" actionWithDuration:1.5f color:@"red"];
-                id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
-                id delayShip = [CCDelayTime actionWithDuration:1.5f];
-                id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
-                CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
-                numPower2Left -= 1;
-                numTimesP2Used-=1;
-                [self runAction:powerUp2Seq];
-                [self updateScore];
+                if (spriteIsColliding == false) {
+                    [self flashLabel:@"PROJECTILES PAUSED" actionWithDuration:1.5f color:@"red"];
+                    id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
+                    id delayShip = [CCDelayTime actionWithDuration:1.5f];
+                    id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
+                    CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
+                    numPower2Left -= 1;
+                    numTimesP2Used-=1;
+                    [self runAction:powerUp2Seq];
+                    [self updateScore];
+                }
             }
         }
     } else {
@@ -2231,21 +2243,21 @@
         // speed and fruit initialization delay modified by score
         if (playerScore < 20) {
             initDelayInFrames = 1; // there is only one sprite on screen, so there is no need to have a delay between initializations
-            shipSpeed = 6.0f;
+            shipSpeed = 5.5f;
             // by default the numSpritesPerArray is set to 1
         }
         
         if (playerScore > 20) {
             
-            initDelayInFrames = 80; //deviceFPS * 1.33333f; //80;
-            shipSpeed = 6.0f;
+            initDelayInFrames = 60; //deviceFPS * 1.33333f; //80;
+            shipSpeed = 5.0f;
             numSpritesPerArray = 2;
             
         }
         
         if (playerScore > 50) {
             
-            shipSpeed = 5.5f;
+            shipSpeed = 5.0f;
             numSpritesPerArray = 3;
             
         }
@@ -2259,9 +2271,9 @@
         
         if (playerScore > 200) {
             
-            initDelayInFrames = 70; //deviceFPS * 1.16666667f; //70; // if the FPS is 60 the commented out numbers would make sense
+            initDelayInFrames = 60; //deviceFPS * 1.16666667f; //70; // if the FPS is 60 the commented out numbers would make sense
             numSpritesPerArray = 6;
-            shipSpeed = 5.0f;
+            shipSpeed = 4.7f;
             
         }
         
@@ -2269,7 +2281,7 @@
             
             initDelayInFrames = 60; //deviceFPS; //60;
             numSpritesPerArray = 6;
-            shipSpeed = 4.5f;
+            shipSpeed = 4.2f;
             
         }
         
@@ -2277,7 +2289,7 @@
             
             initDelayInFrames = 50; //deviceFPS * 0.91666667f; //55;
             numSpritesPerArray = 7;
-            shipSpeed = 4.3f;
+            shipSpeed = 4.2f;
             
         }
         
@@ -2327,7 +2339,7 @@
         {
             initDelayInFrames = 32; //deviceFPS * 0.53333333f; //32;
             numSpritesPerArray = 13;
-            shipSpeed = 4.1f;
+            shipSpeed = 3.0f;
         }
         
         
@@ -2363,7 +2375,7 @@
     } else {
         
         if (framesPassed < 300) {
-            shipSpeed = 2.5f;
+            shipSpeed = 3.0f;
             if (oniPad == true) {
                 initDelayInFrames = 15;
             } else {
@@ -2380,14 +2392,14 @@
         }
         
         if (framesPassed > 600) {
-            shipSpeed = 2.5f;
+            shipSpeed = 3.0f;
             spiralIncrement = 127;
 //            initDelayInFrames = 30 ;
 //            numSpritesPerArray = 10;
         }
         
         if (framesPassed > 900) {
-            shipSpeed = 2.5f;
+            shipSpeed = 3.0f;
             spiralIncrement = 167;
 //            initDelayInFrames = 15;
 //            initDelayInFrames = 35;
@@ -2402,7 +2414,7 @@
         }
         
         if (framesPassed > 1500) {
-            shipSpeed = 2.0f;
+            shipSpeed = 2.5f;
             if (oniPad == true) {
                 initDelayInFrames = 10;
             } else {
@@ -2414,21 +2426,21 @@
         }
         
         if (framesPassed > 1800) {
-            shipSpeed = 2.0f;
+            shipSpeed = 2.5f;
             spiralIncrement = 287;
 //            initDelayInFrames = 25;
 //            numSpritesPerArray = 27;
         }
         
         if (framesPassed > 2100) {
-            shipSpeed = 2.0f;
+            shipSpeed = 2.5f;
             initDelayInFrames = 10;
             spiralIncrement = 327;
 //            numSpritesPerArray = 35;
         }
         
         if (framesPassed > 2400) {
-            shipSpeed = 1.5f;
+            shipSpeed = 2.0f;
 //            initDelayInFrames = 10;
             spiralIncrement = 327;
             //            numSpritesPerArray = 35;
@@ -2570,9 +2582,10 @@
     
     startDbTapCheck = false;
     
+    spriteIsColliding = false;
     
     oniPad = false;
-    spiralIncrement = 47;
+    spiralIncrement = 37;
     explodedAlready = false;
     numLivesForSpiral = 1;
     p1Enabled = false;
@@ -2585,7 +2598,7 @@
     updateMoveCounter = false;
     gameOver = false;
     // reset all game variables
-    shipSpeed = 7.5f; // default speed
+    shipSpeed = 6.5f; // default speed
     playerScore = 0;
     startLives = 10;
     playerLives = 10;

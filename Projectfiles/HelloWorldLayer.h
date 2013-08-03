@@ -253,6 +253,8 @@
     float playerMomentum;
     
     int velocityFrames;
+    
+    bool spriteIsColliding;
 }
 
 +(id)scene;

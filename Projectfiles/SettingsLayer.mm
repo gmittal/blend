@@ -15,7 +15,7 @@
 {
 	if ((self = [super init]))
 	{
-        glClearColor(0.0, 0.75, 1.0, 1.0);
+        glClearColor(0.91, 0.92, 0.91, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"SETTINGS" fontName:@"NexaBold" fontSize:36];
@@ -96,7 +96,7 @@
         [self addChild:background z:-100];
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+//            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
         
     }

@@ -257,6 +257,20 @@
     bool spriteIsColliding;
     
     CCLabelBMFont *furyLabel;
+    
+    bool p1Locked;
+    bool p2Locked;
+    bool p3Locked;
+    
+    bool p1Tutorial;
+    bool p2Tutorial;
+    bool p3Tutorial;
+    
+    int numRoundsPlayed;
+    
+    CCSprite *power1Display;
+    CCSprite *power2Display;
+    CCSprite *power3Display;
 }
 
 +(id)scene;

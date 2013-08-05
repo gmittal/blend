@@ -311,7 +311,7 @@
         
         powerUpBorder1 = [[CCMenuItemImage alloc] init];
         powerUpBorder1 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
-                                                selectedImage: @"PowerupBorder.png"
+                                                selectedImage: @"PowerupBorderSel.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp1)];
 //        powerUpBorder1.position = ccp(size.width/3 - 53, 20);
@@ -319,7 +319,7 @@
         
         powerUpBorder2 = [[CCMenuItemImage alloc] init];
         powerUpBorder2 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
-                                                selectedImage: @"PowerupBorder.png"
+                                                selectedImage: @"PowerupBorderSel.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp2)];
 //        powerUpBorder2.position = ccp(size.width/2, 20);
@@ -327,7 +327,7 @@
         
         powerUpBorder3 = [[CCMenuItemImage alloc] init];
         powerUpBorder3 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
-                                                selectedImage: @"PowerupBorder.png"
+                                                selectedImage: @"PowerupBorderSel.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp3)];
 //        powerUpBorder3.position = ccp(size.width/1.5 + 53, 20);
@@ -453,7 +453,8 @@
 //            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
 //        [self enableSpiralEffect];
-        
+
+         NSLog(@"Round: %i", numRoundsPlayed);
 	}
     
 	return self;
@@ -473,18 +474,26 @@
 {
     if (playedTutorial == false) {
         playedTutorial = true;
+//        p1Locked = true;
+//        p2Locked = true;
+//        p3Locked = true;
+        
+        
         id delay = [CCDelayTime actionWithDuration:5.0f];
         id part1 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial1)];
         id part2 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial2)];
         id part3 = [CCCallFunc actionWithTarget:self selector:@selector(tutorial3)];
         id cleanupTutorial = [CCCallFunc actionWithTarget:self selector:@selector(hideAllTutorialSprites)];
-        CCSequence *tutorialSeq = [CCSequence actions:part1, delay, part2, delay, part3, delay, cleanupTutorial, delay, nil];
+        CCSequence *tutorialSeq = [CCSequence actions:part1, delay, part2, delay, cleanupTutorial, delay, nil];
         [self runAction:tutorialSeq];
         
         [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
+//        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"p2Stats"];
+//        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"p3Stats"];
     }
     
-    
+    [self updatePowerups];
+
 }
 
 -(void) tutorial1
@@ -497,6 +506,10 @@
 {
     rotateArrow.visible = false;
     [self flashLabel:@"Match the colors!" actionWithDuration:5.0f color:@"black"];
+
+    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:20]];
+//    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:10]];
+    
 }
 
 -(void) tutorial3
@@ -510,6 +523,78 @@
     powerupArrow.visible = false;
     rotateArrow.visible = false;
 }
+
+-(void) hidePowerTutorialSprite:(CCSprite *) spriteTohide
+{
+    spriteTohide.visible = false;
+}
+
+-(void) updatePowerups
+{
+    if (p1Locked == true) {
+        powerUpCreator1.visible = false;
+        CCSprite *lockedPowerup1 = [CCSprite spriteWithFile:@"lock.png"];
+        lockedPowerup1.position = powerUpCreator1.position;
+        lockedPowerup1.scale = powerUpCreator1.scale + 0.15f;
+        [self addChild:lockedPowerup1 z:powerUpCreator1.zOrder];
+        numPower1Left = 0;
+    }
+    
+    if (p1Locked == false) {
+        if (numRoundsPlayed == 1) {
+        [self flashLabel:@"New powerup! \n Try and see what it does!" actionWithDuration:5.0f color:@"black"];
+        CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+        power1Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
+        power1Display.position = ccp(powerUpCreator1.position.x + 20, 95);
+        [self addChild:power1Display z:1000];
+        [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power1Display afterDelay:5.0f];
+        }
+    }
+    
+    if (p2Locked == true) {
+        powerUpCreator2.visible = false;
+        CCSprite *lockedPowerup2 = [CCSprite spriteWithFile:@"lock.png"];
+        lockedPowerup2.position = powerUpCreator2.position;
+        lockedPowerup2.scale = powerUpCreator2.scale + 0.15f;
+        [self addChild:lockedPowerup2 z:powerUpCreator2.zOrder];
+        numPower2Left = 0;
+    }
+    
+    if (p2Locked == false) {
+        if (numRoundsPlayed == 2) {
+            [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
+            CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+            power2Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(149,0,34,50)];
+            power2Display.position = ccp(powerUpCreator2.position.x + 20, 95);
+            [self addChild:power2Display z:1000];
+            [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power2Display afterDelay:5.0f];
+        }
+    }
+    
+    if (p3Locked == true) {
+        powerUpCreator3.visible = false;
+        CCSprite *lockedPowerup3 = [CCSprite spriteWithFile:@"lock.png"];
+        lockedPowerup3.position = powerUpCreator3.position;
+        lockedPowerup3.scale = powerUpCreator3.scale + 0.15f;
+        [self addChild:lockedPowerup3 z:powerUpCreator3.zOrder];
+        numPower3Left = 0;
+    }
+    
+    if (p3Locked == false) {
+        if (numRoundsPlayed == 3) {
+            [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
+            CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+            power3Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
+            power3Display.position = ccp(powerUpCreator3.position.x + 20, 95);
+            [self addChild:power3Display z:1000];
+            [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power3Display afterDelay:5.0f];
+        }
+    }
+    
+    [self updateScore];
+}
+
+
 
 -(void) killGrass
 {
@@ -599,7 +684,7 @@
 
 -(void) runEffect
 {
-    [[SimpleAudioEngine sharedEngine] playEffect:@"gameover1.mp3"];
+//    [[SimpleAudioEngine sharedEngine] playEffect:@"gameover1.mp3"];
 	// remove any previous particle FX
     //	[self removeChildByTag:7 cleanup:YES];
 	
@@ -1317,9 +1402,9 @@
 -(void) enablePowerUp1
 {
     // powerup that allows any ship to go ANYWHERE on the player and still grant points
-    
     if (numPower1Left > 0) {
         if (numTimesP1Used > 0) {
+            if (p1Locked == false) {
             if (p1Enabled == false) {
                 [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:timeShieldEnabled color:@"red"];
                 id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
@@ -1330,6 +1415,7 @@
                 numTimesP1Used-=1;
                 [self runAction:powerUp1Seq];
                 [self updateScore];
+            }
             }
         }
     } else {
@@ -1360,22 +1446,24 @@
 {
     if (numPower2Left > 0) {
         if (numTimesP2Used > 0) {
-            if (p2Enabled == false) {
-                if (spriteIsColliding == false) {
-                    [self flashLabel:@"PROJECTILES PAUSED" actionWithDuration:1.5f color:@"red"];
-                    id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
-                    id delayShip = [CCDelayTime actionWithDuration:1.5f];
-                    id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
-                    CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
-                    numPower2Left -= 1;
-                    numTimesP2Used-=1;
-                    [self runAction:powerUp2Seq];
-                    [self updateScore];
+            if (p2Locked == false) {
+                if (p2Enabled == false) {
+                    if (spriteIsColliding == false) {
+                        [self flashLabel:@"PROJECTILES PAUSED" actionWithDuration:1.5f color:@"red"];
+                        id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
+                        id delayShip = [CCDelayTime actionWithDuration:1.5f];
+                        id resumeShip = [CCCallFunc actionWithTarget:self selector:@selector(shipResumeAllActions)];
+                        CCSequence *powerUp2Seq = [CCSequence actions:stopShip, delayShip, resumeShip, nil];
+                        numPower2Left -= 1;
+                        numTimesP2Used-=1;
+                        [self runAction:powerUp2Seq];
+                        [self updateScore];
+                    }
                 }
             }
         }
-    } else {
-        // do nothing
+} else {
+    // do nothing
     }
     
 }
@@ -1387,6 +1475,7 @@
         
         
         if (numTimesP3Used > 0) {
+            if (p3Locked == false) {
             if (p3Enabler == false) {
                 [self flashLabel:@"MULTIPLIER BOOST!" actionWithDuration:5.0f color:@"red"];
                 
@@ -1400,6 +1489,7 @@
                 numTimesP3Used -= 1;
                 
                 [self updateScore];
+            }
             }
         }
 
@@ -2737,6 +2827,38 @@
     
     NSNumber *curCoins = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
     playerCoins = [curCoins intValue]; // read from devices memory
+    
+    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"p1Stats"] == nil) {
+//        p1Locked = true;
+//    } else {
+        p1Locked = [[NSUserDefaults standardUserDefaults] boolForKey:@"p1Stats"];
+    
+//    }
+    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"p2Stats"] == nil) {
+//        p2Locked = true;
+//    } else {
+        p2Locked = [[NSUserDefaults standardUserDefaults] boolForKey:@"p2Stats"];
+//    }
+    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"p3Stats"] == nil) {
+//        p3Locked = true;
+//    } else {
+        p3Locked = [[NSUserDefaults standardUserDefaults] boolForKey:@"p3Stats"];
+//    }
+    
+    if (playedTutorial == false) {
+        p1Locked = true;
+        p2Locked = true;
+        p3Locked = true;
+    }
+    
+    p1Tutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"p1Tutorial"];
+    p2Tutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"p2Tutorial"];
+    p3Tutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"p3Tutorial"];
+    
+    numRoundsPlayed = [[NSUserDefaults standardUserDefaults] integerForKey:@"roundsPlayed"];
 }
 
 -(void) gameOver
@@ -2780,6 +2902,34 @@
         [MGWU setObject:sharedCoins forKey:@"sharedCoins"];
     }
     
+    
+    if (p1Locked == true) {
+        p1Locked = false;
+        p2Locked = true;
+        p3Locked = true;
+    }
+    
+    if (numRoundsPlayed == 1) {
+        p1Locked = false;
+        p2Locked = false;
+        p3Locked = true;
+    }
+    
+    if (numRoundsPlayed == 2) {
+        p1Locked = false;
+        p2Locked = false;
+        p3Locked = false;
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:p1Locked forKey:@"p1Stats"];
+    [[NSUserDefaults standardUserDefaults] setBool:p2Locked forKey:@"p2Stats"];
+    [[NSUserDefaults standardUserDefaults] setBool:p3Locked forKey:@"p3Stats"];
+    
+//    if (p1Tutorial == false && p1Locked == false) {
+//        p1Tutorial = true;
+//        [[NSUserDefaults standardUserDefaults] setBool:p1Tutorial forKey:@"p1Tutorial"];
+//    }
+    
     [[NSUserDefaults standardUserDefaults] setInteger:numPower1Left forKey:@"power1Status"];
     [[NSUserDefaults standardUserDefaults] setInteger:numPower2Left forKey:@"power2Status"];
     [[NSUserDefaults standardUserDefaults] setInteger:numPower3Left forKey:@"power3Status"];
@@ -2788,6 +2938,9 @@
     //    NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     //    NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     //    [MGWU submitHighScore:[savedHighScore intValue] byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
+    
+    numRoundsPlayed++;
+    [[NSUserDefaults standardUserDefaults] setInteger:numRoundsPlayed forKey:@"roundsPlayed"];
     
     [self goToGameOver];
 }

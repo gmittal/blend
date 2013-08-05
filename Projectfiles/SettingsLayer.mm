@@ -143,6 +143,13 @@
     [MGWU removeObjectForKey:@"sharedScore"]; // reset last played score
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"tutorialStatus"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p1Stats"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p2Stats"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p3Stats"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p1Tutorial"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p2Tutorial"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p3Tutorial"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"roundsPlayed"];
     
     [MGWU showMessage:@"All game data has been reset." withImage:nil];
 }

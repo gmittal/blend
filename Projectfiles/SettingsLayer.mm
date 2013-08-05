@@ -150,6 +150,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p2Tutorial"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"p3Tutorial"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"roundsPlayed"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"falseCollisions"];
     
     [MGWU showMessage:@"All game data has been reset." withImage:nil];
 }

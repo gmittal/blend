@@ -444,6 +444,13 @@
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
         
+        CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+        multiplierPointer = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
+        multiplierPointer.position = ccp(multiplierWrapper.position.x + 40, multiplierWrapper.position.y - 40);
+        multiplierPointer.rotation = 180;
+        [self addChild:multiplierPointer z:multiplierWrapper.zOrder];
+        multiplierPointer.visible = false;
+        
         
         [self scheduleUpdate]; // schedule the framely update
         
@@ -538,20 +545,25 @@
         lockedPowerup1.scale = powerUpCreator1.scale + 0.15f;
         [self addChild:lockedPowerup1 z:powerUpCreator1.zOrder];
         numPower1Left = 0;
+//        powerUpCreator1.isEnabled = false;
+//        powerUpBorder1.isEnabled = false;
+        powerUpBorder1.isEnabled = false;
     }
     
     if (p1Locked == false) {
         if (numRoundsPlayed == 1) {
-        [self flashLabel:@"New powerup! \n Try and see what it does!" actionWithDuration:5.0f color:@"black"];
-        CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
-        power1Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
-        power1Display.position = ccp(powerUpCreator1.position.x + 20, 95);
-        [self addChild:power1Display z:1000];
-        [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power1Display afterDelay:5.0f];
+                powerUpBorder1.isEnabled = true;
+                [self flashLabel:@"New powerup! \n Try and see what it does!" actionWithDuration:5.0f color:@"black"];
+                CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+                power1Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
+                power1Display.position = ccp(powerUpCreator1.position.x + 20, 95);
+                [self addChild:power1Display z:1000];
+                [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power1Display afterDelay:5.0f];
         }
     }
     
     if (p2Locked == true) {
+        powerUpBorder2.isEnabled = false;
         powerUpCreator2.visible = false;
         CCSprite *lockedPowerup2 = [CCSprite spriteWithFile:@"lock.png"];
         lockedPowerup2.position = powerUpCreator2.position;
@@ -562,6 +574,7 @@
     
     if (p2Locked == false) {
         if (numRoundsPlayed == 2) {
+            powerUpBorder2.isEnabled = true;
             [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
             CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
             power2Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(149,0,34,50)];
@@ -572,6 +585,7 @@
     }
     
     if (p3Locked == true) {
+        powerUpBorder3.isEnabled = false;
         powerUpCreator3.visible = false;
         CCSprite *lockedPowerup3 = [CCSprite spriteWithFile:@"lock.png"];
         lockedPowerup3.position = powerUpCreator3.position;
@@ -582,6 +596,7 @@
     
     if (p3Locked == false) {
         if (numRoundsPlayed == 3) {
+            powerUpBorder3.isEnabled = true;
             [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
             CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
             power3Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
@@ -1098,6 +1113,7 @@
 {
     pointMultiplier -= multiplierDecrease;
     numLivesForSpiral -= 1;
+    numFalseCollisions++;
 }
 
 -(void) rewardPlayer
@@ -1422,6 +1438,10 @@
         // do nothing
     }
     
+    if (p1Locked == true) {
+        [MGWU showMessage:@"You cannot unlock this powerup until you have played 1 round." withImage:nil];
+    }
+    
 }
 
 -(void) addInfiniteBorder
@@ -1466,6 +1486,9 @@
     // do nothing
     }
     
+    if (p2Locked == true) {
+        [MGWU showMessage:@"You cannot unlock this powerup until you have played 2 rounds." withImage:nil];
+    }
 }
 
 
@@ -1495,6 +1518,10 @@
 
     } else {
         // do nothing
+    }
+    
+    if (p3Locked == true) {
+        [MGWU showMessage:@"You cannot unlock this powerup until you have played 3 rounds." withImage:nil];
     }
 }
 
@@ -2063,6 +2090,14 @@
 
 -(void) updateScore
 {
+    
+    if (numFalseCollisions == 1) {
+        //        [self unscheduleAllSelectors];
+//        [self flashLabel:@"Your multiplier acts as your lives." actionWithDuration:5.0f color:@"black"];
+//        multiplierPointer.visible = true;
+//        [self performSelector:@selector(multiplierTutorial) withObject:nil afterDelay:5.0f];
+//        [self performSelector:@selector(removePointerSprite) withObject:nil afterDelay:10.0f];
+    }
 //    if ((framesPassed % 10) == 0) {
 //    while (playerScore < targetScore) {
 //        playerScore += 1;
@@ -2096,8 +2131,21 @@
         //        [warningLabel runAction:[CCFadeOut actionWithDuration:0.5f]];
         warningLabel.visible = false;
     }
+    
+
+    
 }
 
+-(void) multiplierTutorial
+{
+    [self flashLabel:@"If it reaches zero... FURY MODE!" actionWithDuration:5.0f color:@"black"];
+}
+
+-(void) removePointerSprite
+{
+    multiplierPointer.visible = false;
+//    [self scheduleUpdate];
+}
 
 -(void) updateEffectPositions
 {
@@ -2859,6 +2907,8 @@
     p3Tutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"p3Tutorial"];
     
     numRoundsPlayed = [[NSUserDefaults standardUserDefaults] integerForKey:@"roundsPlayed"];
+    
+    numFalseCollisions = [[NSUserDefaults standardUserDefaults] integerForKey:@"falseCollisions"];
 }
 
 -(void) gameOver
@@ -2941,6 +2991,9 @@
     
     numRoundsPlayed++;
     [[NSUserDefaults standardUserDefaults] setInteger:numRoundsPlayed forKey:@"roundsPlayed"];
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:numFalseCollisions forKey:@"falseCollisions"];
+    
     
     [self goToGameOver];
 }

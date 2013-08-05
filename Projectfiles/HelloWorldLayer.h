@@ -271,6 +271,13 @@
     CCSprite *power1Display;
     CCSprite *power2Display;
     CCSprite *power3Display;
+    
+    bool p1TutorialRunning;
+    bool p2TutorialRunning;
+    bool p3TutorialRunning;
+    
+    int numFalseCollisions;
+    CCSprite *multiplierPointer;
 }
 
 +(id)scene;

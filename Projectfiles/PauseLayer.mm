@@ -98,6 +98,11 @@
         background.position = screenCenter;
         [self addChild:background z:-100];
         
+        
+//        CCLayerColor *c; //= [CCLayerColor layerWithColor:0x000000ff];
+//        [self addChild:c];
+//        [c setOpacity:128];
+        
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
 //            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }

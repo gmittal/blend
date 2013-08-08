@@ -480,7 +480,7 @@
 -(void) startTutorial
 {
     if (playedTutorial == false) {
-        playedTutorial = true;
+//        playedTutorial = true;
 //        p1Locked = true;
 //        p2Locked = true;
 //        p3Locked = true;
@@ -494,7 +494,7 @@
         CCSequence *tutorialSeq = [CCSequence actions:part1, delay, part2, delay, cleanupTutorial, delay, nil];
         [self runAction:tutorialSeq];
         
-        [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
+        
 //        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"p2Stats"];
 //        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"p3Stats"];
     }
@@ -514,9 +514,9 @@
     rotateArrow.visible = false;
     [self flashLabel:@"Match the colors!" actionWithDuration:5.0f color:@"black"];
 
-    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:20]];
+//    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:20]];
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:10]];
-    
+    [self oscillateEffect:[section1Ships objectAtIndex:[section1Ships count] - 1]];
 }
 
 -(void) tutorial3
@@ -538,6 +538,13 @@
 
 -(void) updatePowerups
 {
+    if (oniPad == true) {
+        powerUpCreator1.position = ccp(size.width/3 - 65, 20);
+        powerUpCreator2.position = ccp(size.width/2 - 85, 20);
+        powerUpCreator3.position = ccp(size.width/1.5 - 105, 20);
+        powerUpCreatorsMenu.position = ccp(size.width/2-320, 0);
+    }
+    
     if (p1Locked == true) {
         powerUpCreator1.visible = false;
         CCSprite *lockedPowerup1 = [CCSprite spriteWithFile:@"lock.png"];
@@ -799,6 +806,11 @@
         
         
         if (distance <= radii) { // did the two circles collide at all??
+            
+            if (p2Enabled == true) { // if the sprite is already paused, prevent it from getting stuck in the shield
+                [tempSprite resumeSchedulerAndActions];
+            }
+            
             spriteIsColliding = true;
             
             
@@ -2720,6 +2732,15 @@
     return currentDevice;
 }
 
+-(void) oscillateEffect:(CCSprite *) spriteToOscillate
+{
+    id fadeOut = [CCFadeOut actionWithDuration:0.25f];
+    id fadeIn = [CCFadeIn actionWithDuration:0.25f];
+    CCSequence *fadeInAndOut = [CCSequence actions:fadeOut, fadeIn, nil];
+    id repeat = [CCRepeat actionWithAction:fadeInAndOut times:20];
+    [spriteToOscillate runAction:repeat];
+}
+
 -(void) furyLabel:(NSString *) stringToFlashOnScreen actionWithDuration:(float) numSecondsToFlash
 {
     [furyLabel setString:stringToFlashOnScreen];
@@ -2988,6 +3009,11 @@
     //    NSNumber *savedHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     //    NSString *savedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     //    [MGWU submitHighScore:[savedHighScore intValue] byPlayer:savedUser forLeaderboard:@"defaultLeaderboard"];
+    
+    if (playedTutorial == false) {
+        playedTutorial = true;
+        [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
+    }
     
     numRoundsPlayed++;
     [[NSUserDefaults standardUserDefaults] setInteger:numRoundsPlayed forKey:@"roundsPlayed"];

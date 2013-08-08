@@ -16,15 +16,21 @@
 	if ((self = [super init]))
 	{
 //        glClearColor(0.0, 0.75, 1.0, 1.0);
-        glClearColor(0.91, 0.92, 0.91, 1.0);
-        CGSize screenSize = [[CCDirector sharedDirector] winSize];
-        CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
+//        glClearColor(0.91, 0.92, 0.91, 1.0);
+        
+        // set background color
+//        CCLayerColor* colorLayer = [CCLayerColor layerWithColor:ccc4(255,255,255,0)];
+//        [self addChild:colorLayer z:-100];
+        
+        
+        screenSize = [[CCDirector sharedDirector] winSize];
+        screenCenter = [[CCDirector sharedDirector] screenCenter];
         CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"THE ELEMENTS" fontName:@"NexaBold" fontSize:36];
         gameTitle.color = ccc3(0,0,0);
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 140);
 //        [self addChild:gameTitle];
         
-        CCSprite *titleSprite = [CCSprite spriteWithFile:@"title_logo.png"];
+        titleSprite = [CCSprite spriteWithFile:@"title_logo.png"];
         
         
         id dropdown;
@@ -77,35 +83,43 @@
         [store setFontSize:25];
         store.color = ccc3(0, 0, 0);
         
-        CCLabelTTF *aboutLabel = [CCLabelTTF labelWithString:@"About" fontName:@"NexaBold" fontSize:22];
+        
+        
+        aboutLabel = [CCLabelTTF labelWithString:@"About" fontName:@"NexaBold" fontSize:22];
 //        [about setFontName:@"Roboto-Light"];
 //        [about setFontSize:25];
 //        about.color = ccc3(0, 0, 0);
         aboutLabel.position = ccp(screenCenter.x, screenCenter.y - 300);
-        [self addChild:aboutLabel z:7];
+        
         CCMenuItemFont *about = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(about)];
         about.scale = 1.5f;
+//        [about addChild:aboutLabel z:7];
         
-        
-        CCLabelTTF *promoLabel = [CCLabelTTF labelWithString:@"More Games" fontName:@"NexaBold" fontSize:19];
+        promoLabel = [CCLabelTTF labelWithString:@"More Games" fontName:@"NexaBold" fontSize:19];
         //        [about setFontName:@"Roboto-Light"];
         //        [about setFontSize:25];
         //        about.color = ccc3(0, 0, 0);
         promoLabel.position = ccp(screenCenter.x, screenCenter.y - 350);
-        [self addChild:promoLabel z:7];
+        
         
         
         CCMenuItemFont *crosspromo = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(moreGames)];
         crosspromo.scale = 1.5f;
+        
+        
+        //
 //        [crosspromo setFontName:@"Roboto-Light"];
 //        [crosspromo setFontSize:25];
-//        crosspromo.color = ccc3(0, 0, 0);
+//
         
-        CCMenu *startMenu = [CCMenu menuWithItems:playNow, about, crosspromo, nil];
+        
+        //        crosspromo.color = ccc3(0, 0, 0);
+        startMenu = [CCMenu menuWithItems:playNow, about, crosspromo, nil];
         [startMenu alignItemsVertically];
         startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 300);
         [self addChild:startMenu];
-        
+        [self addChild:promoLabel z:7];
+        [self addChild:aboutLabel z:7];
         
         id dropup = [CCMoveTo actionWithDuration:0.5f position:ccp(screenSize.width/2, screenSize.height/2 - 30)];
         id menujump = [CCJumpBy actionWithDuration:0.5f position:CGPointZero height:0 jumps:1];
@@ -140,7 +154,7 @@
         }
         
         background.position = screenCenter;
-//        [self addChild:background z:-100];
+        [self addChild:background z:-100];
         
         // iPhone 5 Optimizations
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136)
@@ -172,10 +186,32 @@
 
 -(void) startGame
 {
-    [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionZoomFlipAngular transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
+    id moveOut = [CCCallFunc actionWithTarget:self selector:@selector(moveItemsOut)];
+    id delay = [CCDelayTime actionWithDuration:0.3f];
+    id transition = [CCCallFunc actionWithTarget:self selector:@selector(startTransition)];
+    CCSequence *start = [CCSequence actions:moveOut, delay, transition, nil];
+    [self runAction:start];
+//	 [CCTransitionZoomFlipAngular transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
+
+-(void) moveItemsOut
+{
+//    [self removeChild:aboutLabel cleanup:YES];
+//    [self removeChild:promoLabel cleanup:YES];
+    [titleSprite runAction:[CCMoveTo actionWithDuration:0.4f position:ccp(screenSize.width/2, screenSize.height + 100)]];
+//    [startMenu runAction:[CCMoveTo actionWithDuration:0.4f position:ccp(screenSize.width/2, -100)]];
+    [startMenu runAction:[CCFadeOut actionWithDuration:0.2f]];
+    [aboutLabel runAction:[CCFadeOut actionWithDuration:0.2f]];
+    [promoLabel runAction:[CCFadeOut actionWithDuration:0.2f]];
+}
+
+-(void) startTransition
+{
+    [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
+}
+
+
 
 -(void) gameStats
 {

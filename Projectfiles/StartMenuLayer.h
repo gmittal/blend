@@ -14,5 +14,13 @@
 #import "SettingsLayer.h"
 
 @interface StartMenuLayer : CCScene
-
+{
+    CCSprite *titleSprite;
+    CGSize screenSize;
+    CGPoint screenCenter;
+    CCMenu *startMenu;
+    CCLabelTTF *promoLabel;
+    CCLabelTTF *aboutLabel;
+    
+}
 @end

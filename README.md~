@@ -1,10 +1,6 @@
-The Elements
+Juicemania
 =================
 
-Created by Gautam Mittal in collaboration with MakeGamesWithUs ([makegameswith.us](http://www.makegameswith.us)).
+Created by Gautam Mittal in collaboration with MakeGamesWithUs.
 
-
-<br />
-<br />
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
-
+To learn more on building your own awesome iPhone game, check out <a href="http://www.makegameswith.us/">www.makegameswith.us</a>

@@ -269,9 +269,11 @@
             powerUpCreator2.position = ccp(size.width/2 - 85, 20);
             powerUpCreator3.position = ccp(size.width/1.5 - 105, 20);
             powerUpCreatorsMenu.position = ccp(size.width/2-320, 0);
+            
         }
         
         [self addChild:powerUpCreatorsMenu z:5 tag:10];
+//        [self updatePowerups];
         
         // init pausebutton
         pauseButton = [[CCSprite alloc] init];
@@ -462,6 +464,8 @@
 //        [self enableSpiralEffect];
 
          NSLog(@"Round: %i", numRoundsPlayed);
+         NSLog(@"Current Device: %@", [self deviceInfo]);
+         NSLog(oniPad ? @"true" : @"false");
 	}
     
 	return self;
@@ -498,9 +502,7 @@
 //        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"p2Stats"];
 //        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"p3Stats"];
     }
-    
     [self updatePowerups];
-
 }
 
 -(void) tutorial1
@@ -538,6 +540,11 @@
 
 -(void) updatePowerups
 {
+    if ([[self deviceInfo] isEqualToString:@"iPad"] || [[self deviceInfo] isEqualToString:@"iPad Retina"])
+    {
+        oniPad = true;
+    }
+    
     if (oniPad == true) {
         powerUpCreator1.position = ccp(size.width/3 - 65, 20);
         powerUpCreator2.position = ccp(size.width/2 - 85, 20);
@@ -548,13 +555,18 @@
     if (p1Locked == true) {
         powerUpCreator1.visible = false;
         CCSprite *lockedPowerup1 = [CCSprite spriteWithFile:@"lock.png"];
-        lockedPowerup1.position = powerUpCreator1.position;
+        
+        if (oniPad == true) {
+            lockedPowerup1.position = ccp(size.width/3 + 5, 20);
+        } else {
+            lockedPowerup1.position = powerUpCreator1.position;
+        }
         lockedPowerup1.scale = powerUpCreator1.scale + 0.15f;
         [self addChild:lockedPowerup1 z:powerUpCreator1.zOrder];
         numPower1Left = 0;
 //        powerUpCreator1.isEnabled = false;
 //        powerUpBorder1.isEnabled = false;
-        powerUpBorder1.isEnabled = false;
+//        powerUpBorder1.isEnabled = false;
     }
     
     if (p1Locked == false) {
@@ -570,10 +582,15 @@
     }
     
     if (p2Locked == true) {
-        powerUpBorder2.isEnabled = false;
+//        powerUpBorder2.isEnabled = false;
         powerUpCreator2.visible = false;
         CCSprite *lockedPowerup2 = [CCSprite spriteWithFile:@"lock.png"];
-        lockedPowerup2.position = powerUpCreator2.position;
+        
+        if (oniPad == true) {
+            lockedPowerup2.position = ccp(size.width/2 - 15, 20);
+        } else {
+            lockedPowerup2.position = powerUpCreator2.position;
+        }
         lockedPowerup2.scale = powerUpCreator2.scale + 0.15f;
         [self addChild:lockedPowerup2 z:powerUpCreator2.zOrder];
         numPower2Left = 0;
@@ -592,10 +609,15 @@
     }
     
     if (p3Locked == true) {
-        powerUpBorder3.isEnabled = false;
+//        powerUpBorder3.isEnabled = false;
         powerUpCreator3.visible = false;
         CCSprite *lockedPowerup3 = [CCSprite spriteWithFile:@"lock.png"];
-        lockedPowerup3.position = powerUpCreator3.position;
+        
+        if (oniPad == true) {
+            lockedPowerup3.position = ccp(size.width/1.5 - 35, 20);
+        } else {
+            lockedPowerup3.position = powerUpCreator3.position;
+        }
         lockedPowerup3.scale = powerUpCreator3.scale + 0.15f;
         [self addChild:lockedPowerup3 z:powerUpCreator3.zOrder];
         numPower3Left = 0;
@@ -2774,7 +2796,7 @@
 ////     [self removeAllSpritesFromArray];
 ////        [section1Ships removeAllObjects];
 //    }
-    [self enablePowerUp2]; // pause all ships
+//    [self enablePowerUp2]; // pause all ships
     
 
     
@@ -2808,7 +2830,7 @@
     
     spriteIsColliding = false;
     
-    oniPad = false;
+//    oniPad = false;
     spiralIncrement = 37;
     explodedAlready = false;
     numLivesForSpiral = 1;
@@ -2934,6 +2956,7 @@
 
 -(void) gameOver
 {
+    player.scale = 0.0f;
 //    if ([section1Ships count] > 0) {
 //        [section1Ships removeAllObjects];
 //    }

@@ -271,7 +271,7 @@
 
 -(void) shareTweet
 {
-    NSString *messageToShare = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of The Elements! @makegameswithus", endingScore];
+    NSString *messageToShare = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of Blend! @makegameswithus", endingScore];
     if ([MGWU isTwitterActive] == true) {
         [MGWU postToTwitter:messageToShare];
     } else {
@@ -287,12 +287,12 @@
 -(void) shareFB
 {
     NSString *caption = @"Try and beat this awesome score!";
-    NSString *messageToPost = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of The Elements! #makegameswithus", endingScore];
+    NSString *messageToPost = [[NSString alloc] initWithFormat:@"Just got a score of %i in an awesome game of Blend! #makegameswithus", endingScore];
     if ([MGWU isFacebookActive] == true) {
-        [MGWU shareWithTitle:@"The Elements" caption:caption andDescription:messageToPost];
+        [MGWU shareWithTitle:@"Blend" caption:caption andDescription:messageToPost];
     } else {
         [MGWU loginToFacebook];
-        [MGWU shareWithTitle:@"The Elements" caption:caption andDescription:messageToPost];
+        [MGWU shareWithTitle:@"Blend" caption:caption andDescription:messageToPost];
     }
 }
 

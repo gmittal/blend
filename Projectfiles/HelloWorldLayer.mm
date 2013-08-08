@@ -1650,7 +1650,7 @@
     shipColor = color;
     
     if (createSpiralEffectWithCoords == true) {
-        shipColor = 1;
+        shipColor = furyColor;
     }
 }
 
@@ -2073,8 +2073,18 @@
     if (createSpiralEffectWithCoords == false) {
         
         [self removeAllSpritesFromArray];
-                createSpiralEffectWithCoords = true;
-        randGeneratedAngle = section1StartAngle + 60;
+        createSpiralEffectWithCoords = true;
+        
+        if (furyColor == 1) {
+            randGeneratedAngle = section1StartAngle + 60;
+        } else if (furyColor == 2)
+        {
+            randGeneratedAngle = section2StartAngle + 60;
+        } else if (furyColor == 3) {
+            randGeneratedAngle = section3StartAngle + 60;
+        }
+        
+        
         numLivesForSpiral = 1;
         framesPassed = 0;
         
@@ -2825,6 +2835,8 @@
 -(void) resetVariables
 {
 //    playerVelocity = 100.0f;
+    
+    furyColor = (arc4random()%(3-1+1))+1;
     
     startDbTapCheck = false;
     

@@ -278,6 +278,8 @@
     
     int numFalseCollisions;
     CCSprite *multiplierPointer;
+    
+    int furyColor;
 }
 
 +(id)scene;

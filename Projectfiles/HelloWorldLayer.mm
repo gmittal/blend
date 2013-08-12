@@ -80,7 +80,7 @@
         player.position = ccp(size.width/2, size.height/2);
         player.scale = 0.7f;
         playerWidth = [player boundingBox].size.width; // get player width
-        [self addChild:player z:20];
+        [self addChild:player z:55];
         //        [player runAction:explode];
         
         
@@ -967,6 +967,13 @@
                 }
             }
             
+            int actionsCount = [tempSprite numberOfRunningActions];
+            
+//            if (actionsCount == 0) {
+//                [self removeArraySprite:tempSprite]
+//                [circle2 removeObjectAtIndex:i];
+//            }
+            
             if (pointMultiplier <= 0) {
                 pointMultiplier = 0;
                 [tempSprite stopAction:shipMove];
@@ -1556,6 +1563,9 @@
     if (oniPad == true) {
         infiniteBorderPowerUp1.scale = 2.7f;
     }
+    
+//    infiniteBorderPowerUp1.visible = true;
+    infiniteBorderPowerUp1.opacity = 255;
     
     [self performSelector:@selector(stutterInfiniteBorder) withObject:nil afterDelay:timeShieldEnabled - 1.5f];
 }
@@ -2855,11 +2865,13 @@
 -(void) makeFlashLabelVisible
 {
     screenflashLabel.visible = true;
+    screenflashLabel.opacity = 255;
 }
 
 -(void) makeFlashLabelInvisible
 {
     screenflashLabel.visible = false;
+    [screenflashLabel stopAllActions];
 }
 
 -(NSString *) deviceInfo

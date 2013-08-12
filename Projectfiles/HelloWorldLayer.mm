@@ -466,6 +466,12 @@
          NSLog(@"Round: %i", numRoundsPlayed);
          NSLog(@"Current Device: %@", [self deviceInfo]);
          NSLog(oniPad ? @"true" : @"false");
+        
+        if (numRoundsPlayed == 0) {
+            invinciblePlayer = true;
+        }
+        
+        [self performSelector:@selector(notInvincible) withObject:nil afterDelay:10.0f];
 	}
     
 	return self;
@@ -479,7 +485,10 @@
     return scene;
 }
 
-
+-(void) notInvincible
+{
+    invinciblePlayer = false;
+}
 
 -(void) startTutorial
 {
@@ -513,12 +522,43 @@
 
 -(void) tutorial2
 {
+    matchColorsTutorial = true;
     rotateArrow.visible = false;
     [self flashLabel:@"Match the colors!" actionWithDuration:5.0f color:@"black"];
 
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:20]];
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:10]];
-    [self oscillateEffect:[section1Ships objectAtIndex:[section1Ships count] - 1]];
+    [self oscillateEffect:[section1Ships objectAtIndex:[section1Ships count] - 1] times:20];
+    
+    CCSprite *tempSprite = [section1Ships objectAtIndex:[section1Ships count] - 1];
+    
+//    while (matchColorsTutorial == true) {
+    if (tempSprite.tag == 1) {
+        [section2 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"hidden.png"]];
+        [section3 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"hidden.png"]];
+//        [self oscillateEffect:section1 times:5];
+        
+    } else if (tempSprite.tag == 2) {
+        [section1 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"hidden.png"]];
+        [section3 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"hidden.png"]];
+//        [self oscillateEffect:section2 times:5];
+//        section2.visible = false;
+    } else if (tempSprite.tag == 3) {
+        [section2 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"hidden.png"]];
+        [section1 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"hidden.png"]];
+//        [self oscillateEffect:section3 times:5];
+    }
+    
+    [self performSelector:@selector(restoreSectorTextures) withObject:nil afterDelay:5.0f];
+//    }
+
+}
+
+-(void) restoreSectorTextures
+{
+    [section1 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"element1.png"]];
+    [section2 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"element2.png"]];
+    [section3 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"element3.png"]];
 }
 
 -(void) tutorial3
@@ -575,7 +615,10 @@
                 [self flashLabel:@"New powerup! \n Try and see what it does!" actionWithDuration:5.0f color:@"black"];
                 CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
                 power1Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
-                power1Display.position = ccp(powerUpCreator1.position.x + 20, 95);
+                power1Display.position = ccp(powerUpCreator1.position.x + 30, 95);
+                if (oniPad == true) {
+                    power1Display.position = ccp(powerUpCreator1.position.x + 70, 95);
+                }
                 [self addChild:power1Display z:1000];
                 [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power1Display afterDelay:5.0f];
         }
@@ -602,7 +645,10 @@
             [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
             CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
             power2Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(149,0,34,50)];
-            power2Display.position = ccp(powerUpCreator2.position.x + 20, 95);
+            power2Display.position = ccp(powerUpCreator2.position.x + 30, 95);
+            if (oniPad == true) {
+                power2Display.position = ccp(powerUpCreator2.position.x + 70, 95);
+            }
             [self addChild:power2Display z:1000];
             [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power2Display afterDelay:5.0f];
         }
@@ -629,7 +675,10 @@
             [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
             CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
             power3Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
-            power3Display.position = ccp(powerUpCreator3.position.x + 20, 95);
+            power3Display.position = ccp(powerUpCreator3.position.x + 30, 95);
+            if (oniPad == true) {
+                power3Display.position = ccp(powerUpCreator3.position.x + 70, 95);
+            }
             [self addChild:power3Display z:1000];
             [self performSelector:@selector(hidePowerTutorialSprite:) withObject:power3Display afterDelay:5.0f];
         }
@@ -1145,9 +1194,20 @@
 
 -(void) penalizePlayer
 {
-    pointMultiplier -= multiplierDecrease;
-    numLivesForSpiral -= 1;
-    numFalseCollisions++;
+    if (invinciblePlayer == false) {
+        pointMultiplier -= multiplierDecrease;
+        numLivesForSpiral -= 1;
+        numFalseCollisions++;
+    }
+    
+    if (numFalseCollisions == 1 && multiplierTutorialShown == false) {
+//        [self unscheduleUpdate];
+        [self unschedule:@selector(initializeTheShipArray:)];
+        [self flashLabel:@"\n Your multiplier acts as your lives." actionWithDuration:5.0f color:@"black"];
+        multiplierPointer.visible = true;
+        [self performSelector:@selector(multiplierTutorial) withObject:nil afterDelay:5.0f];
+//        [self performSelector:@selector(removePointerSprite) withObject:nil afterDelay:10.0f];
+    }
 }
 
 -(void) rewardPlayer
@@ -2182,12 +2242,14 @@
 
 -(void) multiplierTutorial
 {
-    [self flashLabel:@"If it reaches zero... FURY MODE!" actionWithDuration:5.0f color:@"black"];
+//    [self flashLabel:@"If it reaches zero... FURY MODE!" actionWithDuration:5.0f color:@"black"];
+    [self removePointerSprite];
 }
 
 -(void) removePointerSprite
 {
     multiplierPointer.visible = false;
+    [self schedule:@selector(initializeTheShipArray:)];
 //    [self scheduleUpdate];
 }
 
@@ -2405,10 +2467,17 @@
 
 
     if (input.touchesAvailable == true) {
-//        userIsTapping = true;
-        userIsTapping = false;
+        userIsTapping = true;
+//        userIsTapping = false;
 //        playerVelocity = 6.0f;
+//        speedIncrement += 0.1;
+        
+        
     } else {
+//        speedIncrement -= 0.2;
+//        if (speedIncrement <= 0) {
+//            speedIncrement = 0;
+//        }
         userIsTapping = false;
     }
 
@@ -2764,12 +2833,12 @@
     return currentDevice;
 }
 
--(void) oscillateEffect:(CCSprite *) spriteToOscillate
+-(void) oscillateEffect:(CCSprite *) spriteToOscillate times:(int) iterations
 {
     id fadeOut = [CCFadeOut actionWithDuration:0.25f];
     id fadeIn = [CCFadeIn actionWithDuration:0.25f];
     CCSequence *fadeInAndOut = [CCSequence actions:fadeOut, fadeIn, nil];
-    id repeat = [CCRepeat actionWithAction:fadeInAndOut times:20];
+    id repeat = [CCRepeat actionWithAction:fadeInAndOut times:iterations];
     [spriteToOscillate runAction:repeat];
 }
 
@@ -2924,6 +2993,9 @@
         playedTutorial = [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialStatus"];
     }
     
+    if (playedTutorial == false) {
+        multiplierTutorialShown = false;
+    }
     
     NSNumber *curHighScore = [MGWU objectForKey:@"sharedHighScore"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedHighScore"];
     playerHighScore = [curHighScore intValue]; // read from the devices memory
@@ -3058,7 +3130,7 @@
     
     [self goToGameOver];
 }
-
+    
 -(void) pauseGame
 {
     [[CCDirector sharedDirector] pushScene:
@@ -3120,6 +3192,7 @@
 {
     deviceFPS = 1/dt;
     
+//    player.rotation += speedIncrement;
     
     if (playerScore < targetScore) {
         int increment = (targetScore - playerScore)/2;
@@ -3144,7 +3217,7 @@
         if (playerVelocity <= 0) {
             playerVelocity = 0.0f;
         } else {
-            playerVelocity -= 0.5f;
+            playerVelocity -= 0.25f;
         }
     }
     

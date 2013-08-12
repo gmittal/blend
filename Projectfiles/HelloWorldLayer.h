@@ -280,6 +280,14 @@
     CCSprite *multiplierPointer;
     
     int furyColor;
+    
+    float speedIncrement;
+    
+    bool matchColorsTutorial;
+    
+    bool invinciblePlayer;
+    
+    bool multiplierTutorialShown;
 }
 
 +(id)scene;

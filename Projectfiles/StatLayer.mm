@@ -545,6 +545,7 @@ CGSize screenSize;
 
 - (void)loginToFB
 {
+    [userStatus setString:@"Not logged in to Facebook"];
     UIAlertView *alert = [[UIAlertView alloc] init];
     [alert setTitle:@"Login to Facebook"];
     [alert setMessage:@"You must be logged into Facebook for this leaderboard to be displayed. Log into Facebook?"];
@@ -560,11 +561,15 @@ CGSize screenSize;
     if (buttonIndex == 0)
     {
         [MGWU loginToFacebook];
+        [[CCDirector sharedDirector] replaceScene:[StatLayer node]];
+//        [self getScores];
 //        [self selfDestruct];
     }
     else if (buttonIndex == 1)
     {
 //        [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+        [userStatus setString:@"Not logged in to Facebook"];
+        
     }
 }
 

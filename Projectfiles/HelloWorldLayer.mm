@@ -472,6 +472,16 @@
         }
         
         [self performSelector:@selector(notInvincible) withObject:nil afterDelay:10.0f];
+        
+        if (numRoundsPlayed == 4) {
+            // the user has successfully completed the tutorial
+            [MGWU showMessage:@"Tutorial complete! Here are 5 of each powerup." withImage:nil];
+            numPower1Left = 5;
+            numPower2Left = 5;
+            numPower3Left = 5;
+            [self updateScore];
+        }
+        
 	}
     
 	return self;
@@ -528,7 +538,7 @@
 
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:20]];
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:10]];
-    [self oscillateEffect:[section1Ships objectAtIndex:[section1Ships count] - 1] times:20];
+    [self oscillateEffect:[section1Ships objectAtIndex:[section1Ships count] - 1] times:20 speed:0.25f];
     
     CCSprite *tempSprite = [section1Ships objectAtIndex:[section1Ships count] - 1];
     
@@ -594,7 +604,7 @@
     
     if (p1Locked == true) {
         powerUpCreator1.visible = false;
-        CCSprite *lockedPowerup1 = [CCSprite spriteWithFile:@"lock.png"];
+        lockedPowerup1 = [CCSprite spriteWithFile:@"lock.png"];
         
         if (oniPad == true) {
             lockedPowerup1.position = ccp(size.width/3 + 5, 20);
@@ -612,7 +622,7 @@
     if (p1Locked == false) {
         if (numRoundsPlayed == 1) {
                 powerUpBorder1.isEnabled = true;
-                [self flashLabel:@"New powerup! \n Try and see what it does!" actionWithDuration:5.0f color:@"black"];
+                [self flashLabel:@"This your shield. \n You can use 5 per round. \n Tap it to try it out." actionWithDuration:5.0f color:@"black"];
                 CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
                 power1Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
                 power1Display.position = ccp(powerUpCreator1.position.x + 30, 95);
@@ -627,7 +637,7 @@
     if (p2Locked == true) {
 //        powerUpBorder2.isEnabled = false;
         powerUpCreator2.visible = false;
-        CCSprite *lockedPowerup2 = [CCSprite spriteWithFile:@"lock.png"];
+        lockedPowerup2 = [CCSprite spriteWithFile:@"lock.png"];
         
         if (oniPad == true) {
             lockedPowerup2.position = ccp(size.width/2 - 15, 20);
@@ -642,7 +652,7 @@
     if (p2Locked == false) {
         if (numRoundsPlayed == 2) {
             powerUpBorder2.isEnabled = true;
-            [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
+            [self flashLabel:@"This pauses the projectiles. \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
             CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
             power2Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(149,0,34,50)];
             power2Display.position = ccp(powerUpCreator2.position.x + 30, 95);
@@ -657,7 +667,7 @@
     if (p3Locked == true) {
 //        powerUpBorder3.isEnabled = false;
         powerUpCreator3.visible = false;
-        CCSprite *lockedPowerup3 = [CCSprite spriteWithFile:@"lock.png"];
+        lockedPowerup3 = [CCSprite spriteWithFile:@"lock.png"];
         
         if (oniPad == true) {
             lockedPowerup3.position = ccp(size.width/1.5 - 35, 20);
@@ -672,7 +682,7 @@
     if (p3Locked == false) {
         if (numRoundsPlayed == 3) {
             powerUpBorder3.isEnabled = true;
-            [self flashLabel:@"Another powerup! \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
+            [self flashLabel:@"\n This your multiplier boost.\n It increases your multiplier +1 \n per correct fruit.\n Tap it to try it!" actionWithDuration:8.0f color:@"black"];
             CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
             power3Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
             power3Display.position = ccp(powerUpCreator3.position.x + 30, 95);
@@ -692,7 +702,7 @@
 -(void) killGrass
 {
     burnGrass = [CCParticleFire node];
-	[progressBar3 addChild:burnGrass z:1101];
+//	[progressBar3 addChild:burnGrass z:1101];
     burnGrass.visible = true;
     grassBeingKilled = true;
     fireBeingKilled = false;
@@ -701,7 +711,7 @@
 
 -(void) removeGrassEffect
 {
-    [progressBar3 removeChild:burnGrass];
+//    [progressBar3 removeChild:burnGrass];
     burnGrass.visible = false;
     grassBeingKilled = false;
 }
@@ -710,7 +720,7 @@
 -(void) killFire
 {
     snuffedFire = [CCParticleFire node];
-	[progressBar1 addChild:snuffedFire z:1101];
+//	[progressBar1 addChild:snuffedFire z:1101];
     snuffedFire.visible = true;
     grassBeingKilled = false;
     fireBeingKilled = true;
@@ -719,7 +729,7 @@
 
 -(void) removeFireEffect
 {
-    [progressBar1 removeChild:snuffedFire];
+//    [progressBar1 removeChild:snuffedFire];
     snuffedFire.visible = false;
     fireBeingKilled = false;
 }
@@ -728,7 +738,7 @@
 -(void) killWater
 {
     dryWater = [CCParticleFire node];
-	[progressBar2 addChild:dryWater z:1101];
+//	[progressBar2 addChild:dryWater z:1101];
     dryWater.visible = true;
     grassBeingKilled = false;
     fireBeingKilled = false;
@@ -736,7 +746,7 @@
 
 -(void) removeWaterEffect
 {
-    [progressBar2 removeChild:dryWater];
+//    [progressBar2 removeChild:dryWater];
     dryWater.visible = false;
     waterBeingKilled = false;
 }
@@ -1546,6 +1556,13 @@
     if (oniPad == true) {
         infiniteBorderPowerUp1.scale = 2.7f;
     }
+    
+    [self performSelector:@selector(stutterInfiniteBorder) withObject:nil afterDelay:timeShieldEnabled - 1.5f];
+}
+
+-(void) stutterInfiniteBorder
+{
+    [self oscillateEffect:infiniteBorderPowerUp1 times:5 speed:0.17f];
 }
 
 -(void) removeInfiniteBorder
@@ -1622,6 +1639,7 @@
 -(void) enableShipMultiplierIncrease
 {
     p3Enabler = true;
+    [self performSelector:@selector(stutterLabel) withObject:nil afterDelay:3.5f];
 }
 
 -(void) disableShipMultiplierIncrease
@@ -1645,6 +1663,13 @@
     //    [ship3 pauseSchedulerAndActions];
     //    [ship2 pauseSchedulerAndActions];
     
+    [self performSelector:@selector(stutterLabel) withObject:nil afterDelay:1.0];
+    
+}
+
+-(void) stutterLabel
+{
+    [self oscillateEffect:screenflashLabel times:5 speed:0.17];
 }
 
 -(void) shipResumeAllActions
@@ -2131,6 +2156,28 @@
 -(void) enableSpiralEffect
 {
     if (createSpiralEffectWithCoords == false) {
+        
+        [powerUpCreator1 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [powerUpCreator2 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [powerUpCreator3 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [powerUpBorder1 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [powerUpBorder2 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [powerUpBorder3 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [lockedPowerup1 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [lockedPowerup2 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [lockedPowerup3 runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [power1Left runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [power2Left runAction:[CCFadeOut actionWithDuration:0.5f]];
+        [power3Left runAction:[CCFadeOut actionWithDuration:0.5f]];
+
+        powerUpCreator1.isEnabled = false;
+        powerUpCreator2.isEnabled = false;
+        powerUpCreator3.isEnabled = false;
+        powerUpBorder1.isEnabled = false;
+        powerUpBorder2.isEnabled = false;
+        powerUpBorder3.isEnabled = false;
+        
+        
         
         [self removeAllSpritesFromArray];
         createSpiralEffectWithCoords = true;
@@ -2833,10 +2880,10 @@
     return currentDevice;
 }
 
--(void) oscillateEffect:(CCSprite *) spriteToOscillate times:(int) iterations
+-(void) oscillateEffect:(CCNode *) spriteToOscillate times:(int) iterations speed:(float) speedInSeconds
 {
-    id fadeOut = [CCFadeOut actionWithDuration:0.25f];
-    id fadeIn = [CCFadeIn actionWithDuration:0.25f];
+    id fadeOut = [CCFadeOut actionWithDuration:speedInSeconds];
+    id fadeIn = [CCFadeIn actionWithDuration:speedInSeconds];
     CCSequence *fadeInAndOut = [CCSequence actions:fadeOut, fadeIn, nil];
     id repeat = [CCRepeat actionWithAction:fadeInAndOut times:iterations];
     [spriteToOscillate runAction:repeat];

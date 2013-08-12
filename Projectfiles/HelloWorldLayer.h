@@ -288,6 +288,10 @@
     bool invinciblePlayer;
     
     bool multiplierTutorialShown;
+    
+    CCSprite *lockedPowerup1;
+    CCSprite *lockedPowerup2;
+    CCSprite *lockedPowerup3;
 }
 
 +(id)scene;

@@ -233,6 +233,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"username"];
         if (endingHighScore != 0 || endingHighScore != nil) {
             [MGWU submitHighScore:endingHighScore byPlayer:result forLeaderboard:@"defaultLeaderboard"];
+            [self confirmHighScore];
         }
     }
 }
@@ -267,6 +268,17 @@
     [alert addButtonWithTitle:@"OK"];
     [alert show];
 }
+
+-(void) confirmHighScore
+{
+    UIAlertView *highscore = [[UIAlertView alloc] init];
+    [highscore setTitle:@"Success!"];
+    [highscore setMessage:@"Your username was submitted along with this round's score."];
+    [highscore setDelegate:self];
+    [highscore addButtonWithTitle:@"OK"];
+    [highscore show];
+}
+
 
 
 -(void) shareTweet

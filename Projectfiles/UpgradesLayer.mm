@@ -174,7 +174,7 @@
             numPower1 += 1;
             [[NSUserDefaults standardUserDefaults] setInteger:numPower1 forKey:@"power1Status"];
             
-            [MGWU showMessage:@"1 Energy Shield Bought" withImage:nil];
+//            [MGWU showMessage:@"1 Energy Shield Bought" withImage:nil];
             [self updateString];
         }
     }
@@ -193,7 +193,7 @@
             numPower2 += 1;
             [[NSUserDefaults standardUserDefaults] setInteger:numPower2 forKey:@"power2Status"];
             
-            [MGWU showMessage:@"1 Delay Drone Bought" withImage:nil];
+//            [MGWU showMessage:@"1 Delay Drone Bought" withImage:nil];
             [self updateString];
         }
     }
@@ -214,7 +214,7 @@
             numPower3 += 1;
             [[NSUserDefaults standardUserDefaults] setInteger:numPower3 forKey:@"power3Status"];
             
-            [MGWU showMessage:@"1 Multiplier Boost Bought" withImage:nil];
+//            [MGWU showMessage:@"1 Multiplier Boost Bought" withImage:nil];
             [self updateString];
         }
     }

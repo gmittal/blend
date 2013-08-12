@@ -365,12 +365,15 @@
         [self setDimensionsInPixelsOnSprite:multiplierWrapper width:70 height:70];
         [self addChild:multiplierWrapper z:scoreLabel.zOrder];
         
+        multiplierWrapperColor = multiplierWrapper.color;
+        
         multiplierString = [[NSString alloc] initWithFormat:@"x%i", pointMultiplier];
         multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:25];
         multiplierLabel.position = ccp(multiplierWrapper.position.x + 10, multiplierWrapper.position.y - 3);
         multiplierLabel.color = ccc3(255,255,255);
         //        multiplierLabel.anchorPoint = ccp(0.0f,0.5f); // left justify
         [self addChild:multiplierLabel z:scoreLabel.zOrder+1];
+        
         
         
         enemyShip1 = [[CCSprite alloc] init];
@@ -1197,17 +1200,30 @@
     if (p3Enabler == true) {
         // if the powerup is enabled, do this
         pointMultiplier +=1;
+        [self tintMultiplier:ccc3(0, 255, 0)];
         numHitsUntilNextMultiplier = 0;
     } else {
         // if the powerup is not enabled do this
         if (numHitsUntilNextMultiplier >= pointMultiplier) {
             numHitsUntilNextMultiplier = 0;
             pointMultiplier += 1;
+            [self tintMultiplier:ccc3(0, 255, 0)];
         }
     }
     }
 }
 
+
+-(void) tintMultiplier:(ccColor3B) color
+{
+    [multiplierWrapper runAction:[CCTintTo actionWithDuration:0.1f red:color.r green:color.g blue:color.g]];
+    [self performSelector:@selector(restoreMultiplierWrapper) withObject:nil afterDelay:0.15];
+}
+
+-(void) restoreMultiplierWrapper
+{
+    [multiplierWrapper runAction:[CCTintTo actionWithDuration:0.1f red:multiplierWrapperColor.r green:multiplierWrapperColor.g blue:multiplierWrapperColor.b]];
+}
 
 -(void) penalizePlayer
 {
@@ -1215,6 +1231,7 @@
         pointMultiplier -= multiplierDecrease;
         numLivesForSpiral -= 1;
         numFalseCollisions++;
+        [self tintMultiplier:ccc3(255, 0, 0)];
     }
     
     if (numFalseCollisions == 1 && multiplierTutorialShown == false) {

@@ -294,6 +294,9 @@
     CCSprite *lockedPowerup3;
     
     ccColor3B multiplierWrapperColor;
+    ccColor3B sector1Color;
+    ccColor3B sector2Color;
+    ccColor3B sector3Color;
 }
 
 +(id)scene;

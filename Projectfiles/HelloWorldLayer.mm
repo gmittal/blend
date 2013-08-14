@@ -163,6 +163,10 @@
         [progressBar2 runAction:progressTo2];
         [progressBar3 runAction:progressTo3];
         
+        sector1Color = section1.color;
+        sector2Color = section2.color;
+        sector3Color = section3.color;
+        
         // score label
         score = [[NSString alloc]initWithFormat:@"%i", playerScore];
         scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
@@ -475,15 +479,6 @@
         }
         
         [self performSelector:@selector(notInvincible) withObject:nil afterDelay:10.0f];
-        
-        if (numRoundsPlayed == 4) {
-            // the user has successfully completed the tutorial
-            [MGWU showMessage:@"Tutorial complete! Here are 5 of each powerup." withImage:nil];
-            numPower1Left = 5;
-            numPower2Left = 5;
-            numPower3Left = 5;
-            [self updateScore];
-        }
         
 	}
     
@@ -1225,6 +1220,29 @@
     [multiplierWrapper runAction:[CCTintTo actionWithDuration:0.1f red:multiplierWrapperColor.r green:multiplierWrapperColor.g blue:multiplierWrapperColor.b]];
 }
 
+-(void) tintSector:(ccColor3B) color
+{
+    CCSprite *tmp = [section1Ships objectAtIndex:[section1Ships count] - 1];
+    if (tmp.tag == 1) {
+        [section1 runAction:[CCTintTo actionWithDuration:0.1f red:color.r green:color.g blue:color.g]];
+    } else if (tmp.tag == 2) {
+        [section2 runAction:[CCTintTo actionWithDuration:0.1f red:color.r green:color.g blue:color.g]];
+    } else if (tmp.tag == 3) {
+        [section3 runAction:[CCTintTo actionWithDuration:0.1f red:color.r green:color.g blue:color.g]];
+    }
+    [self performSelector:@selector(restoreColoredSector) withObject:nil afterDelay:0.15];
+}
+
+-(void) restoreColoredSector
+{
+    
+    [section1 runAction:[CCTintTo actionWithDuration:0.1f red:sector1Color.r green:sector1Color.g blue:sector1Color.b]];
+    [section2 runAction:[CCTintTo actionWithDuration:0.1f red:sector2Color.r green:sector2Color.g blue:sector2Color.b]];
+    [section3 runAction:[CCTintTo actionWithDuration:0.1f red:sector3Color.r green:sector3Color.g blue:sector3Color.b]];
+    
+}
+
+
 -(void) penalizePlayer
 {
     if (invinciblePlayer == false) {
@@ -1232,6 +1250,7 @@
         numLivesForSpiral -= 1;
         numFalseCollisions++;
         [self tintMultiplier:ccc3(255, 0, 0)];
+//        [self tintSector:ccc3(255, 0, 0)];
     }
     
     if (numFalseCollisions == 1 && multiplierTutorialShown == false) {
@@ -3036,27 +3055,28 @@
     multiplierDecrease = 1;
     
     // grab powerup values
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"] == nil) {
-        numPower1Left = 1;
-    } else {
+//    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"] == nil) {
+//        numPower1Left = 1;
+//    } else {
         numPower1Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"];
-    }
+//    }
     
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"] == nil) {
-        numPower2Left = 5;
-    } else {
+//    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"] == nil) {
+//        numPower2Left = 5;
+//    } else {
         numPower2Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"];
-    }
+//    }
     
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"] == nil) {
-        numPower3Left = 3;
-    } else {
+//    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"] == nil) {
+//        numPower3Left = 3;
+//    } else {
         numPower3Left = [[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"];
-    }
+//    }
     
-    numTimesP1Used = 5;
-    numTimesP2Used = numPower2Left;
-    numTimesP3Used = numPower3Left;
+    
+    
+    
+    
     
     timeShieldEnabled = 10.0f;
     
@@ -3112,6 +3132,35 @@
     numRoundsPlayed = [[NSUserDefaults standardUserDefaults] integerForKey:@"roundsPlayed"];
     
     numFalseCollisions = [[NSUserDefaults standardUserDefaults] integerForKey:@"falseCollisions"];
+    
+    if (numRoundsPlayed == 1) {
+        numPower1Left = 1;
+        numPower2Left = 0;
+        numPower3Left = 0;
+    }
+    
+    if (numRoundsPlayed == 2) {
+        numPower2Left = 5;
+        numPower3Left = 0;
+    }
+    
+    if (numRoundsPlayed == 3) {
+        numPower3Left = 3;
+    }
+    
+    
+    if (numRoundsPlayed == 4) {
+        // the user has successfully completed the tutorial
+        [MGWU showMessage:@"Tutorial complete! Here are 5 of each powerup." withImage:nil];
+        numPower1Left = 5;
+        numPower2Left = 5;
+        numPower3Left = 5;
+        [self updateScore];
+    }
+    
+    numTimesP1Used = 5;
+    numTimesP2Used = numPower2Left;
+    numTimesP3Used = numPower3Left;
 }
 
 -(void) gameOver

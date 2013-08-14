@@ -279,12 +279,24 @@ CGSize screenSize;
         
         label.anchorPoint = ccp(0.0f,0.5f);
         label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
-        label.color = ccc3(0, 0, 0);
+        
+        if ((i % 2) != 0) {
+            label.color = ccc3(0, 0, 0);
+        } else {
+            label.color = ccc3(128, 0, 0); //ccc3(142, 68, 173);
+        }
+        
         [self addChild:label z: 2 tag:i];
         
         scoreLabel.anchorPoint = ccp(1.0f,0.5f);
         scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
-        scoreLabel.color = ccc3(0, 0, 0);
+        
+        if ((i % 2) != 0) {
+            scoreLabel.color = ccc3(0, 0, 0);
+        } else {
+            scoreLabel.color = ccc3(128, 0, 0); //ccc3(142, 68, 173);
+        }
+        
         [self addChild:scoreLabel z: 2 tag:i + 10000];
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
@@ -361,12 +373,20 @@ CGSize screenSize;
             
             label.anchorPoint = ccp(0.0f,0.5f);
             label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
-            label.color = ccc3(0, 0, 0);
+            if ((i % 2) != 0) {
+                label.color = ccc3(0, 0, 0);
+            } else {
+                label.color = ccc3(128, 0, 0); //ccc3(142, 68, 173);
+            }
             [self addChild:label z: 2 tag:i];
             
             scoreLabel.anchorPoint = ccp(1.0f,0.5f);
             scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
-            scoreLabel.color = ccc3(0, 0, 0);
+            if ((i % 2) != 0) {
+                scoreLabel.color = ccc3(0, 0, 0);
+            } else {
+                scoreLabel.color = ccc3(128, 0, 0); //ccc3(142, 68, 173);
+            }
             [self addChild:scoreLabel z: 2 tag:i + 10000];
             
             if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
@@ -437,12 +457,20 @@ CGSize screenSize;
         
         label.anchorPoint = ccp(0.0f,0.5f);
         label.position = ccp(screenSize.width / 2 - 130, screenSize.height - 145 - i * 20);
-        label.color = ccc3(0, 0, 0);
+        if ((i % 2) != 0) {
+            label.color = ccc3(0, 0, 0);
+        } else {
+            label.color = ccc3(128, 0, 0); //ccc3(142, 68, 173);
+        }
         [self addChild:label z: 2 tag:i];
         
         scoreLabel.anchorPoint = ccp(1.0f,0.5f);
         scoreLabel.position = ccp(screenSize.width / 2 + 130, screenSize.height - 147 - i * 20);
-        scoreLabel.color = ccc3(0, 0, 0);
+        if ((i % 2) != 0) {
+            scoreLabel.color = ccc3(0, 0, 0);
+        } else {
+            scoreLabel.color = ccc3(128, 0, 0); //ccc3(142, 68, 173);
+        }
         [self addChild:scoreLabel z: 2 tag:i + 10000];
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {

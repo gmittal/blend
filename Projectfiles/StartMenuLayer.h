@@ -19,6 +19,7 @@
     CGSize screenSize;
     CGPoint screenCenter;
     CCMenu *startMenu;
+    CCLabelTTF *playNow;
     CCLabelTTF *promoLabel;
     CCLabelTTF *aboutLabel;
     

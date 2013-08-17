@@ -72,15 +72,23 @@
         
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         
         
@@ -112,9 +120,13 @@
         endHighScore.color = ccc3(0, 0, 0);
 //        [self addChild:endHighScore];
         
-        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin.png"];
+        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin1.png"];
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+           coinIcon.position = ccp(40, screenSize.height - 40);
+        } else {
         coinIcon.position = ccp(20, screenSize.height - 20);
-        coinIcon.scale = 1.25f;
+        }
+//        coinIcon.scale = 1.25f;
         [self addChild:coinIcon z:1000];
         
         NSNumber *endingCoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
@@ -126,8 +138,15 @@
         
         int endingCoins = [endingCoinNumber intValue];
         NSString *endCoinString = coinStr; //[[NSString alloc] initWithFormat:@"%i", endingCoins];
-        CCLabelBMFont *endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"NexaBold" fontSize:22];
-        endCoins.position = ccp(coinIcon.position.x + 18, screenSize.height - 22);
+        CCLabelBMFont *endCoins;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"NexaBold" fontSize:44];
+            endCoins.position = ccp(coinIcon.position.x + 43, coinIcon.position.y);
+
+        } else {
+            endCoins = [CCLabelTTF labelWithString:endCoinString fontName:@"NexaBold" fontSize:22];
+            endCoins.position = ccp(coinIcon.position.x + 23, screenSize.height - 22);
+        }
         endCoins.color = ccc3(0, 0, 0);
         endCoins.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:endCoins];
@@ -153,19 +172,19 @@
         leaderLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
         upgradesLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 110);
 
-        [self addChild:playAgainLabel z:7];
-        [self addChild:leaderLabel z:7];
-        [self addChild:upgradesLabel z:7];
+//        [self addChild:playAgainLabel z:7];
+//        [self addChild:leaderLabel z:7];
+//        [self addChild:upgradesLabel z:7];
         
-        CCMenuItemImage *playAgain = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(playAgain)];
-        playAgain.scaleY = 1.5f;
-        playAgain.scaleX = 1.8f;
-        CCMenuItemImage *leaderboards = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(statsGame)];
-        leaderboards.scaleY = 1.5f;
-        leaderboards.scaleX = 1.8f;
-        CCMenuItemImage *upgrades = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(gameUpgrades)];
-        upgrades.scaleY = 1.5f;
-        upgrades.scaleX = 1.8f;
+        CCMenuItemImage *playAgain = [CCMenuItemImage itemWithNormalImage:@"playAgain.png" selectedImage:@"playAgainSel.png" target:self selector:@selector(playAgain)];
+        playAgain.scale = 1.25f;
+//        playAgain.scaleX = 1.8f;
+        CCMenuItemImage *leaderboards = [CCMenuItemImage itemWithNormalImage:@"leaderboards.png" selectedImage:@"leaderboardsSel.png" target:self selector:@selector(statsGame)];
+        leaderboards.scale = 1.25f;
+//        leaderboards.scaleX = 1.8f;
+        CCMenuItemImage *upgrades = [CCMenuItemImage itemWithNormalImage:@"upgrades.png" selectedImage:@"upgradesSel.png" target:self selector:@selector(gameUpgrades)];
+        upgrades.scale = 1.25f;
+//        upgrades.scaleX = 1.8f;
 
         CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, leaderboards, upgrades, nil];
         [gameOverMenu alignItemsVertically];
@@ -190,7 +209,7 @@
         // text field that uses an image as background (aka "skinning")
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
-            nameField = [[UITextField alloc] initWithFrame:CGRectMake(screenCenter.x - 125, screenCenter.y - 150, 250, 30)];
+            nameField = [[UITextField alloc] initWithFrame:CGRectMake(screenCenter.x - 125, screenCenter.y - 170, 250, 30)];
             
         } else {
             nameField = [[UITextField alloc] initWithFrame:CGRectMake(35, 180, 250, 30)];
@@ -325,6 +344,11 @@
 	 [CCTransitionCrossFade transitionWithDuration:0.5f scene:[HelloWorldLayer node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
     [nameField removeFromSuperview];
+}
+
++(BOOL) returnBool
+{
+    return true;
 }
 
 @end

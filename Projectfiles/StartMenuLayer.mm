@@ -8,6 +8,7 @@
 
 #import "StartMenuLayer.h"
 #import "SimpleAudioEngine.h"
+//#import "GameOver.h"
 
 @implementation StartMenuLayer
 
@@ -30,16 +31,17 @@
         gameTitle.position = ccp(screenCenter.x, screenCenter.y + 140);
 //        [self addChild:gameTitle];
         
-        titleSprite = [CCSprite spriteWithFile:@"title_logo.png"];
+        titleSprite = [CCSprite spriteWithFile:@"blend_logo.png"];
+//        titleSprite.scale = 0.8f;
         
         
         id dropdown;
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
-            titleSprite.scale = 2.0f;
+//            titleSprite.scale = 1.3f;
             titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);
-            dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 150)];
+            dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 210)];
         } else {
-            titleSprite.scale = 1.0f;
+//            titleSprite.scale = 0.6f;
             titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);
             dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 110)];
         }
@@ -57,12 +59,22 @@
         CCMenu *settingsMenu = [CCMenu menuWithItems:settings, nil];
         [settingsMenu alignItemsHorizontally];
         settingsMenu.position = ccp(screenSize.width - 25, screenSize.height - 25);
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            settingsMenu.position = ccp(screenSize.width - 50, screenSize.height - 50);
+        }
         [self addChild:settingsMenu];
         
         
         
-        CCMenuItemImage *playNow = [CCMenuItemImage itemWithNormalImage:@"playNowButton.png" selectedImage:@"playNowButtonSel.png" target:self selector:@selector(startGame)];
-        playNow.scale = 1.5f;
+        playNow = [CCLabelTTF labelWithString:@"Play Now" fontName:@"NexaBold" fontSize:27];
+        //        [about setFontName:@"Roboto-Light"];
+        //        [about setFontSize:25];
+        //        about.color = ccc3(0, 0, 0);
+        playNow.position = ccp(screenCenter.x, screenCenter.y - 250);
+        playNow.color = ccc3(0, 0, 0);
+        
+        CCMenuItemImage *play = [CCMenuItemImage itemWithNormalImage:@"playNow.png" selectedImage:@"playNowSel.png" target:self selector:@selector(startGame)];
+        play.scale = 1.25f;
 //        [playNow setFontName:@"Roboto-Light"];
 //        [playNow setFontSize:25];
 //        playNow.color = ccc3(0, 0, 0);
@@ -85,26 +97,27 @@
         
         
         
-        aboutLabel = [CCLabelTTF labelWithString:@"About" fontName:@"NexaBold" fontSize:22];
+        aboutLabel = [CCLabelTTF labelWithString:@"About" fontName:@"NexaBold" fontSize:27];
 //        [about setFontName:@"Roboto-Light"];
 //        [about setFontSize:25];
 //        about.color = ccc3(0, 0, 0);
         aboutLabel.position = ccp(screenCenter.x, screenCenter.y - 300);
+        aboutLabel.color = ccc3(0, 0, 0);
         
-        CCMenuItemFont *about = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(about)];
-        about.scale = 1.5f;
+        CCMenuItemFont *about = [CCMenuItemImage itemWithNormalImage:@"about.png" selectedImage:@"aboutSel.png" target:self selector:@selector(about)];
+        about.scale = 1.25f;
 //        [about addChild:aboutLabel z:7];
         
-        promoLabel = [CCLabelTTF labelWithString:@"More Games" fontName:@"NexaBold" fontSize:19];
+        promoLabel = [CCLabelTTF labelWithString:@"More Games" fontName:@"NexaBold" fontSize:25];
         //        [about setFontName:@"Roboto-Light"];
         //        [about setFontSize:25];
         //        about.color = ccc3(0, 0, 0);
         promoLabel.position = ccp(screenCenter.x, screenCenter.y - 350);
+        promoLabel.color = ccc3(0, 0, 0);
         
         
-        
-        CCMenuItemFont *crosspromo = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(moreGames)];
-        crosspromo.scale = 1.5f;
+        CCMenuItemFont *crosspromo = [CCMenuItemImage itemWithNormalImage:@"promo.png" selectedImage:@"promoSel.png" target:self selector:@selector(moreGames)];
+        crosspromo.scale = 1.25f;
         
         
         //
@@ -114,12 +127,14 @@
         
         
         //        crosspromo.color = ccc3(0, 0, 0);
-        startMenu = [CCMenu menuWithItems:playNow, about, crosspromo, nil];
+        startMenu = [CCMenu menuWithItems:play, about, crosspromo, nil];
         [startMenu alignItemsVertically];
         startMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 300);
         [self addChild:startMenu];
-        [self addChild:promoLabel z:7];
-        [self addChild:aboutLabel z:7];
+        
+//        [self addChild:playNow z:7];
+//        [self addChild:promoLabel z:7];
+//        [self addChild:aboutLabel z:7];
         
         id dropup = [CCMoveTo actionWithDuration:0.5f position:ccp(screenSize.width/2, screenSize.height/2 - 30)];
         id menujump = [CCJumpBy actionWithDuration:0.5f position:CGPointZero height:0 jumps:1];
@@ -137,30 +152,49 @@
         
         id dropup2;
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
-            dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 430)];
+            dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 425)];
         } else {
-            dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 160)];
+            dropup2 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 155)];
         }
         
         [promoLabel runAction:dropup2];
+        
+        id dropup3;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            dropup3 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 535)];
+        } else {
+            dropup3 = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, 265)];
+        }
+        
+        [playNow runAction:dropup3];
 
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         // iPhone 5 Optimizations
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136)
         {
+            playNow.position = ccp(playNow.position.x, playNow.position.y + 44);
             aboutLabel.position = ccp(aboutLabel.position.x, aboutLabel.position.y + 44);
             promoLabel.position = ccp(promoLabel.position.x, promoLabel.position.y + 44);
+
         }
         
         if ([MGWU isOpenGraphActive] == false) // toggle open graph on app startup
@@ -173,6 +207,9 @@
 //        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
         }
         
+//        if ([GameOver returnBool] == true) {
+//            NSLog(@"Hi, this actually works!");
+//        }
         
     }
     return self;
@@ -202,6 +239,7 @@
     [titleSprite runAction:[CCMoveTo actionWithDuration:0.4f position:ccp(screenSize.width/2, screenSize.height + 100)]];
 //    [startMenu runAction:[CCMoveTo actionWithDuration:0.4f position:ccp(screenSize.width/2, -100)]];
     [startMenu runAction:[CCFadeOut actionWithDuration:0.2f]];
+    [playNow runAction:[CCFadeOut actionWithDuration:0.2f]];
     [aboutLabel runAction:[CCFadeOut actionWithDuration:0.2f]];
     [promoLabel runAction:[CCFadeOut actionWithDuration:0.2f]];
 }

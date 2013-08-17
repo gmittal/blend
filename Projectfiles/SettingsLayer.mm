@@ -52,48 +52,56 @@
     
         
         
-        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"reset.png" selectedImage:@"reset.png" target:self selector:@selector(resetGameData)];
+        CCMenuItemImage *resetButton = [CCMenuItemImage itemWithNormalImage:@"reset.png" selectedImage:@"resetSel.png" target:self selector:@selector(resetGameData)];
         CCMenu *resetMenu = [CCMenu menuWithItems:resetButton, nil];
         [resetMenu alignItemsVertically];
-        resetMenu.position = ccp(screenCenter.x, screenCenter.y + 80);
+        resetMenu.position = ccp(screenCenter.x, screenCenter.y + [resetButton boundingBox].size.height/2 + 10);
         [self addChild:resetMenu z:1000];
         
         CCLabelBMFont *resetLabel = [CCLabelTTF labelWithString:@"Reset Game Data" fontName:@"Roboto-Light" fontSize:20];
         resetLabel.position = ccp(screenCenter.x, resetMenu.position.y - 70);
         resetLabel.color = ccc3(0, 0, 0);
-        [self addChild:resetLabel];
+//        [self addChild:resetLabel];
         
         
         CCLabelTTF *goBackToHomeLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"NexaBold" fontSize:22];
         goBackToHomeLabel.position = ccp(screenSize.width/2, 40);
-        [self addChild:goBackToHomeLabel z:7];
-        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(goHome)];
-        goBackToHome.scale = 1.5f;
+//        [self addChild:goBackToHomeLabel z:7];
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"back.png" selectedImage:@"backSel.png" target:self selector:@selector(goHome)];
+        goBackToHome.scale = 1.25f;
 //        [goBackToHome setFontName:@"Roboto-Light"];
 //        [goBackToHome setFontSize:25];
 //        goBackToHome.color = ccc3(0, 0, 0);
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
-        goHomeMenu.position = ccp(screenSize.width/2, 40);
+        goHomeMenu.position = ccp(screenSize.width/2, 60);
         [self addChild:goHomeMenu];
         
         CCMenuItemImage *fbLogin = [CCMenuItemImage itemWithNormalImage:@"fblogin.png" selectedImage:@"fbloginSel.png" target:self selector:@selector(loginWithFacebook)];
         CCMenu *facebookLogin = [CCMenu menuWithItems:fbLogin, nil];
         [facebookLogin alignItemsVertically];
-        facebookLogin.position = ccp(screenCenter.x, screenCenter.y - 100);
+        facebookLogin.position = ccp(screenCenter.x, screenCenter.y - [resetButton boundingBox].size.height/2 - 10);
         [self addChild:facebookLogin z:1000];
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
 //            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];

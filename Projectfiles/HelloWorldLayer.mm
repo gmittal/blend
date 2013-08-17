@@ -84,7 +84,7 @@
         //        [player runAction:explode];
         
         
-        section1 = [CCSprite spriteWithFile:@"element1.png"];
+        section1 = [CCSprite spriteWithFile:@"blankelement.png"];
         section1.scale = 0.7f;
         progressBar1 = [CCProgressTimer progressWithSprite:section1];
 //        progressBar1.scale = 0.8f;
@@ -98,7 +98,7 @@
         
 //        section2 = [CCSprite spriteWithFile:@"element2.png"];
         
-        section2 = [CCSprite spriteWithFile:@"element2.png"];
+        section2 = [CCSprite spriteWithFile:@"blankelement.png"];
         section2.scale = 0.7f;
         
         progressBar2 = [CCProgressTimer progressWithSprite:section2];
@@ -110,7 +110,7 @@
         progressBar2.rotation = 120.0f;
         progressTo2 = [CCProgressTo actionWithDuration:1 percent:33.333f];
         
-        section3 = [CCSprite spriteWithFile:@"element3.png"];
+        section3 = [CCSprite spriteWithFile:@"blankelement.png"];
         section3.scale = 0.7f;
         progressBar3 = [CCProgressTimer progressWithSprite:section3];
 //        progressBar3.scale = 0.8f;
@@ -169,9 +169,14 @@
         
         // score label
         score = [[NSString alloc]initWithFormat:@"%i", playerScore];
-        scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
-        scoreLabel.position = ccp(55, size.height - 22);
-        scoreLabel.color = ccc3(0,0,0);
+        if (oniPad == true) {
+            scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:45];
+            scoreLabel.position = ccp(105, size.height - 37);
+        } else {
+            scoreLabel = [CCLabelTTF labelWithString:score fontName:@"Roboto-Light" fontSize:25];
+            scoreLabel.position = ccp(65, size.height - 22);
+        }
+        scoreLabel.color = ccc3(255,255,255);
         scoreLabel.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:scoreLabel z:1001];
         
@@ -346,7 +351,7 @@
         
         // init the border sprite for powerup1
         infiniteBorderPowerUp1 = [[CCSprite alloc] init];
-        infiniteBorderPowerUp1 = [CCSprite spriteWithFile:@"border.png"];
+        infiniteBorderPowerUp1 = [CCSprite spriteWithFile:@"energyshield.png"];
         infiniteBorderPowerUp1.scale = 0;
         infiniteBorderPowerUp1.position = screenCenter;
         
@@ -364,16 +369,22 @@
         screenflashLabel.visible = false;
         
         
-        multiplierWrapper = [CCSprite spriteWithFile:@"multiplier_wrapper.png"];
-        multiplierWrapper.position = ccp(15, size.height - 19);
-        [self setDimensionsInPixelsOnSprite:multiplierWrapper width:70 height:70];
+        multiplierWrapper = [CCSprite spriteWithFile:@"multiplier.png"];
+        multiplierWrapper.position = ccp(20, size.height - 20);
+//        [self setDimensionsInPixelsOnSprite:multiplierWrapper width:70 height:70];
         [self addChild:multiplierWrapper z:scoreLabel.zOrder];
         
         multiplierWrapperColor = multiplierWrapper.color;
         
         multiplierString = [[NSString alloc] initWithFormat:@"x%i", pointMultiplier];
-        multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:25];
-        multiplierLabel.position = ccp(multiplierWrapper.position.x + 10, multiplierWrapper.position.y - 3);
+        if (oniPad == true) {
+            multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:45];
+            multiplierLabel.position = ccp(multiplierWrapper.position.x + 20, scoreLabel.position.y); //multiplierWrapper.position.y - 3);
+        } else {
+            multiplierLabel = [CCLabelTTF labelWithString:multiplierString fontName:@"Roboto-Light" fontSize:25];
+            multiplierLabel.position = ccp(multiplierWrapper.position.x + 10, multiplierWrapper.position.y - 3);
+        }
+//        multiplierLabel.position = ccp(multiplierWrapper.position.x + 10, multiplierWrapper.position.y - 3);
         multiplierLabel.color = ccc3(255,255,255);
         //        multiplierLabel.anchorPoint = ccp(0.0f,0.5f); // left justify
         [self addChild:multiplierLabel z:scoreLabel.zOrder+1];
@@ -389,15 +400,23 @@
         //        [self addChild:topBar z:1000];
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         
         [self divideAngularSections];
@@ -564,9 +583,9 @@
 
 -(void) restoreSectorTextures
 {
-    [section1 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"element1.png"]];
-    [section2 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"element2.png"]];
-    [section3 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"element3.png"]];
+    [section1 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"blankelement.png"]];
+    [section2 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"blankelement.png"]];
+    [section3 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"blankelement.png"]];
 }
 
 -(void) tutorial3
@@ -1824,24 +1843,25 @@
     [self pickColor];
     CCSprite *ship;
     if (shipColor == 1) {
-        ship = [CCSprite spriteWithFile:@"element1.png"];
+        ship = [CCSprite spriteWithFile:@"fruit1.png"];
         ship.tag = 1;
     }
     
     if (shipColor == 2) {
-        ship = [CCSprite spriteWithFile:@"element2.png"];
+        ship = [CCSprite spriteWithFile:@"fruit2.png"];
         ship.tag = 2;
     }
     
     if (shipColor == 3) {
-        ship = [CCSprite spriteWithFile:@"element3.png"];
+        ship = [CCSprite spriteWithFile:@"fruit3.png"];
         ship.tag = 3;
     }
     
-    ship.scale = 0.15f;
+    ship.scale = 1.5f;
     
     if (oniPad == true) {
-        ship.scale = 0.3f;
+//        ship.scale = 0.3f;
+        ship.scale = 1.4f;
     }
     
     [self createShipCoord:ship topBottomChoose:topBottomVariable withColor:ship.tag]; // create coordinate
@@ -3165,6 +3185,7 @@
 
 -(void) gameOver
 {
+    [self unschedule:@selector(initializeTheShipArray:)];
     player.scale = 0.0f;
 //    if ([section1Ships count] > 0) {
 //        [section1Ships removeAllObjects];

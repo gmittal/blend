@@ -65,29 +65,37 @@ CGSize screenSize;
         
         CCLabelTTF *goBackLabel = [CCLabelTTF labelWithString:@"Back" fontName:@"NexaBold" fontSize:22];
         goBackLabel.position = ccp(screenSize.width/2, 40);
-        [self addChild:goBackLabel z:7];
-        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(goHome)];
-        goBackToHome.scale = 1.5f;
+//        [self addChild:goBackLabel z:7];
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"back.png" selectedImage:@"backSel.png" target:self selector:@selector(goHome)];
+        goBackToHome.scale = 1.25f;
 //        [goBackToHome setFontName:@"Roboto-Light"];
 //        [goBackToHome setFontSize:25];
 //        goBackToHome.color = ccc3(0, 0, 0);
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
-        goHomeMenu.position = ccp(screenSize.width/2, 40);
+        goHomeMenu.position = ccp(screenSize.width/2, 50);
         [self addChild:goHomeMenu];
         
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         
         
@@ -227,8 +235,8 @@ CGSize screenSize;
     otherPlayers = [scoreDict objectForKey:@"all"];
     int count = [otherPlayers count];
     
-    if (count > 15) {
-        count = 15;
+    if (count > 10) {
+        count = 10;
     }
     
     for (int i = 0; i < count; i ++)
@@ -325,8 +333,8 @@ CGSize screenSize;
         otherPlayers = [scoreDict objectForKey:@"friends"];
         count = [otherPlayers count];
         
-        if (count > 15) {
-            count = 15;
+        if (count > 10) {
+            count = 10;
         }
         
         for (int i = 0; i < count; i ++)
@@ -408,8 +416,8 @@ CGSize screenSize;
     otherPlayers = [scoreDict objectForKey:@"all"];
     count = [otherPlayers count];
     
-    if (count > 15) {
-        count = 15;
+    if (count > 10) {
+        count = 10;
     }
     
     for (int i = 0; i < count; i ++)

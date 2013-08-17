@@ -56,10 +56,10 @@ CCLabelBMFont *coinsLabel;
 //        [goBackToHome setFontSize:25];
 //        goBackToHome.color = ccc3(0, 0, 0);
         goBackToHomeLabel.position = ccp(screenSize.width/2, 40);
-        [self addChild:goBackToHomeLabel z:7];
+//        [self addChild:goBackToHomeLabel z:7];
         
-        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(goHome)];
-        goBackToHome.scale = 1.5f;
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"back.png" selectedImage:@"backSel.png" target:self selector:@selector(goHome)];
+        goBackToHome.scale = 1.25f;
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
@@ -78,28 +78,28 @@ CCLabelBMFont *coinsLabel;
 //        restoreMenu.position = ccp(screenCenter.x, screenSize.height - 85);
 //        [self addChild:restoreMenu z:1000];
         
-        CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"buy1.png" selectedImage:@"buy1.png" target:self selector:@selector(buyCash1)];
-        BuyCash1Label.scale = 0.5f;
+        CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"coin1000.png" selectedImage:@"coin1000.png" target:self selector:@selector(buyCash1)];
+//        BuyCash1Label.scale = 0.5f;
         
-        CCMenuItemImage *BuyCash2Label = [CCMenuItemImage itemWithNormalImage:@"buy2.png" selectedImage:@"buy2.png" target:self selector:@selector(buyCash2)];
-        BuyCash2Label.scale = 0.5f;
+        CCMenuItemImage *BuyCash2Label = [CCMenuItemImage itemWithNormalImage:@"coin3000.png" selectedImage:@"coin3000.png" target:self selector:@selector(buyCash2)];
+//        BuyCash2Label.scale = 0.5f;
         
         
-        CCMenuItemImage *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"buy3.png" selectedImage:@"buy3.png" target:self selector:@selector(buyCash3)];
-        BuyCash3Label.scale = 0.5f;
+        CCMenuItemImage *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"coin10000.png" selectedImage:@"coin10000.png" target:self selector:@selector(buyCash3)];
+//        BuyCash3Label.scale = 0.5f;
         
         CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"0.99" fontName:@"Roboto-Light" fontSize:18];
-        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 80);
+        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 60);
         price1.color = ccc3(0, 0, 0);
         [self addChild:price1];
 
         CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"1.99" fontName:@"Roboto-Light" fontSize:18];
-        price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 20);
+        price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 10);
         price2.color = ccc3(0, 0, 0);
         [self addChild:price2];
         
         CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"4.99" fontName:@"Roboto-Light" fontSize:18];
-        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 120);
+        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 80);
         price3.color = ccc3(0, 0, 0);
         [self addChild:price3];
         
@@ -109,15 +109,23 @@ CCLabelBMFont *coinsLabel;
         [self addChild:cashStoreMenu];
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         
         
@@ -185,7 +193,7 @@ CCLabelBMFont *coinsLabel;
     }
     
     if (numProduct == 3) {
-        [MGWU showMessage:@"5000 Coins added! Consider this purchase successful." withImage:nil];
+        [MGWU showMessage:@"10,000 Coins added! Consider this purchase successful." withImage:nil];
         [self updateString];
     }
 }

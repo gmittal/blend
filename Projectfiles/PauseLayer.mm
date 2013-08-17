@@ -30,8 +30,15 @@
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = ccp(screenSize.width/2, screenSize.height/2);
         
-        CCLabelTTF* gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"NexaBold" fontSize:50];
-        gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2 + 100);
+        CCLabelTTF* gameOver;
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"NexaBold" fontSize:80];
+            gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2 + 250);
+        } else {
+            gameOver = [CCLabelTTF labelWithString:@"PAUSED" fontName:@"NexaBold" fontSize:50];
+            gameOver.position = CGPointMake(screenSize.width / 2, screenSize.height / 2 + 100);
+        }
+        
         [self addChild:gameOver z:100 tag:100];
         
         // game over label runs 3 different actions at the same time to create the combined effect
@@ -60,25 +67,25 @@
 //        CCRepeatForever* repeatJump = [CCRepeatForever actionWithAction:jump];
 //        [gameOver runAction:repeatJump];
         
-        CCLabelTTF *playAgainLabel = [CCLabelTTF labelWithString:@"Resume" fontName:@"NexaBold" fontSize:22];
-        playAgainLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 30);
-        [self addChild:playAgainLabel z:7];
+//        CCLabelTTF *playAgainLabel = [CCLabelTTF labelWithString:@"Resume" fontName:@"NexaBold" fontSize:22];
+//        playAgainLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 30);
+//        [self addChild:playAgainLabel z:7];
+//        
+//        CCLabelTTF *restartLabel = [CCLabelTTF labelWithString:@"Restart" fontName:@"NexaBold" fontSize:22];
+//        restartLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 80);
+//        [self addChild:restartLabel z:7];
+//        
+//        CCLabelTTF *quitLabel = [CCLabelTTF labelWithString:@"Quit" fontName:@"NexaBold" fontSize:22];
+//        quitLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 130);
+//        [self addChild:quitLabel z:7];
         
-        CCLabelTTF *restartLabel = [CCLabelTTF labelWithString:@"Restart" fontName:@"NexaBold" fontSize:22];
-        restartLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 80);
-        [self addChild:restartLabel z:7];
         
-        CCLabelTTF *quitLabel = [CCLabelTTF labelWithString:@"Quit" fontName:@"NexaBold" fontSize:22];
-        quitLabel.position = ccp(screenSize.width/2, screenSize.height/2 - 130);
-        [self addChild:quitLabel z:7];
-        
-        
-        CCMenuItemImage *playAgain = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(unPause)];
-        playAgain.scale = 1.5f;
-        CCMenuItemImage *restart = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(restartGame)];
-        restart.scale = 1.5f;
-        CCMenuItemImage *quit = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(quitGame)];
-        quit.scale = 1.5f;
+        CCMenuItemImage *playAgain = [CCMenuItemImage itemWithNormalImage:@"resume.png" selectedImage:@"resumeSel.png" target:self selector:@selector(unPause)];
+        playAgain.scale = 1.25f;
+        CCMenuItemImage *restart = [CCMenuItemImage itemWithNormalImage:@"restart.png" selectedImage:@"restartSel.png" target:self selector:@selector(restartGame)];
+        restart.scale = 1.25f;
+        CCMenuItemImage *quit = [CCMenuItemImage itemWithNormalImage:@"quit.png" selectedImage:@"quitSel.png" target:self selector:@selector(quitGame)];
+        quit.scale = 1.25f;
 //        [playAgain setFontName:@"Roboto-Light"];
 //        [restart setFontName:@"Roboto-Light"];
 //        [quit setFontName:@"Roboto-Light"];
@@ -88,15 +95,23 @@
         [self addChild:gameOverMenu];
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         
 //        CCLayerColor *c; //= [CCLayerColor layerWithColor:0x000000ff];

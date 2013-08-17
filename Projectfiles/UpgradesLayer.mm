@@ -71,16 +71,16 @@
         
         CCLabelTTF *buyCashLabel = [CCLabelTTF labelWithString:@"Buy Cash" fontName:@"NexaBold" fontSize:20];
         buyCashLabel.position = ccp(screenCenter.x, 85);
-        [self addChild:buyCashLabel z:7];
+//        [self addChild:buyCashLabel z:7];
         
-        CCMenuItemImage *buyMoreCash = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyMoreCash)];
-        buyMoreCash.scale = 1.5f;
+        CCMenuItemImage *buyMoreCash = [CCMenuItemImage itemWithNormalImage:@"buyCash.png" selectedImage:@"buyCashSel.png" target:self selector:@selector(buyMoreCash)];
+        buyMoreCash.scale = 1.25f;
 //        [buyMoreCash setFontName:@"Roboto-Light"];
 //        [buyMoreCash setFontSize:25];
 //        buyMoreCash.color = ccc3(0, 0, 0);
         
-        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"playNowButton.png" selectedImage:@"playNowButtonSel.png" target:self selector:@selector(playAgain)];
-        goBackToHome.scale = 1.5f;
+        CCMenuItemImage *goBackToHome = [CCMenuItemImage itemWithNormalImage:@"playNow.png" selectedImage:@"playNowSel.png" target:self selector:@selector(playAgain)];
+        goBackToHome.scale = 1.25f;
 //        [goBackToHome setFontName:@"Roboto-Light"];
 //        [goBackToHome setFontSize:25];
 //        goBackToHome.color = ccc3(0, 0, 0);
@@ -91,18 +91,18 @@
         [self addChild:goHomeMenu];
         
         
-        CCMenuItemImage *BuyC1 = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyCash1)];
-        BuyC1.scaleX = 2.0f;
-        BuyC1.scaleY = 1.9f;
+        CCMenuItemImage *BuyC1 = [CCMenuItemImage itemWithNormalImage:@"buy_shield.png" selectedImage:@"buy_shield.png" target:self selector:@selector(buyCash1)];
+//        BuyC1.scaleX = 2.0f;
+//        BuyC1.scaleY = 1.9f;
         
-        CCMenuItemImage *BuyC2 = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyCash2)];
-        BuyC2.scaleX = 2.0f;
-        BuyC2.scaleY = 1.9f;
+        CCMenuItemImage *BuyC2 = [CCMenuItemImage itemWithNormalImage:@"buy_stop.png" selectedImage:@"buy_stop.png" target:self selector:@selector(buyCash2)];
+//        BuyC2.scaleX = 2.0f;
+//        BuyC2.scaleY = 1.9f;
         
         
-        CCMenuItemFont *BuyC3 = [CCMenuItemImage itemWithNormalImage:@"flatButton.png" selectedImage:@"flatButtonSel.png" target:self selector:@selector(buyCash3)];
-        BuyC3.scaleX = 2.0f;
-        BuyC3.scaleY = 1.9f;
+        CCMenuItemFont *BuyC3 = [CCMenuItemImage itemWithNormalImage:@"buy_multiplier.png" selectedImage:@"buy_multiplier.png" target:self selector:@selector(buyCash3)];
+//        BuyC3.scaleX = 2.0f;
+//        BuyC3.scaleY = 1.9f;
         
         CCMenu *bgcashStoreMenu = [CCMenu menuWithItems:BuyC1, BuyC2, BuyC3, nil];
         [bgcashStoreMenu alignItemsVerticallyWithPadding:10.f];
@@ -120,7 +120,7 @@
         BuyCash3Label.scale = 0.5f;
         
         CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"1000 COINS" fontName:@"NexaBold" fontSize:18];
-        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 67);
+        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 62);
         price1.color = ccc3(255, 255, 255);
         [self addChild:price1];
         
@@ -130,25 +130,33 @@
         [self addChild:price2];
         
         CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"800 COINS" fontName:@"NexaBold" fontSize:18];
-        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 70);
+        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 65);
         price3.color = ccc3(255, 255, 255);
         [self addChild:price3];
         
         CCMenu *cashStoreMenu = [CCMenu menuWithItems:BuyCash1Label, BuyCash2Label, BuyCash3Label, nil];
         [cashStoreMenu alignItemsVerticallyWithPadding:10.f];
         cashStoreMenu.position = ccp(screenSize.width/2 - 40, screenSize.height/2);
-        [self addChild:cashStoreMenu];
+//        [self addChild:cashStoreMenu];
         
         CCSprite *background;
+        CCSprite *leaves;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024) {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
+        } else if ([[CCDirector sharedDirector] winSizeInPixels].height == 1136) {
+            background = [CCSprite spriteWithFile:@"bg-568h.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves-568h.png"];
         } else {
-            background = [CCSprite spriteWithFile:@"skybgip5.png"];
+            background = [CCSprite spriteWithFile:@"bg.png"];
+            leaves = [CCSprite spriteWithFile:@"bg_leaves.png"];
         }
         
         background.position = screenCenter;
+        leaves.position = screenCenter;
         [self addChild:background z:-100];
+        [self addChild:leaves z:-99];
         
         
         [self scheduleUpdate];

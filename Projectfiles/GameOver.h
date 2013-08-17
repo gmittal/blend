@@ -18,4 +18,6 @@
     int endingScore;
     int endingHighScore;
 }
+
++(BOOL) returnBool;
 @end

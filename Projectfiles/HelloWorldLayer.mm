@@ -485,7 +485,7 @@
         [self startTutorial]; // start the tutorial (if needed)
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-//            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"gocart.mp3" loop:YES];
         }
 //        [self enableSpiralEffect];
 
@@ -2205,8 +2205,8 @@
 {
     //    NSLog(@"%f", angle);
     angle = CC_DEGREES_TO_RADIANS(angle);
-    float addedX = cos(angle) * someDistance;
-    float addedY = sin(angle) * someDistance;
+    double addedX = sin(angle) * someDistance;
+    double addedY = cos(angle) * someDistance;
     //    NSLog(@"ADDED X: %f", addedX);
     //    NSLog(@"ADDED Y: %f", addedY);
     //    NSLog(NSStringFromCGPoint(point));

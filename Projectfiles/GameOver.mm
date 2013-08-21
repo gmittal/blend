@@ -231,7 +231,7 @@
         [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-//            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"dpgl_bg.mp3" loop:YES];
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"gocart.mp3" loop:YES];
         }
     
     }

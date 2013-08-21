@@ -182,6 +182,7 @@
 		C7A6DAD517BFFCB30062E5B2 /* buy_multiplier-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DAC917BFFCB30062E5B2 /* buy_multiplier-ipadhd.png */; };
 		C7A6DAD617BFFCB30062E5B2 /* buy_shield-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DACA17BFFCB30062E5B2 /* buy_shield-ipadhd.png */; };
 		C7A6DAD717BFFCB30062E5B2 /* buy_stop-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DACB17BFFCB30062E5B2 /* buy_stop-ipadhd.png */; };
+		C7A6EAA317C146AE0090F27D /* gocart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C7A6EAA217C146AE0090F27D /* gocart.mp3 */; };
 		C7AE7F3F17BC476100F82F9B /* bg_leaves-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AE7F3B17BC476100F82F9B /* bg_leaves-ipad.png */; };
 		C7AE7F4017BC476100F82F9B /* bg_leaves-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AE7F3C17BC476100F82F9B /* bg_leaves-ipadhd.png */; };
 		C7AE7F4117BC476100F82F9B /* bg-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AE7F3D17BC476100F82F9B /* bg-ipad.png */; };
@@ -588,6 +589,7 @@
 		C7A6DAC917BFFCB30062E5B2 /* buy_multiplier-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_multiplier-ipadhd.png"; sourceTree = "<group>"; };
 		C7A6DACA17BFFCB30062E5B2 /* buy_shield-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_shield-ipadhd.png"; sourceTree = "<group>"; };
 		C7A6DACB17BFFCB30062E5B2 /* buy_stop-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_stop-ipadhd.png"; sourceTree = "<group>"; };
+		C7A6EAA217C146AE0090F27D /* gocart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gocart.mp3; sourceTree = "<group>"; };
 		C7AE7F3B17BC476100F82F9B /* bg_leaves-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_leaves-ipad.png"; sourceTree = "<group>"; };
 		C7AE7F3C17BC476100F82F9B /* bg_leaves-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_leaves-ipadhd.png"; sourceTree = "<group>"; };
 		C7AE7F3D17BC476100F82F9B /* bg-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-ipad.png"; sourceTree = "<group>"; };
@@ -1081,6 +1083,7 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C7A6EAA217C146AE0090F27D /* gocart.mp3 */,
 				C718586D17C004A400E5D32E /* coin1000.png */,
 				C718586E17C004A400E5D32E /* coin3000.png */,
 				C718586F17C004A400E5D32E /* coin10000.png */,
@@ -1811,6 +1814,7 @@
 				C718587017C004A400E5D32E /* coin1000.png in Resources */,
 				C718587117C004A400E5D32E /* coin3000.png in Resources */,
 				C718587217C004A400E5D32E /* coin10000.png in Resources */,
+				C7A6EAA317C146AE0090F27D /* gocart.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1895,6 +1899,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1908,6 +1913,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "The Elements-iOS";
+				PROVISIONING_PROFILE = "D28190B7-6545-48A2-8865-E904F718F8D1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E975645-99EC-4714-B166-063EED5B5BDE";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1917,6 +1923,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1930,6 +1937,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "The Elements-iOS";
+				PROVISIONING_PROFILE = "D28190B7-6545-48A2-8865-E904F718F8D1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1E975645-99EC-4714-B166-063EED5B5BDE";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -40,46 +40,52 @@
         [self resetVariables]; // does pretty much everything the previous 6 lines do.
         
         
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"expldata.plist"];
         
         
-        CCSpriteBatchNode *spriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"expldata.png"];
+        //Load the plist which tells Kobold2D how to properly parse your spritesheet. If on a retina device Kobold2D will automatically use bearframes-hd.plist
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile: @"bubbles.plist"];
         
         
+        //Load in the spritesheet, if retina Kobold2D will automatically use bearframes-hd.png
+        
+        CCSpriteBatchNode *spriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"bubbles.png"];
         
         [self addChild:spriteSheet];
         
+        //Define the frames based on the plist - note that for this to work, the original files must be in the format bear1, bear2, bear3 etc...
         
+        //When it comes time to get art for your own original game, makegameswith.us will give you spritesheets that follow this convention, <spritename>1 <spritename>2 <spritename>3 etc...
         
-        explodingFrames = [[NSMutableArray alloc] init];
+        bubbleFrames = [NSMutableArray array];
         
-        
-        
-        for (int i = 0; i <= 11; i ++)
-        
+        for(int i = 1; i <= 21; ++i)
         {
-            
-            [explodingFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%d.png", i]]];
-            
+            [bubbleFrames addObject:
+             [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName: [NSString stringWithFormat:@"bubble%d.png", i]]];
         }
-        
-        
-        
-        explosion = [CCAnimation animationWithSpriteFrames:explodingFrames delay:0.3f];
-        
-        
-        
-        explode = [CCRepeat actionWithAction:[CCAnimate actionWithAnimation:explosion] times:1];
         
         
         player = [[CCSprite alloc] init];
         
-        player = [CCSprite spriteWithFile:@"border.png"];
+        player = [CCSprite spriteWithSpriteFrameName:@"bubble1.png"];
+
     
         
         player.position = ccp(size.width/2, size.height/2);
         player.scale = 0.7f;
         playerWidth = [player boundingBox].size.width; // get player width
+        
+        CCAnimation *bubbling = [CCAnimation animationWithFrames:bubbleFrames delay:0.05f];
+        
+        //Create an action with the animation that can then be assigned to a sprite
+        
+        bubble = [CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:bubbling restoreOriginalFrame:NO]];
+        
+        //tell the bear to run the taunting action
+        [player runAction:bubble];
+        
+        
         [self addChild:player z:55];
         //        [player runAction:explode];
         
@@ -135,11 +141,11 @@
             progressBar1.position = ccp(size.width/2 - 289, size.height/2 - 417);
             progressBar2.position = ccp(size.width/2 - 289, size.height/2 - 417);
             progressBar3.position = ccp(size.width/2 - 289, size.height/2 - 417);
-            player.scale = 1.8f;
+//            player.scale = 1.8f;
             playerWidth = [player boundingBox].size.width; // calibrate collision detection
-            section1.scale = 1.8f;
-            section2.scale = 1.8f;
-            section3.scale = 1.8f;
+//            section1.scale = 1.8f;
+//            section2.scale = 1.8f;
+//            section3.scale = 1.8f;
             spawnDistance = 600;
             
         } else if ([director winSizeInPixels].height == 2048)
@@ -148,11 +154,11 @@
             progressBar1.position = ccp(size.width/2 - 289, size.height/2 - 417);
             progressBar2.position = ccp(size.width/2 - 289, size.height/2 - 417);
             progressBar3.position = ccp(size.width/2 - 289, size.height/2 - 417);
-            player.scale = 1.8f;
+//            player.scale = 1.8f;
             playerWidth = [player boundingBox].size.width; // calibrate collision detection
-            section1.scale = 1.8f;
-            section2.scale = 1.8f;
-            section3.scale = 1.8f;
+//            section1.scale = 1.8f;
+//            section2.scale = 1.8f;
+//            section3.scale = 1.8f;
             spawnDistance = 600;
         } else {
             oniPad = false;
@@ -454,7 +460,7 @@
         
         
         rotateArrow = [CCSprite spriteWithFile:@"rotate.png"];
-        rotateArrow.position = ccp(player.position.x + 20, player.position.y);
+        rotateArrow.position = ccp(player.position.x, player.position.y);
         [self addChild:rotateArrow z:1000];
         rotateArrow.visible = false;
         
@@ -2164,14 +2170,7 @@
     } else {
         randGeneratedAngle = (arc4random()%(toNumber-fromNumber+1))+fromNumber;
         
-        if (randGeneratedAngle == 270) { // for whatever reason when the angle is 270, the collision never works
-            int chooseWhichSide = (arc4random()%(2-1+1))+1;
-            if (chooseWhichSide == 1) {
-                randGeneratedAngle = 271;
-            } else if (chooseWhichSide == 2) {
-                randGeneratedAngle = 272;
-            }
-        }
+        
        
         /*
         if (randGeneratedAngle < 205 && randGeneratedAngle > 155) { // for whatever reason when the angle is 270, the collision never works
@@ -2196,8 +2195,38 @@
         } */
 
         
+        float compare = previousGeneratedAngle + 240;
+        
+        if (compare > 360) {
+            compare -= 360;
+        }
+        
+        if (compare < 0) {
+            compare += 360;
+        }
+        
+        if (randGeneratedAngle < compare) {
+            randGeneratedAngle = previousGeneratedAngle + (arc4random()%(90-30+1))+10;
+            
+        }
+        
+        if (randGeneratedAngle == 270) { // for whatever reason when the angle is 270, the collision never works
+            int chooseWhichSide = (arc4random()%(2-1+1))+1;
+            if (chooseWhichSide == 1) {
+                randGeneratedAngle = 271;
+            } else if (chooseWhichSide == 2) {
+                randGeneratedAngle = 272;
+            }
+        }
+        
+        if (randGeneratedAngle == 0) {
+            randGeneratedAngle += 10;
+        }
+        
         shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
     }
+    
+    previousGeneratedAngle = randGeneratedAngle;
 }
 
 

@@ -235,6 +235,22 @@ CGSize screenSize;
     otherPlayers = [scoreDict objectForKey:@"all"];
     int count = [otherPlayers count];
     
+    // interesting analytics
+    NSMutableDictionary *leastPlayer = [otherPlayers objectAtIndex:count-1];
+    NSNumber *leastScore = [leastPlayer objectForKey:@"score"];
+    NSString *leastName = [leastPlayer objectForKey:@"name"];
+    NSLog(@"Least Score: %@, %i", leastName, [leastScore intValue]);
+    
+    NSMutableDictionary *bestPlayer = [otherPlayers objectAtIndex:0];
+    NSNumber *bestScore = [bestPlayer objectForKey:@"score"];
+    NSString *bestName = [bestPlayer objectForKey:@"name"];
+    NSLog(@"Best Score: %@, %i", bestName, [bestScore intValue]);
+    
+    
+    
+    
+    NSLog(@"Players on Leaderboard: %i", count);
+    
     if (count > 10) {
         count = 10;
     }

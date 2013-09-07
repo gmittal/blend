@@ -297,6 +297,9 @@
     ccColor3B sector1Color;
     ccColor3B sector2Color;
     ccColor3B sector3Color;
+    
+    CCAction *bubble;
+    NSMutableArray *bubbleFrames;
 }
 
 +(id)scene;

@@ -99,11 +99,11 @@ CGSize screenSize;
         
         
         
-        CCMenuItemImage *facebookSel = [CCMenuItemImage itemWithNormalImage:@"facebookHighscoreButton.png" selectedImage:@"facebookHighscoreButtonSel.png" target:self selector:@selector(displayFacebookStats)];
+        CCMenuItemImage *facebookSel = [CCMenuItemImage itemWithNormalImage:@"fb.png" selectedImage:@"fbSel.png" target:self selector:@selector(displayFacebookStats)];
         //        facebookSel.position = ccp(screenSize.width/2 + ([facebookSel boundingBox].size.width/2), screenSize.height - 85);
         //        [self addChild:facebookSel];
         
-        CCMenuItemImage *globalSel = [CCMenuItemImage itemWithNormalImage:@"globalHighscoreButton.png" selectedImage:@"globalHighscoreButtonSel.png" target:self selector:@selector(displayGlobalStats)];
+        CCMenuItemImage *globalSel = [CCMenuItemImage itemWithNormalImage:@"global.png" selectedImage:@"globalSel.png" target:self selector:@selector(displayGlobalStats)];
         //        globalSel.position = ccp(screenSize.width/2 - ([globalSel boundingBox].size.width/2), screenSize.height - 85);
         //        [self addChild:globalSel];
         

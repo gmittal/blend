@@ -254,7 +254,7 @@
                                                  selectedImage: @"shield.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp1)];
-        powerUpCreator1.scale = 0.3f;
+//        powerUpCreator1.scale = 0.3f;
         
         powerUpCreator1.position = ccp(size.width/3 - 70, 20);
         //        [self addChild:powerUpCreator1 z:5];
@@ -264,7 +264,7 @@
                                                  selectedImage: @"stop.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp2)];
-        powerUpCreator2.scale = 0.3f;
+//        powerUpCreator2.scale = 0.3f;
         powerUpCreator2.position = ccp(size.width/2 - 20, 20);
         //        [self addChild:powerUpCreator2 z:5];
         
@@ -273,7 +273,7 @@
                                                  selectedImage: @"shock.png"
                                                         target:self
                                                       selector:@selector(enablePowerUp3)];
-        powerUpCreator3.scale = 0.3f;
+//        powerUpCreator3.scale = 0.3f;
         powerUpCreator3.position = ccp(size.width/1.5 + 30, 20);
         //        [self addChild:powerUpCreator3 z:5];
         
@@ -301,22 +301,22 @@
         power1Left = [[CCLabelBMFont alloc] init];
         power1Num = [[NSString alloc]initWithFormat:@"%i", numPower1Left];
         power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"Roboto-Light" fontSize:25];
-        power1Left.position = ccp(size.width/3 - 30, 20);
-        power1Left.color = ccc3(0,0,0);
+        power1Left.position = ccp(size.width/3 - 21, 20);
+        power1Left.color = ccc3(255,255,255);
         [self addChild:power1Left z:200];
         
         power2Left = [[CCLabelBMFont alloc] init];
         power2Num = [[NSString alloc]initWithFormat:@"%i", numPower2Left];
         power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"Roboto-Light" fontSize:25];
         power2Left.position = ccp(size.width/2 + 20, 20);
-        power2Left.color = ccc3(0,0,0);
+        power2Left.color = ccc3(255,255,255);
         [self addChild:power2Left z:200];
         
         power3Left = [[CCLabelBMFont alloc] init];
         power3Num = [[NSString alloc]initWithFormat:@"%i", numPower3Left];
         power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"Roboto-Light" fontSize:25];
-        power3Left.position = ccp(size.width/1.5 + 70, 20);
-        power3Left.color = ccc3(0,0,0);
+        power3Left.position = ccp(size.width/1.5 + 71, 20);
+        power3Left.color = ccc3(255,255,255);
         [self addChild:power3Left z:200];
         
         if (oniPad == true) {
@@ -328,7 +328,7 @@
         
         powerUpBorder1 = [[CCMenuItemImage alloc] init];
         powerUpBorder1 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
-                                                selectedImage: @"PowerupBorderSel.png"
+                                                selectedImage: @"PowerupBorder.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp1)];
 //        powerUpBorder1.position = ccp(size.width/3 - 53, 20);
@@ -336,7 +336,7 @@
         
         powerUpBorder2 = [[CCMenuItemImage alloc] init];
         powerUpBorder2 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
-                                                selectedImage: @"PowerupBorderSel.png"
+                                                selectedImage: @"PowerupBorder.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp2)];
 //        powerUpBorder2.position = ccp(size.width/2, 20);
@@ -344,7 +344,7 @@
         
         powerUpBorder3 = [[CCMenuItemImage alloc] init];
         powerUpBorder3 = [CCMenuItemImage itemWithNormalImage:@"PowerupBorder.png"
-                                                selectedImage: @"PowerupBorderSel.png"
+                                                selectedImage: @"PowerupBorder.png"
                                                        target:self
                                                      selector:@selector(enablePowerUp3)];
 //        powerUpBorder3.position = ccp(size.width/1.5 + 53, 20);
@@ -634,7 +634,7 @@
         } else {
             lockedPowerup1.position = powerUpCreator1.position;
         }
-        lockedPowerup1.scale = powerUpCreator1.scale + 0.15f;
+        lockedPowerup1.scale = 0.3f + 0.15f;
         [self addChild:lockedPowerup1 z:powerUpCreator1.zOrder];
         numPower1Left = 0;
 //        powerUpCreator1.isEnabled = false;
@@ -667,7 +667,7 @@
         } else {
             lockedPowerup2.position = powerUpCreator2.position;
         }
-        lockedPowerup2.scale = powerUpCreator2.scale + 0.15f;
+        lockedPowerup2.scale = 0.3f + 0.15f;
         [self addChild:lockedPowerup2 z:powerUpCreator2.zOrder];
         numPower2Left = 0;
     }
@@ -697,7 +697,7 @@
         } else {
             lockedPowerup3.position = powerUpCreator3.position;
         }
-        lockedPowerup3.scale = powerUpCreator3.scale + 0.15f;
+        lockedPowerup3.scale = 0.3f + 0.15f;
         [self addChild:lockedPowerup3 z:powerUpCreator3.zOrder];
         numPower3Left = 0;
     }
@@ -2206,8 +2206,20 @@
         }
         
         if (randGeneratedAngle < compare) {
-            randGeneratedAngle = previousGeneratedAngle + (arc4random()%(90-30+1))+10;
+            int chooseSide = (arc4random()%(2-1+1))+1;
+            if (chooseSide == 1) {
+                randGeneratedAngle = previousGeneratedAngle + (arc4random()%(90-30+1))+30;
+            } else {
+                randGeneratedAngle = previousGeneratedAngle - (arc4random()%(90-30+1))+30;
+            }
             
+            if (randGeneratedAngle > 360) {
+                randGeneratedAngle -= 360;
+            }
+            
+            if (randGeneratedAngle < 0) {
+                randGeneratedAngle += 360;
+            }
         }
         
         if (randGeneratedAngle == 270) { // for whatever reason when the angle is 270, the collision never works
@@ -2222,6 +2234,8 @@
         if (randGeneratedAngle == 0) {
             randGeneratedAngle += 10;
         }
+        
+        
         
         shipForCoord.position = [self generatePointByAngle:randGeneratedAngle distance:spawnDistance startPoint:screenCenter];
     }

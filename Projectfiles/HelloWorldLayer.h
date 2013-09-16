@@ -76,9 +76,9 @@
     CCSprite *powerUp2;
     CCSprite *powerUp3;
     
-    CCMenuItemImage *powerUpCreator1;
-    CCMenuItemImage *powerUpCreator2;
-    CCMenuItemImage *powerUpCreator3;
+    CCSprite *powerUpCreator1;
+    CCSprite *powerUpCreator2;
+    CCSprite *powerUpCreator3;
     
     bool gameOver;
     

@@ -39,7 +39,7 @@
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
 //            titleSprite.scale = 1.3f;
             titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);
-            dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 210)];
+            dropdown = [CCMoveTo actionWithDuration:0.5f position:ccp(screenCenter.x, screenCenter.y + 260)];
         } else {
 //            titleSprite.scale = 0.6f;
             titleSprite.position = ccp(screenCenter.x, screenSize.height + 120);

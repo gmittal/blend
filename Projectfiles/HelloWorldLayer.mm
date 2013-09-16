@@ -138,27 +138,35 @@
         if ([director winSizeInPixels].height == 1024)
         {
             oniPad = true;
-            progressBar1.position = ccp(size.width/2 - 289, size.height/2 - 417);
-            progressBar2.position = ccp(size.width/2 - 289, size.height/2 - 417);
-            progressBar3.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            progressBar1.position = ccp(size.width/2 - 211, size.height/2 - 343);
+            progressBar2.position = ccp(size.width/2 - 211, size.height/2 - 343);
+            progressBar3.position = ccp(size.width/2 - 211, size.height/2 - 343);
 //            player.scale = 1.8f;
             playerWidth = [player boundingBox].size.width; // calibrate collision detection
-//            section1.scale = 1.8f;
-//            section2.scale = 1.8f;
-//            section3.scale = 1.8f;
+            section1.scale = 1.8f;
+            section2.scale = 1.8f;
+            section3.scale = 1.8f;
+            progressBar1.scale = 1.8f;
+            progressBar2.scale = 1.8f;
+            progressBar3.scale = 1.8f;
+            
             spawnDistance = 600;
             
         } else if ([director winSizeInPixels].height == 2048)
         {
             oniPad = true;
-            progressBar1.position = ccp(size.width/2 - 289, size.height/2 - 417);
-            progressBar2.position = ccp(size.width/2 - 289, size.height/2 - 417);
-            progressBar3.position = ccp(size.width/2 - 289, size.height/2 - 417);
+            progressBar1.position = ccp(size.width/2 - 211, size.height/2 - 343);
+            progressBar2.position = ccp(size.width/2 - 211, size.height/2 - 343);
+            progressBar3.position = ccp(size.width/2 - 211, size.height/2 - 343);
 //            player.scale = 1.8f;
             playerWidth = [player boundingBox].size.width; // calibrate collision detection
-//            section1.scale = 1.8f;
-//            section2.scale = 1.8f;
-//            section3.scale = 1.8f;
+            section1.scale = 1.8f;
+            section2.scale = 1.8f;
+            section3.scale = 1.8f;
+            progressBar1.scale = 1.8f;
+            progressBar2.scale = 1.8f;
+            progressBar3.scale = 1.8f;
+            
             spawnDistance = 600;
         } else {
             oniPad = false;
@@ -249,45 +257,54 @@
         
         //        ship1.tag = spriteTagNum;
         
-        powerUpCreator1 = [[CCMenuItemImage alloc] init];
-        powerUpCreator1 = [CCMenuItemImage itemWithNormalImage:@"shield.png"
-                                                 selectedImage: @"shield.png"
-                                                        target:self
-                                                      selector:@selector(enablePowerUp1)];
+//        powerUpCreator1 = [[CCMenuItemImage alloc] init];
+//        powerUpCreator1 = [CCMenuItemImage itemWithNormalImage:@"shield.png"
+//                                                 selectedImage: @"shield.png"
+//                                                        target:self
+//                                                      selector:@selector(enablePowerUp1)];
 //        powerUpCreator1.scale = 0.3f;
+        
+        powerUpCreator1 = [CCSprite spriteWithFile:@"shield.png"];
         
         powerUpCreator1.position = ccp(size.width/3 - 70, 20);
         //        [self addChild:powerUpCreator1 z:5];
         
-        powerUpCreator2 = [[CCMenuItemImage alloc] init];
-        powerUpCreator2 = [CCMenuItemImage itemWithNormalImage:@"stop.png"
-                                                 selectedImage: @"stop.png"
-                                                        target:self
-                                                      selector:@selector(enablePowerUp2)];
+//        powerUpCreator2 = [[CCMenuItemImage alloc] init];
+//        powerUpCreator2 = [CCMenuItemImage itemWithNormalImage:@"stop.png"
+//                                                 selectedImage: @"stop.png"
+//                                                        target:self
+//                                                      selector:@selector(enablePowerUp2)];
 //        powerUpCreator2.scale = 0.3f;
+        
+        powerUpCreator2 = [CCSprite spriteWithFile:@"stop.png"];
         powerUpCreator2.position = ccp(size.width/2 - 20, 20);
         //        [self addChild:powerUpCreator2 z:5];
         
-        powerUpCreator3 = [[CCMenuItemImage alloc] init];
-        powerUpCreator3 = [CCMenuItemImage itemWithNormalImage:@"shock.png"
-                                                 selectedImage: @"shock.png"
-                                                        target:self
-                                                      selector:@selector(enablePowerUp3)];
+//        powerUpCreator3 = [[CCMenuItemImage alloc] init];
+//        powerUpCreator3 = [CCMenuItemImage itemWithNormalImage:@"shock.png"
+//                                                 selectedImage: @"shock.png"
+//                                                        target:self
+//                                                      selector:@selector(enablePowerUp3)];
 //        powerUpCreator3.scale = 0.3f;
+        powerUpCreator3 = [CCSprite spriteWithFile:@"shock.png"];
         powerUpCreator3.position = ccp(size.width/1.5 + 30, 20);
         //        [self addChild:powerUpCreator3 z:5];
         
-        powerUpCreatorsMenu = [CCMenu menuWithItems:powerUpCreator1, powerUpCreator2, powerUpCreator3, nil];
-        powerUpCreatorsMenu.position = ccp(size.width/2-160, 0);
+//        powerUpCreatorsMenu = [CCMenu menuWithItems:powerUpCreator1, powerUpCreator2, powerUpCreator3, nil];
+//        powerUpCreatorsMenu.position = ccp(size.width/2-160, 0);
+
         if (oniPad == true) {
-            powerUpCreator1.position = ccp(size.width/3 - 65, 20);
-            powerUpCreator2.position = ccp(size.width/2 - 85, 20);
-            powerUpCreator3.position = ccp(size.width/1.5 - 105, 20);
-            powerUpCreatorsMenu.position = ccp(size.width/2-320, 0);
+            powerUpCreator1.position = ccp(-100, 60);
+            powerUpCreator2.position = ccp(size.width/2, 50);
+            powerUpCreator3.position = ccp(size.width/1.5 - 105, 50);
+//            powerUpCreatorsMenu.position = ccp(0, 0);
             
         }
         
-        [self addChild:powerUpCreatorsMenu z:5 tag:10];
+        [self addChild:powerUpCreator1 z:5];
+        [self addChild:powerUpCreator2 z:5];
+        [self addChild:powerUpCreator3 z:5];
+//        [self addChild:powerUpCreatorsMenu z:5 tag:10];
 //        [self updatePowerups];
         
         // init pausebutton
@@ -300,29 +317,41 @@
         // init powerup labels
         power1Left = [[CCLabelBMFont alloc] init];
         power1Num = [[NSString alloc]initWithFormat:@"%i", numPower1Left];
+        if (oniPad == true) {
+            power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"Roboto-Light" fontSize:45];
+        } else {
         power1Left = [CCLabelTTF labelWithString:power1Num fontName:@"Roboto-Light" fontSize:25];
-        power1Left.position = ccp(size.width/3 - 21, 20);
+        }
+        power1Left.position = ccp(size.width/3 - 36, 20);
         power1Left.color = ccc3(255,255,255);
         [self addChild:power1Left z:200];
         
         power2Left = [[CCLabelBMFont alloc] init];
         power2Num = [[NSString alloc]initWithFormat:@"%i", numPower2Left];
+        if (oniPad == true) {
+        power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"Roboto-Light" fontSize:45];
+        } else {
         power2Left = [CCLabelTTF labelWithString:power2Num fontName:@"Roboto-Light" fontSize:25];
+        }
         power2Left.position = ccp(size.width/2 + 20, 20);
         power2Left.color = ccc3(255,255,255);
         [self addChild:power2Left z:200];
         
         power3Left = [[CCLabelBMFont alloc] init];
         power3Num = [[NSString alloc]initWithFormat:@"%i", numPower3Left];
+        if (oniPad == true) {
+            power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"Roboto-Light" fontSize:45];
+        } else {
         power3Left = [CCLabelTTF labelWithString:power3Num fontName:@"Roboto-Light" fontSize:25];
+        }
         power3Left.position = ccp(size.width/1.5 + 71, 20);
         power3Left.color = ccc3(255,255,255);
         [self addChild:power3Left z:200];
         
         if (oniPad == true) {
-            power1Left.position = ccp(size.width/3 + 40, 20);
-            power2Left.position = ccp(size.width/2 + 20, 20);
-            power3Left.position = ccp(size.width/1.5, 20);
+            power1Left.position = ccp(size.width/3 - 80, 35);
+            power2Left.position = ccp(size.width/2 + 40, 35);
+            power3Left.position = ccp(size.width/1.5 + 150, 35);
         }
         
         
@@ -350,11 +379,31 @@
 //        powerUpBorder3.position = ccp(size.width/1.5 + 53, 20);
         //        [self addChild:powerUpBorder3 z:-5];
         
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+
+    
+//        powerUpBorder1.scaleX = 450/[powerUpBorder1 boundingBox].size.width;
+//        powerUpBorder1.scaleY = 76/[powerUpBorder1 boundingBox].size.height;
+//        
+//        powerUpBorder2.scaleX = 450/[powerUpBorder2 boundingBox].size.width;
+//        powerUpBorder2.scaleY = 76/[powerUpBorder2 boundingBox].size.height;
+//        
+//        powerUpBorder3.scaleX = 450/[powerUpBorder3 boundingBox].size.width;
+//        powerUpBorder3.scaleY = 76/[powerUpBorder3 boundingBox].size.height;
+        }
+        
         CCMenu *powerBorderMenu = [CCMenu menuWithItems:powerUpBorder1, powerUpBorder2, powerUpBorder3, nil];
         powerBorderMenu.position = ccp(size.width/2, 20);
+        
+        if (oniPad == true) {
+            powerBorderMenu.position = ccp(size.width/2, 38);
+        }
+        
         [powerBorderMenu alignItemsHorizontallyWithPadding:0.0f];
         [self addChild:powerBorderMenu z:-5];
         
+        
+    
         // init the border sprite for powerup1
         infiniteBorderPowerUp1 = [[CCSprite alloc] init];
         infiniteBorderPowerUp1 = [CCSprite spriteWithFile:@"energyshield.png"];
@@ -362,6 +411,11 @@
         infiniteBorderPowerUp1.position = screenCenter;
         
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            
+            
+            
+            
+            
             screenflashLabel = [CCLabelTTF labelWithString:score fontName:@"NexaBold" fontSize:40];
             screenflashLabel.position = ccp(size.width/2, size.height - 125);
             
@@ -619,10 +673,10 @@
     }
     
     if (oniPad == true) {
-        powerUpCreator1.position = ccp(size.width/3 - 65, 20);
-        powerUpCreator2.position = ccp(size.width/2 - 85, 20);
-        powerUpCreator3.position = ccp(size.width/1.5 - 105, 20);
-        powerUpCreatorsMenu.position = ccp(size.width/2-320, 0);
+        powerUpCreator1.position = ccp(size.width/3 - 165, 35);
+        powerUpCreator2.position = ccp(size.width/2 - 45, 35);
+        powerUpCreator3.position = ccp(size.width/1.5 + 65, 35);
+//        powerUpCreatorsMenu.position = ccp(size.width/2-320, 0);
     }
     
     if (p1Locked == true) {
@@ -630,7 +684,7 @@
         lockedPowerup1 = [CCSprite spriteWithFile:@"lock.png"];
         
         if (oniPad == true) {
-            lockedPowerup1.position = ccp(size.width/3 + 5, 20);
+            lockedPowerup1.position = powerUpCreator1.position; //ccp(size.width/3 + 5, 20);
         } else {
             lockedPowerup1.position = powerUpCreator1.position;
         }
@@ -663,7 +717,7 @@
         lockedPowerup2 = [CCSprite spriteWithFile:@"lock.png"];
         
         if (oniPad == true) {
-            lockedPowerup2.position = ccp(size.width/2 - 15, 20);
+            lockedPowerup2.position = powerUpCreator2.position; //ccp(size.width/2 - 15, 20);
         } else {
             lockedPowerup2.position = powerUpCreator2.position;
         }
@@ -693,7 +747,7 @@
         lockedPowerup3 = [CCSprite spriteWithFile:@"lock.png"];
         
         if (oniPad == true) {
-            lockedPowerup3.position = ccp(size.width/1.5 - 35, 20);
+            lockedPowerup3.position = powerUpCreator3.position;//ccp(size.width/1.5 - 35, 20);
         } else {
             lockedPowerup3.position = powerUpCreator3.position;
         }
@@ -1867,7 +1921,7 @@
     
     if (oniPad == true) {
 //        ship.scale = 0.3f;
-        ship.scale = 1.4f;
+        ship.scale = 1.0f;
     }
     
     [self createShipCoord:ship topBottomChoose:topBottomVariable withColor:ship.tag]; // create coordinate
@@ -2279,9 +2333,9 @@
         [power2Left runAction:[CCFadeOut actionWithDuration:0.5f]];
         [power3Left runAction:[CCFadeOut actionWithDuration:0.5f]];
 
-        powerUpCreator1.isEnabled = false;
-        powerUpCreator2.isEnabled = false;
-        powerUpCreator3.isEnabled = false;
+//        powerUpCreator1.isEnabled = false;
+//        powerUpCreator2.isEnabled = false;
+//        powerUpCreator3.isEnabled = false;
         powerUpBorder1.isEnabled = false;
         powerUpBorder2.isEnabled = false;
         powerUpBorder3.isEnabled = false;

@@ -5,13 +5,9 @@
  * Released under MIT License in Germany (LICENSE-Kobold2D.txt).
  */
 
-
-/* SUGGESTIONS:
- - PHYSICS FOR USER INPUT (MAKE THE PLANET HAVE A MORE FLUID SPIN, MUCH LIKE A WHEEL, OPTIONAL)
+/* ANALYTICS:
+ any major actions in the game...like, what score people are getting, if/when they are using power-ups, every step of the tutorial, achievements (if you have them), when you die what level you got to.
  */
-
-
-
 
 #import "HelloWorldLayer.h"
 #import "SimpleAudioEngine.h"
@@ -1657,6 +1653,7 @@
                 numTimesP1Used-=1;
                 [self runAction:powerUp1Seq];
                 [self updateScore];
+                [MGWU logEvent:@"energy_shield_powerup_used" withParams:nil];
             }
             }
         }
@@ -1714,6 +1711,7 @@
                         numTimesP2Used-=1;
                         [self runAction:powerUp2Seq];
                         [self updateScore];
+                        [MGWU logEvent:@"projectile_paused_powerup_used" withParams:nil];
                     }
                 }
             }
@@ -1748,6 +1746,7 @@
                 numTimesP3Used -= 1;
                 
                 [self updateScore];
+                [MGWU logEvent:@"multiplier_boost_powerup_used" withParams:nil];
             }
             }
         }
@@ -3322,6 +3321,11 @@
         //        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
         [MGWU setObject:sharedCoins forKey:@"sharedCoins"];
     }
+    
+    NSNumber* trackScore = [NSNumber numberWithInt:playerScore];
+//    NSNumber* levelnumber = [NSNumber numberWithInt:1];
+    NSDictionary *trackScoreParams = [[NSDictionary alloc] initWithObjectsAndKeys: trackScore, @"score", nil];
+    [MGWU logEvent:@"player_score" withParams:trackScoreParams];
     
     
     if (p1Locked == true) {

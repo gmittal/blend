@@ -23,6 +23,7 @@
 //        CCLayerColor* colorLayer = [CCLayerColor layerWithColor:ccc4(255,255,255,0)];
 //        [self addChild:colorLayer z:-100];
         
+        [MGWU setReminderMessage:@"Come back and play Blend now!"];
         
         screenSize = [[CCDirector sharedDirector] winSize];
         screenCenter = [[CCDirector sharedDirector] screenCenter];

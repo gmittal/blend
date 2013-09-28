@@ -27,6 +27,7 @@
     
     NSString *p3String;
     CCLabelBMFont *p3Label;
+    bool oniPad;
 }
 
 @end

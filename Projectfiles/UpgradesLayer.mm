@@ -20,7 +20,18 @@
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:36];
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            oniPad = true;
+        }
+
+        CCLabelBMFont *gameTitle;
+        
+        if (oniPad == true) {
+            gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:76];
+        } else {
+            gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:36];
+        }
         gameTitle.color = ccc3(0,0,0);
 //        gameTitle.anchorPoint = ccp(0.0f,0.5f);
         gameTitle.position = ccp(screenSize.width/2, screenSize.height - 60);
@@ -49,25 +60,43 @@
         
         numPower1 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power1Status"];
         p1String = [[NSString alloc] initWithFormat:@"%i", numPower1];
-        p1Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:20];
-        p1Label.position = ccp(screenSize.width/2 - 100, screenCenter.y + 67);
+        
+        if (oniPad == true) {
+            p1Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:40];
+        } else {
+            p1Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:20];
+        }
+        p1Label.position = ccp(screenSize.width/2 + 112, screenCenter.y + 80);
         p1Label.color = ccc3(0, 0, 0);
         [self addChild:p1Label];
         
         numPower2 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power2Status"];
         p2String = [[NSString alloc] initWithFormat:@"%i", numPower2];
-        p2Label = [CCLabelTTF labelWithString:p2String fontName:@"NexaBold" fontSize:20];
-        p2Label.position = ccp(screenSize.width/2 - 100, screenCenter.y);
+        if (oniPad == true) {
+            p2Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:40];
+        } else {
+            p2Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:20];
+        }
+        p2Label.position = ccp(screenSize.width/2 + 112, screenCenter.y - 7);
         p2Label.color = ccc3(0, 0, 0);
         [self addChild:p2Label];
         
         numPower3 = [[NSUserDefaults standardUserDefaults] integerForKey:@"power3Status"];
         p3String = [[NSString alloc] initWithFormat:@"%i", numPower3];
-        p3Label = [CCLabelTTF labelWithString:p3String fontName:@"NexaBold" fontSize:20];
-        p3Label.position = ccp(screenSize.width/2 - 100, screenCenter.y - 70);
+        if (oniPad == true) {
+            p3Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:40];
+        } else {
+            p3Label = [CCLabelTTF labelWithString:p1String fontName:@"NexaBold" fontSize:20];
+        }
+        p3Label.position = ccp(screenSize.width/2 + 112, screenCenter.y - 95);
         p3Label.color = ccc3(0, 0, 0);
         [self addChild:p3Label];
         
+        if (oniPad == true) {
+            p1Label.position = ccp(screenSize.width/2 + 222, screenCenter.y + 135);
+            p2Label.position = ccp(screenSize.width/2 + 222, screenCenter.y - 30);
+            p3Label.position = ccp(screenSize.width/2 + 222, screenCenter.y - 195);
+        }
         
         CCLabelTTF *buyCashLabel = [CCLabelTTF labelWithString:@"Buy Cash" fontName:@"NexaBold" fontSize:20];
         buyCashLabel.position = ccp(screenCenter.x, 85);
@@ -87,26 +116,30 @@
         
         CCMenu *goHomeMenu = [CCMenu menuWithItems:buyMoreCash, goBackToHome, nil];
         [goHomeMenu alignItemsVertically];
-        goHomeMenu.position = ccp(screenSize.width/2, 60);
+        goHomeMenu.position = ccp(screenSize.width/2, 70);
+        
+        if (oniPad == true) {
+            goHomeMenu.position = ccp(screenSize.width/2, 120);
+        }
         [self addChild:goHomeMenu];
         
         
-        CCMenuItemImage *BuyC1 = [CCMenuItemImage itemWithNormalImage:@"buy_shield.png" selectedImage:@"buy_shield.png" target:self selector:@selector(buyCash1)];
+        CCMenuItemImage *BuyC1 = [CCMenuItemImage itemWithNormalImage:@"upgradee.png" selectedImage:@"upgradeeSel.png" target:self selector:@selector(buyCash1)];
 //        BuyC1.scaleX = 2.0f;
 //        BuyC1.scaleY = 1.9f;
         
-        CCMenuItemImage *BuyC2 = [CCMenuItemImage itemWithNormalImage:@"buy_stop.png" selectedImage:@"buy_stop.png" target:self selector:@selector(buyCash2)];
+        CCMenuItemImage *BuyC2 = [CCMenuItemImage itemWithNormalImage:@"upgradep.png" selectedImage:@"upgradepSel.png" target:self selector:@selector(buyCash2)];
 //        BuyC2.scaleX = 2.0f;
 //        BuyC2.scaleY = 1.9f;
         
         
-        CCMenuItemFont *BuyC3 = [CCMenuItemImage itemWithNormalImage:@"buy_multiplier.png" selectedImage:@"buy_multiplier.png" target:self selector:@selector(buyCash3)];
+        CCMenuItemFont *BuyC3 = [CCMenuItemImage itemWithNormalImage:@"upgradem.png" selectedImage:@"upgrademSel.png" target:self selector:@selector(buyCash3)];
 //        BuyC3.scaleX = 2.0f;
 //        BuyC3.scaleY = 1.9f;
         
         CCMenu *bgcashStoreMenu = [CCMenu menuWithItems:BuyC1, BuyC2, BuyC3, nil];
         [bgcashStoreMenu alignItemsVerticallyWithPadding:10.f];
-        bgcashStoreMenu.position = ccp(screenSize.width/2 + 20, screenSize.height/2);
+        bgcashStoreMenu.position = ccp(screenSize.width/2, screenSize.height/2 + 15);
         [self addChild:bgcashStoreMenu z:-1];
         
         CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"shield.png" selectedImage:@"shield.png" target:self selector:@selector(buyCash1)];
@@ -122,17 +155,17 @@
         CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"1000 COINS" fontName:@"NexaBold" fontSize:18];
         price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 62);
         price1.color = ccc3(255, 255, 255);
-        [self addChild:price1];
+//        [self addChild:price1];
         
         CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"500 COINS" fontName:@"NexaBold" fontSize:18];
         price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2);
         price2.color = ccc3(255, 255, 255);
-        [self addChild:price2];
+//        [self addChild:price2];
         
         CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"800 COINS" fontName:@"NexaBold" fontSize:18];
         price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 65);
         price3.color = ccc3(255, 255, 255);
-        [self addChild:price3];
+//        [self addChild:price3];
         
         CCMenu *cashStoreMenu = [CCMenu menuWithItems:BuyCash1Label, BuyCash2Label, BuyCash3Label, nil];
         [cashStoreMenu alignItemsVerticallyWithPadding:10.f];

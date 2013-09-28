@@ -1917,7 +1917,7 @@
         ship.tag = 3;
     }
     
-    ship.scale = 1.5f;
+    ship.scale = 1.35f;
     
     if (oniPad == true) {
 //        ship.scale = 0.3f;

@@ -300,6 +300,17 @@
     
     CCAction *bubble;
     NSMutableArray *bubbleFrames;
+    
+    int tutorial0Start;
+    int tutorial0End;
+    int tutorial1Start;
+    int tutorial1End;
+    int tutorial2Start;
+    int tutorial2End;
+    int tutorial3Start;
+    int tutorial3End;
+    
+    bool usedPowerupDuringTutorial;
 }
 
 +(id)scene;

@@ -305,9 +305,9 @@
         
         // init pausebutton
         pauseButton = [[CCSprite alloc] init];
-        pauseButton = [CCSprite spriteWithFile:@"pause.png"];
+        pauseButton = [CCSprite spriteWithFile:@"pauseb.png"];
         pauseButton.position = ccp(size.width - 20, size.height - 20);
-        pauseButton.scale = 0.25f;
+//        pauseButton.scale = 0.25f;
         [self addChild:pauseButton z:1001];
         
         // init powerup labels
@@ -551,6 +551,19 @@
         
         if (numRoundsPlayed == 0) {
             invinciblePlayer = true;
+            tutorial0Start = [[NSDate date] timeIntervalSince1970];
+        }
+        
+        if (numRoundsPlayed == 1) {
+            tutorial1Start = [[NSDate date] timeIntervalSince1970];
+        }
+        
+        if (numRoundsPlayed == 2) {
+            tutorial2Start = [[NSDate date] timeIntervalSince1970];
+        }
+        
+        if (numRoundsPlayed == 3) {
+            tutorial3Start = [[NSDate date] timeIntervalSince1970];
         }
         
         [self performSelector:@selector(notInvincible) withObject:nil afterDelay:10.0f];
@@ -1644,6 +1657,9 @@
         if (numTimesP1Used > 0) {
             if (p1Locked == false) {
             if (p1Enabled == false) {
+                if (numRoundsPlayed == 1 || numRoundsPlayed == 2 || numRoundsPlayed == 3) {
+                    usedPowerupDuringTutorial = true;
+                }
                 [self flashLabel:@"ENERGY SHIELD UP" actionWithDuration:timeShieldEnabled color:@"red"];
                 id addBorder = [CCCallFunc actionWithTarget:self selector:@selector(addInfiniteBorder)];
                 id delayRemoval = [CCDelayTime actionWithDuration:timeShieldEnabled];
@@ -1702,6 +1718,9 @@
             if (p2Locked == false) {
                 if (p2Enabled == false) {
                     if (spriteIsColliding == false) {
+                        if (numRoundsPlayed == 1 || numRoundsPlayed == 2 || numRoundsPlayed == 3) {
+                            usedPowerupDuringTutorial = true;
+                        }
                         [self flashLabel:@"PROJECTILES PAUSED" actionWithDuration:1.5f color:@"red"];
                         id stopShip = [CCCallFunc actionWithTarget:self selector:@selector(shipPauseAllActions)];
                         id delayShip = [CCDelayTime actionWithDuration:1.5f];
@@ -1734,6 +1753,10 @@
         if (numTimesP3Used > 0) {
             if (p3Locked == false) {
             if (p3Enabler == false) {
+                if (numRoundsPlayed == 1 || numRoundsPlayed == 2 || numRoundsPlayed == 3) {
+                    usedPowerupDuringTutorial = true;
+                }
+                
                 [self flashLabel:@"MULTIPLIER BOOST!" actionWithDuration:5.0f color:@"red"];
                 
                 id enableIncrease = [CCCallFunc actionWithTarget:self selector:@selector(enableShipMultiplierIncrease)];
@@ -3367,6 +3390,42 @@
     if (playedTutorial == false) {
         playedTutorial = true;
         [[NSUserDefaults standardUserDefaults] setBool:playedTutorial forKey:@"tutorialStatus"];
+    }
+    
+    if (numRoundsPlayed == 0) {
+        tutorial0End = [[NSDate date] timeIntervalSince1970];
+        int tutorial1Time = tutorial0End - tutorial0Start;
+        NSNumber* time = [NSNumber numberWithInt:tutorial1Time];
+        NSNumber* powerupsUsed = [NSNumber numberWithBool:usedPowerupDuringTutorial];
+//        NSNumber* levelnumber = [NSNumber numberWithInt:1];
+        NSDictionary *tlevel1 = [[NSDictionary alloc] initWithObjectsAndKeys: time, @"time", powerupsUsed, @"powerups_used", nil];        [MGWU logEvent:@"tutorial_level1_complete" withParams:tlevel1];
+    }
+    
+    if (numRoundsPlayed == 1) {
+        tutorial1End = [[NSDate date] timeIntervalSince1970];
+        int tutorial2Time = tutorial1End - tutorial1Start;
+        NSNumber* time = [NSNumber numberWithInt:tutorial2Time];
+        NSNumber* powerupsUsed = [NSNumber numberWithBool:usedPowerupDuringTutorial];
+        //        NSNumber* levelnumber = [NSNumber numberWithInt:1];
+        NSDictionary *tlevel2 = [[NSDictionary alloc] initWithObjectsAndKeys: time, @"time", powerupsUsed, @"powerups_used", nil];        [MGWU logEvent:@"tutorial_level2_complete" withParams:tlevel2];
+    }
+    
+    if (numRoundsPlayed == 2) {
+        tutorial2End = [[NSDate date] timeIntervalSince1970];
+        int tutorial3Time = tutorial2End - tutorial2Start;
+        NSNumber* time = [NSNumber numberWithInt:tutorial3Time];
+        NSNumber* powerupsUsed = [NSNumber numberWithBool:usedPowerupDuringTutorial];
+        //        NSNumber* levelnumber = [NSNumber numberWithInt:1];
+        NSDictionary *tlevel3 = [[NSDictionary alloc] initWithObjectsAndKeys: time, @"time", powerupsUsed, @"powerups_used", nil];        [MGWU logEvent:@"tutorial_level3_complete" withParams:tlevel3];
+    }
+    
+    if (numRoundsPlayed == 3) {
+        tutorial3End = [[NSDate date] timeIntervalSince1970];
+        int tutorial4Time = tutorial3End - tutorial3Start;
+        NSNumber* time = [NSNumber numberWithInt:tutorial4Time];
+        NSNumber* powerupsUsed = [NSNumber numberWithBool:usedPowerupDuringTutorial];
+        //        NSNumber* levelnumber = [NSNumber numberWithInt:1];
+        NSDictionary *tlevel4 = [[NSDictionary alloc] initWithObjectsAndKeys: time, @"time", powerupsUsed, @"powerups_used", nil];        [MGWU logEvent:@"tutorial_level4_complete" withParams:tlevel4];
     }
     
     numRoundsPlayed++;

@@ -307,7 +307,10 @@
         pauseButton = [[CCSprite alloc] init];
         pauseButton = [CCSprite spriteWithFile:@"pauseb.png"];
         pauseButton.position = ccp(size.width - 20, size.height - 20);
-//        pauseButton.scale = 0.25f;
+        if (oniPad == true)
+        {
+            pauseButton.position = ccp(size.width - 30, size.height - 30);
+        }//        pauseButton.scale = 0.25f;
         [self addChild:pauseButton z:1001];
         
         // init powerup labels
@@ -509,7 +512,7 @@
         furyLabel.visible = false;
         
         
-        rotateArrow = [CCSprite spriteWithFile:@"rotate.png"];
+        rotateArrow = [CCSprite spriteWithFile:@"circular_arrows.png"];
         rotateArrow.position = ccp(player.position.x, player.position.y);
         [self addChild:rotateArrow z:1000];
         rotateArrow.visible = false;
@@ -523,15 +526,19 @@
         [self addChild:powerupArrow z:1000];
         powerupArrow.visible = false;
 
-        [self setDimensionsInPixelsOnSprite:rotateArrow width:300 height:300];
+//        [self setDimensionsInPixelsOnSprite:rotateArrow width:300 height:300];
     
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"]; // assume by default that a new high score hasn't occured yet
         
         
-        CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
-        multiplierPointer = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
+//        CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+        multiplierPointer = [CCSprite spriteWithFile:@"arrow_multiplier_lives.png"];//[CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
         multiplierPointer.position = ccp(multiplierWrapper.position.x + 40, multiplierWrapper.position.y - 40);
-        multiplierPointer.rotation = 180;
+
+        if (oniPad == true) {
+            multiplierPointer.position = ccp(multiplierWrapper.position.x + 65, multiplierWrapper.position.y - 65);
+        }
+//        multiplierPointer.rotation = 180;
         [self addChild:multiplierPointer z:multiplierWrapper.zOrder];
         multiplierPointer.visible = false;
         
@@ -612,16 +619,32 @@
 
 -(void) tutorial1
 {
-    [self flashLabel:@"Move the circle with your \n finger." actionWithDuration:5.0f color:@"black"];
+    textMoveCircle = [CCSprite spriteWithFile:@"text_move_circle.png"];
+    textMoveCircle.position = screenflashLabel.position;
+    textMoveCircle.scale = 1.3f;
+    [self addChild:textMoveCircle z:screenflashLabel.zOrder];
+    textMoveCircle.visible = true;
+//    [self flashLabel:@"Move the circle with your \n finger." actionWithDuration:5.0f color:@"black"];
     rotateArrow.visible = true;
+    [self performSelector:@selector(removeMoveCircleText) withObject:nil afterDelay:5.0f];
+}
+
+-(void) removeMoveCircleText
+{
+    [self removeChild:textMoveCircle];
 }
 
 -(void) tutorial2
 {
     matchColorsTutorial = true;
     rotateArrow.visible = false;
-    [self flashLabel:@"Match the colors!" actionWithDuration:5.0f color:@"black"];
-
+//    [self flashLabel:@"Match the colors!" actionWithDuration:5.0f color:@"black"];
+    
+    textMatch = [CCSprite spriteWithFile:@"text_match.png"];
+    textMatch.position = screenflashLabel.position;
+    textMatch.scale = 1.3f;
+    [self addChild:textMatch z:screenflashLabel.zOrder];
+    
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:20]];
 //    [[section1Ships objectAtIndex:[section1Ships count] - 1] runAction:[CCBlink actionWithDuration:5.0f blinks:10]];
     [self oscillateEffect:[section1Ships objectAtIndex:[section1Ships count] - 1] times:20 speed:0.25f];
@@ -655,6 +678,7 @@
     [section1 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"blankelement.png"]];
     [section2 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"blankelement.png"]];
     [section3 setTexture:[[CCTextureCache sharedTextureCache] addImage:@"blankelement.png"]];
+    [self removeChild:textMatch];
 }
 
 -(void) tutorial3
@@ -672,6 +696,9 @@
 -(void) hidePowerTutorialSprite:(CCSprite *) spriteTohide
 {
     spriteTohide.visible = false;
+    textShield.visible = false;
+    textProjectiles.visible = false;
+    textMultiplierBoost.visible = false;
 }
 
 -(void) updatePowerups
@@ -708,9 +735,14 @@
     if (p1Locked == false) {
         if (numRoundsPlayed == 1) {
                 powerUpBorder1.isEnabled = true;
-                [self flashLabel:@"This your shield. \n You can use 5 per round. \n Tap it to try it out." actionWithDuration:5.0f color:@"black"];
-                CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
-                power1Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
+                textShield = [CCSprite spriteWithFile:@"text_shield.png"];
+                textShield.position = screenflashLabel.position;
+                textShield.scale = 1.4f;
+                [self addChild:textShield z:screenflashLabel.zOrder];
+                textShield.visible = true;
+//                [self flashLabel:@"This your shield. \n You can use 5 per round. \n Tap it to try it out." actionWithDuration:5.0f color:@"black"];
+//                CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+                power1Display = [CCSprite spriteWithFile:@"arrow_shield.png"];//[CCSprite spriteWithTexture:texture rect:CGRectMake(0,0,110,50)];
                 power1Display.position = ccp(powerUpCreator1.position.x + 30, 95);
                 if (oniPad == true) {
                     power1Display.position = ccp(powerUpCreator1.position.x + 70, 95);
@@ -738,9 +770,14 @@
     if (p2Locked == false) {
         if (numRoundsPlayed == 2) {
             powerUpBorder2.isEnabled = true;
-            [self flashLabel:@"This pauses the projectiles. \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
-            CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
-            power2Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(149,0,34,50)];
+            textProjectiles = [CCSprite spriteWithFile:@"text_projectiles.png"];
+            textProjectiles.position = screenflashLabel.position;
+            textProjectiles.scale = 1.4f;
+            [self addChild:textProjectiles z:screenflashLabel.zOrder];
+            textProjectiles.visible = true;
+//            [self flashLabel:@"This pauses the projectiles. \n Tap it to try it!" actionWithDuration:5.0f color:@"black"];
+//            CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+            power2Display = [CCSprite spriteWithFile:@"arrow_projectiles.png"];//[CCSprite spriteWithTexture:texture rect:CGRectMake(149,0,34,50)];
             power2Display.position = ccp(powerUpCreator2.position.x + 30, 95);
             if (oniPad == true) {
                 power2Display.position = ccp(powerUpCreator2.position.x + 70, 95);
@@ -768,9 +805,14 @@
     if (p3Locked == false) {
         if (numRoundsPlayed == 3) {
             powerUpBorder3.isEnabled = true;
-            [self flashLabel:@"\n This your multiplier boost.\n It increases your multiplier +1 \n per correct fruit.\n Tap it to try it!" actionWithDuration:8.0f color:@"black"];
-            CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
-            power3Display = [CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
+            textMultiplierBoost = [CCSprite spriteWithFile:@"text_multiplier_boost.png"];
+            textMultiplierBoost.position = screenflashLabel.position;
+            textMultiplierBoost.scale = 1.4f;
+            [self addChild:textMultiplierBoost z:screenflashLabel.zOrder];
+            textMultiplierBoost.visible = true;
+//            [self flashLabel:@"\n This your multiplier boost.\n It increases your multiplier +1 \n per correct fruit.\n Tap it to try it!" actionWithDuration:8.0f color:@"black"];
+//            CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"powerupTutorial.png"];
+            power3Display = [CCSprite spriteWithFile:@"arrow_multiplier_boost.png"]; //[CCSprite spriteWithTexture:texture rect:CGRectMake(220,0,100,50)];
             power3Display.position = ccp(powerUpCreator3.position.x + 30, 95);
             if (oniPad == true) {
                 power3Display.position = ccp(powerUpCreator3.position.x + 70, 95);
@@ -1344,7 +1386,12 @@
     if (numFalseCollisions == 1 && multiplierTutorialShown == false) {
 //        [self unscheduleUpdate];
         [self unschedule:@selector(initializeTheShipArray:)];
-        [self flashLabel:@"\n Your multiplier acts as your lives." actionWithDuration:5.0f color:@"black"];
+        textMultiplierLives = [CCSprite spriteWithFile:@"text_multiplier_lives.png"];
+        textMultiplierLives.position = screenflashLabel.position;
+        textMultiplierLives.scale = 1.3f;
+        [self addChild:textMultiplierLives z:screenflashLabel.zOrder];
+        textMultiplierLives.visible = true;
+//        [self flashLabel:@"\n Your multiplier acts as your lives." actionWithDuration:5.0f color:@"black"];
         multiplierPointer.visible = true;
         [self performSelector:@selector(multiplierTutorial) withObject:nil afterDelay:5.0f];
 //        [self performSelector:@selector(removePointerSprite) withObject:nil afterDelay:10.0f];
@@ -2476,6 +2523,7 @@
 {
 //    [self flashLabel:@"If it reaches zero... FURY MODE!" actionWithDuration:5.0f color:@"black"];
     [self removePointerSprite];
+    [self removeChild:textMultiplierLives];
 }
 
 -(void) removePointerSprite

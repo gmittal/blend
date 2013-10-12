@@ -311,6 +311,13 @@
     int tutorial3End;
     
     bool usedPowerupDuringTutorial;
+    
+    CCSprite *textMatch;
+    CCSprite *textShield;
+    CCSprite *textProjectiles;
+    CCSprite *textMultiplierBoost;
+    CCSprite *textMultiplierLives;
+    CCSprite *textMoveCircle;
 }
 
 +(id)scene;

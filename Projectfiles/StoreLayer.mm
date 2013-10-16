@@ -140,7 +140,7 @@ CCLabelBMFont *coinsLabel;
 
 -(void) restore
 {
-    [MGWU testRestoreProducts:@[@"com.gbm.mlg.1000C", @"com.gbm.mlg.3000C", @"com.gbm.mlg.10000C"] withCallback:@selector(restoredProducts:) onTarget:self];
+    [MGWU testRestoreProducts:@[@"com.mgwu.blend.1000C", @"com.mgwu.blend.3000C", @"com.mgwu.blend.10000C"] withCallback:@selector(restoredProducts:) onTarget:self];
 }
 
 -(void) restoredProducts:(NSArray *) products
@@ -149,7 +149,7 @@ CCLabelBMFont *coinsLabel;
         [MGWU showMessage:@"There were no products to restore." withImage:nil]; // tell use why nothing interesting happened
     }
     
-    if ([products isEqual: @[@"com.gbm.mlg.1000C", @"com.gbm.mlg.3000C", @"com.gbm.mlg.10000C"]])
+    if ([products isEqual: @[@"com.mgwu.blend.1000C", @"com.mgwu.blend.3000C", @"com.mgwu.blend.10000C"]])
     {
         coins += 20000; // arbitrary at the moment
         NSNumber *restoredCoinValue = [NSNumber numberWithInt:coins];
@@ -163,17 +163,17 @@ CCLabelBMFont *coinsLabel;
 
 -(void) buyCash1
 {
-    [MGWU buyProduct:@"com.gbm.mlg.1000C" withCallback:@selector(boughtProduct:) onTarget:self];
+    [MGWU buyProduct:@"com.mgwu.blend.1000c" withCallback:@selector(boughtProduct:) onTarget:self];
 }
 
 -(void) buyCash2
 {
-    [MGWU buyProduct:@"com.gbm.mlg.3000C" withCallback:@selector(boughtProduct:) onTarget:self];
+    [MGWU buyProduct:@"com.mgwu.blend.3000c" withCallback:@selector(boughtProduct:) onTarget:self];
 }
 
 -(void) buyCash3
 {
-    [MGWU buyProduct:@"com.gbm.mlg.10000C" withCallback:@selector(boughtProduct:) onTarget:self];
+    [MGWU buyProduct:@"com.mgwu.blend.10000c" withCallback:@selector(boughtProduct:) onTarget:self];
 }
 
 
@@ -199,7 +199,7 @@ CCLabelBMFont *coinsLabel;
 {
     NSLog(@"Something was Bought!");
 //    [MGWU showMessage:@"Purchase Successful" withImage:nil];
-    if ([powerupToBuy isEqualToString:@"com.gbm.mlg.1000C"] == true)
+    if ([powerupToBuy isEqualToString:@"com.mgwu.blend.1000c"] == true)
     {
         NSLog(@"1000 Coins added!");
         [self boughtCashMessage:1];
@@ -210,7 +210,7 @@ CCLabelBMFont *coinsLabel;
         [self updateString];
     }
     
-    if ([powerupToBuy isEqualToString:@"com.gbm.mlg.3000C"] == true)
+    if ([powerupToBuy isEqualToString:@"com.mgwu.blend.3000c"] == true)
     {
         NSLog(@"3000 Coins added!");
         [self boughtCashMessage:2];
@@ -222,7 +222,7 @@ CCLabelBMFont *coinsLabel;
         
     }
     
-    if ([powerupToBuy isEqualToString:@"com.gbm.mlg.10000C"] == true)
+    if ([powerupToBuy isEqualToString:@"com.mgwu.blend.10000c"] == true)
     {
         NSLog(@"10000 Coins added!");
         [self boughtCashMessage:3];

@@ -28,7 +28,7 @@
         CCLabelBMFont *gameTitle;
         
         if (oniPad == true) {
-            gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:76];
+            gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:72];
         } else {
             gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:36];
         }

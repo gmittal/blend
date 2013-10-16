@@ -90,34 +90,19 @@ CCLabelBMFont *coinsLabel;
 //        restoreMenu.position = ccp(screenCenter.x, screenSize.height - 85);
 //        [self addChild:restoreMenu z:1000];
         
-        CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"coin1000.png" selectedImage:@"coin1000.png" target:self selector:@selector(buyCash1)];
+        CCMenuItemImage *BuyCash1Label = [CCMenuItemImage itemWithNormalImage:@"storebtn1.png" selectedImage:@"storebtn1-pressed.png" target:self selector:@selector(buyCash1)];
 //        BuyCash1Label.scale = 0.5f;
         
-        CCMenuItemImage *BuyCash2Label = [CCMenuItemImage itemWithNormalImage:@"coin3000.png" selectedImage:@"coin3000.png" target:self selector:@selector(buyCash2)];
+        CCMenuItemImage *BuyCash2Label = [CCMenuItemImage itemWithNormalImage:@"storebtn2.png" selectedImage:@"storebtn2-pressed.png" target:self selector:@selector(buyCash2)];
 //        BuyCash2Label.scale = 0.5f;
         
         
-        CCMenuItemImage *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"coin10000.png" selectedImage:@"coin10000.png" target:self selector:@selector(buyCash3)];
+        CCMenuItemImage *BuyCash3Label = [CCMenuItemImage itemWithNormalImage:@"storebtn3.png" selectedImage:@"storebtn3-pressed.png" target:self selector:@selector(buyCash3)];
 //        BuyCash3Label.scale = 0.5f;
-        
-        CCLabelTTF *price1 = [CCLabelTTF labelWithString:@"0.99" fontName:@"Roboto-Light" fontSize:18];
-        price1.position = ccp(screenSize.width/2 + 50, screenSize.height/2 + 60);
-        price1.color = ccc3(0, 0, 0);
-        [self addChild:price1];
-
-        CCLabelTTF *price2 = [CCLabelTTF labelWithString:@"1.99" fontName:@"Roboto-Light" fontSize:18];
-        price2.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 10);
-        price2.color = ccc3(0, 0, 0);
-        [self addChild:price2];
-        
-        CCLabelTTF *price3 = [CCLabelTTF labelWithString:@"4.99" fontName:@"Roboto-Light" fontSize:18];
-        price3.position = ccp(screenSize.width/2 + 50, screenSize.height/2 - 80);
-        price3.color = ccc3(0, 0, 0);
-        [self addChild:price3];
         
         CCMenu *cashStoreMenu = [CCMenu menuWithItems:BuyCash1Label, BuyCash2Label, BuyCash3Label, nil];
         [cashStoreMenu alignItemsVerticallyWithPadding:10.f];
-        cashStoreMenu.position = ccp(screenSize.width/2 - 50, screenSize.height/2 - 20);
+        cashStoreMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 20);
         [self addChild:cashStoreMenu];
         
         CCSprite *background;

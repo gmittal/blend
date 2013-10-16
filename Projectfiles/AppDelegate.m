@@ -21,7 +21,7 @@
 #endif
     NSLog(@"Test");
     [MGWU loadMGWU:@"natcrvZe5ytd9slSi2juce99D7Km0qeWI8OGvUgIWlKihnOvpOk6MXZY1cXy7VkduwchOwBgWshqj5VNBCZ2i3ARAOK1IgQkn7SP"];
-        
+    
     [MGWU setReminderMessage:@"Come back and blend!"];
     
     [MGWU setTapjoyAppId: @"b4a93922-6209-4067-b0a3-a19320f68d0d" andSecretKey:@"1tb9JRwRw1OvePawxCIB"];

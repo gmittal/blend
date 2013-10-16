@@ -205,7 +205,7 @@
         
         // startbackground music
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"gocart.mp3" loop:YES];
+        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
         
 //        if ([GameOver returnBool] == true) {

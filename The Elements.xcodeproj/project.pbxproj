@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5484FCF4180E3B9000BF63BB /* flashing_wheel_overlay-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = 5484FCF0180E3B9000BF63BB /* flashing_wheel_overlay-ipadhd.png */; };
+		5484FCF5180E3B9000BF63BB /* flashing_wheel_overlay-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5484FCF1180E3B9000BF63BB /* flashing_wheel_overlay-ipad.png */; };
+		5484FCF6180E3B9000BF63BB /* flashing_wheel_overlay-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 5484FCF2180E3B9000BF63BB /* flashing_wheel_overlay-hd.png */; };
+		5484FCF7180E3B9000BF63BB /* flashing_wheel_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5484FCF3180E3B9000BF63BB /* flashing_wheel_overlay.png */; };
+		5484FCF9180E545300BF63BB /* LLS - Fang.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5484FCF8180E545300BF63BB /* LLS - Fang.wav */; };
 		620289F0180CAE2200CD63B9 /* mgwuSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620289A8180CAE2200CD63B9 /* mgwuSDK.framework */; };
 		620289F1180CAE2200CD63B9 /* aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 620289AA180CAE2200CD63B9 /* aqua.png */; };
 		620289F2180CAE2200CD63B9 /* bluechatbubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 620289AB180CAE2200CD63B9 /* bluechatbubble.png */; };
@@ -247,7 +252,6 @@
 		C7A6DAD517BFFCB30062E5B2 /* buy_multiplier-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DAC917BFFCB30062E5B2 /* buy_multiplier-ipadhd.png */; };
 		C7A6DAD617BFFCB30062E5B2 /* buy_shield-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DACA17BFFCB30062E5B2 /* buy_shield-ipadhd.png */; };
 		C7A6DAD717BFFCB30062E5B2 /* buy_stop-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DACB17BFFCB30062E5B2 /* buy_stop-ipadhd.png */; };
-		C7A6EAA317C146AE0090F27D /* gocart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C7A6EAA217C146AE0090F27D /* gocart.mp3 */; };
 		C7AE7F3F17BC476100F82F9B /* bg_leaves-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AE7F3B17BC476100F82F9B /* bg_leaves-ipad.png */; };
 		C7AE7F4017BC476100F82F9B /* bg_leaves-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AE7F3C17BC476100F82F9B /* bg_leaves-ipadhd.png */; };
 		C7AE7F4117BC476100F82F9B /* bg-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C7AE7F3D17BC476100F82F9B /* bg-ipad.png */; };
@@ -530,6 +534,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5484FCF0180E3B9000BF63BB /* flashing_wheel_overlay-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashing_wheel_overlay-ipadhd.png"; sourceTree = "<group>"; };
+		5484FCF1180E3B9000BF63BB /* flashing_wheel_overlay-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashing_wheel_overlay-ipad.png"; sourceTree = "<group>"; };
+		5484FCF2180E3B9000BF63BB /* flashing_wheel_overlay-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashing_wheel_overlay-hd.png"; sourceTree = "<group>"; };
+		5484FCF3180E3B9000BF63BB /* flashing_wheel_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashing_wheel_overlay.png; sourceTree = "<group>"; };
+		5484FCF8180E545300BF63BB /* LLS - Fang.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "LLS - Fang.wav"; sourceTree = "<group>"; };
 		620289A8180CAE2200CD63B9 /* mgwuSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = mgwuSDK.framework; sourceTree = "<group>"; };
 		620289AA180CAE2200CD63B9 /* aqua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aqua.png; sourceTree = "<group>"; };
 		620289AB180CAE2200CD63B9 /* bluechatbubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluechatbubble.png; sourceTree = "<group>"; };
@@ -773,7 +782,6 @@
 		C7A6DAC917BFFCB30062E5B2 /* buy_multiplier-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_multiplier-ipadhd.png"; sourceTree = "<group>"; };
 		C7A6DACA17BFFCB30062E5B2 /* buy_shield-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_shield-ipadhd.png"; sourceTree = "<group>"; };
 		C7A6DACB17BFFCB30062E5B2 /* buy_stop-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_stop-ipadhd.png"; sourceTree = "<group>"; };
-		C7A6EAA217C146AE0090F27D /* gocart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gocart.mp3; sourceTree = "<group>"; };
 		C7AE7F3B17BC476100F82F9B /* bg_leaves-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_leaves-ipad.png"; sourceTree = "<group>"; };
 		C7AE7F3C17BC476100F82F9B /* bg_leaves-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_leaves-ipadhd.png"; sourceTree = "<group>"; };
 		C7AE7F3D17BC476100F82F9B /* bg-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-ipad.png"; sourceTree = "<group>"; };
@@ -1343,6 +1351,11 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5484FCF8180E545300BF63BB /* LLS - Fang.wav */,
+				5484FCF0180E3B9000BF63BB /* flashing_wheel_overlay-ipadhd.png */,
+				5484FCF1180E3B9000BF63BB /* flashing_wheel_overlay-ipad.png */,
+				5484FCF2180E3B9000BF63BB /* flashing_wheel_overlay-hd.png */,
+				5484FCF3180E3B9000BF63BB /* flashing_wheel_overlay.png */,
 				C7F324CF1808DB0500842D98 /* multiplier-ipad.png */,
 				C7F324C91808D3C700842D98 /* text_multiplier_boost-ipadhd.png */,
 				C7F324CA1808D3C700842D98 /* text_multiplier_lives-ipadhd.png */,
@@ -1437,7 +1450,6 @@
 				C75981A317DB952300EF761F /* bubbles-ipadhd.plist */,
 				C759819417DAAB8000EF761F /* bubbles.plist */,
 				C759819517DAAB8000EF761F /* bubbles.png */,
-				C7A6EAA217C146AE0090F27D /* gocart.mp3 */,
 				C718586D17C004A400E5D32E /* coin1000.png */,
 				C718586E17C004A400E5D32E /* coin3000.png */,
 				C718586F17C004A400E5D32E /* coin10000.png */,
@@ -1873,6 +1885,7 @@
 				C71022191784B601001A474B /* gameover1.mp3 in Resources */,
 				C710221C1784CB68001A474B /* topbar.png in Resources */,
 				C710221D1784CB68001A474B /* topbar-hd.png in Resources */,
+				5484FCF4180E3B9000BF63BB /* flashing_wheel_overlay-ipadhd.png in Resources */,
 				C71022201784CD86001A474B /* backgroundip5-hd.png in Resources */,
 				C71022211784CD86001A474B /* backgroundip5.png in Resources */,
 				C7E0F3DD178B297200E90D84 /* incorrect.wav in Resources */,
@@ -1903,6 +1916,7 @@
 				62028A42180CAFC700CD63B9 /* Icon76x76@2x.png in Resources */,
 				C7848B4B1799DB1B00DFCEB2 /* globalHighscoreButton-hd.png in Resources */,
 				62028A10180CAE2200CD63B9 /* MGWUAboutFooter-Portrait~ipad.png in Resources */,
+				5484FCF6180E3B9000BF63BB /* flashing_wheel_overlay-hd.png in Resources */,
 				C7848B4C1799DB1B00DFCEB2 /* globalHighscoreButton.png in Resources */,
 				C7848B4D1799DB1B00DFCEB2 /* globalHighscoreButtonSel-hd.png in Resources */,
 				C7848B4E1799DB1B00DFCEB2 /* globalHighscoreButtonSel.png in Resources */,
@@ -2044,6 +2058,7 @@
 				C7AE7FEE17BEEBC000F82F9B /* buyCashSel-ipad.png in Resources */,
 				C7AE7FEF17BEEBC000F82F9B /* leaderboards-ipad.png in Resources */,
 				C7AE7FF017BEEBC000F82F9B /* leaderboardsSel-ipad.png in Resources */,
+				5484FCF9180E545300BF63BB /* LLS - Fang.wav in Resources */,
 				C7AE7FF117BEEBC000F82F9B /* playAgain-ipad.png in Resources */,
 				C7AE7FF217BEEBC000F82F9B /* playAgainSel-ipad.png in Resources */,
 				C7AE7FF317BEEBC000F82F9B /* playNow-ipad.png in Resources */,
@@ -2073,6 +2088,7 @@
 				C7AE801D17BEEBCE00F82F9B /* playAgain-ipadhd.png in Resources */,
 				C7AE801E17BEEBCE00F82F9B /* playAgainSel-ipadhd.png in Resources */,
 				C7AE801F17BEEBCE00F82F9B /* playNow-ipadhd.png in Resources */,
+				5484FCF5180E3B9000BF63BB /* flashing_wheel_overlay-ipad.png in Resources */,
 				C7AE802017BEEBCE00F82F9B /* playNowSel-ipadhd.png in Resources */,
 				C7AE802117BEEBCE00F82F9B /* promo-ipadhd.png in Resources */,
 				C7AE802217BEEBCE00F82F9B /* promoSel-ipadhd.png in Resources */,
@@ -2152,7 +2168,6 @@
 				62028A31180CAE2200CD63B9 /* operator.connecting.png in Resources */,
 				C718587117C004A400E5D32E /* coin3000.png in Resources */,
 				C718587217C004A400E5D32E /* coin10000.png in Resources */,
-				C7A6EAA317C146AE0090F27D /* gocart.mp3 in Resources */,
 				C759819C17DAAB8000EF761F /* bubbles.plist in Resources */,
 				C759819D17DAAB8000EF761F /* bubbles.png in Resources */,
 				C75981A417DB952300EF761F /* bubbles-hd.png in Resources */,
@@ -2287,6 +2302,7 @@
 				C7F324CC1808D3C700842D98 /* text_multiplier_lives-ipadhd.png in Resources */,
 				C7F324D01808DB0500842D98 /* multiplier-ipad.png in Resources */,
 				620289F2180CAE2200CD63B9 /* bluechatbubble.png in Resources */,
+				5484FCF7180E3B9000BF63BB /* flashing_wheel_overlay.png in Resources */,
 				C7F324D51809A16300842D98 /* Icon-72.png in Resources */,
 				C7F324D61809A16300842D98 /* Icon-72@2x.png in Resources */,
 				C7F324D71809A16300842D98 /* Icon.png in Resources */,
@@ -2396,10 +2412,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gautam Mittal (84U78C6DH3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/mgwuSDK.embeddedframework\\\"",
-					"/Users/benjaminencz/Development/MGWU/Kobold2D-2.1.0/moon-landing-game/mgwuSDK.embeddedframework",
+					"\"$(SRCROOT)/mgwuSDK.embeddedframework\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				New_Setting = "";
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
@@ -2421,10 +2436,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: makegameswithus inc. (UBXY3JK49V)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/mgwuSDK.embeddedframework\\\"",
-					"/Users/benjaminencz/Development/MGWU/Kobold2D-2.1.0/moon-landing-game/mgwuSDK.embeddedframework",
+					"\"$(SRCROOT)/mgwuSDK.embeddedframework\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				New_Setting = "";
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",

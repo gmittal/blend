@@ -38,8 +38,13 @@
         [self addChild:gameTitle];
         
         
-        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin.png"];
-        coinIcon.position = ccp(15, screenSize.height - 20);
+        CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin1.png"];
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+			coinIcon.position = ccp(40, screenSize.height - 40);
+        } else {
+			coinIcon.position = ccp(20, screenSize.height - 20);
+        }
+		//        coinIcon.scale = 1.25f;
         [self addChild:coinIcon z:1000];
         
         NSNumber *CoinNumber = [MGWU objectForKey:@"sharedCoins"]; //[[NSUserDefaults standardUserDefaults] objectForKey:@"sharedCoins"];
@@ -52,7 +57,14 @@
         coins = [CoinNumber intValue];
         CoinString = startcoinStr; //[[NSString alloc] initWithFormat:@"%i", coins];
         coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:18];
-        coinsLabel.position = ccp(coinIcon.position.x + 17, screenSize.height - 22);
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:44];
+            coinsLabel.position = ccp(coinIcon.position.x + 43, coinIcon.position.y);
+			
+        } else {
+            coinsLabel = [CCLabelTTF labelWithString:CoinString fontName:@"NexaBold" fontSize:22];
+            coinsLabel.position = ccp(coinIcon.position.x + 23, screenSize.height - 22);
+        }
         coinsLabel.color = ccc3(0, 0, 0);
         coinsLabel.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:coinsLabel];
@@ -196,7 +208,7 @@
         
         
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"gocart.mp3" loop:YES];
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
         
     }

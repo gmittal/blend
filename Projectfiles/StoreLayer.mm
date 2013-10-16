@@ -163,17 +163,17 @@ CCLabelBMFont *coinsLabel;
 
 -(void) buyCash1
 {
-    [MGWU testBuyProduct:@"com.gbm.mlg.1000C" withCallback:@selector(boughtProduct:) onTarget:self];
+    [MGWU buyProduct:@"com.gbm.mlg.1000C" withCallback:@selector(boughtProduct:) onTarget:self];
 }
 
 -(void) buyCash2
 {
-    [MGWU testBuyProduct:@"com.gbm.mlg.3000C" withCallback:@selector(boughtProduct:) onTarget:self];
+    [MGWU buyProduct:@"com.gbm.mlg.3000C" withCallback:@selector(boughtProduct:) onTarget:self];
 }
 
 -(void) buyCash3
 {
-    [MGWU testBuyProduct:@"com.gbm.mlg.10000C" withCallback:@selector(boughtProduct:) onTarget:self];
+    [MGWU buyProduct:@"com.gbm.mlg.10000C" withCallback:@selector(boughtProduct:) onTarget:self];
 }
 
 

@@ -28,13 +28,13 @@
         CCLabelBMFont *gameTitle;
         
         if (oniPad == true) {
-            gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:72];
+            gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:76];
         } else {
             gameTitle = [CCLabelTTF labelWithString:@"UPGRADES" fontName:@"NexaBold" fontSize:36];
         }
         gameTitle.color = ccc3(0,0,0);
 //        gameTitle.anchorPoint = ccp(0.0f,0.5f);
-        gameTitle.position = ccp(screenSize.width/2, screenSize.height - 60);
+        gameTitle.position = ccp(screenSize.width/2, screenSize.height - 60 - (gameTitle.contentSize.height/2));
         [self addChild:gameTitle];
         
         

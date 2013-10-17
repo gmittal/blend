@@ -21,9 +21,7 @@
 #endif
     NSLog(@"Test");
     [MGWU loadMGWU:@"natcrvZe5ytd9slSi2juce99D7Km0qeWI8OGvUgIWlKihnOvpOk6MXZY1cXy7VkduwchOwBgWshqj5VNBCZ2i3ARAOK1IgQkn7SP"];
-    
-  //  [MGWU performSelector:@selector(logEvents:withParams:) withObject:nil withObject:nil];
-    
+        
     [MGWU dark];
     
     [MGWU noFacebookPrompt];

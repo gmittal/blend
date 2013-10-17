@@ -25,11 +25,24 @@ CCLabelBMFont *coinsLabel;
         glClearColor(0.0, 0.75, 1.0, 1.0);
         screenSize = [[CCDirector sharedDirector] winSize];
         CGPoint screenCenter = [[CCDirector sharedDirector] screenCenter];
-        CCLabelBMFont *gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"NexaBold" fontSize:36];
-        gameTitle.color = ccc3(0,0,0);
-        gameTitle.position = ccp(screenCenter.x, screenSize.height-60);
-        [self addChild:gameTitle];
+        
+        BOOL oniPad = FALSE;
+        
+        if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
+            oniPad = true;
+        }
+        
+        CCLabelBMFont *gameTitle;
+        
+        if (oniPad == true) {
+            gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"NexaBold" fontSize:76];
+        } else {
+            gameTitle = [CCLabelTTF labelWithString:@"STORE" fontName:@"NexaBold" fontSize:36];
+        }
 
+        gameTitle.color = ccc3(0,0,0);
+        gameTitle.position = ccp(screenSize.width/2, screenSize.height - 60 - (gameTitle.contentSize.height/2));
+        [self addChild:gameTitle];
         
         CCSprite *coinIcon = [CCSprite spriteWithFile:@"coin1.png"];
         if ([[CCDirector sharedDirector] winSizeInPixels].height == 1024 || [[CCDirector sharedDirector] winSizeInPixels].height == 2048) {
@@ -140,7 +153,7 @@ CCLabelBMFont *coinsLabel;
 
 -(void) restore
 {
-    [MGWU testRestoreProducts:@[@"com.mgwu.blend.1000C", @"com.mgwu.blend.3000C", @"com.mgwu.blend.10000C"] withCallback:@selector(restoredProducts:) onTarget:self];
+    //[MGWU testRestoreProducts:@[@"com.mgwu.blend.1000C", @"com.mgwu.blend.3000C", @"com.mgwu.blend.10000C"] withCallback:@selector(restoredProducts:) onTarget:self];
 }
 
 -(void) restoredProducts:(NSArray *) products

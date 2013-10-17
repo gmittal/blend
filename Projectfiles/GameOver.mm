@@ -156,7 +156,7 @@
         CCMenuItemImage *postFB = [CCMenuItemImage itemWithNormalImage:@"facebook.png" selectedImage:@"facebookSel.png" target:self selector:@selector(shareFB)];
         CCMenu *shareMenu = [CCMenu menuWithItems:postFB, tweet, nil];
         [shareMenu alignItemsHorizontallyWithPadding:0.0f];
-        shareMenu.position = ccp(screenSize.width - 60, screenSize.height - 30);
+        shareMenu.position = ccp(screenSize.width - tweet.contentSize.width, screenSize.height - tweet.contentSize.height/2);
         
         //        if ([MGWU isTwitterActive] == true) {
         [self addChild:shareMenu z:1000];

@@ -103,9 +103,11 @@
         [self addChild:background z:-100];
         [self addChild:leaves z:-99];
         
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
         
     }
     return self;
@@ -195,6 +197,24 @@
         }
     }
 }
+
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_back_pressed"];
+}
+
+-(void)androidMenu
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_menu_pressed"];
+}
+#endif
 
 
 @end

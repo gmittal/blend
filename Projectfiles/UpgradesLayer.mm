@@ -207,9 +207,11 @@
         [self scheduleUpdate];
         
         
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
         
     }
     return self;
@@ -287,6 +289,23 @@
 	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[StoreLayer node]]];
 }
 
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[GameOver node]]];
+	
+	[MGWU logEvent:@"android_back_pressed"];
+}
+
+-(void)androidMenu
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_menu_pressed"];
+}
+#endif
 
 
 -(void) updateString

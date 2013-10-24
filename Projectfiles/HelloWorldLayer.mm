@@ -546,10 +546,12 @@
         [self scheduleUpdate]; // schedule the framely update
         
         [self startTutorial]; // start the tutorial (if needed)
-        
+    
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
 //        [self enableSpiralEffect];
 
          NSLog(@"Round: %i", numRoundsPlayed);
@@ -3270,7 +3272,7 @@
     
     bool tutorialStatusCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialStatus"];
     
-    if (tutorialStatusCheck == nil) {
+    if (!tutorialStatusCheck) {
         playedTutorial = false;
     } else {
         playedTutorial = [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialStatus"];
@@ -3615,5 +3617,23 @@
     [self updateEffectPositions];
     [self initChallenges]; // start challenges to throw at the player
 }
+
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_back_pressed"];
+}
+
+-(void)androidMenu
+{
+	[[CCDirector sharedDirector] pushScene:
+	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[PauseLayer node]]];
+	
+	[MGWU logEvent:@"android_menu_pressed"];
+}
+#endif
 
 @end

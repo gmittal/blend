@@ -204,9 +204,11 @@
         }
         
         // startbackground music
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
-        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
+            [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
         
 //        if ([GameOver returnBool] == true) {
 //            NSLog(@"Hi, this actually works!");
@@ -272,7 +274,11 @@
 
 -(void) about
 {
-    [MGWU displayAboutPage];
+#ifdef APPORTABLE
+	[MGWU displayAboutMessage:@"Blend was built by Gautam Mittal!" andTitle:@"About Blend"];
+#else
+	[MGWU displayAboutPage];
+#endif
 }
 
 -(void) moreGames
@@ -281,5 +287,12 @@
 //	 [CCTransitionFlipX transitionWithDuration:0.5f scene:[StoreLayer node]]];
     [MGWU displayCrossPromo];
 }
+
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	exit(0);
+}
+#endif
 
 @end

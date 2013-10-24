@@ -141,9 +141,11 @@ CCLabelBMFont *coinsLabel;
         
 //        [self scheduleUpdate];
         
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
         
     }
     
@@ -254,6 +256,24 @@ CCLabelBMFont *coinsLabel;
     [[CCDirector sharedDirector] replaceScene:
 	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
 }
+
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
+	
+	[MGWU logEvent:@"android_back_pressed"];
+}
+
+-(void)androidMenu
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_menu_pressed"];
+}
+#endif
 
 -(void) updateString
 {

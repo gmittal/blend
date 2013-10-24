@@ -151,7 +151,7 @@
         endCoins.anchorPoint = ccp(0.0f,0.5f);
         [self addChild:endCoins];
         
-        
+#ifndef APPORTABLE
         CCMenuItemImage *tweet = [CCMenuItemImage itemWithNormalImage:@"twitter.png" selectedImage:@"twitterSel.png" target:self selector:@selector(shareTweet)];
         CCMenuItemImage *postFB = [CCMenuItemImage itemWithNormalImage:@"facebook.png" selectedImage:@"facebookSel.png" target:self selector:@selector(shareFB)];
         CCMenu *shareMenu = [CCMenu menuWithItems:postFB, tweet, nil];
@@ -161,6 +161,7 @@
         //        if ([MGWU isTwitterActive] == true) {
         [self addChild:shareMenu z:1000];
         //        }
+#endif
         
         
         
@@ -230,9 +231,11 @@
         [nameField setAutocorrectionType:UITextAutocorrectionTypeNo];
         [nameField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
         
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
     
     }
     return self;
@@ -250,7 +253,7 @@
         NSLog(result);
         //        username = result;
         [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"username"];
-        if (endingHighScore != 0 || endingHighScore != nil) {
+        if (endingHighScore != 0) {
             [MGWU submitHighScore:endingHighScore byPlayer:result forLeaderboard:@"defaultLeaderboard"];
             [self confirmHighScore];
         }
@@ -267,6 +270,7 @@
 		[nameField removeFromSuperview];
 		return YES;
 	}
+	return NO;
 }
 
 -(void) gameUpgrades
@@ -280,21 +284,13 @@
 
 -(void) showNewHighScoreAlert
 {
-    UIAlertView *alert = [[UIAlertView alloc] init];
-    [alert setTitle:@"New High Score"];
-    [alert setMessage:[[NSString alloc] initWithFormat:@"You have a new high score of %i", endingScore]];
-    [alert setDelegate:self];
-    [alert addButtonWithTitle:@"OK"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New High Score" message:[[NSString alloc] initWithFormat:@"You have a new high score of %i", endingScore] delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
 }
 
 -(void) confirmHighScore
 {
-    UIAlertView *highscore = [[UIAlertView alloc] init];
-    [highscore setTitle:@"Success!"];
-    [highscore setMessage:@"Your username was submitted along with this round's score."];
-    [highscore setDelegate:self];
-    [highscore addButtonWithTitle:@"OK"];
+    UIAlertView *highscore = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your username was submitted along with this round's score." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [highscore show];
 }
 
@@ -345,6 +341,24 @@
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
     [nameField removeFromSuperview];
 }
+
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_back_pressed"];
+}
+
+-(void)androidMenu
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_menu_pressed"];
+}
+#endif
 
 +(BOOL) returnBool
 {

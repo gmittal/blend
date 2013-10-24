@@ -9,6 +9,10 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef APPORTABLE
+	[[UIScreen mainScreen] setCurrentMode:[UIScreenMode emulatedMode:UIScreenIPhone4EmulationMode]];
+	setenv("CLASSIC", "0", 1);
+#endif
 	// Forward main to a default implementation provided by Kobold2D™.
 	// The third parameter can be used to supply customized parameters for the initialization.
 	return KKMain(argc, argv, NULL);

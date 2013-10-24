@@ -1,120 +1,5 @@
 {
-    "xcode_project": "The Elements.xcodeproj", 
-    "sources": [
-        {
-            "language": "objc", 
-            "header_paths": [], 
-            "source": "Projectfiles/AppDelegate.m", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/GameOver.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/HelloWorldLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc", 
-            "header_paths": [], 
-            "source": "Projectfiles/LeaderBoardPlayer.m", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/PauseLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/SettingsLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/StartMenuLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/StatLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/StoreLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc++", 
-            "header_paths": [], 
-            "source": "Projectfiles/UpgradesLayer.mm", 
-            "flags": [], 
-            "defines": {}
-        }, 
-        {
-            "language": "objc", 
-            "header_paths": [], 
-            "source": "Projectfiles/main.m", 
-            "flags": [], 
-            "defines": {}
-        }
-    ], 
-    "infoplists": [
-        "./Projectfiles-iOS/Resources/Info.plist"
-    ], 
-    "libs": [
-        "sqlite3.0", 
-        "z", 
-        "stdc++", 
-        "z", 
-        "stdc++", 
-        "icucore", 
-        "box2d-ios", 
-        "chipmunk-ios", 
-        "chipmunk-spacemanager-ios", 
-        "cocos2d-extensions-ios", 
-        "cocos2d-ios", 
-        "cocos3d-ios", 
-        "cocosdenshion-ios", 
-        "kobold2d-ios", 
-        "objectal-ios", 
-        "sneakyinput-ios"
-    ], 
-    "defines": {
-        "NDEBUG": 1, 
-        "NO_LOG_MACROS": 1, 
-        "NS_BLOCK_ASSERTIONS": 1, 
-        "__IPHONE_OS_VERSION_MIN_REQUIRED": 40300, 
-        "RELEASE": 1
-    }, 
-    "pchs": [
-        "./Projectfiles/Prefix-iOS.pch"
-    ], 
     "assets": [
-        {
-            "asset": "Projectfiles-iOS/Resources/Default.png", 
-            "target": "Default.png"
-        }, 
         {
             "asset": "Projectfiles-iOS/Resources/Icon-72.png", 
             "target": "Icon-72.png"
@@ -122,6 +7,10 @@
         {
             "asset": "Projectfiles-iOS/Resources/Icon-Small-50.png", 
             "target": "Icon-Small-50.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-m.png", 
+            "target": "mgwu-m.png"
         }, 
         {
             "asset": "Projectfiles-iOS/Resources/Icon-Small.png", 
@@ -134,6 +23,14 @@
         {
             "asset": "Projectfiles-iOS/Resources/Icon.png", 
             "target": "Icon.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/hipmobsend_field.png", 
+            "target": "hipmobsend_field.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButton@2x.png", 
+            "target": "FBLoginButton@2x.png"
         }, 
         {
             "asset": "Projectfiles-iOS/Resources/Icon@2x.png", 
@@ -152,12 +49,12 @@
             "target": "fps_images-ipadhd.png"
         }, 
         {
-            "asset": "Projectfiles-iOS/Resources/fps_images.png", 
-            "target": "fps_images.png"
+            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButton.png", 
+            "target": "FBLoginButton.png"
         }, 
         {
-            "asset": "Projectfiles-iOS/Resources/Default-568h@2x.png", 
-            "target": "Default-568h@2x.png"
+            "asset": "Projectfiles-iOS/Resources/fps_images.png", 
+            "target": "fps_images.png"
         }, 
         {
             "asset": "Projectfiles-iOS/Resources/iTunesArtwork", 
@@ -176,8 +73,8 @@
             "target": "sect3.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/border-hd.png", 
-            "target": "border-hd.png"
+            "asset": "mgwuSDK.embeddedframework/Resources/send-button-instate.png", 
+            "target": "send-button-instate.png"
         }, 
         {
             "asset": "Projectfiles/Resources/sect1-hd.png", 
@@ -192,10 +89,6 @@
             "target": "sect3-hd.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/border.png", 
-            "target": "border.png"
-        }, 
-        {
             "asset": "Projectfiles/Resources/Roboto.ttf", 
             "target": "Roboto.ttf"
         }, 
@@ -206,6 +99,10 @@
         {
             "asset": "Projectfiles/Resources/ship2-hd.png", 
             "target": "ship2-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Portrait@2x~ipad.png", 
+            "target": "MGWUBackgroundDark-Portrait@2x~ipad.png"
         }, 
         {
             "asset": "Projectfiles/Resources/ship1-hd.png", 
@@ -240,8 +137,16 @@
             "target": "ship-hd.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Landscape@2x~ipad.png", 
+            "target": "MGWUAboutFooter-Landscape@2x~ipad.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/fire.png", 
             "target": "fire.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-pressed-hd.png", 
+            "target": "storebtn2-pressed-hd.png"
         }, 
         {
             "asset": "Projectfiles/Resources/pause-hd.png", 
@@ -250,218 +155,6 @@
         {
             "asset": "Projectfiles/Resources/pause.png", 
             "target": "pause.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/PowerupBorder-hd.png", 
-            "target": "PowerupBorder-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/PowerupBorder.png", 
-            "target": "PowerupBorder.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/aqua.png", 
-            "target": "aqua.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/bluechatbubble.png", 
-            "target": "bluechatbubble.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/CrossPromoViewController.nib", 
-            "target": "CrossPromoViewController.nib"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FacebookIcon.png", 
-            "target": "FacebookIcon.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FacebookSDKResources.bundle", 
-            "target": "FacebookSDKResources.bundle"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/fb_connect.png", 
-            "target": "fb_connect.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginBackgroundLandscape.png", 
-            "target": "FBLoginBackgroundLandscape.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginBackgroundLandscape@2x.png", 
-            "target": "FBLoginBackgroundLandscape@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginBackgroundLandscapeDark.png", 
-            "target": "FBLoginBackgroundLandscapeDark.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginBackgroundPortrait.png", 
-            "target": "FBLoginBackgroundPortrait.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginBackgroundPortrait@2x.png", 
-            "target": "FBLoginBackgroundPortrait@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginBackgroundPortraitDark.png", 
-            "target": "FBLoginBackgroundPortraitDark.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButton.png", 
-            "target": "FBLoginButton.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButton@2x.png", 
-            "target": "FBLoginButton@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButtonPressed.png", 
-            "target": "FBLoginButtonPressed.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButtonPressed@2x.png", 
-            "target": "FBLoginButtonPressed@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButton.png", 
-            "target": "FBNoThanksButton.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButton@2x.png", 
-            "target": "FBNoThanksButton@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButtonPressed.png", 
-            "target": "FBNoThanksButtonPressed.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButtonPressed@2x.png", 
-            "target": "FBNoThanksButtonPressed@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/green.png", 
-            "target": "green.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/grey-background.png", 
-            "target": "grey-background.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/hipmob.back.btn.png", 
-            "target": "hipmob.back.btn.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/hipmob.send.png", 
-            "target": "hipmob.send.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/hipmobsend_field.png", 
-            "target": "hipmobsend_field.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/hipmobsend_field@2x.png", 
-            "target": "hipmobsend_field@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-gk-notification.png", 
-            "target": "mgwu-gk-notification.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-gk-notification@2x.png", 
-            "target": "mgwu-gk-notification@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-m.png", 
-            "target": "mgwu-m.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-m@2x.png", 
-            "target": "mgwu-m@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/MGWUClose.png", 
-            "target": "MGWUClose.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/MGWUClose@2x.png", 
-            "target": "MGWUClose@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginLandscape.nib", 
-            "target": "MGWUFacebookLoginLandscape.nib"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginLandscapeDark.nib", 
-            "target": "MGWUFacebookLoginLandscapeDark.nib"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginPortrait.nib", 
-            "target": "MGWUFacebookLoginPortrait.nib"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginPortraitDark.nib", 
-            "target": "MGWUFacebookLoginPortraitDark.nib"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwulogo.png", 
-            "target": "mgwulogo.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogo@2x.png", 
-            "target": "mgwuLogo@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogoDark.png", 
-            "target": "mgwuLogoDark.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogoDark@2x.png", 
-            "target": "mgwuLogoDark@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIcon.png", 
-            "target": "mgwuPlaceholderIcon.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIcon@2x.png", 
-            "target": "mgwuPlaceholderIcon@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIconDark.png", 
-            "target": "mgwuPlaceholderIconDark.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIconDark@2x.png", 
-            "target": "mgwuPlaceholderIconDark@2x.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/operator.available.png", 
-            "target": "operator.available.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/operator.connecting.png", 
-            "target": "operator.connecting.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/operator.unavailable.png", 
-            "target": "operator.unavailable.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/send-button-active.png", 
-            "target": "send-button-active.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/send-button-inactive.png", 
-            "target": "send-button-inactive.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/send-button-instate.png", 
-            "target": "send-button-instate.png"
-        }, 
-        {
-            "asset": "mgwuSDK.embeddedframework/Resources/send-field-landscape.png", 
-            "target": "send-field-landscape.png"
         }, 
         {
             "asset": "Projectfiles/Resources/Spacera.ttf", 
@@ -480,6 +173,10 @@
             "target": "ship2hex-hd.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/aqua.png", 
+            "target": "aqua.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/healthbarBorder.png", 
             "target": "healthbarBorder.png"
         }, 
@@ -496,6 +193,10 @@
             "target": "healthbarFill.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Landscape~ipad.png", 
+            "target": "MGWUAboutFooter-Landscape~ipad.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/gameover1.mp3", 
             "target": "gameover1.mp3"
         }, 
@@ -508,6 +209,10 @@
             "target": "topbar-hd.png"
         }, 
         {
+            "asset": "Projectfiles/Resources/flashing_wheel_overlay-ipadhd.png", 
+            "target": "flashing_wheel_overlay-ipadhd.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/backgroundip5-hd.png", 
             "target": "backgroundip5-hd.png"
         }, 
@@ -516,48 +221,8 @@
             "target": "backgroundip5.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/element1-hd.png", 
-            "target": "element1-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element2-hd.png", 
-            "target": "element2-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element1.png", 
-            "target": "element1.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element2.png", 
-            "target": "element2.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element3-hd.png", 
-            "target": "element3-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element3.png", 
-            "target": "element3.png"
-        }, 
-        {
             "asset": "Projectfiles/Resources/incorrect.wav", 
             "target": "incorrect.wav"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/multiplier_wrapper-hd.png", 
-            "target": "multiplier_wrapper-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/multiplier_wrapper.png", 
-            "target": "multiplier_wrapper.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/settings_gear.png", 
-            "target": "settings_gear.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/settings_gear-hd.png", 
-            "target": "settings_gear-hd.png"
         }, 
         {
             "asset": "Projectfiles/Resources/buy1-hd.png", 
@@ -580,32 +245,12 @@
             "target": "buy3-hd.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButtonPressed@2x.png", 
+            "target": "FBNoThanksButtonPressed@2x.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/buy3.png", 
             "target": "buy3.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/stop.png", 
-            "target": "stop.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/shield.png", 
-            "target": "shield.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/shock.png", 
-            "target": "shock.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/shield-hd.png", 
-            "target": "shield-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/shock-hd.png", 
-            "target": "shock-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/stop-hd.png", 
-            "target": "stop-hd.png"
         }, 
         {
             "asset": "Projectfiles/Resources/reset.png", 
@@ -614,6 +259,10 @@
         {
             "asset": "Projectfiles/Resources/reset-hd.png", 
             "target": "reset-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Portrait@2x~iphone.png", 
+            "target": "MGWUAboutFooter-Portrait@2x~iphone.png"
         }, 
         {
             "asset": "Projectfiles/Resources/skybgip5-hd.png", 
@@ -628,8 +277,20 @@
             "target": "circula.ttf"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Landscape@2x~iphone.png", 
+            "target": "MGWUAboutFooter-Landscape@2x~iphone.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-m@2x.png", 
+            "target": "mgwu-m@2x.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/flex.ttf", 
             "target": "flex.ttf"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/operator.unavailable.png", 
+            "target": "operator.unavailable.png"
         }, 
         {
             "asset": "Projectfiles/Resources/nexabold.ttf", 
@@ -638,6 +299,10 @@
         {
             "asset": "Projectfiles/Resources/facebookHighscoreButton-hd.png", 
             "target": "facebookHighscoreButton-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1.png", 
+            "target": "storebtn1.png"
         }, 
         {
             "asset": "Projectfiles/Resources/facebookHighscoreButton.png", 
@@ -654,6 +319,18 @@
         {
             "asset": "Projectfiles/Resources/globalHighscoreButton-hd.png", 
             "target": "globalHighscoreButton-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Portrait~ipad.png", 
+            "target": "MGWUAboutFooter-Portrait~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default~iphone.png", 
+            "target": "Default~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/flashing_wheel_overlay-hd.png", 
+            "target": "flashing_wheel_overlay-hd.png"
         }, 
         {
             "asset": "Projectfiles/Resources/globalHighscoreButton.png", 
@@ -708,6 +385,10 @@
             "target": "facebook.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Landscape~iphone.png", 
+            "target": "MGWUBackgroundDark-Landscape~iphone.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/facebook-hd.png", 
             "target": "facebook-hd.png"
         }, 
@@ -732,20 +413,16 @@
             "target": " Logo.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/rotate.png", 
-            "target": "rotate.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/rotate-hd.png", 
-            "target": "rotate-hd.png"
-        }, 
-        {
             "asset": "Projectfiles/Resources/powerupTutorial.png", 
             "target": "powerupTutorial.png"
         }, 
         {
             "asset": "Projectfiles/Resources/powerupTutorial-hd.png", 
             "target": "powerupTutorial-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Landscape@2x~iphone.png", 
+            "target": "MGWUBackground-Landscape@2x~iphone.png"
         }, 
         {
             "asset": "Projectfiles/Resources/coin-hd.png", 
@@ -756,36 +433,8 @@
             "target": "coin.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/playNowButton-hd.png", 
-            "target": "playNowButton-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/playNowButton.png", 
-            "target": "playNowButton.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/playNowButtonSel-hd.png", 
-            "target": "playNowButtonSel-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/playNowButtonSel.png", 
-            "target": "playNowButtonSel.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/flatButton.png", 
-            "target": "flatButton.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/flatButton-hd.png", 
-            "target": "flatButton-hd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/flatButtonSel.png", 
-            "target": "flatButtonSel.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/flatButtonSel-hd.png", 
-            "target": "flatButtonSel-hd.png"
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginLandscapeDark.nib", 
+            "target": "MGWUFacebookLoginLandscapeDark.nib"
         }, 
         {
             "asset": "Projectfiles/Resources/flatText-hd.png", 
@@ -804,22 +453,6 @@
             "target": "blankelement.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/element2-ipadhd.png", 
-            "target": "element2-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element1-ipadhd.png", 
-            "target": "element1-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/border-ipadhd.png", 
-            "target": "border-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/element3-ipadhd.png", 
-            "target": "element3-ipadhd.png"
-        }, 
-        {
             "asset": "Projectfiles/Resources/skybgip5-ipad.png", 
             "target": "skybgip5-ipad.png"
         }, 
@@ -828,40 +461,20 @@
             "target": "skybgip5-ipadhd.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/flatButton-ipadhd.png", 
-            "target": "flatButton-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/flatButtonSel-ipadhd.png", 
-            "target": "flatButtonSel-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/playNowButton-ipadhd.png", 
-            "target": "playNowButton-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/playNowButtonSel-ipadhd.png", 
-            "target": "playNowButtonSel-ipadhd.png"
-        }, 
-        {
             "asset": "Projectfiles/Resources/pause-ipadhd.png", 
             "target": "pause-ipadhd.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/PowerupBorder-ipadhd.png", 
-            "target": "PowerupBorder-ipadhd.png"
+            "asset": "Projectfiles/Resources/storebtn3-pressed-ipad.png", 
+            "target": "storebtn3-pressed-ipad.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/shield-ipadhd.png", 
-            "target": "shield-ipadhd.png"
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUClose@2x.png", 
+            "target": "MGWUClose@2x.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/stop-ipadhd.png", 
-            "target": "stop-ipadhd.png"
-        }, 
-        {
-            "asset": "Projectfiles/Resources/shock-ipadhd.png", 
-            "target": "shock-ipadhd.png"
+            "asset": "Projectfiles/Resources/AboutScreen/MGWUAbout@2x~ipad.png", 
+            "target": "MGWUAbout@2x~ipad.png"
         }, 
         {
             "asset": "Projectfiles/Resources/facebook-ipadhd.png", 
@@ -900,6 +513,10 @@
             "target": "buy3-ipadhd.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginPortraitDark.nib", 
+            "target": "MGWUFacebookLoginPortraitDark.nib"
+        }, 
+        {
             "asset": "Projectfiles/Resources/fblogin-ipadhd.png", 
             "target": "fblogin-ipadhd.png"
         }, 
@@ -908,376 +525,1541 @@
             "target": "fbloginSel-ipadhd.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/reset-ipadhd.png", 
-            "target": "reset-ipadhd.png"
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogoDark.png", 
+            "target": "mgwuLogoDark.png"
         }, 
         {
-            "asset": "Projectfiles/Resources/rotate-ipadhd.png", 
-            "target": "rotate-ipadhd.png"
+            "asset": "Projectfiles/Resources/reset-ipadhd.png", 
+            "target": "reset-ipadhd.png"
         }, 
         {
             "asset": "Projectfiles/Resources/powerupTutorial-ipadhd.png", 
             "target": "powerupTutorial-ipadhd.png"
         }, 
         {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Landscape-568h@2x~iphone.png", 
+            "target": "MGWUAboutFooter-Landscape-568h@2x~iphone.png"
+        }, 
+        {
             "asset": "Projectfiles/Resources/settings_gear-ipadhd.png", 
             "target": "settings_gear-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogo.png", 
+            "target": "mgwuLogo.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/lock-ipadhd.png", 
+            "target": "lock-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/lock.png", 
+            "target": "lock.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/lock-hd.png", 
+            "target": "lock-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorderSel.png", 
+            "target": "PowerupBorderSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorderSel-ipadhd.png", 
+            "target": "PowerupBorderSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default-568h@2x.png", 
+            "target": "Default-568h@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorderSel-hd.png", 
+            "target": "PowerupBorderSel-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButton@2x.png", 
+            "target": "FBNoThanksButton@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/transpbg.png", 
+            "target": "transpbg.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/hipmob.send.png", 
+            "target": "hipmob.send.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/transpbg-hd.png", 
+            "target": "transpbg-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/hidden-hd.png", 
+            "target": "hidden-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/hidden.png", 
+            "target": "hidden.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg_leaves-ipad.png", 
+            "target": "bg_leaves-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg_leaves-ipadhd.png", 
+            "target": "bg_leaves-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg-ipad.png", 
+            "target": "bg-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg-ipadhd.png", 
+            "target": "bg-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg-568h.png", 
+            "target": "bg-568h.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg-hd.png", 
+            "target": "bg-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg_leaves-568h.png", 
+            "target": "bg_leaves-568h.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-pressed.png", 
+            "target": "storebtn2-pressed.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg.png", 
+            "target": "bg.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg_leaves-hd.png", 
+            "target": "bg_leaves-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bg_leaves.png", 
+            "target": "bg_leaves.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/blend_logo.png", 
+            "target": "blend_logo.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/blend_logo-hd.png", 
+            "target": "blend_logo-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/blend_logo-ipad.png", 
+            "target": "blend_logo-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/blend_logo-ipadhd.png", 
+            "target": "blend_logo-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resumeSel.png", 
+            "target": "resumeSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradesSel.png", 
+            "target": "upgradesSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/backSel.png", 
+            "target": "backSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboards.png", 
+            "target": "leaderboards.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboardsSel.png", 
+            "target": "leaderboardsSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quitSel.png", 
+            "target": "quitSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restart.png", 
+            "target": "restart.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restartSel.png", 
+            "target": "restartSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resume.png", 
+            "target": "resume.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrades.png", 
+            "target": "upgrades.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/aboutSel.png", 
+            "target": "aboutSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/facebook-ipad.png", 
+            "target": "facebook-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCash.png", 
+            "target": "buyCash.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCashSel.png", 
+            "target": "buyCashSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quit.png", 
+            "target": "quit.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/about.png", 
+            "target": "about.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/back.png", 
+            "target": "back.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNow.png", 
+            "target": "playNow.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default-Landscape~ipad.png", 
+            "target": "Default-Landscape~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNowSel.png", 
+            "target": "playNowSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promo.png", 
+            "target": "promo.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promoSel.png", 
+            "target": "promoSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgain.png", 
+            "target": "playAgain.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgainSel.png", 
+            "target": "playAgainSel.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Portrait~iphone.png", 
+            "target": "MGWUAboutFooter-Portrait~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/about-hd.png", 
+            "target": "about-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/aboutSel-hd.png", 
+            "target": "aboutSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/back-hd.png", 
+            "target": "back-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/backSel-hd.png", 
+            "target": "backSel-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogo@2x.png", 
+            "target": "mgwuLogo@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-ipadhd.png", 
+            "target": "storebtn1-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCash-hd.png", 
+            "target": "buyCash-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCashSel-hd.png", 
+            "target": "buyCashSel-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Portrait~ipad.png", 
+            "target": "MGWUBackground-Portrait~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboards-hd.png", 
+            "target": "leaderboards-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboardsSel-hd.png", 
+            "target": "leaderboardsSel-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/send-button-active.png", 
+            "target": "send-button-active.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIcon@2x.png", 
+            "target": "mgwuPlaceholderIcon@2x.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Portrait@2x~ipad.png", 
+            "target": "MGWUBackground-Portrait@2x~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgain-hd.png", 
+            "target": "playAgain-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButtonPressed.png", 
+            "target": "FBLoginButtonPressed.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgainSel-hd.png", 
+            "target": "playAgainSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNow-hd.png", 
+            "target": "playNow-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNowSel-hd.png", 
+            "target": "playNowSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promo-hd.png", 
+            "target": "promo-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-hd.png", 
+            "target": "storebtn2-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promoSel-hd.png", 
+            "target": "promoSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quit-hd.png", 
+            "target": "quit-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quitSel-hd.png", 
+            "target": "quitSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restart-hd.png", 
+            "target": "restart-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restartSel-hd.png", 
+            "target": "restartSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resume-hd.png", 
+            "target": "resume-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resumeSel-hd.png", 
+            "target": "resumeSel-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/send-button-inactive.png", 
+            "target": "send-button-inactive.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Portrait~iphone.png", 
+            "target": "MGWUBackground-Portrait~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/MGWUIcon@2x.png", 
+            "target": "MGWUIcon@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrades-hd.png", 
+            "target": "upgrades-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradesSel-hd.png", 
+            "target": "upgradesSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/about-ipad.png", 
+            "target": "about-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-pressed.png", 
+            "target": "storebtn1-pressed.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/aboutSel-ipad.png", 
+            "target": "aboutSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/back-ipad.png", 
+            "target": "back-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/backSel-ipad.png", 
+            "target": "backSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCash-ipad.png", 
+            "target": "buyCash-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCashSel-ipad.png", 
+            "target": "buyCashSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboards-ipad.png", 
+            "target": "leaderboards-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/AboutScreen/MGWUAbout~ipad.png", 
+            "target": "MGWUAbout~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboardsSel-ipad.png", 
+            "target": "leaderboardsSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/LLS - Fang.wav", 
+            "target": "LLS - Fang.wav"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgain-ipad.png", 
+            "target": "playAgain-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-pressed-ipadhd.png", 
+            "target": "storebtn2-pressed-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgainSel-ipad.png", 
+            "target": "playAgainSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNow-ipad.png", 
+            "target": "playNow-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNowSel-ipad.png", 
+            "target": "playNowSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promo-ipad.png", 
+            "target": "promo-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promoSel-ipad.png", 
+            "target": "promoSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quit-ipad.png", 
+            "target": "quit-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quitSel-ipad.png", 
+            "target": "quitSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restart-ipad.png", 
+            "target": "restart-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restartSel-ipad.png", 
+            "target": "restartSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resume-ipad.png", 
+            "target": "resume-ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Landscape@2x~ipad.png", 
+            "target": "MGWUBackground-Landscape@2x~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resumeSel-ipad.png", 
+            "target": "resumeSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrades-ipad.png", 
+            "target": "upgrades-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradesSel-ipad.png", 
+            "target": "upgradesSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/about-ipadhd.png", 
+            "target": "about-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/aboutSel-ipadhd.png", 
+            "target": "aboutSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/back-ipadhd.png", 
+            "target": "back-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginLandscape.nib", 
+            "target": "MGWUFacebookLoginLandscape.nib"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/backSel-ipadhd.png", 
+            "target": "backSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCash-ipadhd.png", 
+            "target": "buyCash-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buyCashSel-ipadhd.png", 
+            "target": "buyCashSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboards-ipadhd.png", 
+            "target": "leaderboards-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/leaderboardsSel-ipadhd.png", 
+            "target": "leaderboardsSel-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIcon.png", 
+            "target": "mgwuPlaceholderIcon.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-ipad.png", 
+            "target": "storebtn2-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgain-ipadhd.png", 
+            "target": "playAgain-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playAgainSel-ipadhd.png", 
+            "target": "playAgainSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNow-ipadhd.png", 
+            "target": "playNow-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/flashing_wheel_overlay-ipad.png", 
+            "target": "flashing_wheel_overlay-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/playNowSel-ipadhd.png", 
+            "target": "playNowSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promo-ipadhd.png", 
+            "target": "promo-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/promoSel-ipadhd.png", 
+            "target": "promoSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quit-ipadhd.png", 
+            "target": "quit-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/quitSel-ipadhd.png", 
+            "target": "quitSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restart-ipadhd.png", 
+            "target": "restart-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/restartSel-ipadhd.png", 
+            "target": "restartSel-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/hipmob.back.btn.png", 
+            "target": "hipmob.back.btn.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resume-ipadhd.png", 
+            "target": "resume-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resumeSel-ipadhd.png", 
+            "target": "resumeSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrades-ipadhd.png", 
+            "target": "upgrades-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradesSel-ipadhd.png", 
+            "target": "upgradesSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/settings_gear-ipad.png", 
+            "target": "settings_gear-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/settings_gear.png", 
+            "target": "settings_gear.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/settings_gear-hd.png", 
+            "target": "settings_gear-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resetSel.png", 
+            "target": "resetSel.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/fb_connect.png", 
+            "target": "fb_connect.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resetSel-hd.png", 
+            "target": "resetSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resetSel-ipad.png", 
+            "target": "resetSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default-Landscape@2x~ipad.png", 
+            "target": "Default-Landscape@2x~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/reset-ipad.png", 
+            "target": "reset-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/resetSel-ipadhd.png", 
+            "target": "resetSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fblogin-ipad.png", 
+            "target": "fblogin-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-pressed-hd.png", 
+            "target": "storebtn1-pressed-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fbloginSel-ipad.png", 
+            "target": "fbloginSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/multiplier-ipad.png", 
+            "target": "multiplier-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/multiplier-ipadhd.png", 
+            "target": "multiplier-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/multiplier.png", 
+            "target": "multiplier.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/multiplier-hd.png", 
+            "target": "multiplier-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/MGWUIcon.png", 
+            "target": "MGWUIcon.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/border-hd.png", 
+            "target": "border-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/border-ipadhd.png", 
+            "target": "border-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/border.png", 
+            "target": "border.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/energyshield.png", 
+            "target": "energyshield.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIconDark@2x.png", 
+            "target": "mgwuPlaceholderIconDark@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/energyshield-hd.png", 
+            "target": "energyshield-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Portrait@2x~iphone.png", 
+            "target": "MGWUBackground-Portrait@2x~iphone.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/grey-background.png", 
+            "target": "grey-background.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/energyshield-ipadhd.png", 
+            "target": "energyshield-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit3-ipadhd.png", 
+            "target": "fruit3-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit3.png", 
+            "target": "fruit3.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit3-hd.png", 
+            "target": "fruit3-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit3-ipad.png", 
+            "target": "fruit3-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit2.png", 
+            "target": "fruit2.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit2-hd.png", 
+            "target": "fruit2-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit2-ipad.png", 
+            "target": "fruit2-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit2-ipadhd.png", 
+            "target": "fruit2-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit1-ipadhd.png", 
+            "target": "fruit1-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit1.png", 
+            "target": "fruit1.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit1-hd.png", 
+            "target": "fruit1-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Portrait~ipad.png", 
+            "target": "MGWUBackgroundDark-Portrait~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fruit1-ipad.png", 
+            "target": "fruit1-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin1.png", 
+            "target": "coin1.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin1-ipad.png", 
+            "target": "coin1-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin1-hd.png", 
+            "target": "coin1-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin1-ipadhd.png", 
+            "target": "coin1-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_shield-ipad.png", 
+            "target": "buy_shield-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_multiplier-hd.png", 
+            "target": "buy_multiplier-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_multiplier-ipad.png", 
+            "target": "buy_multiplier-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_shield-hd.png", 
+            "target": "buy_shield-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_stop-hd.png", 
+            "target": "buy_stop-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_stop-ipad.png", 
+            "target": "buy_stop-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-pressed-ipad.png", 
+            "target": "storebtn2-pressed-ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/green.png", 
+            "target": "green.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Landscape~iphone.png", 
+            "target": "MGWUAboutFooter-Landscape~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_multiplier.png", 
+            "target": "buy_multiplier.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_shield.png", 
+            "target": "buy_shield.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_stop.png", 
+            "target": "buy_stop.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_multiplier-ipadhd.png", 
+            "target": "buy_multiplier-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3-ipad.png", 
+            "target": "storebtn3-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_shield-ipadhd.png", 
+            "target": "buy_shield-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/operator.available.png", 
+            "target": "operator.available.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/buy_stop-ipadhd.png", 
+            "target": "buy_stop-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin1000-hd.png", 
+            "target": "coin1000-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin3000-hd.png", 
+            "target": "coin3000-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUAboutFooter-Portrait@2x~ipad.png", 
+            "target": "MGWUAboutFooter-Portrait@2x~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin10000-hd.png", 
+            "target": "coin10000-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin1000.png", 
+            "target": "coin1000.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/AboutScreen/MGWUAbout@2x.png", 
+            "target": "MGWUAbout@2x.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/operator.connecting.png", 
+            "target": "operator.connecting.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin3000.png", 
+            "target": "coin3000.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/coin10000.png", 
+            "target": "coin10000.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles.plist", 
+            "target": "bubbles.plist"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles.png", 
+            "target": "bubbles.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles-hd.png", 
+            "target": "bubbles-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles-ipad.png", 
+            "target": "bubbles-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles-ipadhd.png", 
+            "target": "bubbles-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles-hd.plist", 
+            "target": "bubbles-hd.plist"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles-ipad.plist", 
+            "target": "bubbles-ipad.plist"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/bubbles-ipadhd.plist", 
+            "target": "bubbles-ipadhd.plist"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/rotate-hd.png", 
+            "target": "rotate-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/rotate.png", 
+            "target": "rotate.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/rotate-ipadhd.png", 
+            "target": "rotate-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorder.png", 
+            "target": "PowerupBorder.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorder-hd.png", 
+            "target": "PowerupBorder-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shock-hd.png", 
+            "target": "shock-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3-hd.png", 
+            "target": "storebtn3-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default-Portrait@2x~ipad.png", 
+            "target": "Default-Portrait@2x~ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FacebookIcon.png", 
+            "target": "FacebookIcon.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shock.png", 
+            "target": "shock.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/stop.png", 
+            "target": "stop.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/stop-hd.png", 
+            "target": "stop-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shield-hd.png", 
+            "target": "shield-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shield.png", 
+            "target": "shield.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButtonPressed.png", 
+            "target": "FBNoThanksButtonPressed.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Landscape@2x~ipad.png", 
+            "target": "MGWUBackgroundDark-Landscape@2x~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/global.png", 
+            "target": "global.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBNoThanksButton.png", 
+            "target": "FBNoThanksButton.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-pressed-ipad.png", 
+            "target": "storebtn1-pressed-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/global-hd.png", 
+            "target": "global-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fb.png", 
+            "target": "fb.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fb-hd.png", 
+            "target": "fb-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/global-ipadhd.png", 
+            "target": "global-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fb-ipadhd.png", 
+            "target": "fb-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fbSel-ipadhd.png", 
+            "target": "fbSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fbSel-hd.png", 
+            "target": "fbSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/fbSel.png", 
+            "target": "fbSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/globalSel-ipadhd.png", 
+            "target": "globalSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/globalSel-hd.png", 
+            "target": "globalSel-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuLogoDark@2x.png", 
+            "target": "mgwuLogoDark@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/globalSel.png", 
+            "target": "globalSel.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUClose.png", 
+            "target": "MGWUClose.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorder-ipadhd.png", 
+            "target": "PowerupBorder-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/PowerupBorder-ipad.png", 
+            "target": "PowerupBorder-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shield-ipad.png", 
+            "target": "shield-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shock-ipad.png", 
+            "target": "shock-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shock-ipadhd.png", 
+            "target": "shock-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/stop-ipadhd.png", 
+            "target": "stop-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-hd.png", 
+            "target": "storebtn1-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/stop-ipad.png", 
+            "target": "stop-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/shield-ipadhd.png", 
+            "target": "shield-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrademSel-hd.png", 
+            "target": "upgrademSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrademSel.png", 
+            "target": "upgrademSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradem-hd.png", 
+            "target": "upgradem-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradem.png", 
+            "target": "upgradem.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/facebookSel-ipad.png", 
+            "target": "facebookSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradepSel.png", 
+            "target": "upgradepSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-ipad.png", 
+            "target": "storebtn1-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradepSel-hd.png", 
+            "target": "upgradepSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3-pressed-ipadhd.png", 
+            "target": "storebtn3-pressed-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradep-hd.png", 
+            "target": "upgradep-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Landscape@2x~iphone.png", 
+            "target": "MGWUBackgroundDark-Landscape@2x~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradep.png", 
+            "target": "upgradep.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-gk-notification.png", 
+            "target": "mgwu-gk-notification.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradeeSel-hd.png", 
+            "target": "upgradeeSel-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradeeSel.png", 
+            "target": "upgradeeSel.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradee-hd.png", 
+            "target": "upgradee-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradee.png", 
+            "target": "upgradee.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradee-ipad.png", 
+            "target": "upgradee-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/twitterSel-ipad.png", 
+            "target": "twitterSel-ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Landscape~ipad.png", 
+            "target": "MGWUBackground-Landscape~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradee-ipadhd.png", 
+            "target": "upgradee-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradeeSel-ipad.png", 
+            "target": "upgradeeSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradeeSel-ipadhd.png", 
+            "target": "upgradeeSel-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwuPlaceholderIconDark.png", 
+            "target": "mgwuPlaceholderIconDark.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default.png", 
+            "target": "Default.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradem-ipad.png", 
+            "target": "upgradem-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3-pressed.png", 
+            "target": "storebtn3-pressed.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUFacebookLoginPortrait.nib", 
+            "target": "MGWUFacebookLoginPortrait.nib"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradem-ipadhd.png", 
+            "target": "upgradem-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrademSel-ipad.png", 
+            "target": "upgrademSel-ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/hipmobsend_field@2x.png", 
+            "target": "hipmobsend_field@2x.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FBLoginButtonPressed@2x.png", 
+            "target": "FBLoginButtonPressed@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgrademSel-ipadhd.png", 
+            "target": "upgrademSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradep-ipad.png", 
+            "target": "upgradep-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradep-ipadhd.png", 
+            "target": "upgradep-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradepSel-ipad.png", 
+            "target": "upgradepSel-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3.png", 
+            "target": "storebtn3.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Portrait@2x~iphone.png", 
+            "target": "MGWUBackgroundDark-Portrait@2x~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/upgradepSel-ipadhd.png", 
+            "target": "upgradepSel-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/pauseb-hd.png", 
+            "target": "pauseb-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/pauseb-ipad.png", 
+            "target": "pauseb-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3-ipadhd.png", 
+            "target": "storebtn3-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/pauseb-ipadhd.png", 
+            "target": "pauseb-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn3-pressed-hd.png", 
+            "target": "storebtn3-pressed-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/pauseb.png", 
+            "target": "pauseb.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/hidden-ipadhd.png", 
+            "target": "hidden-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/circular_arrows.png", 
+            "target": "circular_arrows.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_boost.png", 
+            "target": "arrow_multiplier_boost.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_lives.png", 
+            "target": "arrow_multiplier_lives.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_projectiles.png", 
+            "target": "arrow_projectiles.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_shield.png", 
+            "target": "arrow_shield.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/circular_arrows-hd.png", 
+            "target": "circular_arrows-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_boost-hd.png", 
+            "target": "arrow_multiplier_boost-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_lives-hd.png", 
+            "target": "arrow_multiplier_lives-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_projectiles-hd.png", 
+            "target": "arrow_projectiles-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_shield-hd.png", 
+            "target": "arrow_shield-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/Splashscreens/Default~ipad.png", 
+            "target": "Default~ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/FacebookSDKResources.bundle", 
+            "target": "FacebookSDKResources.bundle"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/circular_arrows-ipad.png", 
+            "target": "circular_arrows-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_boost-ipad.png", 
+            "target": "arrow_multiplier_boost-ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Landscape~ipad.png", 
+            "target": "MGWUBackgroundDark-Landscape~ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_lives-ipad.png", 
+            "target": "arrow_multiplier_lives-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_projectiles-ipad.png", 
+            "target": "arrow_projectiles-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_shield-ipad.png", 
+            "target": "arrow_shield-ipad.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/mgwu-gk-notification@2x.png", 
+            "target": "mgwu-gk-notification@2x.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/circular_arrows-ipadhd.png", 
+            "target": "circular_arrows-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_boost-ipadhd.png", 
+            "target": "arrow_multiplier_boost-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_multiplier_lives-ipadhd.png", 
+            "target": "arrow_multiplier_lives-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackgroundDark-Portrait~iphone.png", 
+            "target": "MGWUBackgroundDark-Portrait~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_projectiles-ipadhd.png", 
+            "target": "arrow_projectiles-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/arrow_shield-ipadhd.png", 
+            "target": "arrow_shield-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_match.png", 
+            "target": "text_match.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_move_circle.png", 
+            "target": "text_move_circle.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_projectiles.png", 
+            "target": "text_projectiles.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_shield.png", 
+            "target": "text_shield.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/twitter-ipad.png", 
+            "target": "twitter-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_boost.png", 
+            "target": "text_multiplier_boost.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_lives.png", 
+            "target": "text_multiplier_lives.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_match-hd.png", 
+            "target": "text_match-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_move_circle-hd.png", 
+            "target": "text_move_circle-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_projectiles-hd.png", 
+            "target": "text_projectiles-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/MGWUBackground-Landscape~iphone.png", 
+            "target": "MGWUBackground-Landscape~iphone.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_shield-hd.png", 
+            "target": "text_shield-hd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/send-field-landscape.png", 
+            "target": "send-field-landscape.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2.png", 
+            "target": "storebtn2.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_boost-hd.png", 
+            "target": "text_multiplier_boost-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_lives-hd.png", 
+            "target": "text_multiplier_lives-hd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_match-ipad.png", 
+            "target": "text_match-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_move_circle-ipad.png", 
+            "target": "text_move_circle-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_projectiles-ipad.png", 
+            "target": "text_projectiles-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn2-ipadhd.png", 
+            "target": "storebtn2-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_shield-ipad.png", 
+            "target": "text_shield-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_boost-ipad.png", 
+            "target": "text_multiplier_boost-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_lives-ipad.png", 
+            "target": "text_multiplier_lives-ipad.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_match-ipadhd.png", 
+            "target": "text_match-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_move_circle-ipadhd.png", 
+            "target": "text_move_circle-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_projectiles-ipadhd.png", 
+            "target": "text_projectiles-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/AboutScreen/MGWUAbout.png", 
+            "target": "MGWUAbout.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_shield-ipadhd.png", 
+            "target": "text_shield-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/storebtn1-pressed-ipadhd.png", 
+            "target": "storebtn1-pressed-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_boost-ipadhd.png", 
+            "target": "text_multiplier_boost-ipadhd.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/text_multiplier_lives-ipadhd.png", 
+            "target": "text_multiplier_lives-ipadhd.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/bluechatbubble.png", 
+            "target": "bluechatbubble.png"
+        }, 
+        {
+            "asset": "Projectfiles/Resources/flashing_wheel_overlay.png", 
+            "target": "flashing_wheel_overlay.png"
+        }, 
+        {
+            "asset": "mgwuSDK.embeddedframework/Resources/CrossPromoViewController.nib", 
+            "target": "CrossPromoViewController.nib"
         }
     ], 
-    "type": "app", 
-    "header_paths": [
-        {
-            "type": "iquote", 
-            "header_path": "The Elements-iOS-generated-files.hmap", 
-            "hmap": {}
-        }, 
-        {
-            "type": "I", 
-            "header_path": "The Elements-iOS-own-target-headers.hmap", 
-            "hmap": {}
-        }, 
-        {
-            "type": "I", 
-            "header_path": "The Elements-iOS-all-target-headers.hmap", 
-            "hmap": {}
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "The Elements-iOS-project-headers.hmap", 
-            "hmap": {
-                "StatLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "StatLayer.h", 
-                    "key": "StatLayer.h"
-                }, 
-                "AppDelegate.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "AppDelegate.h", 
-                    "key": "AppDelegate.h"
-                }, 
-                "PauseLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "PauseLayer.h", 
-                    "key": "PauseLayer.h"
-                }, 
-                "StoreLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "StoreLayer.h", 
-                    "key": "StoreLayer.h"
-                }, 
-                "SettingsLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "SettingsLayer.h", 
-                    "key": "SettingsLayer.h"
-                }, 
-                "StartMenuLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "StartMenuLayer.h", 
-                    "key": "StartMenuLayer.h"
-                }, 
-                "Prefix-iOS.pch": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "Prefix-iOS.pch", 
-                    "key": "Prefix-iOS.pch"
-                }, 
-                "Prefix-Mac.pch": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "Prefix-Mac.pch", 
-                    "key": "Prefix-Mac.pch"
-                }, 
-                "UpgradesLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "UpgradesLayer.h", 
-                    "key": "UpgradesLayer.h"
-                }, 
-                "GameOver.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "GameOver.h", 
-                    "key": "GameOver.h"
-                }, 
-                "LeaderBoardPlayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "LeaderBoardPlayer.h", 
-                    "key": "LeaderBoardPlayer.h"
-                }, 
-                "HelloWorldLayer.h": {
-                    "prefix": "Projectfiles/", 
-                    "suffix": "HelloWorldLayer.h", 
-                    "key": "HelloWorldLayer.h"
-                }
-            }
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/kobold2d"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/nodes"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/kobold2d/cocos2d-ext"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/actions"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/conditions"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/statemachine"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/variables"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/wrapper"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/scriptnodes"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/nodeabilities"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/koboldscript/nodebehaviors"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/cpSpaceSerializer"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/ccExtras"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/cpExtras"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/PhysicsEditorExtras"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Platforms"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Platforms/iOS"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Platforms/Mac"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Support"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCBigImage"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCLayerPanZoom"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCMenuAdvanced"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCMenuItemSpriteIndependent"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCScrollLayer"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCSendMessages"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCSlider"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCVideoPlayer"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCVideoPlayer/iOS"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCVideoPlayer/Mac"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/FilesDownloader"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/TMXGenerator"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cc3Extras"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cc3PVR"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/CCNodeController"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cocos3d"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cocos3d/OpenGLES11"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cocos3d/Utility"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../Moon"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "__Kobold2D__/libs/cocos3d/cocos3d/cc3PVR/PVRT 2.08"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "__Kobold2D__/libs/cocos3d/cocos3d/cc3PVR/PVRT 2.08/OGLES"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/CocosDenshion"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Chipmunk/include/chipmunk"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/Actions"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/AudioTrack"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/OpenAL"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/Session"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/Support"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/VTPG"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/Lua/src"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/SneakyInput/Classes"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/kobold2d/sneaky-ext"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/bitarray_c"
-        }, 
-        {
-            "type": "iquote", 
-            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/external/kazmath/include"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Rope"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Collision"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Collision/Shapes"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Common"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Dynamics"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Dynamics/Contacts"
-        }, 
-        {
-            "type": "I", 
-            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Dynamics/Joints"
-        }
+    "config": {
+        "APPLICATION_FULL_NAME": "The Elements-iOS", 
+        "APPLICATION_IDENTIFIER": "com.mgwu.blend", 
+        "APPLICATION_NAME": "TheElements-iOS", 
+        "LONG_VERSION": "1.0", 
+        "SHORT_VERSION": "1.0", 
+        "TEMPLATE_VALUES": {
+            "EXECUTABLE_NAME": "The Elements-iOS", 
+            "PRODUCT_NAME": "The Elements-iOS"
+        }, 
+        "URL_SCHEME": [
+            "fb340241102776141", 
+            "fb340241102776141"
+        ]
+    }, 
+    "defines": {
+        "NDEBUG": 1, 
+        "NO_LOG_MACROS": 1, 
+        "NS_BLOCK_ASSERTIONS": 1, 
+        "RELEASE": 1, 
+        "__IPHONE_OS_VERSION_MIN_REQUIRED": 50000
+    }, 
+    "deps": [
+        "UIKit", 
+        "Foundation", 
+        "AudioToolbox", 
+        "OpenAL", 
+        "QuartzCore", 
+        "SystemConfiguration", 
+        "AVFoundation", 
+        "CoreGraphics", 
+        "CoreLocation", 
+        "MediaPlayer", 
+        "OpenGLES", 
+        "Foundation", 
+        "AudioToolbox", 
+        "OpenAL", 
+        "QuartzCore", 
+        "SystemConfiguration", 
+        "AVFoundation", 
+        "CoreGraphics", 
+        "CoreLocation", 
+        "MediaPlayer", 
+        "OpenGLES", 
+        "SystemConfiguration", 
+        "StoreKit", 
+        "Security", 
+        "MessageUI", 
+        "mgwuSDK", 
+        "CoreTelephony", 
+        "CFNetwork"
     ], 
-    "modules": [], 
-    "version": "1", 
     "flags": [
         "-DNS_BLOCK_ASSERTIONS=1", 
         "-ffast-math", 
-        "-fwritable-strings", 
         "-fobjc-arc", 
         "-fasm-blocks", 
         {
@@ -1314,49 +2096,467 @@
             "type": "objc"
         }
     ], 
-    "deps": [
-        "UIKit", 
-        "Foundation", 
-        "AudioToolbox", 
-        "OpenAL", 
-        "QuartzCore", 
-        "SystemConfiguration", 
-        "AVFoundation", 
-        "CoreGraphics", 
-        "CoreLocation", 
-        "MediaPlayer", 
-        "OpenGLES", 
-        "Foundation", 
-        "AudioToolbox", 
-        "OpenAL", 
-        "QuartzCore", 
-        "SystemConfiguration", 
-        "AVFoundation", 
-        "CoreGraphics", 
-        "CoreLocation", 
-        "MediaPlayer", 
-        "OpenGLES", 
-        "SystemConfiguration", 
-        "StoreKit", 
-        "Security", 
-        "MessageUI", 
-        "CoreTelephony", 
-        "CFNetwork", 
-        "mgwuSDK"
-    ], 
-    "config": {
-        "URL_SCHEME": [
-            "fb340241102776141", 
-            "fb340241102776141"
-        ], 
-        "APPLICATION_IDENTIFIER": "com.gbm.mlg", 
-        "TEMPLATE_VALUES": {
-            "EXECUTABLE_NAME": "The Elements-iOS", 
-            "PRODUCT_NAME": "The Elements-iOS"
+    "header_paths": [
+        {
+            "header_path": "The Elements-iOS-generated-files.hmap", 
+            "hmap": {}, 
+            "type": "iquote"
         }, 
-        "LONG_VERSION": "1.0", 
-        "SHORT_VERSION": "1.0", 
-        "APPLICATION_NAME": "TheElements-iOS", 
-        "APPLICATION_FULL_NAME": "The Elements-iOS"
-    }
+        {
+            "header_path": "The Elements-iOS-own-target-headers.hmap", 
+            "hmap": {}, 
+            "type": "I"
+        }, 
+        {
+            "header_path": "The Elements-iOS-all-target-headers.hmap", 
+            "hmap": {}, 
+            "type": "I"
+        }, 
+        {
+            "header_path": "The Elements-iOS-project-headers.hmap", 
+            "hmap": {
+                "AppDelegate.h": {
+                    "key": "AppDelegate.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "AppDelegate.h"
+                }, 
+                "GameOver.h": {
+                    "key": "GameOver.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "GameOver.h"
+                }, 
+                "HelloWorldLayer.h": {
+                    "key": "HelloWorldLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "HelloWorldLayer.h"
+                }, 
+                "LeaderBoardPlayer.h": {
+                    "key": "LeaderBoardPlayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "LeaderBoardPlayer.h"
+                }, 
+                "PauseLayer.h": {
+                    "key": "PauseLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "PauseLayer.h"
+                }, 
+                "Prefix-Mac.pch": {
+                    "key": "Prefix-Mac.pch", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "Prefix-Mac.pch"
+                }, 
+                "Prefix-iOS.pch": {
+                    "key": "Prefix-iOS.pch", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "Prefix-iOS.pch"
+                }, 
+                "SettingsLayer.h": {
+                    "key": "SettingsLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "SettingsLayer.h"
+                }, 
+                "StartMenuLayer.h": {
+                    "key": "StartMenuLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "StartMenuLayer.h"
+                }, 
+                "StatLayer.h": {
+                    "key": "StatLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "StatLayer.h"
+                }, 
+                "StoreLayer.h": {
+                    "key": "StoreLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "StoreLayer.h"
+                }, 
+                "UpgradesLayer.h": {
+                    "key": "UpgradesLayer.h", 
+                    "prefix": "Projectfiles/", 
+                    "suffix": "UpgradesLayer.h"
+                }
+            }, 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/kobold2d", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/nodes", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/kobold2d/cocos2d-ext", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/actions", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/conditions", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/statemachine", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/variables", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/wrapper", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/scriptnodes", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/nodeabilities", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/koboldscript/nodebehaviors", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/cpSpaceSerializer", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/ccExtras", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/cpExtras", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Chipmunk-SpaceManager/src/PhysicsEditorExtras", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Platforms", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Platforms/iOS", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Platforms/Mac", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/cocos2d/Support", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCBigImage", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCLayerPanZoom", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCMenuAdvanced", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCMenuItemSpriteIndependent", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCScrollLayer", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCSendMessages", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCSlider", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCVideoPlayer", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCVideoPlayer/iOS", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/CCVideoPlayer/Mac", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/FilesDownloader", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone-extensions/Extensions/TMXGenerator", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cc3Extras", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cc3PVR", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/CCNodeController", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cocos3d", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cocos3d/OpenGLES11", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos3d/cocos3d/cocos3d/Utility", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "\"/Users/Ashu/Kobold2D/Kobold2D-2.1.0/__Kobold2D__/libs/cocos3d/cocos3d/cc3PVR/PVRT 2.08", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "\"/Users/Ashu/Kobold2D/Kobold2D-2.1.0/__Kobold2D__/libs/cocos3d/cocos3d/cc3PVR/PVRT 2.08/OGLES", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/CocosDenshion", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Chipmunk/include/chipmunk", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/Actions", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/AudioTrack", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/OpenAL", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/Session", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/ObjectAL-for-iPhone/ObjectAL/ObjectAL/Support", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/VTPG", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Lua/src", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/SneakyInput/Classes", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/kobold2d/sneaky-ext", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/bitarray_c", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/cocos2d-iphone/external/kazmath/include", 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Rope", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Collision", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Collision/Shapes", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Common", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Dynamics", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Dynamics/Contacts", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "../__Kobold2D__/libs/Box2D/Box2D/Dynamics/Joints", 
+            "type": "I"
+        }
+    ], 
+    "infoplists": [
+        "./Projectfiles-iOS/Resources/Info.plist"
+    ], 
+    "libs": [
+        "sqlite3.0", 
+        "z", 
+        "stdc++", 
+        "z", 
+        "stdc++", 
+        "icucore", 
+        "box2d-ios", 
+        "chipmunk-ios", 
+        "chipmunk-spacemanager-ios", 
+        "cocos2d-extensions-ios", 
+        "cocos2d-ios", 
+        "cocos3d-ios", 
+        "cocosdenshion-ios", 
+        "kobold2d-ios", 
+        "objectal-ios", 
+        "sneakyinput-ios"
+    ], 
+    "modules": [
+        {
+            "build_cwd": "../__Kobold2D__", 
+            "project": "Kobold2D-Libraries", 
+            "project_config": "Release", 
+            "target": "kobold2d-ios"
+        }, 
+        {
+            "build_cwd": "./", 
+            "project": "The Elements", 
+            "project_config": "Release", 
+            "target": "The Elements-iOS"
+        }
+    ], 
+    "pchs": [
+        "./Projectfiles/Prefix-iOS.pch"
+    ], 
+    "sources": [
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Projectfiles/AppDelegate.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/GameOver.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/HelloWorldLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Projectfiles/LeaderBoardPlayer.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/PauseLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/SettingsLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/StartMenuLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/StatLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/StoreLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc++", 
+            "source": "Projectfiles/UpgradesLayer.mm"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Projectfiles/main.m"
+        }
+    ], 
+    "type": "app", 
+    "version": "1", 
+    "xcode_project": "The Elements.xcodeproj"
 }

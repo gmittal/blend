@@ -98,7 +98,7 @@ CGSize screenSize;
         [self addChild:leaves z:-99];
         
         
-        
+#ifndef APPORTABLE
         CCMenuItemImage *facebookSel = [CCMenuItemImage itemWithNormalImage:@"fb.png" selectedImage:@"fbSel.png" target:self selector:@selector(displayFacebookStats)];
         //        facebookSel.position = ccp(screenSize.width/2 + ([facebookSel boundingBox].size.width/2), screenSize.height - 85);
         //        [self addChild:facebookSel];
@@ -116,13 +116,16 @@ CGSize screenSize;
         }
         
         [self addChild:boardChoice];
+#endif
         
         global1 = false;
         fb1 = true;
         
+#ifndef APPORTABLE
         if ([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying] == false) {
             [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"LLS - Fang.wav" loop:YES];
         }
+#endif
         
         
     }
@@ -135,6 +138,24 @@ CGSize screenSize;
 	 [CCTransitionFadeTR transitionWithDuration:0.5f scene:[GameOver node]]];
     //        [[CCDirector sharedDirector] replaceScene:[HelloWorldLayer node]];
 }
+
+#ifdef APPORTABLE
+-(void)androidBack
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[GameOver node]]];
+	
+	[MGWU logEvent:@"android_back_pressed"];
+}
+
+-(void)androidMenu
+{
+	[[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:0.5f scene:[StartMenuLayer node]]];
+	
+	[MGWU logEvent:@"android_menu_pressed"];
+}
+#endif
 
 -(void) getScores
 {

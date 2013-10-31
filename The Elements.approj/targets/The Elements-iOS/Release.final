@@ -2063,7 +2063,6 @@
         "MediaPlayer", 
         "OpenGLES", 
         "SystemConfiguration", 
-        "StoreKit", 
         "Security", 
         "MessageUI", 
         "mgwuSDK", 

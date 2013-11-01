@@ -26,6 +26,8 @@
             [node pauseSchedulerAndActions];
         }
         
+        numRoundsPlayed = [[NSUserDefaults standardUserDefaults] integerForKey:@"roundsPlayed"];
+        NSLog(@"Rounds Played: %i", numRoundsPlayed);
         
         // add the labels shown during game over
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
@@ -185,8 +187,12 @@
         CCMenuItemImage *upgrades = [CCMenuItemImage itemWithNormalImage:@"upgrades.png" selectedImage:@"upgradesSel.png" target:self selector:@selector(gameUpgrades)];
         upgrades.scale = 1.25f;
 //        upgrades.scaleX = 1.8f;
-
-        CCMenu *gameOverMenu = [CCMenu menuWithItems:playAgain, leaderboards, upgrades, nil];
+        CCMenu *gameOverMenu;
+        if (numRoundsPlayed <= 4) {
+            gameOverMenu = [CCMenu menuWithItems:playAgain, leaderboards, nil];
+        } else {
+            gameOverMenu = [CCMenu menuWithItems:playAgain, leaderboards, upgrades, nil];
+        }
         [gameOverMenu alignItemsVertically];
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
         [self addChild:gameOverMenu];
@@ -271,11 +277,16 @@
 
 -(void) gameUpgrades
 {
-    [[CCDirector sharedDirector] replaceScene:
-	 [CCTransitionFadeBL transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
-    //Hide keyboard when "done" clicked
-    //  [textField resignFirstResponder];
-    [nameField removeFromSuperview];
+    if (numRoundsPlayed >= 4) {
+        [[CCDirector sharedDirector] replaceScene:
+         [CCTransitionFadeBL transitionWithDuration:0.5f scene:[UpgradesLayer node]]];
+        //Hide keyboard when "done" clicked
+        //  [textField resignFirstResponder];
+        [nameField removeFromSuperview];
+    } else {
+        [MGWU showMessage:@"I'm sorry, you can't upgrade any of your powerups until you've completed the tutorial. Check back, once you've finished!" withImage:nil];
+    }
+    
 }
 
 -(void) showNewHighScoreAlert

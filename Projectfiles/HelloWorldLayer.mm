@@ -3381,13 +3381,13 @@
     }
     
     if (playerCoins == 0) {
-        playerCoins = playerScore;
+        playerCoins = 50 + playerScore/5;
         sharedCoins = [NSNumber numberWithInteger:playerCoins];
         //        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
         [MGWU setObject:sharedCoins forKey:@"sharedCoins"];
     }
     if (playerCoins > 0) {
-        playerCoins = playerCoins + playerScore;
+        playerCoins = playerCoins + (50 + playerScore/5);
         sharedCoins = [NSNumber numberWithInteger:playerCoins];
         //        [[NSUserDefaults standardUserDefaults] setObject:sharedCoins forKey:@"sharedCoins"];
         [MGWU setObject:sharedCoins forKey:@"sharedCoins"];

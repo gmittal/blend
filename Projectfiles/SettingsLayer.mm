@@ -11,6 +11,11 @@
 
 @implementation SettingsLayer
 
+- (void)dealloc {
+    FBalert.delegate = nil;
+    alert.delegate = nil;
+}
+
 -(id) init
 {
 	if ((self = [super init]))

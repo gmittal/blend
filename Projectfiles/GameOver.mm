@@ -283,7 +283,6 @@
     UIAlertView *alert = [[UIAlertView alloc] init];
     [alert setTitle:@"New High Score"];
     [alert setMessage:[[NSString alloc] initWithFormat:@"You have a new high score of %i", endingScore]];
-    [alert setDelegate:self];
     [alert addButtonWithTitle:@"OK"];
     [alert show];
 }
@@ -293,7 +292,6 @@
     UIAlertView *highscore = [[UIAlertView alloc] init];
     [highscore setTitle:@"Success!"];
     [highscore setMessage:@"Your username was submitted along with this round's score."];
-    [highscore setDelegate:self];
     [highscore addButtonWithTitle:@"OK"];
     [highscore show];
 }
@@ -309,7 +307,6 @@
         UIAlertView *alert = [[UIAlertView alloc] init];
         [alert setTitle:@"Twitter Sign-in"];
         [alert setMessage:@"You must be logged into Twitter in order to use this feature."];
-        [alert setDelegate:self];
         [alert addButtonWithTitle:@"OK"];
         [alert show];
     }

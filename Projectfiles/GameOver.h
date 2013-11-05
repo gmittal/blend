@@ -17,6 +17,7 @@
     UITextField *nameField;
     int endingScore;
     int endingHighScore;
+    int numRoundsPlayed;
 }
 
 +(BOOL) returnBool;

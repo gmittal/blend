@@ -185,7 +185,7 @@
     if (alertView == (UIAlertView *)alert) {
         if (buttonIndex == 0)
         {
-            [self selfDestruct];
+            [self performSelector:@selector(selfDestruct) withObject:nil afterDelay:0.6];
         }
         else if (buttonIndex == 1)
         {

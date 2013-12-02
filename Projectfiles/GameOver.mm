@@ -197,6 +197,18 @@
         gameOverMenu.position = ccp(screenSize.width/2, screenSize.height/2 - 60);
         [self addChild:gameOverMenu];
         
+        if (numRoundsPlayed == 5) {
+            CCSprite* arrow = [CCSprite spriteWithFile:@"arrow_projectiles.png"];
+            arrow.position = ccp(gameOverMenu.position.x, gameOverMenu.position.y - 30);
+            [self addChild:arrow z:10000];
+            
+            CCSprite* coinArrow = [CCSprite spriteWithFile:@"arrow_projectiles.png"];
+            coinArrow.scale = -1;
+            coinArrow.position = ccp(coinIcon.position.x, coinIcon.position.y - 30);
+            [self addChild:coinArrow z:10000];
+            
+        }
+        
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"newHighScore"] == true) {
             [self showNewHighScoreAlert];
             [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"newHighScore"];

@@ -180,6 +180,10 @@
 //    [alert removeFromSuperview];
 }
 
+-(void) cancelSelfDestructSequence {
+    [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView == (UIAlertView *)alert) {
@@ -189,7 +193,7 @@
         }
         else if (buttonIndex == 1)
         {
-            [MGWU showMessage:@"Game data reset was cancelled." withImage:nil];
+            [self performSelector:@selector(cancelSelfDestructSequence) withObject:nil afterDelay:0.6];
         }
     }
     

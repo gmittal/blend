@@ -33,7 +33,8 @@
     [MGWU setAppiraterAppId:@"725766849" andAppName:@"Blend"];
     
     [MGWU useCrashlyticsWithApiKey:@"9fe93cfe42c0da72e3d0b1a0aa49822003c415a5"];
-        
+    
+    
     [MGWU useIAPs];
     
     
